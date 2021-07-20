@@ -99,7 +99,7 @@ class UserController extends Controller
                 $image_name = Str::random(20);
                 $ext = strtolower($image->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'public/upload/portfolio-pic/';
+                $upload_path = 'upload/portfolio-pic/';
                 $image_url = $upload_path . $image_full_name;
                 $image->move($upload_path, $image_full_name);
                 $user->photo = $image_url;
@@ -193,7 +193,7 @@ class UserController extends Controller
                 $image_name = Str::random(20);
                 $ext = strtolower($image->getClientOriginalExtension());
                 $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'public/upload/portfolio-pic/';
+                $upload_path = 'upload/portfolio-pic/';
                 $image_url = $upload_path . $image_full_name;
                 $image->move($upload_path, $image_full_name);
                 $user->photo = $image_url;

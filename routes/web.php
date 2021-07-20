@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContestController;
+use App\Http\Controllers\ContestPlayerController;
 use App\Http\Controllers\UserAccessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -39,4 +40,7 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::get('user-access', [UserAccessController::class,'index'])->name('user.access');
     Route::post('userAclSetup', [UserAccessController::class,'userAclSetup']);
     Route::post('useracl', [UserAccessController::class,'save']);
+
+    Route::post('add-player-to-cart',[ContestPlayerController::class,'addPlayerToCart'])->name('player.add.cart');
+    Route::post('remove-player-from-cart',[ContestPlayerController::class,'removeCart'])->name('player.remove.cart');
 });

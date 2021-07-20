@@ -91,10 +91,19 @@ $('.timepicker').datetimepicker({
     toolbarPlacement:'top',
     keepOpen:false,
     buttons:{
-        showToday: true,
         showClear: true,
         showClose: true
     },
+    icons: {
+        time: "fas fa-clock",
+        date: "fas fa-calendar",
+        up: "fas fa-arrow-up",
+        down: "fas fa-arrow-down",
+        previous: "fas fa-chevron-left",
+        next: "fas fa-chevron-right",
+        today: "fas fa-calendar-check",
+        clear: "fas fa-trash"
+    }
 });
 // Date tiem picker close on blur
 $('.datetimepicker,.datepicker,.timepicker').on('blur', function(){
