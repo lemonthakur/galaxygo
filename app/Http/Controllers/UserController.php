@@ -35,6 +35,7 @@ class UserController extends Controller
 
 
             return DataTables::of($users)
+                ->addIndexColumn()
                 ->addColumn('actions', 'backend.user.action')
                 ->rawColumns(['actions'])
             ->make(true);

@@ -1,5 +1,5 @@
 @extends("backend.master.main-layout")
-@section("page-title","User")
+@section("page-title","Contest")
 @section("main-content")
 
     <div class="content-wrapper">
@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">User</h1>
+                        <h1 class="m-0 text-dark">Contest</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,8 +28,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">User List</h3>
-                                <a href="{{route('user.create')}}" class="btn btn-primary float-right text-white">
+                                <h3 class="card-title">Contest List</h3>
+                                <a href="{{route('contest.create')}}" class="btn btn-primary float-right text-white">
                                     <i class="fas fa-plus-circle"></i>
                                     Add New
                                 </a>
@@ -53,14 +53,8 @@
                                         <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>Photo</th>
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Contact No</th>
-                                            <th>role</th>
-                                            <th>Created By</th>
-                                            <th>Updated By</th>
-                                            <th>Status</th>
+                                            <th>Count Down End</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -90,24 +84,24 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
                                 stripHtml : false,
-                                columns: [ 0, 1, 2,3,4, 5 ],
+                                columns: [ 0, 1, 2],
                             }
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2,3,4, 5 ]
+                                columns: [ 0, 1, 2]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2,3,4, 5 ]
+                                columns: [ 0, 1, 2]
                             }
                         }
                     ],
@@ -129,33 +123,14 @@
                         }
                     },
                     'ajax': {
-                        'url':'{{route("user.index")}}',
+                        'url':'{{route("contest.index")}}',
                         "type": "GET",
                         "data": formData
                     },
                     'columns': [
                         { data: 'DT_RowIndex' },
-                        { "data": function ( data, type, row ) {
-                                if(!data.photo){
-                                    return '';
-                                }
-                                return '<img width="100" src="'+data.photo+'"/>';
-                            }
-                        },
                         { data: 'name' },
-                        { data: 'email' },
-                        { data: 'contact_no' },
-                        { data: 'role.name' },
-                        { data: 'creator.name' },
-                        { data: 'updator.name' },
-                        { "data": function ( data, type, row ) {
-                                let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
-                                if (data.status === 1){
-                                    status = '<span class="btn btn-success btn-xs">Active</span>';
-                                }
-                                return status;
-                            }
-                        },
+                        { data: 'expaire_time' },
                         {data: 'actions'},
                     ]
                 });

@@ -37,4 +37,68 @@ $(document).ready(function() {
     });
 });
 
+// date time picker
+ $('.datetimepicker').datetimepicker({
+    ignoreReadonly: true,
+    toolbarPlacement:'top',
+    keepOpen:false,
+    buttons:{
+        showToday: true,
+        showClear: true,
+        showClose: true
+    },
+    useCurrent:false,
+    icons: {
+        time: "fas fa-clock",
+        date: "fas fa-calendar",
+        up: "fas fa-arrow-up",
+        down: "fas fa-arrow-down",
+        previous: "fas fa-chevron-left",
+        next: "fas fa-chevron-right",
+        today: "fas fa-calendar-check",
+        clear: "fas fa-trash"
+    }
+});
+
+// Date picker
+$('.datepicker').datetimepicker({
+    ignoreReadonly: true,
+    toolbarPlacement:'top',
+    keepOpen:false,
+    buttons:{
+        showToday: true,
+        showClear: true,
+        showClose: true
+    },
+    useCurrent:false,
+    format: 'L',
+    icons: {
+        time: "fas fa-clock",
+        date: "fas fa-calendar",
+        up: "fas fa-arrow-up",
+        down: "fas fa-arrow-down",
+        previous: "fas fa-chevron-left",
+        next: "fas fa-chevron-right",
+        today: "fas fa-calendar-check",
+        clear: "fas fa-trash"
+    }
+});
+
+// Time Picker
+$('.timepicker').datetimepicker({
+    ignoreReadonly: true,
+    format: 'LT',
+    toolbarPlacement:'top',
+    keepOpen:false,
+    buttons:{
+        showToday: true,
+        showClear: true,
+        showClose: true
+    },
+});
+// Date tiem picker close on blur
+$('.datetimepicker,.datepicker,.timepicker').on('blur', function(){
+    $(this).data('datetimepicker').hide();
+});
+
 

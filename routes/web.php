@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContestController;
 use App\Http\Controllers\UserAccessController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -25,6 +26,7 @@ Route::group(['middleware'=>'authCheck'],function (){
         'module' => ModuleController::class,
         'role' => RoleController::class,
         'user' => UserController::class,
+        'contest' => ContestController::class,
     ]);
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');

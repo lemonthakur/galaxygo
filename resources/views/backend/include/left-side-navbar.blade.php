@@ -73,6 +73,32 @@
                     </li>
                 @endif
 
+                <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' || $routeName == 'contest.edit') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Contest Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route("contest.index")}}"
+                                   class="nav-link {{ ($routeName == 'contest.index' || $routeName == 'contest.edit') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Contest List</p>
+                                </a>
+                            </li>
+                        <li class="nav-item">
+                            <a href="{{route("contest.create")}}"
+                               class="nav-link {{ ($routeName == 'contest.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contest Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 @if(!empty($aclList[1][1]) || !empty($aclList[2][1]) || !empty($aclList[3][1]))
                 <li class="nav-item has-treeview {{ ($routeName == 'role.index' || $routeName == 'role.create' || $routeName == 'role.edit' || $routeName == 'role.access' || $routeName == 'user.access') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
