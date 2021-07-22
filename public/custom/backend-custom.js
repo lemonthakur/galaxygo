@@ -71,7 +71,7 @@ $('.datepicker').datetimepicker({
         showClose: true
     },
     useCurrent:false,
-    format: 'L',
+    format: 'DD-MM-YYYY',
     icons: {
         time: "fas fa-clock",
         date: "fas fa-calendar",

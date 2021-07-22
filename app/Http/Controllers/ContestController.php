@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -16,14 +17,13 @@ class ContestController extends Controller
 {
     public function index(Request $request){
         if($request->ajax()){
-            // $name = $request->name;
+             $name = $request->name;
 
             $contests = Contest::orderBy('name','desc');
-
-            // if (!empty($name)){
-            //     $users = $users->where("name","LIKE","%$name%");
-            // }
-
+             if (!empty($name)){
+                 $name = date('Y-m-d',strtotime($name));
+                 $contests = $contests->whereDate("name","=","$name");
+             }
 
             return DataTables::of($contests)
                 ->addIndexColumn()
@@ -52,7 +52,7 @@ class ContestController extends Controller
 
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
-        } 
+        }
 
         if (count(Cart::content()) == 0){
             session()->flash('error','Please, Add Player');
@@ -60,8 +60,8 @@ class ContestController extends Controller
         }
             $contest = new Contest();
 
-            $contest->name        = $request->name;
-            $contest->expaire_time = $request->name.' '.$request->expaire_time;
+            $contest->name        = date('Y-m-d',strtotime($request->name));
+            $contest->expaire_time = date('Y-m-d',strtotime($request->name)).' '.$request->expaire_time;
 
             if ($contest->save()) {
                 $contestId = $contest->id;
@@ -85,6 +85,37 @@ class ContestController extends Controller
                 session()->flash("error", "Data not created");
                 return redirect()->back();
             }
+    }
+
+    public function edit(Contest $contest)
+    {
+        return view('backend.contest.edit',compact('contest'));
+    }
+
+    public function update(Contest $contest,Request $request){
+        $rules = [
+            "name" => "required|unique:contests,name," . $contest->id,
+            "expaire_time" => "required"
+        ];
+
+        $message = [
+            "expaire_time.required" => "Count Down Timer is required",
+        ];
+
+        $validation = Validator::make($request->all(), $rules, $message);
+
+        if ($validation->fails()) {
+            return redirect()->back()->withInput()->withErrors($validation);
+        }
+        $contest->name        = date("Y-m-d", strtotime($request->name));
+        $contest->expaire_time = date('Y-m-d',strtotime($request->name)).' '.$request->expaire_time;
+
+        if ($contest->save()) {
+            session()->flash("success", "Data successfully updated");
+        } else {
+            session()->flash("error", "Data not updated");
+        }
+        return redirect()->back();
     }
 
     public function destroy(Contest $contest)

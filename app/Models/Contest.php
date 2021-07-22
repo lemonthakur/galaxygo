@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -31,5 +30,9 @@ class Contest extends Model
 
     public function updatedBy(){
         return $this->belongsTo(User::class,'updated_by');
+    }
+
+    public function contestPlayers(){
+        return $this->hasMany(ContestPlayer::class,'contest_id');
     }
 }

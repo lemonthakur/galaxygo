@@ -1,8 +1,8 @@
 
     <form method="post" action="{{ route('contest.destroy',$id) }}">
-            <a class="btn btn-xs btn-warning text-white" href="{{route('contest.edit',$id)}}" title="Edit">
-                <i class="fas fa-pencil-alt"></i>
-            </a>
+        <a class="btn btn-xs btn-warning text-white" href="{{route('contest.edit',$id)}}" title="Edit">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
 
             @method('delete')
             @csrf

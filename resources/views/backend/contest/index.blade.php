@@ -40,7 +40,9 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter User Name">
+                                                <input type="text" class="form-control datepicker" name="name" id="name"
+                                                       placeholder="Enter Contest Name"
+                                                       readonly data-target="#name" data-toggle="datetimepicker">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -74,10 +76,10 @@
 
 @section('js')
     <script>
-        $(document).ready( function () {
+        $(document).ready(function () {
             let formData = {};
 
-            function loadDataTable(formData){
+            function loadDataTable(formData) {
                 $('#dTable').dataTable({
                     dom: 'Blrtip',
                     // dom: 'Blfrtip',
@@ -86,32 +88,32 @@
                             extend: 'print',
                             title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                stripHtml : false,
-                                columns: [ 0, 1, 2],
+                                stripHtml: false,
+                                columns: [0, 1, 2],
                             }
                         },
                         {
                             extend: 'excelHtml5',
                             title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2]
+                                columns: [0, 1, 2]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
                             title: 'Contest List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2]
+                                columns: [0, 1, 2]
                             }
                         }
                     ],
-                     "responsive": true,
+                    "responsive": true,
                     'processing': true,
                     'serverSide': true,
                     "pageLength": 10,
-                    "lengthMenu": [[5,10, 20,30,40, 50,100, -1], [5,10, 20,30,40, 50,100, "All"]],
+                    "lengthMenu": [[5, 10, 20, 30, 40, 50, 100, -1], [5, 10, 20, 30, 40, 50, 100, "All"]],
 
-                    "bSort" : false,
+                    "bSort": false,
                     "language": {
 
                         // Change the Pagination button labels
@@ -123,14 +125,18 @@
                         }
                     },
                     'ajax': {
-                        'url':'{{route("contest.index")}}',
+                        'url': '{{route("contest.index")}}',
                         "type": "GET",
                         "data": formData
                     },
                     'columns': [
-                        { data: 'DT_RowIndex' },
-                        { data: 'name' },
-                        { data: 'expaire_time' },
+                        {data: 'DT_RowIndex'},
+                        { "data": function ( data, type, row ) {
+                                let name = moment(data.name).format('DD/MM/YYYY');
+                                return name;
+                            }
+                        },
+                        {data: 'expaire_time'},
                         {data: 'actions'},
                     ]
                 });
@@ -138,7 +144,7 @@
 
             loadDataTable();
 
-            $('#filterForm').on('submit',function (event) {
+            $('#filterForm').on('submit', function (event) {
                 event.preventDefault();
                 formData = getFormData($(this));
 
@@ -146,20 +152,20 @@
                 loadDataTable(formData);
             });
 
-            function getFormData($form){
+            function getFormData($form) {
                 let unindexed_array = $form.serializeArray();
                 let indexed_array = {};
 
-                $.map(unindexed_array, function(n, i){
+                $.map(unindexed_array, function (n, i) {
                     indexed_array[n['name']] = n['value'];
                 });
 
                 return indexed_array;
             }
 
-            $(document).on('input','#name',function (){
+            $(document).on('input', '#name', function () {
                 $('#filterForm').submit();
             });
         });
     </script>
-    @endsection
+@endsection

@@ -28,6 +28,7 @@ Route::group(['middleware'=>'authCheck'],function (){
         'role' => RoleController::class,
         'user' => UserController::class,
         'contest' => ContestController::class,
+        'contest-player' => ContestPlayerController::class,
     ]);
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');

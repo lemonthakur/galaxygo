@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 py-2">
+                                        <div class="col-md-12">
                                             <div class="row">
 
                                                 <div class="col-md-12 text-center">
@@ -140,7 +140,7 @@
 
                                 <div class="card-footer text-right">
                                     <button type="submit" class="btn btn-dark">Submit</button>
-                                    <a href="{{route('contest.index')}}" class="btn btn-default cancel">Cancel</button>
+                                    <a href="{{route('contest.index')}}" class="btn btn-default cancel">Cancel</a>
                                 </div>
                             </form>
                         </div>
@@ -208,7 +208,7 @@ $('#add-player').on('click',function() {
         }
     })
 
-    
+
 });
 
 $(document).on('click','.removeCart',function () {
