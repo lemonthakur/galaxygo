@@ -75,7 +75,7 @@
 
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' || $routeName == 'contest.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
+                        <i class="nav-icon fas fa-play-circle"></i>
                         <p>
                             Contest Management
                             <i class="right fas fa-angle-left"></i>
@@ -94,6 +94,32 @@
                                class="nav-link {{ ($routeName == 'contest.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Contest Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-coins"></i>
+                        <p>
+                            Contest Win Coin
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("win-coin.index")}}"
+                               class="nav-link {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contest Win Coin List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("win-coin.create")}}"
+                               class="nav-link {{ ($routeName == 'win-coin.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contest Win Coin Create</p>
                             </a>
                         </li>
                     </ul>

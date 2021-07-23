@@ -27,7 +27,7 @@
                     <div class="col-md-8 offset-md-2">
                         <div class="card card-dark">
                             <div class="card-header">
-                                <h3 class="card-title">Create User</h3>
+                                <h3 class="card-title">Edit User</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->

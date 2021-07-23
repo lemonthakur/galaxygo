@@ -3,6 +3,9 @@
         <a class="btn btn-xs btn-warning text-white" href="{{route('contest.edit',$id)}}" title="Edit">
             <i class="fas fa-pencil-alt"></i>
         </a>
+        <a class="btn btn-xs btn-info text-white" href="{{route('contest.answer',$id)}}" title="Answer Submit">
+            <i class="fas fa-question"></i>
+        </a>
 
             @method('delete')
             @csrf

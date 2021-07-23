@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -114,6 +112,30 @@ class ContestController extends Controller
             session()->flash("success", "Data successfully updated");
         } else {
             session()->flash("error", "Data not updated");
+        }
+        return redirect()->back();
+    }
+
+    public function contestAnswer($id)
+    {
+        $contest = Contest::with('contestPlayers')->find($id);
+        if (count($contest->contestPlayers) <= 0){
+            session()->flash('error','Please add some players');
+            return redirect()->back();
+        }
+        return view('backend.contest.contest-answer',compact('contest'));
+    }
+
+    public function contestAnswerSubmit(Request $request){
+        $contest = Contest::where('id',$request->contest_id)->update(['is_final_answer' => 1]);
+        if ($contest){
+            for ($i =0 ; $i < count($request->contest_player_id); $i++){
+                $contestPlayer = ContestPlayer::where('id',$request->contest_player_id[$i])
+                    ->update(['answer' => $request->contest_player_answer[$i]]);
+            }
+            session()->flash('success','Contest Answer Submitter');
+        }else{
+            session()->flash('error','Contest Answer Not Submitter');
         }
         return redirect()->back();
     }

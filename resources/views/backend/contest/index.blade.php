@@ -47,6 +47,7 @@
                                         </div>
                                         <div class="col-md-2">
                                             <button type="submit" class="btn btn-dark">Search</button>
+                                            <button id="reset" type="reset" class="btn btn-danger">Reset</button>
                                         </div>
                                     </div>
                                 </form>
@@ -57,6 +58,7 @@
                                             <th>SL</th>
                                             <th>Name</th>
                                             <th>Count Down End</th>
+                                            <th>Is Answer Submit</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -107,6 +109,9 @@
                             }
                         }
                     ],
+                    columnDefs: [
+                        { className: 'text-center', targets: [3,4] },
+                    ],
                     "responsive": true,
                     'processing': true,
                     'serverSide': true,
@@ -137,6 +142,16 @@
                             }
                         },
                         {data: 'expaire_time'},
+                        { "data": function ( data, type, row ) {
+                                let answer = "";
+                                if (data.is_final_answer === 0){
+                                    answer = ' <label class="btn btn-danger btn-xs">No</label>'
+                                }else {
+                                    answer = ' <label class="btn btn-success btn-xs">Yes</label>'
+                                }
+                                return answer;
+                            }
+                        },
                         {data: 'actions'},
                     ]
                 });
@@ -149,6 +164,7 @@
                 formData = getFormData($(this));
 
                 $('#dTable').DataTable().destroy();
+                $('#dTable tbody').empty();
                 loadDataTable(formData);
             });
 
@@ -165,6 +181,13 @@
 
             $(document).on('input', '#name', function () {
                 $('#filterForm').submit();
+            });
+
+            $('#reset').on('click',function () {
+                formData = {};
+                $('#dTable').DataTable().destroy();
+                $('#dTable tbody').empty();
+                loadDataTable(formData);
             });
         });
     </script>
