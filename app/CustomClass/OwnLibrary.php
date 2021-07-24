@@ -67,7 +67,7 @@ class OwnLibrary {
         $image_name = Str::random(20);
         $ext = strtolower($image->getClientOriginalExtension());
         $image_full_name = $image_name . '.' . $ext;
-        $upload_path = 'public/upload/'.$folderName.'/';
+        $upload_path = 'upload/'.$folderName.'/';
         $image_url = $upload_path . $image_full_name;
         $image->move($upload_path, $image_full_name);
         return $image_url;

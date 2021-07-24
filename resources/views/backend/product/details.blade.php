@@ -107,8 +107,14 @@
                                         <th>Attach File</th>
                                         <td>
                                             @if($product->attached_file)
-                                            <a href="{{ URL::to('image_show/3/' . $product->id ) }}" target="_blank">
+                                            @php
+                                                $fil = explode('/', $product->attached_file);
+                                            @endphp
+                                            {{--<a href="{{ URL::to('image_show/3/' . $product->id ) }}" target="_blank">
                                                 {!! $product->attached_file !!}
+                                            </a>--}}
+                                            <a href="{{ URL::to('image_show/3/' . $product->id ) }}" target="_blank">
+                                                {!! $fil[3] !!}
                                             </a>
                                             @endif
                                         </td>

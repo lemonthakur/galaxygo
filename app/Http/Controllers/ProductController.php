@@ -393,13 +393,18 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         OwnLibrary::validateAccess($this->moduleId, 4);
-        if ($product->delete()) {
-            session()->flash("success", "Product Deleted");
-            return redirect()->back();
-        } else {
-            session()->flash("error", "Product Not Deleted");
-            return redirect()->back();
+        if($product){
+            if($product->status==1)
+                $product->status=0;
+            else
+                $product->status=1;
+
+            $product->save();
+            session()->flash('success','Data Inactive successfully');
+        }else{
+            session()->flash('error','Action Failed!');
         }
+        return redirect()->back();
     }
 
     function getSubCagetories(Request $request){

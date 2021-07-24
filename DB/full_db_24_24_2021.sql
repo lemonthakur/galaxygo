@@ -107,13 +107,14 @@ CREATE TABLE `contest_players` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `contest_players` */
 
 insert  into `contest_players`(`id`,`contest_id`,`player_name`,`player_image`,`location`,`versus`,`score`,`answer`,`created_by`,`updated_by`,`status`,`deleted_at`,`created_at`,`updated_at`) values 
 (1,1,'Lemon','upload/player-pic/ejmdfEiko4KeMC6AEjBq210724.jpg','Thakur','Versus',4555.00,0,1,1,1,NULL,'2021-07-24 07:46:04','2021-07-24 07:46:04'),
-(2,1,'Lemo','upload/player-pic/gpGi4OlGID476pPyTnvI.jpg','city','332222',65555.00,0,1,1,1,NULL,'2021-07-24 07:47:15','2021-07-24 07:47:15');
+(2,1,'Lemo','upload/player-pic/gpGi4OlGID476pPyTnvI.jpg','city','332222',65555.00,0,1,1,1,NULL,'2021-07-24 07:47:15','2021-07-24 07:47:15'),
+(3,2,'Thakur','upload/player-pic/n0EixSI4cLAz3vZ16er7210724.jpg','Sylhet','332222',5555.00,0,1,1,1,NULL,'2021-07-24 10:04:53','2021-07-24 10:04:53');
 
 /*Table structure for table `contests` */
 
@@ -132,12 +133,13 @@ CREATE TABLE `contests` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `contests_name_unique` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `contests` */
 
 insert  into `contests`(`id`,`name`,`expaire_time`,`is_final_answer`,`created_by`,`updated_by`,`status`,`deleted_at`,`created_at`,`updated_at`) values 
-(1,'2021-07-01','2021-07-01 5:44 PM',0,1,1,1,NULL,'2021-07-24 07:46:04','2021-07-24 07:46:04');
+(1,'2021-07-01','2021-07-01 5:44 PM',0,1,1,1,NULL,'2021-07-24 07:46:04','2021-07-24 07:46:04'),
+(2,'2021-07-30','2021-07-30 6:04 PM',0,1,1,1,NULL,'2021-07-24 10:04:53','2021-07-24 10:04:53');
 
 /*Table structure for table `failed_jobs` */
 
@@ -484,7 +486,7 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`name`,`slug`,`category_id`,`sub_category_id`,`brand_id`,`feature_image`,`galler_images`,`product_type`,`attached_file`,`price`,`discount_amount`,`quantity`,`model_number`,`product_description`,`return_policy`,`pro_meta`,`pro_mt_description`,`video_url`,`featureproduct`,`avg_review`,`status`,`deleted_at`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(1,'Products','products-7093',1,2,2,'public/upload/product-feature-image/D8N7ZpqrFrNgRJRl97sq.jpg','[\"60fbbbca04041w2p06Rilwdvmta26Hmmy.jpg\"]','Auction Product','public/upload/product-attached-file/yBbfubZtZ4nV37B57bVb.docx',190.555,5.555,NULL,'S-A7s','<p>Product description</p>','<p>Return policy</p>','ff, ttsss','dfdfsss','https://youtu.be/Yh_0cPX0Hso','no',0.00,1,NULL,1,1,'2021-07-23 22:54:23','2021-07-24 07:05:46');
+(1,'Products','products-5819',1,2,2,'public/upload/product-feature-image/D8N7ZpqrFrNgRJRl97sq.jpg','[\"60fbbbca04041w2p06Rilwdvmta26Hmmy.jpg\"]','Auction Product','public/upload/product-attached-file/yBbfubZtZ4nV37B57bVb.docx',190.555,5.555,NULL,'S-A7s','<p>Product description</p>','<p>Return policy</p>','ff, ttsss','dfdfsss','https://youtu.be/Yh_0cPX0Hso','no',0.00,1,NULL,1,1,'2021-07-23 22:54:23','2021-07-24 10:05:33');
 
 /*Table structure for table `roles` */
 
@@ -537,7 +539,7 @@ CREATE TABLE `site_settings` (
 /*Data for the table `site_settings` */
 
 insert  into `site_settings`(`id`,`logo`,`icon`,`email`,`contact_no`,`site_title`,`meta_description`,`meta_keyword`,`copy_right`,`alert_quantity`,`display_unit`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(1,'public/upload/site-setting/oN5m0foVCDmdMpP7Zhdq.png','public/upload/site-setting/pscb8cQG6OXhTBej6wny.png','thakurlemon@gmail.com','01719287734','Contest','Web Embed','Inventory','Contest',15000,1,1,1,'2021-06-02 06:26:39','2021-07-19 03:59:00');
+(1,'upload/site-setting/qMPDTDFThCSaPSsGUf74.png','upload/site-setting/rJ4DcypuQQz0gSm74UXn.png','thakurlemon@gmail.com','01719287734','Contest','Web Embed','Inventory','Contest',15000,1,1,1,'2021-06-02 06:26:39','2021-07-24 10:01:37');
 
 /*Table structure for table `users` */
 
@@ -568,10 +570,10 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`role_id`,`name`,`email`,`email_verified_at`,`contact_no`,`photo`,`password`,`lastLoginTime`,`status`,`deleted_at`,`remember_token`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(1,1,'admin','admin@email.com',NULL,'01682234164','public/upload/portfolio-pic/LtrmIxDiRzqTUUtjzF5k.jpg','$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm','2021-07-24 04:25:56',1,NULL,'7YhAAiFAv3LcmcoFOLFGRThkasxUuXco3znBI9gqj9cgtWPk0eCIFvNmf5hn',1,1,'2020-01-18 16:14:02','2021-07-24 04:25:56'),
-(2,1,'Myles Key','jymyjopuny@mailinator.com',NULL,'123456','public/upload/rofile-pic/Vty0kqzBV9o3coKVIyqI.jpg','$2y$10$lJHuiDyxiw/yq/.bfz01BeygTc9Tl0mZbAM0JS7NADJlVjXmBSsDK',NULL,1,NULL,NULL,1,1,'2020-01-18 16:33:52','2020-03-02 21:06:00'),
-(3,2,'Phelan Brown','fynojewu@mailinator.com',NULL,'1465','public/upload/rofile-pic/IfhDPL9wVq1IPh6J4d4w.png','$2y$10$BvWoKwT6Toe1WgiVuxutxufuaqhUb1VXiZKaRYsSyK6TQz3NcFVge',NULL,1,NULL,NULL,1,1,'2020-01-18 16:37:14','2020-01-24 20:39:51'),
-(4,2,'Charlotte Villarreal','cusesohyko@mailinator.com',NULL,'12456','public/upload/rofile-pic/bcE7Fewm45VV3WtuoL0v.png','$2y$10$2aF8MBYraBpAzxw/ye2bXuKieJp6FoBuVQBHL6YHbSN1CIouTQf9C',NULL,1,NULL,NULL,1,1,'2020-01-18 16:48:36','2020-03-02 21:06:04'),
+(1,1,'admin','admin@email.com',NULL,'01682234164','upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg','$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm','2021-07-24 10:00:32',1,NULL,'EmZxyvR8f2cva9IaSwVNge5WxxIQvCnV4MTrH6I1MBwZPrFBfjQBCo1eqdiV',1,1,'2020-01-18 16:14:02','2021-07-24 10:00:32'),
+(2,1,'Myles Key','jymyjopuny@mailinator.com',NULL,'123456','upload/portfolio-pic/9fvRrPSRAhy9LsS05Wh6.jpg','$2y$10$lJHuiDyxiw/yq/.bfz01BeygTc9Tl0mZbAM0JS7NADJlVjXmBSsDK',NULL,1,NULL,NULL,1,1,'2020-01-18 16:33:52','2021-07-24 10:02:25'),
+(3,2,'Phelan Brown','fynojewu@mailinator.com',NULL,'1465','upload/portfolio-pic/Dt5hvKLSeHJPt37pyDgi.jpg','$2y$10$BvWoKwT6Toe1WgiVuxutxufuaqhUb1VXiZKaRYsSyK6TQz3NcFVge',NULL,1,NULL,NULL,1,1,'2020-01-18 16:37:14','2021-07-24 10:02:42'),
+(4,2,'Charlotte Villarreal','cusesohyko@mailinator.com',NULL,'12456','upload/portfolio-pic/bwh7hQus2F4eQkJlMbOg.jpg','$2y$10$2aF8MBYraBpAzxw/ye2bXuKieJp6FoBuVQBHL6YHbSN1CIouTQf9C',NULL,1,NULL,NULL,1,1,'2020-01-18 16:48:36','2021-07-24 10:02:14'),
 (5,2,'miraj','miraj@email.com',NULL,'1465456',NULL,'$2y$10$gpyKgl1cj4Yh6qAEN/Z5ZOZ9Lkp75B.DgwLev./4CIHdGLG71m7iG','2020-03-03 11:23:09',1,NULL,NULL,1,1,'2020-03-02 21:06:56','2020-03-03 11:23:09'),
 (6,1,'Juliet Harrison','kazyx@mailinator.com',NULL,'123456874',NULL,'$2y$10$alGTDKUcytKoLnUFYyOWmer7EoXknY1911HsMCa496lq2LYV13JDK',NULL,1,NULL,NULL,1,1,'2020-11-23 13:53:19','2020-11-23 13:55:39'),
 (7,1,'Tara Erickson','gobimohyja@mailinator.com',NULL,'U146545','public/upload/portfolio-pic/mVEBox9gvoYJrzQHueww.jpg','$2y$10$qgZrvHAaoziTx9EsRQKyN.RDRELo3StfBHsmTajQFOAyQ0/o/W1n2',NULL,1,NULL,NULL,1,1,'2020-11-23 13:56:49','2021-07-18 17:42:37'),

@@ -153,7 +153,7 @@
                         {data: 'discount_amount'},
                         { "data": function ( data, type, row ) {
                                 let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
-                                if (data.status === 1){
+                                if (data.status == 1){
                                     status = '<span class="btn btn-success btn-xs">Active</span>';
                                 }
                                 return status;
