@@ -1,5 +1,5 @@
 @extends("backend.master.main-layout")
-@section("page-title","User")
+@section("page-title","Win Coin")
 @section("main-content")
 
     <div class="content-wrapper">
@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">User</h1>
+                        <h1 class="m-0 text-dark">Win Coin</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -28,46 +28,40 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">User List</h3>
-                                <a href="{{route('user.create')}}" class="btn btn-primary float-right text-white">
+                                <h3 class="card-title">Win Coin List</h3>
+                                <a href="{{route('win-coin.create')}}" class="btn btn-primary float-right text-white">
                                     <i class="fas fa-plus-circle"></i>
                                     Add New
                                 </a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">
-                                <form id="filterForm">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter User Name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-dark">Search</button>
-                                            <button id="reset" type="reset" class="btn btn-danger">Reset</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="table-responsive">
+{{--                                <form id="filterForm">--}}
+{{--                                    <div class="row">--}}
+{{--                                        <div class="col-md-4">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter User Name">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-2">--}}
+{{--                                            <button type="submit" class="btn btn-dark">Search</button>--}}
+{{--                                            <button id="reset" type="reset" class="btn btn-danger">Reset</button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
                                     <table class="table table-bordered table-hover" id="dTable">
                                         <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>Photo</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Contact No</th>
-                                            <th>role</th>
-                                            <th>Created By</th>
-                                            <th>Updated By</th>
+                                            <th>Number Of Win</th>
+                                            <th>Out Of</th>
+                                            <th>Win Coin</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,28 +85,31 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("d-m-Y")}}',
                             exportOptions: {
                                 stripHtml : false,
-                                columns: [ 0, 1, 2,3,4, 5 ],
+                                columns: [ 0, 1, 2,3,4],
                             }
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2,3,4, 5 ]
+                                columns: [ 0, 1, 2,3,4]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("d-m-Y")}}',
                             exportOptions: {
-                                columns: [ 0, 1, 2,3,4, 5 ]
+                                columns: [ 0, 1, 2,3,4 ]
                             }
                         }
                     ],
-                     "responsive": true,
+                    columnDefs: [
+                        { className: 'text-center', targets: [0,1,2,3,4,5]},
+                    ],
+                    responsive: true,
                     'processing': true,
                     'serverSide': true,
                     "pageLength": 10,
@@ -130,25 +127,15 @@
                         }
                     },
                     'ajax': {
-                        'url':'{{route("user.index")}}',
+                        'url':'{{route("win-coin.index")}}',
                         "type": "GET",
                         "data": formData
                     },
                     'columns': [
                         { data: 'DT_RowIndex' },
-                        { "data": function ( data, type, row ) {
-                                if(!data.photo){
-                                    return '';
-                                }
-                                return '<img width="100" src="'+data.photo+'"/>';
-                            }
-                        },
-                        { data: 'name' },
-                        { data: 'email' },
-                        { data: 'contact_no' },
-                        { data: 'role.name' },
-                        { data: 'creator.name' },
-                        { data: 'updator.name' },
+                        { data: 'win' },
+                        { data: 'out_of' },
+                        { data: 'coin' },
                         { "data": function ( data, type, row ) {
                                 let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
                                 if (data.status === 1){
@@ -164,36 +151,36 @@
 
             loadDataTable();
 
-            $('#filterForm').on('submit',function (event) {
-                event.preventDefault();
-                formData = getFormData($(this));
-
-                $('#dTable').DataTable().destroy();
-                $('#dTable tbody').empty();
-                loadDataTable(formData);
-            });
-
-            function getFormData($form){
-                let unindexed_array = $form.serializeArray();
-                let indexed_array = {};
-
-                $.map(unindexed_array, function(n, i){
-                    indexed_array[n['name']] = n['value'];
-                });
-
-                return indexed_array;
-            }
-
-            $(document).on('input','#name',function (){
-                $('#filterForm').submit();
-            });
-
-            $('#reset').on('click',function () {
-                formData = {};
-                $('#dTable').DataTable().destroy();
-                $('#dTable tbody').empty();
-                loadDataTable(formData);
-            });
+            // $('#filterForm').on('submit',function (event) {
+            //     event.preventDefault();
+            //     formData = getFormData($(this));
+            //
+            //     $('#dTable').DataTable().destroy();
+            //     $('#dTable tbody').empty();
+            //     loadDataTable(formData);
+            // });
+            //
+            // function getFormData($form){
+            //     let unindexed_array = $form.serializeArray();
+            //     let indexed_array = {};
+            //
+            //     $.map(unindexed_array, function(n, i){
+            //         indexed_array[n['name']] = n['value'];
+            //     });
+            //
+            //     return indexed_array;
+            // }
+            //
+            // $(document).on('input','#name',function (){
+            //     $('#filterForm').submit();
+            // });
+            //
+            // $('#reset').on('click',function () {
+            //     formData = {};
+            //     $('#dTable').DataTable().destroy();
+            //     $('#dTable tbody').empty();
+            //     loadDataTable(formData);
+            // });
         });
     </script>
     @endsection

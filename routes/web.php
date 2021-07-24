@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ContestPlayerController;
 use App\Http\Controllers\UserAccessController;
+use App\Http\Controllers\WinCoinController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleController;
@@ -32,6 +33,7 @@ Route::group(['middleware'=>'authCheck'],function (){
         'user' => UserController::class,
         'contest' => ContestController::class,
         'contest-player' => ContestPlayerController::class,
+        'win-coin' => WinCoinController::class,
     ]);
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');
@@ -47,6 +49,8 @@ Route::group(['middleware'=>'authCheck'],function (){
 
     Route::post('add-player-to-cart',[ContestPlayerController::class,'addPlayerToCart'])->name('player.add.cart');
     Route::post('remove-player-from-cart',[ContestPlayerController::class,'removeCart'])->name('player.remove.cart');
+    Route::get('contest/answer/{id}',[ContestController::class,'contestAnswer'])->name('contest.answer');
+    Route::post('contest/answer',[ContestController::class,'contestAnswerSubmit'])->name('contest.answer.submit');
 
     Route::resource("/category",CategoryController::class);
     Route::resource("/brand",BrandController::class);

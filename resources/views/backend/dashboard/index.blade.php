@@ -21,7 +21,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h3 style="font-size: 25px;" class="card-title h3 text-center w-100">Welcome to inventory management system</h3>
+                                <h3 style="font-size: 25px;" id="wc" class="card-title h3 text-center w-100">Welcome To Galaxy DashBoard</h3>
                             </div>
                         </div>
                     </div>
@@ -31,4 +31,13 @@
         </div>
         <!-- /.content -->
     </div>
+    @endsection
+@section('js');
+<script>
+    setInterval(
+        function() {
+            let randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            $('#wc').css("color",randomColor);
+        }, 1500);
+</script>
     @endsection

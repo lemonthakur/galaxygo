@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2021 at 06:05 AM
+-- Generation Time: Jul 23, 2021 at 07:31 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `m_admin8`
+-- Database: `m_galaxy`
 --
 
 -- --------------------------------------------------------
@@ -52,6 +52,73 @@ INSERT INTO `activities` (`id`, `name`, `description`, `created_by`, `updated_by
 (6, 'Password reset', NULL, 1, 1, 1, NULL, '2020-01-24 12:52:50', '2020-01-24 12:52:50'),
 (7, 'Print', NULL, 1, 1, 1, NULL, '2020-01-24 12:53:01', '2020-01-24 12:53:01'),
 (8, 'Details', NULL, 1, 1, 1, NULL, '2020-01-24 12:53:12', '2020-01-24 12:53:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contests`
+--
+
+CREATE TABLE `contests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expaire_time` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_final_answer` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = not submitted,1= submitted',
+  `created_by` int(11) NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contests`
+--
+
+INSERT INTO `contests` (`id`, `name`, `expaire_time`, `is_final_answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '2021-07-20', '2021-07-20 8:16 PM', 0, 1, 1, 1, NULL, '2021-07-20 00:22:24', '2021-07-22 01:35:52'),
+(2, '2021-07-21', '2021-07-21 8:08 PM', 0, 1, 1, 1, NULL, '2021-07-20 11:09:13', '2021-07-22 01:35:35'),
+(3, '2021-07-22', '2021-07-22 8:08 PM', 1, 1, 1, 1, NULL, '2021-07-20 11:10:04', '2021-07-23 09:00:26'),
+(4, '2021-07-23', '2021-07-23 11:15 PM', 1, 1, 1, 1, NULL, '2021-07-23 11:16:20', '2021-07-23 11:17:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contest_players`
+--
+
+CREATE TABLE `contest_players` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `contest_id` bigint(20) UNSIGNED NOT NULL,
+  `player_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `player_image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `versus` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `score` double(10,2) NOT NULL,
+  `answer` int(11) NOT NULL DEFAULT 0 COMMENT '0=no answer,1=under,2=over',
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contest_players`
+--
+
+INSERT INTO `contest_players` (`id`, `contest_id`, `player_name`, `player_image`, `location`, `versus`, `score`, `answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 3, 'Nichole Walton', 'upload/player-pic/b1ScTMmwtlQbDJqP5Hri210720.png', 'Non laudantium qui', 'Dolor velit quae fac', 73.00, 0, 1, 1, 1, '2021-07-22 00:47:36', '2021-07-20 11:10:04', '2021-07-22 00:47:36'),
+(2, 3, 'Wayne Bradford', 'upload/player-pic/XSHZvdmzj2gcHXQubD6f210720.jpg', 'Harum nisi eligendi', 'Voluptas adipisci so', 74.00, 1, 1, 1, 1, NULL, '2021-07-20 11:10:04', '2021-07-23 09:00:26'),
+(3, 3, 'Josiah Gardner', 'upload/player-pic/zCFtmcZQNmzNvsdlYvM5.png', 'Quo in sunt consecte', 'Cumque nisi mollit d', 62.00, 1, 1, 1, 1, NULL, '2021-07-22 01:08:23', '2021-07-23 09:00:26'),
+(4, 3, 'Sydnee Gardner', 'upload/player-pic/QojFzHX0uYqIwiL9Gis5.jpg', 'Velit nisi voluptate', 'Aperiam nesciunt al', 30.00, 2, 1, 1, 1, NULL, '2021-07-22 01:08:45', '2021-07-23 09:00:26'),
+(5, 2, 'Kelly Dalton', 'upload/player-pic/tnH5aWhxXn0w6TY3RSyp.jpg', 'Et nostrum nisi ipsa', 'Nisi velit mollitia', 9.00, 0, 1, 1, 1, NULL, '2021-07-23 08:33:52', '2021-07-23 08:33:52'),
+(6, 2, 'Wang Weber', 'upload/player-pic/B23HtwmaJbQhn3lzYFKO.png', 'Laboriosam amet la', 'Deserunt consectetur', 72.00, 0, 1, 1, 1, NULL, '2021-07-23 08:34:05', '2021-07-23 08:34:05'),
+(7, 2, 'Nolan Hopper', 'upload/player-pic/pznb50JhJwp1ecaszSR9.jpg', 'Inventore voluptatem', 'Exercitationem solut', 70.00, 0, 1, 1, 1, NULL, '2021-07-23 08:36:45', '2021-07-23 08:36:45'),
+(8, 4, 'Teegan Ware', 'upload/player-pic/44LZO1aMg8AX7gqvkSs4210723.png', 'Voluptatem quis per', 'Porro beatae aute ad', 3.00, 1, 1, 1, 1, NULL, '2021-07-23 11:16:20', '2021-07-23 11:17:01'),
+(9, 4, 'Timon Blackwell', 'upload/player-pic/Js1AKjgN6e5ddod4x6Vb.jpg', 'Architecto in rem mo', 'Magnam ratione venia', 56.00, 2, 1, 1, 1, NULL, '2021-07-23 11:16:39', '2021-07-23 11:17:01');
 
 -- --------------------------------------------------------
 
@@ -95,7 +162,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2020_01_17_041946_create_module_to_users_table', 1),
 (30, '2020_01_17_042141_create_roles_table', 1),
 (31, '2020_01_18_111739_add_created_by_to_roles', 1),
-(41, '2021_06_01_171209_create_site_settings_table', 2);
+(41, '2021_06_01_171209_create_site_settings_table', 2),
+(44, '2021_07_19_142035_create_contests_table', 3),
+(45, '2021_07_19_142601_create_contest_players_table', 3),
+(46, '2021_07_23_140119_add_column_is_final_answer_to_contests', 4),
+(48, '2021_07_23_160401_create_win_coins_table', 5);
 
 -- --------------------------------------------------------
 
@@ -428,7 +499,7 @@ CREATE TABLE `site_settings` (
 --
 
 INSERT INTO `site_settings` (`id`, `logo`, `icon`, `email`, `contact_no`, `site_title`, `meta_description`, `meta_keyword`, `copy_right`, `alert_quantity`, `display_unit`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'public/upload/site-setting/oN5m0foVCDmdMpP7Zhdq.png', 'public/upload/site-setting/pscb8cQG6OXhTBej6wny.png', 'thakurlemon@gmail.com', '01719287734', 'Contest', 'Web Embed', 'Inventory', 'Contest', 15000, 1, 1, 1, '2021-06-02 00:26:39', '2021-07-18 21:59:00');
+(1, 'public/upload/site-setting/oN5m0foVCDmdMpP7Zhdq.png', 'public/upload/site-setting/pscb8cQG6OXhTBej6wny.png', 'thakurlemon@gmail.com', '01719287734', 'Galaxy', 'Galaxy', 'Galaxy', 'Galaxy', 15000, 1, 1, 1, '2021-06-02 00:26:39', '2021-07-19 20:48:10');
 
 -- --------------------------------------------------------
 
@@ -460,17 +531,46 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `contact_no`, `photo`, `password`, `lastLoginTime`, `status`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@email.com', NULL, '01682234164', 'public/upload/portfolio-pic/LtrmIxDiRzqTUUtjzF5k.jpg', '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-07-19 03:58:35', 1, NULL, '7YhAAiFAv3LcmcoFOLFGRThkasxUuXco3znBI9gqj9cgtWPk0eCIFvNmf5hn', 1, 1, '2020-01-18 10:14:02', '2021-07-18 22:00:16'),
+(1, 1, 'admin', 'admin@email.com', NULL, '01682234164', 'public/upload/portfolio-pic/LtrmIxDiRzqTUUtjzF5k.jpg', '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-07-23 13:31:13', 1, NULL, 'THyQIYeUh4trL0f1OofOfmhGS1pcM5WSkQsUTy4qJumn7SFHvq2mSigPKiFP', 1, 1, '2020-01-18 10:14:02', '2021-07-23 07:31:13'),
 (2, 1, 'Myles Key', 'jymyjopuny@mailinator.com', NULL, '123456', 'public/upload/rofile-pic/Vty0kqzBV9o3coKVIyqI.jpg', '$2y$10$lJHuiDyxiw/yq/.bfz01BeygTc9Tl0mZbAM0JS7NADJlVjXmBSsDK', NULL, 1, NULL, NULL, 1, 1, '2020-01-18 10:33:52', '2020-03-02 15:06:00'),
 (3, 2, 'Phelan Brown', 'fynojewu@mailinator.com', NULL, '1465', 'public/upload/rofile-pic/IfhDPL9wVq1IPh6J4d4w.png', '$2y$10$BvWoKwT6Toe1WgiVuxutxufuaqhUb1VXiZKaRYsSyK6TQz3NcFVge', NULL, 1, NULL, NULL, 1, 1, '2020-01-18 10:37:14', '2020-01-24 14:39:51'),
 (4, 2, 'Charlotte Villarreal', 'cusesohyko@mailinator.com', NULL, '12456', 'public/upload/rofile-pic/bcE7Fewm45VV3WtuoL0v.png', '$2y$10$2aF8MBYraBpAzxw/ye2bXuKieJp6FoBuVQBHL6YHbSN1CIouTQf9C', NULL, 1, NULL, NULL, 1, 1, '2020-01-18 10:48:36', '2020-03-02 15:06:04'),
 (5, 2, 'miraj', 'miraj@email.com', NULL, '1465456', NULL, '$2y$10$gpyKgl1cj4Yh6qAEN/Z5ZOZ9Lkp75B.DgwLev./4CIHdGLG71m7iG', '2020-03-03 11:23:09', 1, NULL, NULL, 1, 1, '2020-03-02 15:06:56', '2020-03-03 05:23:09'),
 (6, 1, 'Juliet Harrison', 'kazyx@mailinator.com', NULL, '123456874', NULL, '$2y$10$alGTDKUcytKoLnUFYyOWmer7EoXknY1911HsMCa496lq2LYV13JDK', NULL, 1, NULL, NULL, 1, 1, '2020-11-23 07:53:19', '2020-11-23 07:55:39'),
-(7, 1, 'Tara Erickson', 'gobimohyja@mailinator.com', NULL, 'U146545', 'public/upload/portfolio-pic/mVEBox9gvoYJrzQHueww.jpg', '$2y$10$qgZrvHAaoziTx9EsRQKyN.RDRELo3StfBHsmTajQFOAyQ0/o/W1n2', NULL, 1, NULL, NULL, 1, 1, '2020-11-23 07:56:49', '2021-07-18 11:42:37'),
+(7, 1, 'Tara Erickson', 'gobimohyja@mailinator.com', NULL, 'U146545', 'public/upload/portfolio-pic/mVEBox9gvoYJrzQHueww.jpg', '$2y$10$qgZrvHAaoziTx9EsRQKyN.RDRELo3StfBHsmTajQFOAyQ0/o/W1n2', NULL, 1, '2021-07-19 20:48:43', NULL, 1, 1, '2020-11-23 07:56:49', '2021-07-19 20:48:43'),
 (8, 1, 'Holmes Spears', 'jukilo@mailinator.com', NULL, '123456845688', NULL, '$2y$10$zgvy63DyvNHGhyBZEXSBxuT/9McN08iDefme0G3BJongc0BcXM/vS', NULL, 1, NULL, NULL, 1, 1, '2021-07-17 21:14:49', '2021-07-17 21:14:49'),
 (9, 2, 'Jeremy Steele', 'tisis@mailinator.com', NULL, 'Vel eveniet', NULL, '$2y$10$tRWRy4.SgeLTyMyAYvWIduDRREcLuGS6DjIo/xMqjssX48ZucUNTm', NULL, 1, NULL, NULL, 1, 1, '2021-07-17 21:17:27', '2021-07-17 21:17:27'),
 (10, 2, 'Catherine Palmer', 'bunafefo@mailinator.com', NULL, 'Quo non', NULL, '$2y$10$0kox7J5iVhHErhPW6ZaMSumTwkad7v584oJnBh0CKgi3wsns/M6qK', NULL, 1, NULL, NULL, 1, 1, '2021-07-17 21:17:43', '2021-07-17 21:17:43'),
 (11, 3, 'Hashim Velez', 'ligexusenu@mailinator.com', NULL, 'Expedit', 'public/upload/portfolio-pic/qzd6rhhgB2jEnucwvnc7.jpg', '$2y$10$gmCO4ZZw0B9AbvYmDgMWJOPlVMqv3l2TPhn41cuZ03dBJZ0j5llAm', NULL, 1, NULL, NULL, 1, 1, '2021-07-18 08:58:57', '2021-07-18 08:58:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `win_coins`
+--
+
+CREATE TABLE `win_coins` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `win` int(11) NOT NULL,
+  `out_of` int(11) NOT NULL,
+  `coin` int(11) NOT NULL,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0 = inactive, 1 = active',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `win_coins`
+--
+
+INSERT INTO `win_coins` (`id`, `win`, `out_of`, `coin`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 8, 10, 1000, 1, 1, 1, NULL, '2021-07-23 11:03:08', '2021-07-23 11:03:08'),
+(3, 9, 10, 10000, 1, 1, 1, NULL, '2021-07-23 11:03:44', '2021-07-23 11:03:44'),
+(4, 10, 10, 100000, 1, 1, 1, NULL, '2021-07-23 11:04:00', '2021-07-23 11:27:59'),
+(5, 7, 10, 500, 1, 1, 1, NULL, '2021-07-23 11:29:21', '2021-07-23 11:29:21');
 
 --
 -- Indexes for dumped tables
@@ -480,6 +580,19 @@ INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `con
 -- Indexes for table `activities`
 --
 ALTER TABLE `activities`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contests`
+--
+ALTER TABLE `contests`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `contests_name_unique` (`name`);
+
+--
+-- Indexes for table `contest_players`
+--
+ALTER TABLE `contest_players`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -545,6 +658,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_contact_no_unique` (`contact_no`);
 
 --
+-- Indexes for table `win_coins`
+--
+ALTER TABLE `win_coins`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -553,6 +672,18 @@ ALTER TABLE `users`
 --
 ALTER TABLE `activities`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `contests`
+--
+ALTER TABLE `contests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `contest_players`
+--
+ALTER TABLE `contest_players`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -564,7 +695,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -607,6 +738,12 @@ ALTER TABLE `site_settings`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `win_coins`
+--
+ALTER TABLE `win_coins`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
