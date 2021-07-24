@@ -99,6 +99,64 @@
                     </ul>
                 </li>
 
+                <li class="nav-item has-treeview {{ ($routeName == 'category.index' || $routeName == 'category.create' || $routeName == 'category.edit'
+                 || $routeName == 'brand.index' || $routeName == 'brand.create' || $routeName == 'brand.edit'
+                 || $routeName == 'product.index' || $routeName == 'product.create' || $routeName == 'product.edit') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Product Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("category.index")}}"
+                               class="nav-link {{ ($routeName == 'category.index' || $routeName == 'category.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Category List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("category.create")}}"
+                               class="nav-link {{ ($routeName == 'category.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Category Create</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route("brand.index")}}"
+                               class="nav-link {{ ($routeName == 'brand.index' || $routeName == 'brand.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Brand List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("brand.create")}}"
+                               class="nav-link {{ ($routeName == 'brand.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Brand Create</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route("product.index")}}"
+                               class="nav-link {{ ($routeName == 'product.index' || $routeName == 'product.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Product List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("product.create")}}"
+                               class="nav-link {{ ($routeName == 'product.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Product Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 @if(!empty($aclList[1][1]) || !empty($aclList[2][1]) || !empty($aclList[3][1]))
                 <li class="nav-item has-treeview {{ ($routeName == 'role.index' || $routeName == 'role.create' || $routeName == 'role.edit' || $routeName == 'role.access' || $routeName == 'user.access') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">

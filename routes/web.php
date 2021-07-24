@@ -12,6 +12,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\SiteSettingController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
 
 
 Route::get('/admin-login',[AdminLoginController::class,'loginView'])->name('admin.login.view');
@@ -44,4 +47,10 @@ Route::group(['middleware'=>'authCheck'],function (){
 
     Route::post('add-player-to-cart',[ContestPlayerController::class,'addPlayerToCart'])->name('player.add.cart');
     Route::post('remove-player-from-cart',[ContestPlayerController::class,'removeCart'])->name('player.remove.cart');
+
+    Route::resource("/category",CategoryController::class);
+    Route::resource("/brand",BrandController::class);
+    Route::resource("/product",ProductController::class);
+    Route::post("/product-sub-category",[ProductController::class,'getSubCagetories'])->name('product-product-sub-category.get');
+    Route::get("/image_show/{type}/{id}",[ProductController::class,'imageShow']);
 });
