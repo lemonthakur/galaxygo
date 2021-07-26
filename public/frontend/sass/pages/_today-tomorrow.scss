@@ -1,0 +1,114 @@
+.ic-today-tomorrow-area {
+    margin-top: 80px;
+    @media #{$max767} {
+        margin-top: 60px;
+    }
+    @media #{$max575} {
+        margin-top: 40px;
+    }
+}
+
+.ic-today-tomorrow-card {
+    background: #ffffff0d;
+    @include bd-radius(10px);
+    text-align: center;
+    padding: 38px 44px;
+    margin-bottom: 40px;
+    @media #{$max1366} {
+        padding: 35px 40px;
+    }
+    @media #{$max1199} {
+        padding: 25px 25px;
+    }
+    @media #{$max991} {
+        padding: 20px 20px;
+    }
+    @media #{$max575} {
+        padding: 20px 10px;
+    }
+    .ic-heading {
+        margin-bottom: 25px;
+        @media #{$max991} {
+            margin-bottom: 20px;
+        }
+        @media #{$max767} {
+            margin-bottom: 15px;
+        }
+        h2 {
+            span {
+                color: $color-golden2;
+            }
+        }
+    }
+    .content {
+        p {
+            font-size: 20px;
+            line-height: 200%;
+            color: $color-white;
+            text-transform: capitalize;
+            font-family: $font-medium;
+            @media #{$max1366} {
+                font-size: 19px;
+                line-height: 198%;
+            }
+            @media #{$max1199} {
+                font-size: 18px;
+            }
+            @media #{$max991} {
+                font-size: 16px;
+            }
+            @media #{$max767} {
+                font-size: 15px;
+            }
+            @media #{$max480} {
+                font-size: 14px;
+            }
+        }
+    }
+    .ic-game-start-btn {
+        margin-top: 26px;
+        @media #{$max575} {
+            margin-top: 20px;
+        }
+        .ic-btn {
+            background: $color-golden3;
+            color: $color-black1;
+            line-height: 45px;
+            &:first-child {
+                @media #{$max374} {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+            }
+            &:hover {
+                background: $color-golden1;
+            }
+            @media #{$max991} {
+                height: 45px;
+                line-height: 40px;
+            }
+        }
+    }
+}
+
+.today-tomorrow-chat-icon {
+    margin-bottom: 10px;
+    @media #{$max991} {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @media #{$max375} {
+        display: block;
+    }
+    .ic-chat-icon {
+        @media #{$max375} {
+            margin-bottom: 10px;
+        }
+    }
+    a span {
+        @media #{$max991} {
+            font-size: 14px!important;
+        }
+    }
+}

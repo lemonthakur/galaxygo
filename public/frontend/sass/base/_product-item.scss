@@ -1,0 +1,257 @@
+.ic-our-product-filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    @media #{$max991} {
+        display: block;
+        text-align: center;
+    }
+    .ic-heading {
+        h2 {
+            font-family: $font-semiBold;
+            @media #{$max1366} {
+                font-size: 34px;
+            }
+            @media #{$max991} {
+                font-size: 32px;
+                margin-bottom: 20px;
+            }
+            @media #{$max767} {
+                font-size: 28px;
+            }
+        }
+    }
+    .ic-filter-btn {
+        .ic-btn {
+            background: #ffffff1a;
+            margin-right: 8px;
+            line-height: 45px;
+            @media #{$max575} {
+                padding: 0px 15px;
+            }
+            @media #{$max480} {
+                padding: 0px 10px;
+                height: 40px;
+                line-height: 40px;
+                margin-bottom: 8px;
+            }
+            &.active {
+                background: $color-golden3;
+                color: $color-black1;
+            }
+            &:hover {
+                background: $color-golden3;
+                color: $color-black1;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+}
+
+.ic-product-item {
+    background: #fff3;
+    @include bd-radius(10px);
+    margin-bottom: 25px;
+    @media #{$max480} {
+        max-width: 300px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    &:hover {
+        .ic-content {
+            .title-price {
+                h5 {
+                    color: $color-golden2;
+                    @include transition(0.5s);
+                }
+                p {
+                    color: $color-golden1;
+                    @include transition(0.5s);
+                }
+            }
+        }
+        .ic-thumbnil {
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+    .ic-thumbnil {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px 10px 0px 0px;
+        img {
+            border-radius: 10px 10px 0px 0px;
+            transform: scale(1);
+            transition: 0.8s ease-in;
+            animation-duration: 4s;
+            @media #{$max480} {
+                width: 100%;
+            }
+        }
+        .ic-badge {
+            background: $color-black1;
+            @include bd-radius(3px);
+            padding: 3px 12px 5px 12px;
+            font-size: 10px;
+            color: $color-white;
+            text-transform: capitalize;
+            position: absolute;
+            top: 16px;
+            left: 16px;
+        }
+    }
+    .ic-content {
+        padding: 10px 16px 20px 16px;
+        @media #{$max1199} {
+            padding: 10px 10px 15px 10px;
+        }
+        .title-price {
+            h5 {
+                font-size: 20px;
+                line-height: 31px;
+                font-family: $font-regular;
+                color: $color-white;
+                text-transform: capitalize;
+                @media #{$max1280} {
+                    font-size: 19px;
+                    line-height: 30px;
+                }
+                @media #{$max991} {
+                    font-size: 18px;
+                    line-height: 28px;
+                }
+            }
+            p {
+                @extend h5;
+                color: $color-white;
+                margin-bottom: 12px;
+            }
+        }
+        .ic-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            a {
+                display: inline-block;
+                padding: 4px 10px 8px 10px;
+                text-transform: capitalize;
+                color: $color-black1;
+                @include bd-radius(4px);
+                margin-right: 7px;
+                @include transition(0.5s);
+                &:last-child {
+                    margin-right: 0px;
+                }
+                @media #{$max1199} {
+                    padding: 3px 5px 6px 6px;
+                    margin-right: 5px;
+                    font-size: 15px;
+                }
+                @media #{$max575} {
+                    font-size: 14px;
+                }
+            }
+            .buy-btn {
+                background: $color-black1;
+                color: $color-golden2;
+                &:hover {
+                    background: $color-golden3;
+                    color: $color-black1;
+                }
+            }
+            .bid-btn {
+                background: $color-white;
+                color: $color-black1;
+            }
+            .icon-btn {
+                padding: 0px;
+                background: $color-golden3;
+                color: $color-black1;
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                text-align: center;
+                @media #{$max1199} {
+                    width: 34px;
+                    height: 32px;
+                    line-height: 32px;
+                }
+                @media #{$max991} {
+                    height: 31px;
+                    line-height: 31px;
+                }
+                i {
+                    font-size: 22px;
+                    @media #{$max1199} {
+                        font-size: 20px;
+                    }
+                    @media #{$max767} {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ic-pagination {
+    margin-top: 15px;
+    padding-bottom: 15px;
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li {
+            &:last-child a {
+                margin-right: 0px;
+            }
+            a {
+                width: 32px;
+                height: 32px;
+                line-height: 30px;
+                text-align: center;
+                display: inline-block;
+                font-size: 16px;
+                color: $color-white;
+                font-family: $font-regular;
+                background: #fff3;
+                @include bd-radius(4px);
+                @include transition(0.5s);
+                margin-right: 8px;
+                @media #{$max767} {
+                    font-size: 15px;
+                }
+                @media #{$max575} {
+                    width: 30px;
+                    height: 30px;
+                    line-height: 28px;
+                    font-size: 14px;
+                }
+                &.active {
+                    background: $color-white;
+                    color: $color-black1;
+                }
+                &:hover {
+                    background: $color-white;
+                    color: $color-black1;
+                }
+            }
+        }
+    }
+}
+
+.ic-col-xs-6 {
+    @media #{$max575} {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    @media #{$max480} {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

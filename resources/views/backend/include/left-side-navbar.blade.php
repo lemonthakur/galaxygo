@@ -73,6 +73,48 @@
                     </li>
                 @endif
 
+                 @if(!empty($aclList[1][1]) || !empty($aclList[2][1]) || !empty($aclList[3][1]))
+                    <li class="nav-item has-treeview {{ ($routeName == 'role.index' || $routeName == 'role.create' || $routeName == 'role.edit' || $routeName == 'role.access' || $routeName == 'user.access') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                Access Control
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if(!empty($aclList[1][1]))
+                                <li class="nav-item">
+                                    <a href="{{route("role.index")}}"
+                                       class="nav-link {{ ($routeName == 'role.index' || $routeName == 'role.create'|| $routeName == 'role.edit') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Role Management</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(!empty($aclList[2][1]))
+                                <li class="nav-item">
+                                    <a href="{{route("role.access")}}"
+                                       class="nav-link {{ ($routeName == 'role.access') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Role Access Control</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(!empty($aclList[3][1]))
+                                <li class="nav-item">
+                                    <a href="{{route("user.access")}}"
+                                       class="nav-link {{ ($routeName == 'user.access') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Access Control</p>
+                                    </a>
+                                </li>
+                            @endif
+
+                        </ul>
+                    </li>
+                @endif
+
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' || $routeName == 'contest.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-play-circle"></i>
@@ -182,48 +224,6 @@
                         </li>
                     </ul>
                 </li>
-
-                @if(!empty($aclList[1][1]) || !empty($aclList[2][1]) || !empty($aclList[3][1]))
-                    <li class="nav-item has-treeview {{ ($routeName == 'role.index' || $routeName == 'role.create' || $routeName == 'role.edit' || $routeName == 'role.access' || $routeName == 'user.access') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>
-                                Access Control
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @if(!empty($aclList[1][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("role.index")}}"
-                                       class="nav-link {{ ($routeName == 'role.index' || $routeName == 'role.create'|| $routeName == 'role.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Role Management</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[2][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("role.access")}}"
-                                       class="nav-link {{ ($routeName == 'role.access') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Role Access Control</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[3][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("user.access")}}"
-                                       class="nav-link {{ ($routeName == 'user.access') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>User Access Control</p>
-                                    </a>
-                                </li>
-                            @endif
-
-                        </ul>
-                    </li>
-                @endif
 
                 @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3]))
                     <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create' || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit' || $routeName == 'site.setting.edit') ? 'menu-open' : '' }}">

@@ -37,6 +37,10 @@ class ContestController extends Controller
     }
 
     public function store(Request $request){
+        if ($request->name) {
+            $request->name = date('Y-m-d',strtotime($request->name));
+        }
+
         $rules = [
             "name" => "required|unique:contests,name",
             "expaire_time" => "required"
@@ -58,8 +62,8 @@ class ContestController extends Controller
         }
             $contest = new Contest();
 
-            $contest->name        = date('Y-m-d',strtotime($request->name));
-            $contest->expaire_time = date('Y-m-d',strtotime($request->name)).' '.$request->expaire_time;
+            $contest->name        = $request->name;
+            $contest->expaire_time = $request->name.' '.$request->expaire_time;
 
             if ($contest->save()) {
                 $contestId = $contest->id;
@@ -91,6 +95,11 @@ class ContestController extends Controller
     }
 
     public function update(Contest $contest,Request $request){
+
+        if ($request->name) {
+            $request->name = date('Y-m-d',strtotime($request->name));
+        }
+
         $rules = [
             "name" => "required|unique:contests,name," . $contest->id,
             "expaire_time" => "required"
@@ -105,8 +114,8 @@ class ContestController extends Controller
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
         }
-        $contest->name        = date("Y-m-d", strtotime($request->name));
-        $contest->expaire_time = date('Y-m-d',strtotime($request->name)).' '.$request->expaire_time;
+        $contest->name        = $request->name;
+        $contest->expaire_time = $request->name.' '.$request->expaire_time;
 
         if ($contest->save()) {
             session()->flash("success", "Data successfully updated");

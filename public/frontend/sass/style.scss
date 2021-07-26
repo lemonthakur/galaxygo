@@ -1,0 +1,42 @@
+/*===============================================
+
+Theme Name: Galaxy Go HTML Template
+Version:1.0
+Author: ITCLAN
+Support: itclan@gmail.com
+Description:Galaxy Go HTML Template
+
+NOTE:
+=====
+Please DO NOT EDIT THIS CSS, you may need to use "custom.css".
+
+==============================================*/
+
+
+/**====================
+    1. Theme Default CSS
+========================
+**/
+
+
+/**Base SCSS**/
+
+@import './base/mixin';
+@import './base/typography';
+@import './base/variable';
+@import './base/spaceing';
+@import './base/header';
+
+/**Pages**/
+
+@import 'pages/home';
+@import 'pages/login';
+@import 'pages/profile';
+@import 'pages/today-tomorrow';
+@import 'base/product-item';
+@import 'pages/product';
+@import 'pages/product-details';
+@import 'pages/entries';
+@import 'pages/checkout';
+@import 'pages/orders';
+@import 'pages/cart';

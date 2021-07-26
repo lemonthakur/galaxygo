@@ -1,0 +1,288 @@
+.ic-profile-area {
+    padding-top: 40px;
+    padding-bottom: 45px;
+    @media #{$max1366} {
+        padding-bottom: 40px;
+    }
+    @media #{$max767} {
+        padding-bottom: 35px;
+    }
+    @media #{$max575} {
+        padding-bottom: 25px;
+    }
+}
+
+.ic-profile-left {
+    background: #ffffff0d;
+    @include bd-radius(10px);
+    padding-bottom: 30px;
+    @media #{$max1199} {
+        padding-bottom: 25px;
+    }
+    @media #{$max767} {
+        margin-bottom: 20px;
+    }
+    .ic-user {
+        .ic-cover-bg {
+            border-radius: 10px 10px 0px 0px;
+            position: relative;
+            img {
+                @media #{$max767} {
+                    width: 100%;
+                }
+            }
+            .ic-edit-cover-photo {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                a {
+                    text-transform: capitalize;
+                    background: #fff3;
+                    display: flex;
+                    align-items: center;
+                    @include bd-radius(5px);
+                    padding: 3px 5px 3px 5px;
+                    i {
+                        margin-right: 5px;
+                        color: $color-golden3;
+                    }
+                    span {
+                        font-size: 13px;
+                        margin-top: -3px;
+                        color: $color-golden3;
+                    }
+                }
+            }
+        }
+        .user-profile {
+            text-align: center;
+            margin-top: -60px;
+            position: relative;
+            img {
+                width: 120px;
+                height: 120px;
+                @include bd-radius(50%);
+            }
+            .ic-edit-profile {
+                a {
+                    position: absolute;
+                    bottom: 0;
+                    display: inline-block;
+                    background: #fff6;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 26px;
+                    border-radius: 50%;
+                    right: 35%;
+                    @media #{$max991} {
+                        right: 30%;
+                    }
+                    @media #{$max767} {
+                        right: 40%;
+                    }
+                    @media #{$max375} {
+                        right: 35%;
+                    }
+                    i {
+                        color: $color-golden3;
+                    }
+                }
+            }
+        }
+    }
+    .ic-win-btn {
+        padding: 0px 20px;
+        margin-top: 28px;
+        @media #{$max1199} {
+            padding: 0px 10px;
+        }
+        @media #{$max767} {
+            text-align: center;
+        }
+        a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: $color-golden2;
+            @include bd-radius(7px);
+            color: $color-black1;
+            font-size: 20px;
+            font-family: $font-medium;
+            text-align: center;
+            margin-right: 18px;
+            line-height: 15px;
+            @media #{$max1199} {
+                padding: 10px 16px;
+                margin-right: 15px;
+            }
+            @media #{$max991} {
+                padding: 8px 15px;
+                margin-right: 10px;
+            }
+            &:last-child {
+                margin-right: 0px;
+                padding: 10px 30px;
+                @media #{$max1199} {
+                    padding: 10px 16px;
+                }
+                @media #{$max991} {
+                    padding: 8px 14px;
+                }
+            }
+            span {
+                color: $color-black1;
+                font-family: $font-medium;
+                display: block;
+                text-transform: capitalize;
+                margin-top: 4px;
+            }
+        }
+    }
+    .ic-total-balance {
+        text-align: center;
+        margin-top: 18px;
+        p {
+            font-size: 20px;
+            line-height: 31px;
+            color: $color-white;
+            font-family: $font-medium;
+            text-transform: capitalize;
+            @media #{$max1366} {
+                font-size: 19px;
+            }
+            @media #{$max1199} {
+                font-size: 18px;
+            }
+            @media #{$max575} {
+                font-size: 16px;
+                line-height: 24px;
+            }
+        }
+        h4 {
+            line-height: 37px;
+            font-family: $font-semiBold;
+            color: $color-white;
+            @media #{$max1366} {
+                font-size: 22px;
+            }
+            @media #{$max1199} {
+                font-size: 20px;
+                line-height: 32px;
+            }
+            @media #{$max575} {
+                font-size: 18px;
+                line-height: 30px;
+            }
+        }
+    }
+}
+
+.ic-profile-right {
+    background: #ffffff0d;
+    @include bd-radius(10px);
+    padding: 40px;
+    @media #{$max1366} {
+        padding: 35px;
+    }
+    @media #{$max991} {
+        padding: 30px;
+    }
+    @media #{$max575} {
+        padding: 25px;
+    }
+    @media #{$max480} {
+        padding: 20px;
+    }
+    .title {
+        margin-bottom: 25px;
+        @media #{$max575} {
+            margin-bottom: 20px;
+        }
+        h4 {
+            color: $color-golden3;
+            font-family: $font-semiBold;
+            text-transform: capitalize;
+        }
+    }
+    .ic-profile-basic-info {
+        .form-group {
+            margin-bottom: 20px;
+            @media #{$max767} {
+                margin-bottom: 18px;
+            }
+            @media #{$max575} {
+                margin-bottom: 15px;
+            }
+        }
+        label {
+            color: $color-white;
+            text-transform: capitalize;
+            margin-bottom: 10px;
+            @media #{$max1366} {
+                font-size: 15px;
+            }
+            @media #{$max767} {
+                font-size: 14px;
+            }
+        }
+        .form-control {
+            height: 55px;
+            line-height: 55px;
+            background: #fff3;
+            @include bd-radius(6px);
+            border: none;
+            padding: 0px 24px;
+            color: $color-golden3;
+            @media #{$max1366} {
+                height: 50px;
+                line-height: 50px;
+            }
+            @media #{$max767} {
+                height: 48px;
+                line-height: 48px;
+            }
+            @media #{$max575} {
+                height: 45px;
+                line-height: 45px;
+            }
+            &::placeholder {
+                font-size: 16px;
+                color: $color-white;
+                font-family: $font-regular;
+                @media #{$max1366} {
+                    font-size: 15px;
+                }
+                @media #{$max575} {
+                    font-size: 14px;
+                }
+            }
+        }
+        .ic-btn {
+            height: 55px;
+            line-height: 55px;
+            background: $color-golden2;
+            display: block;
+            border: none;
+            text-transform: uppercase;
+            color: $color-black1;
+            font-family: $font-medium;
+            width: 100%;
+            margin-top: 22px;
+            @media #{$max1366} {
+                height: 53px;
+                line-height: 53px;
+            }
+            @media #{$max991} {
+                height: 50px;
+                line-height: 50px;
+                margin-top: 15px;
+            }
+            @media #{$max767} {
+                height: 48px;
+                line-height: 48px;
+            }
+            &:hover {
+                background: $color-golden1;
+            }
+        }
+    }
+}

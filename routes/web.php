@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ContestPlayerController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\WinCoinController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,21 @@ use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+
+//Frontend Route
+Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/login',[HomeController::class,'login'])->name('login');
+Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
+Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
+Route::get('/entries',[HomeController::class,'entries'])->name('entries');
+Route::get('/shop',[HomeController::class,'shop'])->name('shop');
+Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
+Route::get('/orders',[HomeController::class,'orders'])->name('orders');
+Route::get('/profile',[HomeController::class,'profile'])->name('profile');
+Route::get('/cart',[HomeController::class,'cart'])->name('cart');
+Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
+Route::get('/payment',[HomeController::class,'payment'])->name('payment');
+//Frontend Route
 
 
 Route::get('/admin-login',[AdminLoginController::class,'loginView'])->name('admin.login.view');

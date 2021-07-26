@@ -1,0 +1,295 @@
+.ic-login-warper {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    @media #{$max767} {
+        margin-top: 60px;
+    }
+    @media #{$max575} {
+        margin-top: 40px;
+    }
+}
+
+.ic-login-card {
+    width: 540px;
+    @include bd-radius(10px);
+    background: #141317;
+    padding: 40px;
+    position: relative;
+    z-index: 9;
+    @media #{$max767} {
+        padding: 35px;
+    }
+    @media #{$max575} {
+        width: 100%;
+        padding: 25px;
+    }
+    .ic-login-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .logo {
+        position: relative;
+        padding-bottom: 25px;
+        &::before {
+            content: "";
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(89.97deg, rgba(255, 255, 255, 0.02) 20.99%, rgba(214, 186, 79, 0.25) 45.34%, rgba(255, 255, 255, 0.02) 66.7%);
+            width: 100%;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+    .ic-heading {
+        margin-top: 20px;
+        margin-bottom: 35px;
+        @media #{$max575} {
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+    }
+    .ic-login-form-warper {
+        .form-control {
+            height: 50px;
+            line-height: 50px;
+            border-radius: 0px 5px 5px 0px;
+            background: #2B2A2D;
+            border: none;
+            padding: 0px 22px;
+            color: $color-golden3;
+            @media #{$max767} {
+                height: 48px;
+                line-height: 48px;
+            }
+            @media #{$max575} {
+                height: 45px;
+                line-height: 45px;
+            }
+            &:focus {
+                .icon {
+                    i {
+                        color: red;
+                    }
+                }
+            }
+            &::placeholder {
+                font-size: 15px;
+                font-family: $font-regular;
+                color: $color-white;
+                opacity: 0.4;
+            }
+        }
+        .input-form-group {
+            display: flex;
+            align-items: center;
+            .icon {
+                height: 50px;
+                line-height: 50px;
+                background: #2B2A2D;
+                padding: 0px 22px;
+                border-radius: 5px 0px 0px 5px;
+                border-right: 1px solid #e2cf611c;
+                @media #{$max767} {
+                    height: 48px;
+                    line-height: 48px;
+                }
+                @media #{$max575} {
+                    height: 45px;
+                    line-height: 45px;
+                }
+                i {
+                    font-size: 22px;
+                    color: #ffffff63;
+                    @media #{$max767} {
+                        font-size: 20px;
+                    }
+                    @media #{$max575} {
+                        font-size: 18px;
+                    }
+                }
+            }
+            &.icon-color {
+                .icon i {
+                    color: $color-golden3;
+                }
+            }
+        }
+        .login-btn {
+            height: 50px;
+            line-height: 50px;
+            background: linear-gradient(90deg, #C39A35 0%, #E2CF61 100%);
+            @include bd-radius(5px);
+            text-transform: capitalize;
+            color: $color-black1;
+            font-family: $font-medium;
+            display: block;
+            text-align: center;
+            text-transform: uppercase;
+            @include transition(0.5s);
+            @media #{$max1366} {
+                font-size: 15px;
+            }
+            @media #{$max767} {
+                height: 48px;
+                line-height: 48px;
+            }
+            @media #{$max575} {
+                height: 45px;
+                line-height: 45px;
+            }
+        }
+        .ic-forgot-remember {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            @media #{$max575} {
+                margin-bottom: 5px;
+            }
+            .remember {
+                label {
+                    width: 24px;
+                    height: 24px;
+                    @include bd-radius(3px);
+                    border: 1px solid $color-golden3;
+                    cursor: pointer;
+                    position: relative;
+                    @media #{$max1366} {
+                        width: 22px;
+                        height: 22px;
+                    }
+                    @media #{$max767} {
+                        width: 22px;
+                        height: 22px;
+                    }
+                    @media #{$max575} {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    &::before {
+                        content: "\eed8";
+                        font-family: IcoFont !important;
+                        font-weight: 600;
+                        position: absolute;
+                        color: $color-black1;
+                        font-size: 20px;
+                        left: 50%;
+                        top: 50%;
+                        @include transform(-50%, -50%);
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                }
+                input {
+                    display: none;
+                }
+                input:checked+label {
+                    background: $color-golden3;
+                    &::before {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+            .forget-password {
+                a {
+                    color: $color-golden1;
+                    font-family: $font-regular;
+                    text-transform: capitalize;
+                }
+            }
+        }
+        .ic-or-login {
+            margin-bottom: 20px;
+            p {
+                text-align: center;
+                font-family: $font-medium;
+                color: $color-white;
+                text-transform: capitalize;
+            }
+        }
+        .ic-social-login {
+            display: flex;
+            @media #{$max480} {
+                display: block;
+                text-align: center;
+            }
+            a {
+                height: 55px;
+                line-height: 55px;
+                background: #2B2A2D;
+                display: inline-block;
+                padding: 0px 19px;
+                @include bd-radius(10px);
+                font-family: $font-regular;
+                color: #fff;
+                text-transform: capitalize;
+                display: flex;
+                align-items: center;
+                margin-right: 20px;
+                @include transition(0.5s);
+                @media #{$max767} {
+                    height: 50px;
+                    line-height: 50px;
+                }
+                @media #{$max575} {
+                    padding: 0px 10px;
+                    margin-right: 10px;
+                    height: 48px;
+                    line-height: 48px;
+                }
+                @media #{$max480} {
+                    justify-content: center;
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                    &:last-child {
+                        margin-bottom: 0px;
+                    }
+                }
+                &:hover {
+                    background: $color-golden3;
+                    span {
+                        color: $color-black1;
+                    }
+                    i {
+                        color: $color-black1;
+                    }
+                }
+                &:last-child {
+                    margin-right: 0px;
+                    padding: 0px 15px;
+                }
+                span {
+                    font-family: $font-medium;
+                    color: #fff;
+                    text-transform: capitalize;
+                    margin-top: -5px;
+                    @include transition(0.5s);
+                    @media #{$max1366} {
+                        font-size: 15px;
+                    }
+                }
+                i {
+                    font-size: 20px;
+                    margin-right: 9px;
+                    @include transition(0.5s);
+                    @media #{$max1366} {
+                        font-size: 19px;
+                    }
+                    @media #{$max767} {
+                        font-size: 18px;
+                    }
+                    @media #{$max575} {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}

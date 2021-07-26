@@ -1,0 +1,273 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/**Fonts**/
+
+@font-face {
+    src: url(../fonts/text-fonts/Galano-Grotesque-Light.otf);
+    font-family: galano-light;
+    font-weight: 300;
+}
+
+@font-face {
+    src: url(../fonts/text-fonts/Galano-Grotesque.otf);
+    font-family: galano-regular;
+    font-weight: 400;
+}
+
+@font-face {
+    src: url(../fonts/text-fonts/Galano-Grotesque-Medium.otf);
+    font-family: galano-medium;
+    font-weight: 500;
+}
+
+@font-face {
+    src: url(../fonts/text-fonts/Galano-Grotesque-SemiBold.otf);
+    font-family: galano-semibold;
+    font-weight: 500;
+}
+
+@font-face {
+    src: url(../fonts/text-fonts/Galano-Grotesque-Bold.otf);
+    font-family: galano-bold;
+    font-weight: 700;
+}
+
+$font-light:galano-light;
+$font-regular:galano-regular;
+$font-medium:galano-medium;
+$font-semiBold: galano-semibold;
+$font-bold:galano-bold;
+@import './variable';
+
+/**Font Size & Font Family**/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0px;
+    text-transform: capitalize;
+}
+
+h1 {
+    font-size: 48px;
+    line-height: 120%;
+}
+
+h2 {
+    font-size: 36px;
+    line-height: 120%;
+    @media #{$max1366} {
+        font-size: 34px;
+    }
+    @media #{$max1280} {
+        font-size: 32px;
+    }
+    @media #{$max1199} {
+        font-size: 30px;
+    }
+    @media #{$max991} {
+        font-size: 28px;
+    }
+    @media #{$max767} {
+        font-size: 27px;
+    }
+    @media #{$max575} {
+        font-size: 25px;
+    }
+}
+
+h3 {
+    font-size: 32px;
+    line-height: 120%;
+}
+
+h4 {
+    font-size: 24px;
+    line-height: 120%;
+    @media #{$max575} {
+        font-size: 22px;
+    }
+    @media #{$max767} {
+        font-size: 21px;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+    li {
+        list-style-type: none;
+    }
+}
+
+a {
+    text-decoration: none;
+    &:hover {
+        color: unset;
+        text-decoration: none;
+    }
+}
+
+i {
+    font-size: 16px;
+}
+
+p,
+a,
+span,
+label {
+    margin: 0px;
+    font-size: 16px;
+    line-height: 150%;
+    font-family: $font-regular;
+    color: #000000;
+    @media #{$max767} {
+        font-size: 15px;
+    }
+    @media #{$max575} {
+        font-size: 14px;
+    }
+}
+
+input {
+    &:focus {
+        outline: none;
+    }
+    &::placeholder {
+        font-size: 16px;
+        font-weight: 500;
+        font-family: $font-regular;
+    }
+}
+
+
+/**Default Button**/
+
+button {
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+}
+
+.ic-btn {
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    font-family: $font-regular;
+    display: inline-block;
+    text-transform: capitalize;
+    color: $color-white;
+    @include transition(0.5s);
+    @include bd-radius(10px);
+    background: #fff;
+    padding: 0px 20px;
+    align-items: center;
+    position: relative;
+    z-index: 9;
+    @media #{$max991} {
+        height: 48px;
+        line-height: 48px;
+    }
+    @media #{$max767} {
+        height: 45px;
+        line-height: 45px;
+        font-size: 15px;
+    }
+    @media #{$max575} {
+        font-size: 14px;
+    }
+    i {
+        line-height: 50px;
+        font-size: 22px;
+        color: #0E0E0E;
+    }
+}
+
+.ic-btn-golden2 {
+    background: $color-golden2;
+    color: $color-white;
+    line-height: 45px;
+    &:hover {
+        background: $color-golden1;
+        color: $color-white;
+    }
+}
+
+.ic-btn-black {
+    @extend .ic-btn;
+    background: #0E0E0E;
+    color: #fff;
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.f-right {
+    float: right;
+}
+
+.ic-col-pl-0 {
+    padding-left: 0px;
+}
+
+.ic-col-pr-0 {
+    padding-right: 0px;
+}
+
+.nice-select {
+    width: 100%;
+    ul {
+        width: 100%;
+    }
+}
+
+.ic-heading {
+    h2 {
+        line-height: 42px;
+        font-family: $font-light;
+        text-transform: capitalize;
+        color: $color-white;
+        @media #{$max1366} {
+            font-size: 35px;
+        }
+        @media #{$max991} {
+            font-size: 34px;
+        }
+        @media #{$max767} {
+            font-size: 32px;
+        }
+        @media #{$max575} {
+            font-size: 28px;
+        }
+        span {
+            @extend h2;
+            color: $color-golden1;
+            font-family: $font-medium;
+        }
+    }
+    p {
+        text-transform: capitalize;
+        font-family: $font-bold;
+    }
+}
+
+.ic-container {
+    max-width: 1800px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px 20px;
+}
