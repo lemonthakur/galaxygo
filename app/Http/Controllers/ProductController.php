@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
+use Image;
 
 class ProductController extends Controller
 {
@@ -65,6 +66,7 @@ class ProductController extends Controller
         OwnLibrary::validateAccess($this->moduleId, 2);
         $rules = [
             "name" => "required|min:2|max:500",
+            'slug' => 'required|unique:products',
             "category_id" => "integer",
             "sub_category_id" => "integer",
             "brand_id" => "integer",
@@ -79,8 +81,8 @@ class ProductController extends Controller
             "pro_mt_description" => "max:200",
             "video_url" => "max:500",
             "featureproduct" => "required|min:2|max:10",
-            "status" => "required|integer|min:1|max:4",
-            "feature_image" => "required",
+            "status" => "required|integer|min:0|max:4",
+            "feature_image" => "required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024|dimensions:width=1200,height=969",
         ];
 
         if($request->discount_amount){
@@ -132,8 +134,8 @@ class ProductController extends Controller
             "featureproduct.min" => "Feature Product may not be lass than 2 characters.",
 
             "status.required" => "Status is required.",
-            "status.max" => "The Status not be greater than 11.",
-            "status.min" => "The Status not be lass than 1.",
+            "status.max" => "The Status not be greater than 4.",
+            "status.min" => "The Status not be lass than 0.",
         ];
         $validation = Validator::make($request->all(), $rules, $message);
 
@@ -144,7 +146,7 @@ class ProductController extends Controller
             $target = new Product();
 
             $target->name                       = $request->name;
-            $target->slug                       = Str::slug($request->name).'-'.rand(1,9999);
+            $target->slug                       = $request->slug;
             $target->category_id                = $request->category_id;
             $target->sub_category_id            = $request->sub_category_id;
             $target->brand_id                   = $request->brand_id;
@@ -164,7 +166,31 @@ class ProductController extends Controller
 
             $feature_image = $request->file('feature_image');
             if ($feature_image) {
-                $target->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
+                //$target->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
+
+                $image = $request->file('feature_image');
+                $image_name = Str::random(20);
+                $ext = strtolower($image->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+
+                $input['imagename'] = $image_full_name;
+
+                $destinationPath = public_path('upload/product-thumbnail-255-200/');
+                $img = Image::make($image->path());
+                $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-thumbnail-82-82/');
+                $img2 = Image::make($image->path());
+                $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-thumbnail-473-382/');
+                $img3 = Image::make($image->path());
+                $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-feature-image/');
+                $image->move($destinationPath, $input['imagename']);
+
+                $target->feature_image = 'upload/product-feature-image/'.$input['imagename'];
             }
             $galler_images_array = array();
             if (!empty($request->galler_images) AND count($request->galler_images) > 0) {
@@ -241,6 +267,7 @@ class ProductController extends Controller
         OwnLibrary::validateAccess($this->moduleId, 2);
         $rules = [
             "name" => "required|min:2|max:500",
+            'slug' => 'required|unique:products,slug,'.$product->id,
             "category_id" => "integer",
             "sub_category_id" => "integer",
             "brand_id" => "integer",
@@ -255,7 +282,7 @@ class ProductController extends Controller
             "pro_mt_description" => "max:200",
             "video_url" => "max:500",
             "featureproduct" => "required|min:2|max:10",
-            "status" => "required|integer|min:1|max:4",
+            "status" => "required|integer|min:0|max:4",
         ];
 
         if($request->discount_amount){
@@ -264,8 +291,8 @@ class ProductController extends Controller
         if($request->quantity){
             $rules["quantity"] = "integer";
         }
-        if(!$product_info->feature_image){
-            $rules["feature_image"] = "required";
+        if(!$product_info->feature_image || $request->feature_image){
+            $rules["feature_image"] = "required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024|dimensions:width=1200,height=969";
         }
 
         $message = [
@@ -310,8 +337,8 @@ class ProductController extends Controller
             "featureproduct.min" => "Feature Product may not be lass than 2 characters.",
 
             "status.required" => "Status is required.",
-            "status.max" => "The Status not be greater than 11.",
-            "status.min" => "The Status not be lass than 1.",
+            "status.max" => "The Status not be greater than 4.",
+            "status.min" => "The Status not be lass than 0.",
         ];
         $validation = Validator::make($request->all(), $rules, $message);
 
@@ -321,7 +348,7 @@ class ProductController extends Controller
             $success = false;
 
             $product->name                       = $request->name;
-            $product->slug                       = Str::slug($request->name).'-'.rand(1,9999);
+            $product->slug                       = $request->slug;
             $product->category_id                = $request->category_id;
             $product->sub_category_id            = $request->sub_category_id;
             $product->brand_id                   = $request->brand_id;
@@ -342,9 +369,40 @@ class ProductController extends Controller
             $feature_image = $request->file('feature_image');
             if ($feature_image) {
                 if (!empty($product->feature_image)){
-                    @unlink($product->feature_image);
+                    @unlink('upload/product-feature-image/'.$product->feature_image);
+                    @unlink('upload/product-thumbnail-255-200/'.$product->feature_image);
+                    @unlink('upload/product-thumbnail-82-82/'.$product->feature_image);
+                    @unlink('upload/product-thumbnail-473-382/'.$product->feature_image);
                 }
-                $product->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
+                //$product->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
+
+                $image = $request->file('feature_image');
+                $image_name = Str::random(20);
+                $ext = strtolower($image->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+
+                $input['imagename'] = $image_full_name;
+
+                $destinationPath = public_path('upload/product-thumbnail-255-200/');
+                $img = Image::make($image->path());
+                /*$img->resize(200, 255, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$input['imagename']);*/
+                $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-thumbnail-82-82/');
+                $img2 = Image::make($image->path());
+                $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-thumbnail-473-382/');
+                $img3 = Image::make($image->path());
+                $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
+
+                $destinationPath = public_path('upload/product-feature-image/');
+                $image->move($destinationPath, $input['imagename']);
+
+                $product->feature_image = $input['imagename'];
+
             }
             $galler_images_array = array();
             if (!empty($request->galler_images) AND count($request->galler_images) > 0) {

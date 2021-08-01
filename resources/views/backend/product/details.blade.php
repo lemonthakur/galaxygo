@@ -84,7 +84,7 @@
                                         <th>Feature Image</th>
                                         <td>
                                             <a href="{{ URL::to('image_show/1/' . $product->id ) }}" target="_blank">
-                                                <img id="output" src="{{asset($product->feature_image)}}" width="180"/>
+                                                <img id="output" src="{{asset('upload/product-feature-image/'.$product->feature_image)}}" width="180"/>
                                             </a>
                                         </td>
                                         <th>Gallery Images</th>

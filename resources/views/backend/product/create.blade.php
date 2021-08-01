@@ -68,13 +68,21 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="name">Name <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control {{$errors->has("name") ? "is-invalid":""}}" id="name" name="name" placeholder="Enter Category Name" value="{{old("name")}}" required>
                                                         <span class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                                     </div>
                                                 </div><!-- end Name -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Slug<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control {{$errors->has("slug") ? "is-invalid":""}}"
+                                                               id="slug" name="slug" value="{{old("slug")}}" required>
+                                                        <span class="text-danger"> {{$errors->has("slug") ? $errors->first("slug") : ""}} </span>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group select2-parent">
                                                         <label for="category_id">Category</label>
@@ -308,6 +316,20 @@
                     alert(textStatus+errorThrown);
                 }
             });
+        });
+
+        function slug_create(str) {
+            var $slug = '';
+            var trimmed = $.trim(str);
+            $slug = trimmed.toLowerCase().replace(/ /g, '-')
+                .replace(/[&\/\\#,+()$~%.'":*?<>{}|]/g, '');
+            return $slug+'-'+Math.floor(1000 + Math.random() * 9000);
+        }
+
+        $(document).on("input", "#name", function(){
+            var val = $(this).val();
+            var ret_val = slug_create(val);
+            $("#slug").val(ret_val);
         });
 
     });

@@ -69,13 +69,21 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="name">Name <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control {{$errors->has("name") ? "is-invalid":""}}" id="name" name="name" placeholder="Enter Category Name" value="{{old("name", $product->name)}}" required>
                                                         <span class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                                     </div>
                                                 </div><!-- end Name -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Slug<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control {{$errors->has("slug") ? "is-invalid":""}}"
+                                                               id="slug" name="slug" value="{{old("slug", $product->slug)}}" required>
+                                                        <span class="text-danger"> {{$errors->has("slug") ? $errors->first("slug") : ""}} </span>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group select2-parent">
                                                         <label for="category_id">Category</label>
@@ -247,7 +255,7 @@
                                                            id="image" style="display: none;" @if(empty($product->feature_image)) required @endif>
                                                     <p><label for="image" style="cursor: pointer;">
                                                             @if($product->feature_image)
-                                                                <img id="output" src="{{asset($product->feature_image)}}" width="180"/>
+                                                                <img id="output" src="{{asset('upload/product-feature-image/'.$product->feature_image)}}" width="180"/>
                                                             @else
                                                                 <img id="output" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="180"/>
                                                             @endif
@@ -348,6 +356,20 @@
                 });
             });
             $('#category_id').trigger('change');
+
+            function slug_create(str) {
+                var $slug = '';
+                var trimmed = $.trim(str);
+                $slug = trimmed.toLowerCase().replace(/ /g, '-')
+                    .replace(/[&\/\\#,+()$~%.'":*?<>{}|]/g, '');
+                return $slug+'-'+Math.floor(1000 + Math.random() * 9000);
+            }
+
+            $(document).on("input", "#name", function(){
+                var val = $(this).val();
+                var ret_val = slug_create(val);
+                $("#slug").val(ret_val);
+            });
 
         });
     </script>
