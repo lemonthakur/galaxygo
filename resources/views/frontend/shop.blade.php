@@ -323,13 +323,7 @@
                     <!--Item End-->--}}
             </div>
             <div class="ic-pagination">
-                <ul>
-                    <li><a href="#">01</a></li>
-                    <li><a href="#">02</a></li>
-                    <li><a href="#" class="active">03</a></li>
-                    <li><a href="#">04</a></li>
-                    <li><a href="#">05</a></li>
-                </ul>
+                {{$all_products->links('vendor.pagination.frontend')}}
             </div>
         </div>
     </div>

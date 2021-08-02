@@ -1,3 +1,7 @@
 /*=============================================================================
      Any custom css you want to apply should be defined here
 ==============================================================================*/
+.ic-pagination ul li a.previous,
+.ic-pagination ul li a.next{
+    width: 85px;
+}

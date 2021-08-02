@@ -9,7 +9,10 @@ use App\Models\Product;
 class ShopController extends Controller
 {
     public function allProducts(){
-        $all_products = Product::where('status', 1)->orderBy('id', 'DESC')->get();
+//        $all_products = Product::where('status', 1)->orderBy('id', 'DESC')->get();
+        $all_products = Product::where('status', 1)->orderBy('id', 'DESC')->paginate(1);
+
+
         $data['all_products'] = $all_products;
 
         return view('frontend.shop', $data);
@@ -56,7 +59,7 @@ class ShopController extends Controller
                         <div class="ic-product-item">';
                     $html .='<div class="ic-thumbnil">
                                 <a href="'.route('product-details', $apv->slug).'">
-                                <img src="'.asset('upload/product-thumbnail-255-200/'.$apv->feature_image).'" 
+                                <img src="'.asset('upload/product-thumbnail-255-200/'.$apv->feature_image).'"
                                 class="img-fluid" alt="product"></a>
                                 <span class="ic-badge">over</span>
                             </div>';

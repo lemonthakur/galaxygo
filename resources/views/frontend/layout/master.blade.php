@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="{{asset('frontend/css/owl.carousel.min.css')}}">
     <!--Animated Css-->
     <link rel="stylesheet" href="{{asset('frontend/css/animate.css')}}">
+    <!--Eazyzoom css--->
+    <link rel="stylesheet" href="{{asset('frontend/css/easyzoom.css')}}">
     <!--Main CSS-->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <!--Custom CSS-->
@@ -64,6 +66,8 @@
 <!--Eazyzoom js-->
 <script src="{{asset('frontend/js/easyzoom.js')}}"></script>
 <script src="{{asset('frontend/js/video.min.js')}}"></script>
+<!--Eazyzoom js-->
+<script src="{{asset('frontend/js/easyzoom.js')}}"></script>
 <!--Main Js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 <!--Custom Js-->
