@@ -50,7 +50,7 @@ class AuthController extends Controller
 
             return Redirect::route('home');
         } else {
-            Session::flash('invalid', 'Invalid login credential!');
+            Session::flash('error', 'Invalid login credential!');
             return redirect()->route('login')->withInput($request->except('password'));
         }
     }

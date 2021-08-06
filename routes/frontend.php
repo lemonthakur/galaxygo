@@ -1,5 +1,8 @@
 <?php
+
+use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
 

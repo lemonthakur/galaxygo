@@ -26,7 +26,7 @@
     <!--Video js css--->
     <link rel="stylesheet" href="{{asset('frontend/css/video-js.css')}}">
     <!-- sweetalert2 css--->
-    <link rel="stylesheet" href="{{asset("/admin-lte/plugins/sweetalert2/sweetalert2.min.css")}}">
+    <link rel="stylesheet" href="{{asset("/admin-lte/plugins/toastr/toastr.min.css")}}">
 
     @yield('css')
 
@@ -42,7 +42,7 @@
     <!--Bootstrap Js-->
     <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
     <!--sweetalert2 js-->
-    <script src="{{asset("/admin-lte/plugins/sweetalert2/sweetalert2.min.js")}}"></script>
+    <script src="{{asset("/admin-lte/plugins/toastr/toastr.min.js")}}"></script>
 </head>
 
 <body class="ic-body" style="background-image: url('{{asset('frontend/images/background-bg.png')}}');">
@@ -57,7 +57,7 @@
     </div>
 </div>
 
-@include('backend.include.errormsg')
+@include('frontend.include.toastr')
 
 @if (Auth::check() && Auth::user()->role_id == 0)
     @include('frontend.include.profile-header')
