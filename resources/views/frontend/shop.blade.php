@@ -4,52 +4,6 @@
 @section('content')
 @include('frontend.include.profile-header')
 
-<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content ic-bid-modal-content">
-            <div class="modal-header ic-bid-modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Bids For Apple Watch</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="flaticon-error"></i></span>
-                </button>
-            </div>
-            <div class="modal-body ic-bid-modal">
-                <div class="ic-bid-modal-body">
-                    <div class="ic-table-warper">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">time</th>
-                                <th scope="col">amount</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>24 Oct, 2021 / 10:30 PM</td>
-                                <td>$110</td>
-                            </tr>
-                            <tr>
-                                <td>24 Oct, 2021 / 10:30 PM</td>
-                                <td>$110</td>
-                            </tr>
-                            <tr>
-                                <td>24 Oct, 2021 / 10:30 PM</td>
-                                <td>$110</td>
-                            </tr>
-                            <tr>
-                                <td>24 Oct, 2021 / 10:30 PM</td>
-                                <td>$110</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 <section class="ic-product-banner-area">
     <div class="container">
         <div class="ic-product-banner owl-carousel">
@@ -118,7 +72,7 @@
                             </div>
                             <div class="ic-content">
                                 <div class="title-price">
-                                    <a href="{{route('product-details', $apv->slug)}}">
+                                    <a href="{{ route('product-details', $apv->slug) }}">
                                         <h5>{{ $apv->name }}</h5>
                                         @php
                                             $price = $apv->price;
@@ -131,11 +85,10 @@
                                 <div class="ic-btn-group  custom-add-to-cart-par" data-id="{{$apv->id}}" data-name="{{$apv->name}}" data-price="{{$price}}"
                                      data-discount="{{$apv->discount_amount}}" data-image="{{$apv->feature_image}}"
                                      data-slug="{{$apv->slug}}">
-                                    @if($apv->product_type=='General Product')
                                         <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
-                                    @else
-                                        <a href="#" class="bid-btn">bid now</a>
-                                        <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
+                                    @if( $apv->auction_end_date.' '.$apv->auction_end_time >= date('Y-m-d H:i:s'))
+                                        <a href="{{ route('product-details', $apv->slug) }}" class="bid-btn">bid now</a>
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#bidModal" class="icon-btn bid-list"><i class="flaticon-time-left"></i></a>
                                     @endif
                                 </div>
                             </div>
@@ -144,187 +97,14 @@
                 @empty
                     <div class="col-md-12 text-center"><span class="text-danger">Product not available.</span></div>
                 @endforelse
-                    {{--<!--Item 1-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-1.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
+
+                <div class="col-md-12">
+                    <div class="ic-pagination">
+                        {{$all_products->links('vendor.pagination.frontend')}}
                     </div>
-                    <!--Item 2-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-2.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 3-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}><img src="{{asset('frontend/images/product/product-3.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 4-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-4.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 5-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-5.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 6-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-6.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 7-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-7.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item 8-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 ic-col-xs-6">
-                        <div class="ic-product-item">
-                            <div class="ic-thumbnil">
-                                <a href="{{route('product-details')}}"><img src="{{asset('frontend/images/product/product-8.png')}}" class="img-fluid" alt="product"></a>
-                                <span class="ic-badge">over</span>
-                            </div>
-                            <div class="ic-content">
-                                <div class="title-price">
-                                    <a href="{{route('product-details')}}">
-                                        <h5>apple watch</h5>
-                                        <p>$400.00</p>
-                                    </a>
-                                </div>
-                                <div class="ic-btn-group">
-                                    <a href="{{route('cart')}}" class="buy-btn">buy now</a>
-                                    <a href="#" class="bid-btn">bid now</a>
-                                    <a href="#" data-toggle="modal" data-target="#bidModal" class="icon-btn"><i class="flaticon-time-left"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Item End-->--}}
+                </div>
             </div>
-            <div class="ic-pagination">
-                {{$all_products->links('vendor.pagination.frontend')}}
-            </div>
+
         </div>
     </div>
 </section>
@@ -335,18 +115,22 @@
     <script>
         $(document).ready(function(){
             var csrf = "{{csrf_token()}}";
+            var req_type = 'all-pro';
             $(document).on("click", ".all-pro", function(){
                 $("#loading").show();
+                req_type = 'all-pro';
                 ajax_call_for_product('all-pro');
             });
 
             $(document).on("click", ".new-pro", function(){
                 $("#loading").show();
+                req_type = 'new-pro';
                 ajax_call_for_product('new-pro');
             });
 
             $(document).on("click", ".fea-pro", function(){
                 $("#loading").show();
+                req_type = 'fea-pro';
                 var ret_val = ajax_call_for_product('fea-pro');
             });
 
@@ -369,14 +153,15 @@
             $(document).on("click", ".custom_add_to_cart", function(e){
                 e.preventDefault();
                 var csrf = "{{csrf_token()}}";
+                $("#loading").show();
 
-                var id         = $(this).parents().find('.custom-add-to-cart-par').attr('data-id');
-                var name       = $(this).parents().find('.custom-add-to-cart-par').attr('data-name');
+                var id         = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
+                var name       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-name');
                 var quantity   = 1;
-                var price      = $(this).parents().find('.custom-add-to-cart-par').attr('data-price');
-                var discount   = $(this).parents().find('.custom-add-to-cart-par').attr('data-discount');
-                var img_name   = $(this).parents().find('.custom-add-to-cart-par').attr('data-image');
-                var slug       = $(this).parents().find('.custom-add-to-cart-par').attr('data-slug');
+                var price      = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-price');
+                var discount   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-discount');
+                var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
+                var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
 
                 // for popover
                 var this_pov = $(this).parent().find(".fa-shopping-cart");
@@ -405,6 +190,28 @@
                 });
 
             });
+
+            $(document).on('click', '.ic-pagination > ul > li > a', function(event){
+                event.preventDefault();
+                $("#loading").show();
+                var page = $(this).attr('href').split('page=')[1];
+                fetch_data(page);
+            });
+
+            function fetch_data(page)
+            {
+                $.ajax({
+                    url:"{{ route('ajax-pro.list') }}",
+                    method:"POST",
+                    data:{_token:csrf, page:page, pro_type: req_type},
+                    success:function(data)
+                    {
+                        $("#product_list").empty();
+                        $("#product_list").html(data);
+                        $("#loading").hide();
+                    }
+                });
+            }
 
         });
     </script>

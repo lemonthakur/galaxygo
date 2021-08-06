@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomClass\OwnLibrary;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
+use App\Models\ProductWiseBid;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\Facades\DataTables;
 use Image;
+use DB;
 
 class ProductController extends Controller
 {
@@ -91,6 +93,19 @@ class ProductController extends Controller
         if($request->quantity){
             $rules["quantity"] = "integer";
         }
+        if($request->product_type == 'Auction Product'){
+            if(strlen($request->auction_start_time) == 7)
+                $request['auction_start_time'] = '0'.$request->auction_start_time;
+
+            if(strlen($request->auction_end_time) == 7)
+                $request['auction_end_time'] = '0'.$request->auction_end_time;
+
+            $rules["starting_bid_amount"] = 'required|numeric';
+            $rules["auction_start_date"] = 'required|date|date_format:d-m-Y';
+            $rules["auction_start_time"] = 'required|date_format:h:i A';
+            $rules["auction_end_date"] = 'required|date|date_format:d-m-Y';
+            $rules["auction_end_time"] = 'required|date_format:h:i A';
+        }
 
         $message = [
             "name.required" => "The Name is required.",
@@ -136,82 +151,130 @@ class ProductController extends Controller
             "status.required" => "Status is required.",
             "status.max" => "The Status not be greater than 4.",
             "status.min" => "The Status not be lass than 0.",
+
+            "auction_start_date.date_format" => "The auction start date format is not valid.",
+            "auction_end_date.date_format" => "The auction end date format is not valid.",
+            "auction_start_time.date_format" => "The auction start time format is not valid.",
+            "auction_end_time.date_format" => "The auction end time format is not valid.",
         ];
         $validation = Validator::make($request->all(), $rules, $message);
 
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
         } else {
-            $success = false;
-            $target = new Product();
+            DB::beginTransaction();
+            try {
+                $success = false;
+                $target = new Product();
 
-            $target->name                       = $request->name;
-            $target->slug                       = $request->slug;
-            $target->category_id                = $request->category_id;
-            $target->sub_category_id            = $request->sub_category_id;
-            $target->brand_id                   = $request->brand_id;
-            $target->product_type               = $request->product_type;
-            $target->price                      = $request->price;
-            $target->discount_amount                      = $request->discount_amount;
-            $target->model_number               = $request->model_number;
-            $target->product_description        = $request->product_description;
-            $target->return_policy              = $request->return_policy;
+                $target->name                       = $request->name;
+                $target->slug                       = $request->slug;
+                $target->category_id                = $request->category_id;
+                $target->sub_category_id            = $request->sub_category_id;
+                $target->brand_id                   = $request->brand_id;
+                $target->product_type               = $request->product_type;
+                $target->price                      = $request->price;
+                $target->discount_amount                      = $request->discount_amount;
+                $target->model_number               = $request->model_number;
+                $target->product_description        = $request->product_description;
+                $target->return_policy              = $request->return_policy;
 
-            $target->pro_meta                   = $request->pro_meta;
-            $target->pro_mt_description         = $request->pro_mt_description;
+                $target->pro_meta                   = $request->pro_meta;
+                $target->pro_mt_description         = $request->pro_mt_description;
 
-            $target->video_url                  = $request->video_url;
-            $target->featureproduct             = $request->featureproduct;
-            $target->status                     = $request->status;
+                $target->video_url                  = $request->video_url;
+                $target->featureproduct             = $request->featureproduct;
+                $target->status                     = $request->status;
 
-            $feature_image = $request->file('feature_image');
-            if ($feature_image) {
-                //$target->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
-
-                $image = $request->file('feature_image');
-                $image_name = Str::random(20);
-                $ext = strtolower($image->getClientOriginalExtension());
-                $image_full_name = $image_name . '.' . $ext;
-
-                $input['imagename'] = $image_full_name;
-
-                $destinationPath = public_path('upload/product-thumbnail-255-200/');
-                $img = Image::make($image->path());
-                $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
-
-                $destinationPath = public_path('upload/product-thumbnail-82-82/');
-                $img2 = Image::make($image->path());
-                $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
-
-                $destinationPath = public_path('upload/product-thumbnail-473-382/');
-                $img3 = Image::make($image->path());
-                $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
-
-                $destinationPath = public_path('upload/product-feature-image/');
-                $image->move($destinationPath, $input['imagename']);
-
-                $target->feature_image = 'upload/product-feature-image/'.$input['imagename'];
-            }
-            $galler_images_array = array();
-            if (!empty($request->galler_images) AND count($request->galler_images) > 0) {
-                for ($i = 0; count($request->galler_images) > $i; $i++) {
-                    if (!empty($request->galler_images[$i])) {
-                        $file = $request->galler_images[$i];
-                        $destinationPath = public_path() . '/upload/product-galler-images/';
-                        $galler_image = uniqid() . $file->getClientOriginalName();
-                        $uploadSuccess = $file->move($destinationPath, $galler_image);
-                        $galler_images_array[] = $galler_image;
-                    }
+                if($request->product_type == 'Auction Product'){
+                    $target->starting_bid_amount = $request->starting_bid_amount;
+                    $target->auction_start_date = date("Y-m-d", strtotime($request->auction_start_date));
+                    $target->auction_start_time = date("H:i:s", strtotime($request->auction_start_time));
+                    $target->auction_end_date = date("Y-m-d", strtotime($request->auction_end_date));
+                    $target->auction_end_time = date("H:i:s", strtotime($request->auction_end_time));
+                    $target->auction_start_date_time = date("Y-m-d", strtotime($request->auction_start_date)).' '.date("H:i:s", strtotime($request->auction_start_time));
+                    $target->auction_end_date_time = date("Y-m-d", strtotime($request->auction_end_date)).' '.date("H:i:s", strtotime($request->auction_end_time));
                 }
-                $target->galler_images = json_encode($galler_images_array);
-            }
-            $attached_file = $request->file('attached_file');
-            if ($attached_file) {
-                $target->attached_file = OwnLibrary::uploadImage($attached_file,'product-attached-file');
-            }
-            if($target->save()){
-                #product store
 
+                $feature_image = $request->file('feature_image');
+                if ($feature_image) {
+                    //$target->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
+
+                    $image = $request->file('feature_image');
+                    $image_name = Str::random(20);
+                    $ext = strtolower($image->getClientOriginalExtension());
+                    $image_full_name = $image_name . '.' . $ext;
+
+                    $input['imagename'] = $image_full_name;
+
+                    $destinationPath = public_path('upload/product-thumbnail-255-200/');
+                    $img = Image::make($image->path());
+                    $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
+
+                    $destinationPath = public_path('upload/product-thumbnail-82-82/');
+                    $img2 = Image::make($image->path());
+                    $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
+
+                    $destinationPath = public_path('upload/product-thumbnail-473-382/');
+                    $img3 = Image::make($image->path());
+                    $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
+
+                    $destinationPath = public_path('upload/product-thumbnail-634-512/');
+                    $img4 = Image::make($image->path());
+                    $img4->resize(634, 512)->save($destinationPath.'/'.$input['imagename']);
+
+                    $destinationPath = public_path('upload/product-feature-image/');
+                    $image->move($destinationPath, $input['imagename']);
+
+                    $target->feature_image = $input['imagename'];
+                }
+                $galler_images_array = array();
+                if (!empty($request->galler_images) AND count($request->galler_images) > 0) {
+                    for ($i = 0; count($request->galler_images) > $i; $i++) {
+                        if (!empty($request->galler_images[$i])) {
+                            $file = $request->galler_images[$i];
+                            $destinationPath = public_path() . '/upload/product-galler-images/';
+                            $galler_image = uniqid() . $file->getClientOriginalName();
+                            $uploadSuccess = $file->move($destinationPath, $galler_image);
+                            $galler_images_array[] = $galler_image;
+                        }
+                    }
+                    $target->galler_images = json_encode($galler_images_array);
+                }
+                $attached_file = $request->file('attached_file');
+                if ($attached_file) {
+                    $target->attached_file = OwnLibrary::uploadImage($attached_file,'product-attached-file');
+                }
+                if($target->save()){
+                    if($request->product_type == 'Auction Product'){
+                        $product_wise_bid = new ProductWiseBid();
+                        $product_wise_bid->product_id = $target->id;
+                        $product_wise_bid->starting_bid_amount = $request->starting_bid_amount;
+                        $product_wise_bid->product_id = $target->id;
+                        $product_wise_bid->auction_start_date = date("Y-m-d", strtotime($request->auction_start_date));
+                        $product_wise_bid->auction_start_time = date("H:i:s", strtotime($request->auction_start_time));
+                        $product_wise_bid->auction_end_date = date("Y-m-d", strtotime($request->auction_end_date));
+                        $product_wise_bid->auction_end_time = date("H:i:s", strtotime($request->auction_end_time));
+                        $product_wise_bid->auction_start_date_time = date("Y-m-d", strtotime($request->auction_start_date)).' '.date("H:i:s", strtotime($request->auction_start_time));
+                        $product_wise_bid->auction_end_date_time = date("Y-m-d", strtotime($request->auction_end_date)).' '.date("H:i:s", strtotime($request->auction_end_time));
+                        $product_wise_bid->save();
+                    }
+                    $success = true;
+                }
+
+            }catch(ValidationException $e) {
+                DB::rollback();
+                return Redirect::to('/product/create')
+                    ->withErrors( $e->getErrors() )
+                    ->withInput();
+            }catch(\Exception $e)
+            {
+                DB::rollback();
+                throw $e;
+            }
+            DB::commit();
+
+            if($success){
                 session()->flash('success','Product Created');
                 return redirect()->route('product.index', $target->id);
             }else{
@@ -295,6 +358,20 @@ class ProductController extends Controller
             $rules["feature_image"] = "required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024|dimensions:width=1200,height=969";
         }
 
+        if($request->product_type == 'Auction Product'){
+            if(strlen($request->auction_start_time) == 7)
+                $request['auction_start_time'] = '0'.$request->auction_start_time;
+
+            if(strlen($request->auction_end_time) == 7)
+                $request['auction_end_time'] = '0'.$request->auction_end_time;
+
+            $rules["starting_bid_amount"] = 'required|numeric';
+            $rules["auction_start_date"] = 'required|date|date_format:d-m-Y';
+            $rules["auction_start_time"] = 'required|date_format:h:i A';
+            $rules["auction_end_date"] = 'required|date|date_format:d-m-Y';
+            $rules["auction_end_time"] = 'required|date_format:h:i A';
+        }
+
         $message = [
             "name.required" => "The Name is required.",
             "name.max" => "The Name may not be greater than 500 characters.",
@@ -339,100 +416,172 @@ class ProductController extends Controller
             "status.required" => "Status is required.",
             "status.max" => "The Status not be greater than 4.",
             "status.min" => "The Status not be lass than 0.",
+
+            "auction_start_date.date_format" => "The auction start date format is not valid.",
+            "auction_end_date.date_format" => "The auction end date format is not valid.",
+            "auction_start_time.date_format" => "The auction start time format is not valid.",
+            "auction_end_time.date_format" => "The auction end time format is not valid.",
         ];
         $validation = Validator::make($request->all(), $rules, $message);
 
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
         } else {
-            $success = false;
+            DB::beginTransaction();
+            try {
+                $success = false;
 
-            $product->name                       = $request->name;
-            $product->slug                       = $request->slug;
-            $product->category_id                = $request->category_id;
-            $product->sub_category_id            = $request->sub_category_id;
-            $product->brand_id                   = $request->brand_id;
-            $product->product_type               = $request->product_type;
-            $product->price                      = $request->price;
-            $product->discount_amount            = $request->discount_amount;
-            $product->model_number               = $request->model_number;
-            $product->product_description        = $request->product_description;
-            $product->return_policy              = $request->return_policy;
+                $product->name                       = $request->name;
+                $product->slug                       = $request->slug;
+                $product->category_id                = $request->category_id;
+                $product->sub_category_id            = $request->sub_category_id;
+                $product->brand_id                   = $request->brand_id;
+                $product->product_type               = $request->product_type;
+                $product->price                      = $request->price;
+                $product->discount_amount            = $request->discount_amount;
+                $product->model_number               = $request->model_number;
+                $product->product_description        = $request->product_description;
+                $product->return_policy              = $request->return_policy;
 
-            $product->pro_meta                   = $request->pro_meta;
-            $product->pro_mt_description         = $request->pro_mt_description;
+                $product->pro_meta                   = $request->pro_meta;
+                $product->pro_mt_description         = $request->pro_mt_description;
 
-            $product->video_url                  = $request->video_url;
-            $product->featureproduct             = $request->featureproduct;
-            $product->status                     = $request->status;
+                $product->video_url                  = $request->video_url;
+                $product->featureproduct             = $request->featureproduct;
+                $product->status                     = $request->status;
 
-            $feature_image = $request->file('feature_image');
-            if ($feature_image) {
-                if (!empty($product->feature_image)){
-                    @unlink('upload/product-feature-image/'.$product->feature_image);
-                    @unlink('upload/product-thumbnail-255-200/'.$product->feature_image);
-                    @unlink('upload/product-thumbnail-82-82/'.$product->feature_image);
-                    @unlink('upload/product-thumbnail-473-382/'.$product->feature_image);
+                if($request->product_type == 'Auction Product'){
+                    $product->starting_bid_amount = $request->starting_bid_amount;
+                    $product->auction_start_date = date("Y-m-d", strtotime($request->auction_start_date));
+                    $product->auction_start_time = date("H:i:s", strtotime($request->auction_start_time));
+                    $product->auction_end_date = date("Y-m-d", strtotime($request->auction_end_date));
+                    $product->auction_end_time = date("H:i:s", strtotime($request->auction_end_time));
+                    $product->auction_start_date_time = date("Y-m-d", strtotime($request->auction_start_date)).' '.date("H:i:s", strtotime($request->auction_start_time));
+                    $product->auction_end_date_time = date("Y-m-d", strtotime($request->auction_end_date)).' '.date("H:i:s", strtotime($request->auction_end_time));
+                }else{
+                    $product->starting_bid_amount = NULL;
+                    $product->auction_start_date = NULL;
+                    $product->auction_start_time = NULL;
+                    $product->auction_end_date = NULL;
+                    $product->auction_end_time = NULL;
+                    $product->auction_start_date_time = NULL;
+                    $product->auction_end_date_time = NULL;
                 }
-                //$product->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
 
-                $image = $request->file('feature_image');
-                $image_name = Str::random(20);
-                $ext = strtolower($image->getClientOriginalExtension());
-                $image_full_name = $image_name . '.' . $ext;
+                $feature_image = $request->file('feature_image');
+                if ($feature_image) {
+                    if (!empty($product->feature_image)){
+                        @unlink('upload/product-feature-image/'.$product->feature_image);
+                        @unlink('upload/product-thumbnail-255-200/'.$product->feature_image);
+                        @unlink('upload/product-thumbnail-82-82/'.$product->feature_image);
+                        @unlink('upload/product-thumbnail-473-382/'.$product->feature_image);
+                        @unlink('upload/product-thumbnail-634-512/'.$product->feature_image);
+                    }
+                    //$product->feature_image = OwnLibrary::uploadImage($feature_image,'product-feature-image');
 
-                $input['imagename'] = $image_full_name;
+                    $image = $request->file('feature_image');
+                    $image_name = Str::random(20);
+                    $ext = strtolower($image->getClientOriginalExtension());
+                    $image_full_name = $image_name . '.' . $ext;
 
-                $destinationPath = public_path('upload/product-thumbnail-255-200/');
-                $img = Image::make($image->path());
-                /*$img->resize(200, 255, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($destinationPath.'/'.$input['imagename']);*/
-                $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
+                    $input['imagename'] = $image_full_name;
 
-                $destinationPath = public_path('upload/product-thumbnail-82-82/');
-                $img2 = Image::make($image->path());
-                $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
+                    $destinationPath = public_path('upload/product-thumbnail-255-200/');
+                    $img = Image::make($image->path());
+                    /*$img->resize(200, 255, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($destinationPath.'/'.$input['imagename']);*/
+                    $img->resize(255, 200)->save($destinationPath.'/'.$input['imagename']);
 
-                $destinationPath = public_path('upload/product-thumbnail-473-382/');
-                $img3 = Image::make($image->path());
-                $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
+                    $destinationPath = public_path('upload/product-thumbnail-82-82/');
+                    $img2 = Image::make($image->path());
+                    $img2->resize(82, 82)->save($destinationPath.'/'.$input['imagename']);
 
-                $destinationPath = public_path('upload/product-feature-image/');
-                $image->move($destinationPath, $input['imagename']);
+                    $destinationPath = public_path('upload/product-thumbnail-473-382/');
+                    $img3 = Image::make($image->path());
+                    $img3->resize(473, 382)->save($destinationPath.'/'.$input['imagename']);
 
-                $product->feature_image = $input['imagename'];
+                    $destinationPath = public_path('upload/product-thumbnail-634-512/');
+                    $img4 = Image::make($image->path());
+                    $img4->resize(634, 512)->save($destinationPath.'/'.$input['imagename']);
 
-            }
-            $galler_images_array = array();
-            if (!empty($request->galler_images) AND count($request->galler_images) > 0) {
-                $decoded_value = json_decode($product->galler_images);
-                if($decoded_value){
-                    foreach ($decoded_value as $dk => $dv){
-                        if (!empty($dv)){
-                            @unlink(public_path() . '/upload/product-galler-images/'.$dv);
+                    $destinationPath = public_path('upload/product-feature-image/');
+                    $image->move($destinationPath, $input['imagename']);
+
+                    $product->feature_image = $input['imagename'];
+
+                }
+                $galler_images_array = array();
+                if (!empty($request->galler_images) AND count($request->galler_images) > 0) {
+                    $decoded_value = json_decode($product->galler_images);
+                    if($decoded_value){
+                        foreach ($decoded_value as $dk => $dv){
+                            if (!empty($dv)){
+                                @unlink(public_path() . '/upload/product-galler-images/'.$dv);
+                            }
                         }
                     }
-                }
-                for ($i = 0; count($request->galler_images) > $i; $i++) {
-                    if (!empty($request->galler_images[$i])) {
-                        $file = $request->galler_images[$i];
-                        $destinationPath = public_path() . '/upload/product-galler-images/';
-                        $galler_image = uniqid() . $file->getClientOriginalName();
-                        $uploadSuccess = $file->move($destinationPath, $galler_image);
-                        $galler_images_array[] = $galler_image;
+                    for ($i = 0; count($request->galler_images) > $i; $i++) {
+                        if (!empty($request->galler_images[$i])) {
+                            $file = $request->galler_images[$i];
+                            $destinationPath = public_path() . '/upload/product-galler-images/';
+                            $galler_image = uniqid() . $file->getClientOriginalName();
+                            $uploadSuccess = $file->move($destinationPath, $galler_image);
+                            $galler_images_array[] = $galler_image;
+                        }
                     }
+                    $product->galler_images = json_encode($galler_images_array);
                 }
-                $product->galler_images = json_encode($galler_images_array);
-            }
-            $attached_file = $request->file('attached_file');
-            if ($attached_file) {
-                if (!empty($product->attached_file)){
-                    @unlink($product->attached_file);
+                $attached_file = $request->file('attached_file');
+                if ($attached_file) {
+                    if (!empty($product->attached_file)){
+                        @unlink($product->attached_file);
+                    }
+                    $product->attached_file = OwnLibrary::uploadImage($attached_file,'product-attached-file');
                 }
-                $product->attached_file = OwnLibrary::uploadImage($attached_file,'product-attached-file');
+                if($product->save()){
+                    if($request->product_type == 'Auction Product'){
+                        $from = date("Y-m-d", strtotime($request->auction_start_date)).' '.date("H:i:s", strtotime($request->auction_start_time));
+                        $to = date("Y-m-d", strtotime($request->auction_end_date)).' '.date("H:i:s", strtotime($request->auction_end_time));
+
+                        $check_existing = ProductWiseBid::where('product_id', $product->id);
+                                                        $check_existing->where(function($query) use($from, $to){
+                                                            $query->whereBetween('auction_start_date',  [$from, $to]);
+                                                            $query->orWhereBetween('auction_end_date_time',  [$from, $to]);
+                                                        });
+                        $check_existing = $check_existing->first();
+
+                        if($check_existing)
+                            $product_wise_bid = ProductWiseBid::find($check_existing->id);
+                        else
+                            $product_wise_bid = new ProductWiseBid();
+
+                        $product_wise_bid->product_id = $product->id;
+                        $product_wise_bid->starting_bid_amount = $request->starting_bid_amount;
+                        $product_wise_bid->auction_start_date = date("Y-m-d", strtotime($request->auction_start_date));
+                        $product_wise_bid->auction_start_time = date("H:i:s", strtotime($request->auction_start_time));
+                        $product_wise_bid->auction_end_date = date("Y-m-d", strtotime($request->auction_end_date));
+                        $product_wise_bid->auction_end_time = date("H:i:s", strtotime($request->auction_end_time));
+                        $product_wise_bid->auction_start_date_time = date("Y-m-d", strtotime($request->auction_start_date)).' '.date("H:i:s", strtotime($request->auction_start_time));
+                        $product_wise_bid->auction_end_date_time = date("Y-m-d", strtotime($request->auction_end_date)).' '.date("H:i:s", strtotime($request->auction_end_time));
+                        $product_wise_bid->save();
+                    }
+                    $success = true;
+                }
+
+            }catch(ValidationException $e) {
+                DB::rollback();
+                return Redirect::to('/product/create')
+                    ->withErrors( $e->getErrors() )
+                    ->withInput();
+            }catch(\Exception $e)
+            {
+                DB::rollback();
+                throw $e;
             }
-            if($product->save()){
+            DB::commit();
+
+            if($success){
                 session()->flash('success','Product updated successfully');
                 return redirect()->route('product.index');
             }else{

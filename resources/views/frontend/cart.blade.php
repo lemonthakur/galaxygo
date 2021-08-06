@@ -224,7 +224,6 @@
                             $(this).parent().parent().parent().find('.qty-price').text(qty +' X $'+ price);
                         });
                         $("#subtotal_amount").text('SUBTOTAl: $'+data);
-                        alert('success');
                     }
                 });
 

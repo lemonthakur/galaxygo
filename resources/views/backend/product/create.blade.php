@@ -143,19 +143,59 @@
                                                         <span class="text-danger"> {{$errors->has("quantity") ? $errors->first("quantity") : ""}} </span>
                                                     </div>
                                                 </div><!-- end discount price -->
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 product_type_parent">
                                                     <div class="form-group">
                                                         <label>Product Type <span class="text-danger">*</span></label>
                                                         <div class="checkbox checkbox-success">
                                                             <input type="radio" class="product_type" name="product_type" id="general_product" value="General Product" {{(old('product_type') == "General Product") ? 'checked': ''}} required checked>
-                                                            <label for="general_product" style="font-weight: bold;">General Product</label>
+                                                            <label for="general_product" style="font-weight: bold;">Auction No</label>
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                             <input type="radio" class="product_type" name="product_type" id="auction_product" value="Auction Product" {{(old('product_type') == "Auction Product") ? 'checked': ''}} required>
-                                                            <label for="auction_product" style="font-weight: bold;">Auction Product</label>
+                                                            <label for="auction_product" style="font-weight: bold;">Auction Yes</label>
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                @if(old("product_type") == 'Auction Product')
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="discount_price">Starting Bid Amount</label>
+                                                            <input type="number" step="any" required class="form-control {{$errors->has("starting_bid_amount") ? "is-invalid":""}}" id="starting_bid_amount" name="starting_bid_amount" placeholder="Enter Starting Bid Amount" value="{{old("starting_bid_amount")}}">
+                                                            <span class="text-danger"> {{$errors->has("starting_bid_amount") ? $errors->first("starting_bid_amount") : ""}} </span>
+                                                        </div>
+                                                    </div><!-- end starting bid amount price -->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="name">Auction Start Date<span class="text-danger">*</span></label>
+                                                            <input readonly type="text" required class="form-control datepicker {{$errors->has("auction_start_date") ? "is-invalid":""}}" id="auction_start_date" data-target="#auction_start_date"
+                                                                   data-toggle="datetimepicker" name="auction_start_date" placeholder="Auction start date" value="{{old("auction_start_date")}}">
+                                                            <span class="text-danger"> {{$errors->has("auction_start_date") ? $errors->first("auction_start_date") : ""}} </span>
+                                                        </div>
+                                                    </div><!-- end Auction Start Date -->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="expaire_time">Auction Start Time<span class="text-danger">*</span></label>
+                                                            <input readonly type="text" required class="form-control timepicker {{$errors->has("auction_start_time") ? "is-invalid":""}}" id="auction_start_time"
+                                                                   data-target="#auction_start_time" data-toggle="datetimepicker" name="auction_start_time" placeholder="Enter auction start time" value="{{old("auction_start_time")}}">
+                                                            <span class="text-danger"> {{$errors->has("auction_start_time") ? $errors->first("auction_start_time") : ""}} </span>
+                                                        </div>
+                                                    </div><!-- end AuctionStart time -->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="name">Auction End Date<span class="text-danger">*</span></label>
+                                                            <input readonly type="text" required class="form-control datepicker {{$errors->has("auction_end_date") ? "is-invalid":""}}" id="auction_end_date" data-target="#auction_end_date"
+                                                                   data-toggle="datetimepicker" name="auction_end_date" placeholder="Auction end date" value="{{old("auction_end_date")}}">
+                                                            <span class="text-danger"> {{$errors->has("auction_end_date") ? $errors->first("auction_end_date") : ""}} </span>
+                                                        </div>
+                                                    </div><!-- end Auction End Date -->
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="expaire_time">Auction End Time<span class="text-danger">*</span></label>
+                                                            <input readonly type="text" required class="form-control timepicker {{$errors->has("auction_end_time") ? "is-invalid":""}}" id="auction_end_time"
+                                                                   data-target="#auction_end_time" data-toggle="datetimepicker" name="auction_end_time" placeholder="Enter auction end time" value="{{old("auction_end_time")}}">
+                                                            <span class="text-danger"> {{$errors->has("auction_end_time") ? $errors->first("auction_end_time") : ""}} </span>
+                                                        </div>
+                                                    </div><!-- end Auction End time -->
+                                                @endif
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="product_description">Product Description <span class="text-danger">*</span></label>
@@ -177,37 +217,6 @@
                                                         <label for="seo_allow" style="font-weight: bold;">Allow Product SEO</label>
                                                     </div>
                                                 </div>--}}
-                                                <div class="col-md-12 com_for_hide_show {{(old('seo_allow') == "1") ? '': 'showSeo'}}">
-                                                    <div class="form-group">
-                                                        <label for="pro_meta">Meta (Comma separated)</label>
-                                                        <input type="text" class="form-control {{$errors->has("pro_meta") ? "is-invalid":""}}" id="pro_meta" name="pro_meta" placeholder="Enter Meta" value="{{old("pro_meta")}}">
-                                                        <span class="text-danger"> {{$errors->has("pro_meta") ? $errors->first("pro_meta") : ""}} </span>
-                                                    </div>
-                                                </div><!-- end meta -->
-                                                <div class="col-md-12 com_for_hide_show {{(old('seo_allow') == "1") ? '': 'showSeo'}}">
-                                                    <div class="form-group">
-                                                        <label for="pro_mt_description">Meta Description</label>
-                                                        <textarea class="form-control {{$errors->has("pro_mt_description") ? "is-invalid":""}}" id="pro_mt_description" name="pro_mt_description" placeholder="Enter Meta Description">{{old("pro_mt_description")}}</textarea>
-                                                        <span class="text-danger"> {{$errors->has("pro_mt_description") ? $errors->first("pro_mt_description") : ""}} </span>
-                                                    </div>
-                                                </div><!-- end Meta Description -->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="video_url">Video URL</label>
-                                                        <input type="text" class="form-control {{$errors->has("video_url") ? "is-invalid":""}}" id="video_url" name="video_url" placeholder="Enter Video URL" value="{{old("video_url")}}">
-                                                        <span class="text-danger"> {{$errors->has("video_url") ? $errors->first("video_url") : ""}} </span>
-                                                    </div>
-                                                </div><!-- end youtube url -->
-                                                <div class="col-md-6">
-                                                    <div class="form-group select2-parent">
-                                                        <label for="status">Status <span class="text-danger">*</span></label>
-                                                        <select name="status" class="form-control single-select2" id="status" style="width: 100%;">
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </select>
-                                                        <span class="text-danger"> {{$errors->has("status") ? $errors->first("status") : ""}} </span>
-                                                    </div>
-                                                </div><!-- end Category -->
 
                                                 <div class="col-md-12">
                                                     <div class="card-footer text-right">
@@ -267,6 +276,39 @@
                                                     </div>
                                                 </div><!-- /.Attached File -->
 
+                                                <div class="col-md-12 com_for_hide_show {{(old('seo_allow') == "1") ? '': 'showSeo'}}">
+                                                    <div class="form-group">
+                                                        <label for="pro_meta">Meta (Comma separated)</label>
+                                                        <input type="text" class="form-control {{$errors->has("pro_meta") ? "is-invalid":""}}" id="pro_meta" name="pro_meta" placeholder="Enter Meta" value="{{old("pro_meta")}}">
+                                                        <span class="text-danger"> {{$errors->has("pro_meta") ? $errors->first("pro_meta") : ""}} </span>
+                                                    </div>
+                                                </div><!-- end meta -->
+                                                <div class="col-md-12 com_for_hide_show {{(old('seo_allow') == "1") ? '': 'showSeo'}}">
+                                                    <div class="form-group">
+                                                        <label for="pro_mt_description">Meta Description</label>
+                                                        <textarea class="form-control {{$errors->has("pro_mt_description") ? "is-invalid":""}}" id="pro_mt_description" name="pro_mt_description" placeholder="Enter Meta Description">{{old("pro_mt_description")}}</textarea>
+                                                        <span class="text-danger"> {{$errors->has("pro_mt_description") ? $errors->first("pro_mt_description") : ""}} </span>
+                                                    </div>
+                                                </div><!-- end Meta Description -->
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="video_url">Video URL</label>
+                                                        <input type="text" class="form-control {{$errors->has("video_url") ? "is-invalid":""}}" id="video_url" name="video_url" placeholder="Enter Video URL" value="{{old("video_url")}}">
+                                                        <span class="text-danger"> {{$errors->has("video_url") ? $errors->first("video_url") : ""}} </span>
+                                                    </div>
+                                                </div><!-- end youtube url -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group select2-parent">
+                                                        <label for="status">Status <span class="text-danger">*</span></label>
+                                                        <select name="status" class="form-control single-select2" id="status" style="width: 100%;">
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Inactive</option>
+                                                        </select>
+                                                        <span class="text-danger"> {{$errors->has("status") ? $errors->first("status") : ""}} </span>
+                                                    </div>
+                                                </div><!-- end Category -->
+
                                             </div><!-- /.row -->
                                         </div><!-- /.card-body -->
                                     </div><!-- /.col -->
@@ -292,6 +334,55 @@
     $(document).ready(function(){
         bsCustomFileInput.init();
         tinymceInitial();
+
+        $('body').on('click','.datepicker, .timepicker', function() {
+            initializeDatePicker();
+        });
+
+        function initializeDatePicker (){
+            $('.datepicker').datetimepicker({
+                ignoreReadonly: true,
+                toolbarPlacement:'top',
+                keepOpen:false,
+                buttons:{
+                    showToday: true,
+                    showClear: true,
+                    showClose: true
+                },
+                useCurrent:false,
+                format: 'DD-MM-YYYY',
+                icons: {
+                    time: "fas fa-clock",
+                    date: "fas fa-calendar",
+                    up: "fas fa-arrow-up",
+                    down: "fas fa-arrow-down",
+                    previous: "fas fa-chevron-left",
+                    next: "fas fa-chevron-right",
+                    today: "fas fa-calendar-check",
+                    clear: "fas fa-trash"
+                }
+            });
+            $('.timepicker').datetimepicker({
+                ignoreReadonly: true,
+                format: 'LT',
+                toolbarPlacement:'top',
+                keepOpen:false,
+                buttons:{
+                    showClear: true,
+                    showClose: true
+                },
+                icons: {
+                    time: "fas fa-clock",
+                    date: "fas fa-calendar",
+                    up: "fas fa-arrow-up",
+                    down: "fas fa-arrow-down",
+                    previous: "fas fa-chevron-left",
+                    next: "fas fa-chevron-right",
+                    today: "fas fa-calendar-check",
+                    clear: "fas fa-trash"
+                }
+            });
+        }
 
         $(document).on('change', '#category_id', function(){
             var me = $(this);
@@ -332,6 +423,27 @@
             $("#slug").val(ret_val);
         });
 
-    });
+        $("input[type='button']").click(function(){
+            var radioValue = $("input[name='gender']:checked").val();
+            if(radioValue){
+                alert("Your are a - " + radioValue);
+            }
+        });
+
+        $(document).on("click", "input[name=product_type]", function() {
+            var radioValue = $(this).val();
+            if(radioValue == 'Auction Product') {
+                var append_html = '<div class="col-md-6 apn"><div class="form-group"><label for="discount_price">Starting Bid Amount</label><input type="number" step="any" required class="form-control" id="starting_bid_amount" name="starting_bid_amount" placeholder="Enter Starting Bid Amount" value=""></div></div>\n' +
+                    '<div class="col-md-6 apn"><div class="form-group"><label for="name">Auction Start Date<span class="text-danger">*</span></label><input readonly type="text" required class="form-control datepicker" id="auction_start_date" data-target="#auction_start_date" data-toggle="datetimepicker" name="auction_start_date" placeholder="Auction start date" value=""></div></div>' +
+                    '<div class="col-md-6 apn"><div class="form-group"><label for="expaire_time">Auction Start Time<span class="text-danger">*</span></label><input readonly type="text" required class="form-control timepicker " id="auction_start_time"data-target="#auction_start_time" data-toggle="datetimepicker" name="auction_start_time" placeholder="Enter auction start time" value=""></div></div>' +
+                    '<div class="col-md-6 apn"><div class="form-group"><label for="name">Auction End Date<span class="text-danger">*</span></label><input readonly type="text" required class="form-control datepicker" id="auction_end_date" data-target="#auction_end_date" data-toggle="datetimepicker" name="auction_end_date" placeholder="Auction end date" value=""></div></div>' +
+                    '<div class="col-md-6 apn"><div class="form-group"><label for="expaire_time">Auction End Time<span class="text-danger">*</span></label><input readonly type="text" required class="form-control timepicker" id="auction_end_time" data-target="#auction_end_time" data-toggle="datetimepicker" name="auction_end_time" placeholder="Enter auction end time" value=""></div></div>';
+                $( append_html ).insertAfter( $( ".product_type_parent" ) );
+            }else{
+                $( ".apn" ).remove();
+            }
+        });
+
+        });
 </script>
 @endsection

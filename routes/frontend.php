@@ -18,6 +18,9 @@ Route::get('cart/get','frontend\CartController@cartGet')->name('cart.get');
 // Shop page
 Route::get('shop/{pro_type?}', [ShopController::class,'allProducts'])->name('shop');
 Route::get('products/{slug}',[ShopController::class,'productDetails'])->name('product-details');
+Route::get('products/bid/{slug}',[ShopController::class,'productDetailsBid'])->name('product-details.bid');
 Route::post('ajax-pro-list',[ShopController::class,'ajaxProductList'])->name('ajax-pro.list');
+Route::post('bid/cart/add', [CartController::class,'bidProductCartAdd'])->name('bid-product-cart.add');
+Route::post('bid/user/list', [CartController::class,'bidUserList'])->name('bid-user.list');
 
 

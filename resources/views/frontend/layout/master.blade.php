@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{asset('frontend/css/animate.css')}}">
     <!--Eazyzoom css--->
     <link rel="stylesheet" href="{{asset('frontend/css/easyzoom.css')}}">
+    <!--Video js css--->
+    <link rel="stylesheet" href="{{asset('frontend/css/video-js.css')}}">
     <!--Main CSS-->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     <!--Custom CSS-->
@@ -76,6 +78,28 @@
 <script src="{{asset('frontend/js/wow.js')}}"></script>
 <script>
     new WOW().init();
+
+    $(document).ready(function(){
+        $(document).on("click", ".bid-list", function(){
+            var id = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
+            var csrf = "{{csrf_token()}}";
+            $("#loading").show();
+
+            $.ajax({
+                type:'post',
+                url: "{{route('bid-user.list')}}",
+                data:{
+                    _token:csrf,
+                    id:id,
+                },
+                success:function (data) {
+                    $("#list_bidder").empty().html(data.table_data);
+                    $("#exampleModalLabel").empty().html(data.model_title);
+                    $("#loading").hide();
+                }
+            });
+        });
+    });
 </script>
 
 @yield('js')

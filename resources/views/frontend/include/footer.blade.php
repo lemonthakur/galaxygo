@@ -182,4 +182,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="bidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content ic-bid-modal-content">
+            <div class="modal-header ic-bid-modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bids For Apple Watch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="flaticon-error"></i></span>
+                </button>
+            </div>
+            <div class="modal-body ic-bid-modal">
+                <div class="ic-bid-modal-body">
+                    <div class="ic-table-warper">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">time</th>
+                                <th scope="col">amount</th>
+                            </tr>
+                            </thead>
+                            <tbody id="list_bidder">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <!--===Footer Area End===-->
