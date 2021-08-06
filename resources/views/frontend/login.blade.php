@@ -64,7 +64,7 @@
                             <p>or</p>
                         </div>
                         <div class="ic-social-login">
-                            <a href="#"><i class="flaticon-facebook"></i> <span>login on facebook</span> </a>
+                            <a href="{{route('social.login','facebook')}}"><i class="flaticon-facebook"></i> <span>login on facebook</span> </a>
                             <a href="{{route('register')}}"><i class="flaticon-message"></i>
                                 <span>register using email</span> </a>
                         </div>

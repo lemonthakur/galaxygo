@@ -26,7 +26,7 @@
                         <a class="ic-btn profile-dropdown-item dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="flaticon-login"></i>
-                            <span>mr. jaxon</span>
+                            <span>{{ucwords(auth()->user()->name)}}</span>
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -37,8 +37,21 @@
 
                     <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Conis Balance: 00</span></a>
                     {{--                        <a href="#" class="ic-btn ml-2"><i class="icofont-sign-out"></i> <span>Logout</span></a>--}}
+
+                    @guest()
                     <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
                                                                  alt=""></a>
+                    @endguest
+
+                    @auth()
+                        @if(auth()->user()->photo)
+                    <a href="#" class="mobile-profile-user"><img src="{{auth()->user()->photo}}"
+                                                                 alt=""></a>
+                        @else
+                            <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
+                                                                         alt=""></a>
+                            @endif
+                    @endauth
                     <a href="#" class="ic-mobile-menu-open">
                         <span></span>
                         <span></span>
@@ -88,7 +101,7 @@
                                 <span class="menu-expand">
                                     <i class="icofont-simple-down"></i>
                                 </span>
-                            <a href="#"><i class="flaticon-login menu-icon"></i> mr. jaxon</a>
+                            <a href="#"><i class="flaticon-login menu-icon"></i> {{ucwords(auth()->user()->name)}}</a>
                         </li>
                         <li class="ic-menu-item-has-children">
                             <a href="#"><i class="flaticon-coins-1 menu-icon"></i> Coins Balance: 00</a>

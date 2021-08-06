@@ -29,6 +29,11 @@ Route::post('bid/user/list', [CartController::class,'bidUserList'])->name('bid-u
 //Frontend Login
 Route::get('/login',[AuthController::class,'loginView'])->name('login');
 Route::post('/login',[AuthController::class,'login'])->name('login.submit');
+//Social Login
+Route::get('social-login/{provider}', [AuthController::class,'redirect'])->name('social.login');
+Route::get('social-login/{provider}/callback',[AuthController::class,'callback'])->name('social.login.callback');
+
+//Frontend Registration
 Route::get('/registration',[AuthController::class,'registrationView'])->name('register');
 Route::post('/registration',[AuthController::class,'register'])->name('register.submit');
 

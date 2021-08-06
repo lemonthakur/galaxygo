@@ -10,14 +10,28 @@
                 <div class="ic-profile-left">
                     <div class="ic-user">
                         <div class="ic-cover-bg">
+
                             <img src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="cover">
+
                             <div class="ic-edit-cover-photo">
                                 <a href="#"><i class="icofont-camera"></i>
                                     <span>edit cover photo</span> </a>
                             </div>
                         </div>
                         <div class="user-profile">
-                            <img src="{{asset('frontend/images/user.png')}}" alt="user">
+
+                            @guest()
+                                <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                            @endguest
+
+                            @auth()
+                                @if(auth()->user()->photo)
+                                        <img src="{{auth()->user()->photo}}" alt="user">
+                                @else
+                                        <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                                @endif
+                            @endauth
+
                             <div class="ic-edit-profile">
                                 <a href="#"><i class="icofont-camera"></i></a>
                             </div>
@@ -40,28 +54,16 @@
                     </div>
                     <form action="" class="ic-profile-basic-info">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="">First name</label>
-                                    <input type="text" class="form-control" placeholder="mr">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="">last name</label>
-                                    <input type="text" class="form-control" placeholder="Jaxson">
-                                </div>
-                            </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="">paypal email</label>
-                                    <input type="email" class="form-control" placeholder="mrjaxson@gmail.com">
+                                    <input type="text" class="form-control" placeholder="{{auth()->user()->name}}">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="">email</label>
-                                    <input type="email" class="form-control" placeholder="mrjaxson@gmail.com">
+                                    <input type="email" class="form-control" placeholder="{{auth()->user()->email}}">
                                 </div>
                             </div>
                             <div class="col-12">

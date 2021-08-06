@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -94,8 +95,35 @@ class AuthController extends Controller
         }
     }
 
-    public function fbLogin(){
+    public function redirect($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
 
+    public function callback($provider)
+    {
+        $userSocial =   Socialite::driver($provider)->stateless()->user();
+        $users       =   User::where(['email' => $userSocial->getEmail()])->first();
+        if($users){
+            Auth::login($users);
+        }else{
+            $user = new User();
+            $user->role_id = 0;
+            $user->contact_no = Str::random(4).date('ymd').rand(0,99);
+            $user->photo = $userSocial->getAvatar() ?? '';
+            $user->name = $userSocial->getName();
+            $user->email = $userSocial->getEmail();
+            $user->provider_id = $userSocial->getId();
+            $user->provider = $provider;
+
+            if($user->save()){
+                Auth::loginUsingId($user->id);
+            }else{
+                session()->flash("error","Unable to login");
+                return redirect()->route("login");
+            }
+        }
+        return redirect()->route('home');
     }
 
     public function logout(){
