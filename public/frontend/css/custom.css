@@ -5,3 +5,25 @@
 .ic-pagination ul li a.next{
     width: 85px;
 }
+
+button.login-btn{
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.ic-btn.profile-dropdown-item.dropdown-toggle::after{
+    display: none !important;
+}
+
+.ic-profile-header-btn .dropdown-menu{
+    background-color: #1A1A1F !important;
+    width: 100%;
+}
+.ic-profile-header-btn .dropdown-menu .dropdown-item{
+    color: #fff;
+}
+.ic-profile-header-btn .dropdown-menu .dropdown-item:hover{
+    background-color:#E2CF61;
+    color: #000;
+}

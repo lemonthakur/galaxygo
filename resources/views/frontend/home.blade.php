@@ -2,7 +2,6 @@
 @section('title','Home')
 
 @section('content')
-    @include('frontend.include.header')
 
     <section class="ic-user-home-area">
         <div class="container">

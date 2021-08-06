@@ -2,7 +2,6 @@
 @section('title','Home')
 
 @section('content')
-@include('frontend.include.profile-header')
 
 <section class="ic-product-banner-area">
     <div class="container">

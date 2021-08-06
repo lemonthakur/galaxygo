@@ -25,12 +25,24 @@
     <link rel="stylesheet" href="{{asset('frontend/css/easyzoom.css')}}">
     <!--Video js css--->
     <link rel="stylesheet" href="{{asset('frontend/css/video-js.css')}}">
-    <!--Main CSS-->
-    <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
-    <!--Custom CSS-->
-    <link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
+    <!-- sweetalert2 css--->
+    <link rel="stylesheet" href="{{asset("/admin-lte/plugins/sweetalert2/sweetalert2.min.css")}}">
 
     @yield('css')
+
+
+    {{------------------------------
+    -----------Javascript-----------
+    ------------------------------}}
+
+    <!--Jquery-->
+    <script src="{{asset('frontend/js/jquery-3.5.1.min.js')}}"></script>
+    <!--popper Js-->
+    <script src="{{asset("/admin-lte/plugins/popper/umd/popper.min.js")}}"></script>
+    <!--Bootstrap Js-->
+    <script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
+    <!--sweetalert2 js-->
+    <script src="{{asset("/admin-lte/plugins/sweetalert2/sweetalert2.min.js")}}"></script>
 </head>
 
 <body class="ic-body" style="background-image: url('{{asset('frontend/images/background-bg.png')}}');">
@@ -45,6 +57,14 @@
     </div>
 </div>
 
+@include('backend.include.errormsg')
+
+@if (Auth::check() && Auth::user()->role_id == 0)
+    @include('frontend.include.profile-header')
+@else
+    @include('frontend.include.header')
+@endif
+
 @yield('content');
 
 @include('frontend.include.footer')
@@ -54,10 +74,6 @@
 <a href="#" class="ic-scroll-top"><i class="icofont-rounded-up"></i></a>
 <!--===Scroll Top Area Start===-->
 
-<!--Jquery-->
-<script src="{{asset('frontend/js/jquery-3.5.1.min.js')}}"></script>
-<!--Bootstrap Js-->
-<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 <!--Owl Carosuel Js-->
 <script src="{{asset('frontend/js/owl.carousel.min.js')}}"></script>
 <!--Nice Select js-->
@@ -68,14 +84,16 @@
 <!--Eazyzoom js-->
 <script src="{{asset('frontend/js/easyzoom.js')}}"></script>
 <script src="{{asset('frontend/js/video.min.js')}}"></script>
-<!--Eazyzoom js-->
-<script src="{{asset('frontend/js/easyzoom.js')}}"></script>
 <!--Main Js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 <!--Custom Js-->
 <script src="{{asset('frontend/js/custom.js')}}"></script>
 <!--Wow Js-->
 <script src="{{asset('frontend/js/wow.js')}}"></script>
+<!--Main CSS-->
+<link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
+<!--Custom CSS-->
+<link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
 <script>
     new WOW().init();
 

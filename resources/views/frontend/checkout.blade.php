@@ -2,7 +2,6 @@
 @section('title','Home')
 
 @section('content')
-@include('frontend.include.profile-header')
 
 <section class="ic-checkout-area">
     <div class="container">

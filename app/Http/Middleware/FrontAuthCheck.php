@@ -1,16 +1,20 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-class AuthCheck {
+use Illuminate\Http\Request;
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
+class FrontAuthCheck
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     protected $auth;
 
     public function __construct(Guard $auth)
@@ -31,14 +35,14 @@ class AuthCheck {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->route('admin.login.view');
+                return redirect()->route('home');
             }
         }else{
-            if($this->auth->user() != null && $this->auth->user()->role_id > 0){
+            if($this->auth->user() != null && $this->auth->user()->role_id == 0){
                 return $next($request);
             }
             else {
-                return redirect()->route('admin.login.view');
+                return redirect()->route('home');
             }
         }
     }

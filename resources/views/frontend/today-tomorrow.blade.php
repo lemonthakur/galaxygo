@@ -2,7 +2,6 @@
 @section('title','Home')
 
 @section('content')
-    @include('frontend.include.header')
 
     <section class="ic-today-tomorrow-area">
         <div class="container">

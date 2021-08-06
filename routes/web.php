@@ -22,7 +22,6 @@ include ('frontend.php');
 
 //Frontend Route
 Route::get('/',[HomeController::class,'home'])->name('home');
-Route::get('/login',[HomeController::class,'login'])->name('login');
 Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
 Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
 Route::get('/entries',[HomeController::class,'entries'])->name('entries');

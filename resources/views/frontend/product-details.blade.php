@@ -22,7 +22,6 @@
 @endsection
 
 @section('content')
-@include('frontend.include.profile-header')
 
 <section class="ic-product-details-area">
     <div class="container">
