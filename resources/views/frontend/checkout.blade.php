@@ -15,14 +15,16 @@
                         <div class="ic-checkout-paymnet-card">
                             <div class="ic-express-checkout">
                                 <p>Express Checkout</p>
-                                <a href="#"><i class="flaticon-paypal"></i> buy with paypal</a>
+                                <a href="{{ route('make.payment') }}"><i class="flaticon-paypal"></i> buy with paypal</a>
                             </div>
                             <div class="or-pay">
                                 <p><span>OR</span> To pay by credit card, purchase order or check, start by entering your shipping address bellow</p>
                             </div>
 
                             <div class="ic-payment-checkout-form">
-                                <p>Already have an account? <a href="{{route('login')}}">Log in</a> </p>
+                                @if(!\Auth::check())
+                                    <p>Already have an account? <a href="{{route('login').'?checkoutpg=pg'}}">Log in</a> </p>
+                                @endif
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
