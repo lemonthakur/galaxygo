@@ -200,6 +200,13 @@
                             $("#subtotal_amount").text('SUBTOTAl: $'+data);
                             thsRem.parent().parent().remove();
                             $('#deleteModel').modal('toggle');
+
+                            toastr.options =
+                                {
+                                    "closeButton" : true,
+                                    "progressBar" : true
+                                }
+                            toastr.success("Item remove successfully.");
                         }
                     });
                 }
@@ -223,6 +230,13 @@
                             $(this).parent().parent().parent().find('.qty-price').text(qty +' X $'+ price);
                         });
                         $("#subtotal_amount").text('SUBTOTAl: $'+data);
+
+                        toastr.options =
+                            {
+                                "closeButton" : true,
+                                "progressBar" : true
+                            }
+                        toastr.success("Cart updated successfully.");
                     }
                 });
 

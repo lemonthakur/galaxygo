@@ -16,7 +16,7 @@
         }
 
         .ic-product-details-right .ic-product-count-buy .quantityError{
-            border: 1px solid #f52f2f;
+            border: 1px solid #f52f2f !important;
         }
     </style>
 @endsection
@@ -35,7 +35,6 @@
                             </a>
                         </div>
                     @else
-
                         <video id="my-video" class="video-js" controls preload="auto" poster="{{asset('upload/product-thumbnail-634-512/'.$product->feature_image)}}" data-setup="{}">
                             <source src="{{ $product->video_url }}" type="video/mp4">
                             </source>
@@ -44,7 +43,6 @@
                             <source src="{{ $product->video_url }}" type="video/ogg">
                             </source>
                         </video>
-
                     @endif
                 </div>
             </div>
@@ -66,7 +64,7 @@
                     @if( $product->auction_end_date.' '.$product->auction_end_time >= date('Y-m-d H:i:s'))
                         <div class="ic-product-count-buy">
                             <div class="product-count bid-product-count">
-                                <input type="number" value="" min="1" class="qty"  style="padding-left: 0;">
+                                <input type="number" value="{{ Session::get("bid_amo") }}" min="1" class="qty"  style="padding-left: 0;">
                             </div>
                             <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                                  data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
@@ -83,10 +81,12 @@
                             $difference = $end_date->diffInHours($now);
                             $divi = explode(".", number_format((float)($difference/24), 2, '.', ''));
                             $days = isset($divi[0]) ? $divi[0] : 0;
-                            $hours = isset($divi[1]) ? $divi[1] : 0;
+                            $conver_to_dec = isset($divi[1]) ? '.'.$divi[1] : 0;
+                            $hours = isset($divi[1]) ? round($conver_to_dec*24) : 0;
                             ?>
                             <small class="text-white">Time left: {{ $days.'d' }} {{ strlen($hours)==1 ? '0'.$hours.'h' : $hours.'h' }}</small>&nbsp;&nbsp;&nbsp;
                         </div>
+                        <?php Session::forget(["bid_amo", "pro_dir_url"]); ?>
                     @endif
                     {{--end auction product--}}
 
@@ -166,7 +166,7 @@
 
 @section('js')
     <script src="{{asset("/admin-lte/plugins/jquery/jquery.min.js")}}"></script>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function(){
             $(document).on("click", ".custom_add_to_cart", function(e){
             e.preventDefault();
@@ -179,14 +179,6 @@
             var discount   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-discount');
             var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
             var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
-
-            // for popover
-            var this_pov = $(this).parent().find(".fa-shopping-cart");
-            $(this_pov).popover({
-            placement : 'top',
-            container: 'body',
-            content : "Adding..."
-            }).popover('show');
 
             $.ajax({
                 type:'post',
@@ -217,16 +209,18 @@
                 var amount = $(this).parent().parent().find('.qty').val();
                 var user_id = '{{ \Auth::check() }}';
 
-                if(user_id !=1){
-                    alert('Please login first.');
-                    return false;
-                }
-
                 if(amount == '' || amount <= 0){
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").addClass('quantityError');
                     return false;
                 }else{
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").removeClass('quantityError');
+                }
+
+                if(user_id !=1){
+                    var redirect_url = "{{ route('login') }}";
+                    var product_det = "{{ $product->slug }}";
+                    window.location.href = redirect_url+'?pro_dir_url='+product_det+'&bid_amo='+amount;
+                    return false;
                 }
                 $("#loading").show();
 
@@ -241,9 +235,19 @@
                     success:function (data) {
                         //window.location.href = "{{ route('bid-product-cart.add')}}";
                         if(data=='true'){
-                            alert('Bid addred successfully.');
+                            toastr.options =
+                                {
+                                    "closeButton" : true,
+                                    "progressBar" : true
+                                }
+                            toastr.success("Bid added successfully.");
                         }else{
-                            alert('Bid can not added at this moment.');
+                            toastr.options =
+                                {
+                                    "closeButton" : true,
+                                    "progressBar" : true
+                                }
+                            toastr.error("Something went wrong. Bid can not added at this moment. Please contact with admin.");
                         }
                         $("#loading").hide();
                     }
@@ -252,7 +256,7 @@
             $(document).on("input", ".qty", function(e){
                 var val_amount = $(this).val();
                 if(val_amount == '' || val_amount <= 0){
-                    $(".ic-product-details-right .ic-product-count-buy .bid-product-count").addClass('quantityError');
+                    //$(".ic-product-details-right .ic-product-count-buy .bid-product-count").addClass('quantityError');
                 }else{
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").removeClass('quantityError');
                 }

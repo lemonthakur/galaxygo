@@ -5,6 +5,8 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
+use App\Http\Controllers\Frontend\PayPalPaymentController;
+use App\Http\Controllers\Frontend\CheckoutController;
 
 //minicart
 Route::post('cart/add', [CartController::class,'cartAdd'])->name('cart.add');
@@ -43,6 +45,14 @@ Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPa
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+
+Route::get('handle-payment', [PayPalPaymentController::class, 'handlePayment'])->name('make.payment');
+Route::get('cancel-payment', [PayPalPaymentController::class, 'paymentCancel'])->name('cancel.payment');
+Route::get('payment-success', [PayPalPaymentController::class, 'paymentSuccess'])->name('success.payment');
+
+Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::post('checkout-register', [CheckoutController::class, 'register'])->name('checkout.register');
+Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');
 
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

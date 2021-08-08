@@ -17,7 +17,15 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    public function loginView(){
+    public function loginView(Request $request){
+
+        if($request->pro_dir_url || $request->bid_amo){
+            session(['pro_dir_url' => $request->pro_dir_url, 'bid_amo' => $request->bid_amo]);
+        }
+        elseif($request->checkoutpg){
+            session(['checkoutpg' => $request->checkoutpg]);
+        }
+
         return view('frontend.login');
     }
 
@@ -49,6 +57,13 @@ class AuthController extends Controller
         if (Auth::attempt($user,$remember_me)) {
 
             User::where('id',auth()->id())->update(['lastLoginTime' => Carbon::now()]);
+            if(Session::get("pro_dir_url") && Session::get("bid_amo")){
+                return Redirect::route('product-details', Session::get("pro_dir_url"));
+            }
+            elseif(Session::get("checkoutpg")){
+                Session::forget(["checkoutpg"]);
+                return Redirect::route('checkout');
+            }
 
             return Redirect::route('home');
         } else {
@@ -144,6 +159,10 @@ class AuthController extends Controller
                 session()->flash("error","Unable to login");
                 return redirect()->route("login");
             }
+        }
+
+        if(Session::get("pro_dir_url") && Session::get("bid_amo")){
+            return Redirect::route('product-details', Session::get("pro_dir_url"));
         }
         return redirect()->route('home');
     }
