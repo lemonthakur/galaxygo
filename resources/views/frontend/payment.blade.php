@@ -75,7 +75,7 @@
                                     </div> -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="number" value="" min="1" class="qty form-control" placeholder="Point to Pay">
+                                            <input type="number" readonly value="" min="1" class="qty form-control" placeholder="Point to Pay">
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                             </div>
                         @endforeach
                     @endif
-                    
+
                     <div class="ic-coupon-input">
                         <input type="text" class="form-control" placeholder="Coupon Or Discount Code">
                         <a href="#" class="ic-btn">apply</a>
@@ -185,8 +185,8 @@
                     else if(data.order_placed=='yes'){
                         window.location.href = "{{ route('orders')}}";
                     }
-                    
-                    
+
+
                 }
             });
 

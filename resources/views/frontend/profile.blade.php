@@ -43,7 +43,7 @@
                     </div>
                     <div class="ic-total-balance">
                         <p>Total Coins Balance</p>
-                        <h4>00</h4>
+                        <h4>{{auth()->user()->current_coin}}</h4>
                     </div>
                 </div>
             </div>
