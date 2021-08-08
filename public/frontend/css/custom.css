@@ -49,3 +49,12 @@ button.login-btn{
     background: #D6BA4F;
     color: #000;
 }
+
+.ic-checkout-payment-left .ic-payment-checkout-form .form-control{
+    color: #fff;
+}
+
+.form-group .nice-select ul.list{
+    max-height: 250px;
+    overflow-y: scroll !important;
+}

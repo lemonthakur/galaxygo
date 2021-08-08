@@ -230,10 +230,10 @@ class CheckoutController extends Controller
                         Session::put('shippingAddress',[
                             'shipping_address_id' => $check_existing->id,
                         ]);
-                    }                   
+                    }
 
                     $success = true;
-                    
+
 
                 }catch(ValidationException $e) {
 
@@ -263,6 +263,7 @@ class CheckoutController extends Controller
 
     public function checkout(){
         $countries = Country::all();
+//        $countries = Country::whereIn('id', [150, 200]);
         return view('frontend.checkout', compact('countries'));
     }
 
@@ -282,7 +283,7 @@ class CheckoutController extends Controller
 
             DB::beginTransaction();
             try {
-                
+
                 $success = false;
 
                 $latestOrder = Order::orderBy('created_at','DESC')->first();
