@@ -10,7 +10,7 @@
                 </div>
                 <div class="ic-header-right">
                     <a href="{{route('login')}}" class="ic-btn"><i class="flaticon-login"></i> <span>login</span></a>
-                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">Coins Balance: 1000</span> <span class="sm-coin-bal">10000</span></a>
+                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">Coins Balance: 0.00</span> <span class="sm-coin-bal">0.00</span></a>
                 </div>
             </div>
         </div>

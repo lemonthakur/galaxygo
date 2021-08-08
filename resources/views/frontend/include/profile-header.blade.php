@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Conis Balance: 00</span></a>
+                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Coins Balance: {{auth()->user()->current_coin}}</span></a>
                     {{--                        <a href="#" class="ic-btn ml-2"><i class="icofont-sign-out"></i> <span>Logout</span></a>--}}
 
                     @guest()
@@ -104,7 +104,7 @@
                             <a href="#"><i class="flaticon-login menu-icon"></i> {{ucwords(auth()->user()->name)}}</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> Coins Balance: 00</a>
+                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> Coins Balance: {{auth()->user()->current_coin}}</a>
                         </li>
                     </ul>
 

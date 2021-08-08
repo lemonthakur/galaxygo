@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CoinHistory;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -83,10 +84,20 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->contact_no = Str::random(4).date('ymd').rand(0,99);
+        $user->total_coin = $user->total_coin + 100;
+        $user->current_coin = $user->current_coin + 100;
         $user->password = Hash::make($request->password);
 
         if ($user->save()){
             Auth::loginUsingId($user->id);
+
+            $coinHistory = new CoinHistory();
+            $coinHistory->user_id = auth()->id();
+            $coinHistory->amount = 100;
+            $coinHistory->transaction_type = 0;
+            $coinHistory->earn_expense_type = 0;
+            $coinHistory->save();
+
             session()->flash("success","Successfully register");
             return redirect()->route("home");
         }else{
@@ -115,9 +126,20 @@ class AuthController extends Controller
             $user->email = $userSocial->getEmail();
             $user->provider_id = $userSocial->getId();
             $user->provider = $provider;
+            $user->total_coin = $user->total_coin + 100;
+            $user->current_coin = $user->current_coin + 100;
+            $user->provider = $provider;
 
             if($user->save()){
                 Auth::loginUsingId($user->id);
+
+                $coinHistory = new CoinHistory();
+                $coinHistory->user_id = auth()->id();
+                $coinHistory->amount = 100;
+                $coinHistory->transaction_type = 0;
+                $coinHistory->earn_expense_type = 0;
+                $coinHistory->save();
+
             }else{
                 session()->flash("error","Unable to login");
                 return redirect()->route("login");

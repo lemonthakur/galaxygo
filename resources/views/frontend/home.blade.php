@@ -8,7 +8,15 @@
             <div class="ic-user-content-warper">
                 <div class="content">
                     <div class="ic-heading text-center">
-                        <h2>i am <span>guest</span></h2>
+                        <h2>i am
+                            <span>
+                                @if (Auth::check() && Auth::user()->role_id == 0)
+                                    {{ucwords(auth()->user()->name)}}
+                                @else
+                                    Guest
+                                @endif
+                            </span>
+                        </h2>
                     </div>
                     <div class="ic-btn-group ic-guest-btn">
                         <div class="ic-today-btn">

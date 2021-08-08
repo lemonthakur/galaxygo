@@ -16,6 +16,9 @@ class AddForSocialLoginColumnInUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('provider')->after('lastLoginTime')->nullable();
             $table->string('provider_id')->after('provider')->nullable();
+            $table->decimal('total_coin',14,2)->after('provider_id')->default(0);
+            $table->decimal('current_coin',14,2)->after('total_coin')->default(0);
+            $table->decimal('withdraw',14,2)->after('current_coin')->default(0);
         });
     }
 
