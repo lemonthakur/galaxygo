@@ -27,3 +27,25 @@ button.login-btn{
     background-color:#E2CF61;
     color: #000;
 }
+
+.ic-checkout-payment-left .ic-express-checkout label {
+    height: 56px;
+    line-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #1A1A1F;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    font-family: galano-medium, serif;
+    cursor: pointer;
+}
+.ic-checkout-payment-left .ic-express-checkout label.active{
+    background: #D6BA4F;
+    color: #000;
+}
