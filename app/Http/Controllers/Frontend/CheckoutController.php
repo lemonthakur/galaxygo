@@ -1,0 +1,264 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\OrderShippingAddress;
+use App\Models\Country;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
+use DB;
+
+class CheckoutController extends Controller
+{
+    public function register(Request $request){
+        if(!\Auth::check()){
+            $rules = [
+                'payment_method' => 'required',
+                'name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6',
+                'confirm_password' => 'required|same:password|min:6',
+
+                'shipping_adrress_line_1' => 'required',
+                'shipping_city' => 'required',
+                'shipping_country' => 'required',
+                'shipping_post_code' => 'required',
+                'shipping_phone' => 'required',
+            ];
+
+            $message = [
+                'name.required' => 'First Name is required',
+                'last_name.required' => 'Last Name is required',
+                'email.email' => 'Email must be a valid email address',
+                'email.required' => 'Email is required',
+                'password.required' => 'Password is required',
+
+                'shipping_adrress_line_1.required' => 'Adrress line 1 is required',
+                'shipping_city.required' => 'City is required',
+                'shipping_country.required' => 'Country is required',
+                'shipping_post_code.required' => 'Post Code is required',
+                'shipping_phone.required' => 'Phone Number is required',
+            ];
+
+            $validation = Validator::make($request->all(),$rules,$message);
+
+            if ($validation->fails()){
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors($validation);
+            }else{
+                DB::beginTransaction();
+                try {
+                    $success = false;
+
+                    $user = new User();
+                    $user->role_id = 0;
+                    $user->name = $request->name;
+                    $user->last_name = $request->last_name;
+                    $user->email = $request->email;
+                    $user->contact_no = $request->shipping_phone;
+                    $user->password = Hash::make($request->password);
+
+                    $user->shipping_first_name      = $request->name;
+                    $user->shipping_last_name       = $request->last_name;
+                    $user->shipping_email           = $request->email;
+                    $user->shipping_company_name    = $request->shipping_company_name;
+                    $user->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                    $user->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                    $user->shipping_city            = $request->shipping_city;
+                    $user->shipping_country         = $request->shipping_country;
+                    $user->shipping_post_code       = $request->shipping_post_code;
+                    $user->shipping_phone           = $request->shipping_phone;
+
+                    if ($user->save()){
+                        Auth::loginUsingId($user->id);
+                        $orderShipping = new OrderShippingAddress();
+
+                        $orderShipping->user_id                  = $user->id;
+                        $orderShipping->shipping_first_name      = $request->name;
+                        $orderShipping->shipping_last_name       = $request->last_name;
+                        $orderShipping->shipping_email           = $request->email;
+                        $orderShipping->shipping_company_name    = $request->shipping_company_name;
+                        $orderShipping->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                        $orderShipping->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                        $orderShipping->shipping_city            = $request->shipping_city;
+                        $orderShipping->shipping_country         = $request->shipping_country;
+                        $orderShipping->shipping_post_code       = $request->shipping_post_code;
+                        $orderShipping->shipping_phone           = $request->shipping_phone;
+
+                        $orderShipping->created_by = Auth::id();
+                        $orderShipping->updated_by = Auth::id();
+                        $orderShipping->save();
+
+                        $success = true;
+                        Session::put('shippingAddress',[
+                            'shipping_address_id' => $orderShipping->id,
+                        ]);
+                    }
+
+                }catch(ValidationException $e) {
+
+                    DB::rollback();
+                    return Redirect::to('/checkout')
+                        ->withErrors( $e->getErrors() )
+                        ->withInput();
+                }catch(\Exception $e)
+                {
+                    DB::rollback();
+                    throw $e;
+                }
+                DB::commit();
+
+                if ($success){
+                    if($request->payment_method==1)
+                        return redirect()->route("make.payment");
+                    else
+                        return redirect()->route("payment");
+                }else{
+                    session()->flash("error","Unable to register");
+                    return redirect()->route("checkout")->withInput();
+                }
+            }
+        }else{
+            // in again time
+            $rules = [
+                'payment_method' => 'required',
+                'name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required|email|unique:users,email,'.Auth::id(),
+
+                'shipping_adrress_line_1' => 'required',
+                'shipping_city' => 'required',
+                'shipping_country' => 'required',
+                'shipping_post_code' => 'required',
+                'shipping_phone' => 'required',
+            ];
+
+            $message = [
+                'name.required' => 'First Name is required',
+                'last_name.required' => 'Last Name is required',
+                'email.email' => 'Email must be a valid email address',
+                'email.required' => 'Email is required',
+                'password.required' => 'Password is required',
+
+                'shipping_adrress_line_1.required' => 'Adrress line 1 is required',
+                'shipping_city.required' => 'City is required',
+                'shipping_country.required' => 'Country is required',
+                'shipping_post_code.required' => 'Post Code is required',
+                'shipping_phone.required' => 'Phone Number is required',
+            ];
+
+            $validation = Validator::make($request->all(),$rules,$message);
+
+            if ($validation->fails()){
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors($validation);
+            }else{
+                DB::beginTransaction();
+                try {
+                    $success = false;
+
+                    $user = User::find(Auth::id());
+
+                    $user->shipping_first_name      = $request->name;
+                    $user->shipping_last_name       = $request->last_name;
+                    $user->shipping_email           = $request->email;
+                    $user->shipping_company_name    = $request->shipping_company_name;
+                    $user->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                    $user->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                    $user->shipping_city            = $request->shipping_city;
+                    $user->shipping_country         = $request->shipping_country;
+                    $user->shipping_post_code       = $request->shipping_post_code;
+                    $user->shipping_phone           = $request->shipping_phone;
+
+                    if ($user->save()){
+                        
+                        $check_existing = OrderShippingAddress::where('shipping_first_name', $request->name)
+                                            ->where('shipping_last_name', $request->last_name)
+                                            ->where('shipping_email', $request->email)
+                                            ->where('shipping_company_name', $request->shipping_company_name)
+                                            ->where('shipping_adrress_line_1', $request->shipping_adrress_line_1)
+                                            ->where('shipping_adrress_line_2', $request->shipping_adrress_line_2)
+                                            ->where('shipping_city', $request->shipping_city)
+                                            ->where('shipping_country', $request->shipping_country)
+                                            ->where('shipping_post_code', $request->shipping_post_code)
+                                            ->where('shipping_phone', $request->shipping_phone)
+                                            ->where('user_id', Auth::id())
+                                            ->where('created_by', Auth::id())
+                                            ->where('updated_by', Auth::id())
+                                            ->first();
+
+                        if(!$check_existing){
+                            $orderShipping = new OrderShippingAddress();
+
+                            $orderShipping->user_id                  = $user->id;
+                            $orderShipping->shipping_first_name      = $request->name;
+                            $orderShipping->shipping_last_name       = $request->last_name;
+                            $orderShipping->shipping_email           = $request->email;
+                            $orderShipping->shipping_company_name    = $request->shipping_company_name;
+                            $orderShipping->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                            $orderShipping->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                            $orderShipping->shipping_city            = $request->shipping_city;
+                            $orderShipping->shipping_country         = $request->shipping_country;
+                            $orderShipping->shipping_post_code       = $request->shipping_post_code;
+                            $orderShipping->shipping_phone           = $request->shipping_phone;
+
+                            $orderShipping->created_by = Auth::id();
+                            $orderShipping->updated_by = Auth::id();
+                            $orderShipping->save();
+
+                            Session::put('shippingAddress',[
+                                'shipping_address_id' => $orderShipping->id,
+                            ]);
+                        }else{
+                            Session::put('shippingAddress',[
+                                'shipping_address_id' => $check_existing->id,
+                            ]);
+                        }                   
+
+                        $success = true;
+                    }
+
+                }catch(ValidationException $e) {
+
+                    DB::rollback();
+                    return Redirect::to('/checkout')
+                        ->withErrors( $e->getErrors() )
+                        ->withInput();
+                }catch(\Exception $e)
+                {
+                    DB::rollback();
+                    throw $e;
+                }
+                DB::commit();
+
+                if ($success){
+                    if($request->payment_method==1)
+                        return redirect()->route("make.payment");
+                    else
+                        return redirect()->route("payment");
+                }else{
+                    session()->flash("error","Unable to register");
+                    return redirect()->route("checkout")->withInput();
+                }
+            }
+        }
+    }
+
+    public function checkout(){
+        $countries = Country::all();
+        return view('frontend.checkout', compact('countries'));
+    }
+
+}

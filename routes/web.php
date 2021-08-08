@@ -30,7 +30,7 @@ Route::get('/entries',[HomeController::class,'entries'])->name('entries');
 Route::get('/orders',[HomeController::class,'orders'])->name('orders');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 //Route::get('/cart',[HomeController::class,'cart'])->name('cart');
-Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
+//Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
 Route::get('/payment',[HomeController::class,'payment'])->name('payment');
 //Frontend Route
 
