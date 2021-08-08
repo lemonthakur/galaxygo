@@ -15,21 +15,13 @@
                         <div class="ic-checkout-paymnet-card">
                             <div class="ic-express-checkout">
                                 <p>Express Checkout</p>
-<<<<<<< .mine
                                 <a href="{{ route('make.payment') }}"><i class="flaticon-paypal"></i> buy with paypal</a>
-
-
-
-
-
-=======
 
                                 <label class="mb-3" id="paypalLabel" for="paypal"><i class="flaticon-paypal mr-1"></i> buy with paypal</label>
                                 <input class="d-none" id="paypal" type="radio" value="1" name="payment_method">
 
                                 <label id="coinLabel" for="coin"><i class="icofont-coins mr-1"></i> buy with coin</label>
                                 <input class="d-none" id="coin" type="radio" value="2" name="payment_method">
->>>>>>> .theirs
                             </div>
                             <div class="or-pay">
                                 <p><span>OR</span> To pay by credit card, purchase order or check, start by entering your shipping address bellow</p>
