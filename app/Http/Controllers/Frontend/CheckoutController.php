@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\OrderShippingAddress;
 use App\Models\Country;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Cart;
 use DB;
 
 class CheckoutController extends Controller
@@ -169,37 +173,37 @@ class CheckoutController extends Controller
                 try {
                     $success = false;
 
-                    $user = User::find(Auth::id());
+                    $check_existing = OrderShippingAddress::where('shipping_first_name', $request->name)
+                                        ->where('shipping_last_name', $request->last_name)
+                                        ->where('shipping_email', $request->email)
+                                        ->where('shipping_company_name', $request->shipping_company_name)
+                                        ->where('shipping_adrress_line_1', $request->shipping_adrress_line_1)
+                                        ->where('shipping_adrress_line_2', $request->shipping_adrress_line_2)
+                                        ->where('shipping_city', $request->shipping_city)
+                                        ->where('shipping_country', $request->shipping_country)
+                                        ->where('shipping_post_code', $request->shipping_post_code)
+                                        ->where('shipping_phone', $request->shipping_phone)
+                                        ->where('user_id', Auth::id())
+                                        ->where('created_by', Auth::id())
+                                        ->where('updated_by', Auth::id())
+                                        ->first();
 
-                    $user->shipping_first_name      = $request->name;
-                    $user->shipping_last_name       = $request->last_name;
-                    $user->shipping_email           = $request->email;
-                    $user->shipping_company_name    = $request->shipping_company_name;
-                    $user->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
-                    $user->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
-                    $user->shipping_city            = $request->shipping_city;
-                    $user->shipping_country         = $request->shipping_country;
-                    $user->shipping_post_code       = $request->shipping_post_code;
-                    $user->shipping_phone           = $request->shipping_phone;
+                    if(!$check_existing){
 
-                    if ($user->save()){
-                        
-                        $check_existing = OrderShippingAddress::where('shipping_first_name', $request->name)
-                                            ->where('shipping_last_name', $request->last_name)
-                                            ->where('shipping_email', $request->email)
-                                            ->where('shipping_company_name', $request->shipping_company_name)
-                                            ->where('shipping_adrress_line_1', $request->shipping_adrress_line_1)
-                                            ->where('shipping_adrress_line_2', $request->shipping_adrress_line_2)
-                                            ->where('shipping_city', $request->shipping_city)
-                                            ->where('shipping_country', $request->shipping_country)
-                                            ->where('shipping_post_code', $request->shipping_post_code)
-                                            ->where('shipping_phone', $request->shipping_phone)
-                                            ->where('user_id', Auth::id())
-                                            ->where('created_by', Auth::id())
-                                            ->where('updated_by', Auth::id())
-                                            ->first();
+                        $user = User::find(Auth::id());
 
-                        if(!$check_existing){
+                        $user->shipping_first_name      = $request->name;
+                        $user->shipping_last_name       = $request->last_name;
+                        $user->shipping_email           = $request->email;
+                        $user->shipping_company_name    = $request->shipping_company_name;
+                        $user->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                        $user->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                        $user->shipping_city            = $request->shipping_city;
+                        $user->shipping_country         = $request->shipping_country;
+                        $user->shipping_post_code       = $request->shipping_post_code;
+                        $user->shipping_phone           = $request->shipping_phone;
+
+                        if($user->save()){
                             $orderShipping = new OrderShippingAddress();
 
                             $orderShipping->user_id                  = $user->id;
@@ -217,18 +221,19 @@ class CheckoutController extends Controller
                             $orderShipping->created_by = Auth::id();
                             $orderShipping->updated_by = Auth::id();
                             $orderShipping->save();
+                        }
 
-                            Session::put('shippingAddress',[
-                                'shipping_address_id' => $orderShipping->id,
-                            ]);
-                        }else{
-                            Session::put('shippingAddress',[
-                                'shipping_address_id' => $check_existing->id,
-                            ]);
-                        }                   
+                        Session::put('shippingAddress',[
+                            'shipping_address_id' => $orderShipping->id,
+                        ]);
+                    }else{
+                        Session::put('shippingAddress',[
+                            'shipping_address_id' => $check_existing->id,
+                        ]);
+                    }                   
 
-                        $success = true;
-                    }
+                    $success = true;
+                    
 
                 }catch(ValidationException $e) {
 
@@ -259,6 +264,103 @@ class CheckoutController extends Controller
     public function checkout(){
         $countries = Country::all();
         return view('frontend.checkout', compact('countries'));
+    }
+
+    public function checkoutpointPayment(Request $request){
+        $point_amount = $request->point_amount;
+
+        $deliveryCharge = 60;
+        $totla_usd = Cart::subtotal()+$deliveryCharge;
+        $totla_to_pay = $totla_usd*100;
+
+        $user_have_point = 200000;
+
+        if($totla_to_pay < $point_amount || $totla_to_pay > $user_have_point)
+             return response()->json(['payment_error' => 'no', 'point_less' => 'yes', 'order_placed' => 'no']);
+
+        if($point_amount == $totla_to_pay){
+
+            DB::beginTransaction();
+            try {
+                
+                $success = false;
+
+                $latestOrder = Order::orderBy('created_at','DESC')->first();
+                if($latestOrder)
+                    $invoice_id = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+                else
+                    $invoice_id = str_pad(1, 8, "0", STR_PAD_LEFT);
+
+                $order = new Order();
+                $order->user_id                 = auth()->id();
+                $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
+                $order->subtotal = Cart::subtotal();
+                $order->discount = Cart::discount();
+                $order->vat_tax  = Cart::tax();
+                $order->delivery_charge = $deliveryCharge;
+                $order->total = Cart::total() + $deliveryCharge;
+                $order->payment_type = 'Point';
+                $order->tran_id = $invoice_id;
+                $order->status = 'Pending';
+                $order->created_by = auth()->id();
+                $order->updated_by = auth()->id();
+
+                if($order->save()){
+
+                    foreach(Cart::content() as $row){
+                        $orderDetails = new OrderDetail();
+
+                        $orderDetails->order_id = $order->id;
+                        $orderDetails->user_id = $order->user_id;
+                        $orderDetails->product_id = $row->id;
+                        $orderDetails->quantity = $row->qty;
+                        $orderDetails->price = $row->price;
+                        $orderDetails->discount = $row->discount;
+                        $orderDetails->vat_tax = $row->tax;
+                        $orderDetails->total_price = $row->total;
+                        $orderDetails->created_by = Auth::id();
+                        $orderDetails->updated_by = Auth::id();
+                        $orderDetails->save();
+                    }
+
+                    $transaction = new Transaction();
+                    $transaction->order_id = $order->id;
+                    $transaction->correlationid = NULL;
+                    $transaction->build = NULL;
+                    $transaction->email = NULL;
+                    $transaction->payerid = NULL;
+                    $transaction->firstname = NULL;
+                    $transaction->lastname = NULL;
+                    $transaction->currencycode = NULL;
+                    $transaction->amount = $totla_usd;
+                    $transaction->invoice_no = $invoice_id;
+                    $transaction->tran_date = date("Y-m-d h:i:s");
+                    $transaction->payment_type = 'Point';
+                    $transaction->save();
+
+                    $success = true;
+                }
+
+            }catch(ValidationException $e) {
+                DB::rollback();
+                return Redirect::to('/checkout')
+                ->withErrors( $e->getErrors() )
+                ->withInput();
+            }catch(\Exception $e)
+            {
+                DB::rollback();
+                throw $e;
+            }
+            DB::commit();
+
+            Cart::destroy();
+            session()->flash('order_success','Order placed successfully');
+            return response()->json(['point_less' => 'no', 'payment_error' => 'no', 'order_placed' => 'yes']);
+            //return redirect()->route('orders');
+
+        }else{
+            return response()->json(['point_less' => 'no', 'payment_error' => 'yes', 'order_placed' => 'no']);
+        }
     }
 
 }

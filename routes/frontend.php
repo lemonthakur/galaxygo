@@ -51,7 +51,8 @@ Route::get('cancel-payment', [PayPalPaymentController::class, 'paymentCancel'])-
 Route::get('payment-success', [PayPalPaymentController::class, 'paymentSuccess'])->name('success.payment');
 
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
-Route::post('checkout.register', [CheckoutController::class, 'register'])->name('checkout.register');
+Route::post('checkout-register', [CheckoutController::class, 'register'])->name('checkout.register');
+Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');
 
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

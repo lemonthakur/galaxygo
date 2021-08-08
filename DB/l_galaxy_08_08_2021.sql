@@ -693,6 +693,35 @@ insert  into `modules`(`id`,`name`,`description`,`status`,`deleted_at`,`created_
 (6,'Admin Panel User',NULL,1,NULL,1,1,'2020-01-24 18:58:53','2020-01-24 18:58:53'),
 (10,'Site Setting',NULL,1,NULL,1,1,'2021-07-14 09:08:07','2021-07-14 09:08:07');
 
+/*Table structure for table `order_details` */
+
+DROP TABLE IF EXISTS `order_details`;
+
+CREATE TABLE `order_details` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` double(8,2) NOT NULL,
+  `discount` double(10,2) DEFAULT NULL,
+  `vat_tax` double(8,2) DEFAULT NULL,
+  `total_price` double(8,2) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
+  `created_by` bigint(20) DEFAULT NULL,
+  `updated_by` bigint(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `order_details` */
+
+insert  into `order_details`(`id`,`order_id`,`user_id`,`product_id`,`quantity`,`price`,`discount`,`vat_tax`,`total_price`,`status`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
+(1,'1',14,9,1,70.00,0.00,14.70,84.70,1,14,14,'2021-08-08 16:11:30','2021-08-08 16:11:30'),
+(2,'2',14,10,1,100.00,0.00,21.00,121.00,1,14,14,'2021-08-08 16:52:37','2021-08-08 16:52:37'),
+(3,'3',14,9,1,70.00,0.00,14.70,84.70,1,14,14,'2021-08-08 16:53:44','2021-08-08 16:53:44');
+
 /*Table structure for table `order_shipping_addresses` */
 
 DROP TABLE IF EXISTS `order_shipping_addresses`;
@@ -724,6 +753,36 @@ insert  into `order_shipping_addresses`(`id`,`user_id`,`shipping_first_name`,`sh
 (13,14,'Size','Thakur','admin@email.comLem','ddddd','adddress 1','address2','sdfghjkl;ss',18,'333','01876543321',1,14,14,'2021-08-08 12:04:08','2021-08-08 12:04:08'),
 (14,14,'Sizes','Thakur','admin@email.comLem','ddddd','adddress 1','address2','sdfghjkl;ss',18,'333','01876543321',1,14,14,'2021-08-08 12:26:37','2021-08-08 12:26:37'),
 (15,14,'Size','Thakur','admin@email.comLem','ddddd','adddress 1','address2','sdfghjkl;ss',18,'333','01876543321',1,14,14,'2021-08-08 12:34:21','2021-08-08 12:34:21');
+
+/*Table structure for table `orders` */
+
+DROP TABLE IF EXISTS `orders`;
+
+CREATE TABLE `orders` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `shipping_address_id` int(11) DEFAULT NULL,
+  `subtotal` double NOT NULL,
+  `discount` double DEFAULT NULL,
+  `vat_tax` double NOT NULL,
+  `delivery_charge` double NOT NULL,
+  `total` double NOT NULL,
+  `payment_type` varchar(28) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tran_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('Pending','Fulfilment','Cancle') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending' COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
+  `created_by` bigint(20) NOT NULL,
+  `updated_by` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `orders` */
+
+insert  into `orders`(`id`,`user_id`,`shipping_address_id`,`subtotal`,`discount`,`vat_tax`,`delivery_charge`,`total`,`payment_type`,`tran_id`,`status`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
+(1,14,0,70,0,14.7,500,84.7,'PayPal','00000001','Pending',14,14,'2021-08-08 16:11:30','2021-08-08 16:11:30'),
+(2,14,0,100,0,21,60,181,'Point','00000002','Pending',14,14,'2021-08-08 16:52:37','2021-08-08 16:52:37'),
+(3,14,0,70,0,14.7,60,144.7,'Point','00000003','Pending',14,14,'2021-08-08 16:53:44','2021-08-08 16:53:44');
 
 /*Table structure for table `password_resets` */
 
@@ -831,7 +890,7 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`name`,`slug`,`category_id`,`sub_category_id`,`brand_id`,`feature_image`,`galler_images`,`product_type`,`attached_file`,`price`,`discount_amount`,`quantity`,`model_number`,`product_description`,`return_policy`,`pro_meta`,`pro_mt_description`,`video_url`,`featureproduct`,`starting_bid_amount`,`auction_start_date`,`auction_start_time`,`auction_end_date`,`auction_end_time`,`auction_start_date_time`,`auction_end_date_time`,`avg_review`,`status`,`deleted_at`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(8,'Product 1','45455ID',2,NULL,1,'ytgvkWxqvOFVYLXEvHTX.png','[\"610c5abb7e880product-details-large.png\"]','Auction Product',NULL,50,NULL,NULL,NULL,'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>','<p>Return plicy</p>','Meta','Meta discritpion',NULL,'yes',40,'2021-08-01','09:30:00','2021-08-10','11:59:00','2021-08-01 09:30:00','2021-08-10 11:59:00',0.00,1,NULL,1,1,'2021-08-05 21:19:40','2021-08-06 20:13:06'),
+(8,'Product 1','45455ID',2,NULL,1,'ytgvkWxqvOFVYLXEvHTX.png','[\"610c5abb7e880product-details-large.png\"]','Auction Product',NULL,50,10,NULL,NULL,'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>','<p>Return plicy</p>','Meta','Meta discritpion',NULL,'yes',40,'2021-08-01','09:30:00','2021-08-10','11:59:00','2021-08-01 09:30:00','2021-08-10 11:59:00',0.00,1,NULL,1,1,'2021-08-05 21:19:40','2021-08-06 20:13:06'),
 (9,'product 2','product-2-5880',2,NULL,2,'d38reOkhGAJasjHq7KpG.png',NULL,'General Product',NULL,70,NULL,NULL,'eeee555ID','<p>Product dEscritpion</p>','<p>Return plicy</p>',NULL,NULL,NULL,'no',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0.00,1,NULL,1,1,'2021-08-05 21:42:57','2021-08-05 21:45:42'),
 (10,'Prouct 3','prouct-3-7928',2,NULL,2,'tgW6WRxeKwyRvxhcQxD1.png',NULL,'General Product',NULL,100,NULL,NULL,'E-g33333gtt','<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>',NULL,NULL,NULL,'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4','yes',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0.00,1,NULL,1,1,'2021-08-05 21:47:23','2021-08-06 20:05:54');
 
@@ -887,6 +946,36 @@ CREATE TABLE `site_settings` (
 
 insert  into `site_settings`(`id`,`logo`,`icon`,`email`,`contact_no`,`site_title`,`meta_description`,`meta_keyword`,`copy_right`,`alert_quantity`,`display_unit`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
 (1,'upload/site-setting/qMPDTDFThCSaPSsGUf74.png','upload/site-setting/rJ4DcypuQQz0gSm74UXn.png','thakurlemon@gmail.com','01719287734','Contest','Web Embed','Inventory','Contest',15000,1,1,1,'2021-06-02 06:26:39','2021-07-24 10:01:37');
+
+/*Table structure for table `transactions` */
+
+DROP TABLE IF EXISTS `transactions`;
+
+CREATE TABLE `transactions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` bigint(20) DEFAULT NULL,
+  `correlationid` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `build` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payerid` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firstname` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastname` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currencycode` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` double(8,2) NOT NULL,
+  `invoice_no` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tran_date` datetime DEFAULT NULL,
+  `payment_type` enum('paypal','point') COLLATE utf8mb4_unicode_ci DEFAULT 'paypal',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `transactions` */
+
+insert  into `transactions`(`id`,`order_id`,`correlationid`,`build`,`email`,`payerid`,`firstname`,`lastname`,`currencycode`,`amount`,`invoice_no`,`tran_date`,`payment_type`,`created_at`,`updated_at`) values 
+(1,1,'400bf434c6131','55890594','sb-phakv7066915@personal.example.com','BD6FQF6LTWVLA','John','Doe','USD',70.00,'00000001','2021-08-08 04:11:29','paypal','2021-08-08 16:11:30','2021-08-08 16:11:30'),
+(2,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,160.00,'00000002','2021-08-08 04:52:37','point','2021-08-08 16:52:37','2021-08-08 16:52:37'),
+(3,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,130.00,'00000003','2021-08-08 04:53:44','point','2021-08-08 16:53:44','2021-08-08 16:53:44');
 
 /*Table structure for table `users` */
 

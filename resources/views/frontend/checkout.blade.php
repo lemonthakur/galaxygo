@@ -188,6 +188,16 @@
                 $(this).addClass('active');
                 $('#paypalLabel').removeClass('active');
             });
+
+            var order_error_cancel = '{{ Session::has('order_error') }}';
+            if(order_error_cancel){
+                toastr.options =
+                    {
+                        "closeButton" : true,
+                        "progressBar" : true
+                    }
+                toastr.error("Your payment has been cancelled.");
+            }
         });
     </script>
 @endsection

@@ -301,3 +301,30 @@
 </section>
 
 @endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            var csrf = "{{csrf_token()}}";
+            var session_for_toa = '{{ Session::has('order_success') }}';
+            var order_error = '{{ Session::has('order_error') }}';
+            if(session_for_toa){
+                toastr.options =
+                    {
+                        "closeButton" : true,
+                        "progressBar" : true
+                    }
+                toastr.success("Order placed successfully.");
+            }
+            else if(order_error){
+                toastr.options =
+                    {
+                        "closeButton" : true,
+                        "progressBar" : true
+                    }
+                toastr.error("Order can not be placed. Please try again later.");
+            }
+        });
+    </script>
+@endsection
+
