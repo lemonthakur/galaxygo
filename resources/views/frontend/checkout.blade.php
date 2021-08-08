@@ -20,8 +20,8 @@
                                 <input class="d-none" id="paypal" type="radio" value="1" name="payment_method"
                                         {{ (old("payment_method")==1 || old("payment_method")==null || old("payment_method") == '')? 'checked':''  }}>
 
-                                <label id="coinLabel" class="{{ (old("payment_method")==1) ? 'active':'' }}" for="coin"><i class="icofont-coins mr-1"></i> buy with coin</label>
-                                <input class="d-none" id="coin" type="radio" value="2" name="payment_method" {{ (old("payment_method")==1) ? 'checked':'' }}>
+                                <label id="coinLabel" class="{{ (old("payment_method")==2) ? 'active':'' }}" for="coin"><i class="icofont-coins mr-1"></i> buy with coin</label>
+                                <input class="d-none" id="coin" type="radio" value="2" name="payment_method" {{ (old("payment_method")==2) ? 'checked':'' }}>
                                 <span class="text-danger"> {{$errors->has("payment_method") ? $errors->first("payment_method") : ""}} </span>
                             </div>
                             <div class="or-pay">

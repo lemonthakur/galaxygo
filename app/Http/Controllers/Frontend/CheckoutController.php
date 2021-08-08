@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
+use App\Models\CoinHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,25 +85,39 @@ class CheckoutController extends Controller
                     $user->shipping_post_code       = $request->shipping_post_code;
                     $user->shipping_phone           = $request->shipping_phone;
 
+                    $user->total_coin = $user->total_coin + 100;
+                    $user->current_coin = $user->current_coin + 100;
+
                     if ($user->save()){
                         Auth::loginUsingId($user->id);
-                        $orderShipping = new OrderShippingAddress();
 
-                        $orderShipping->user_id                  = $user->id;
-                        $orderShipping->shipping_first_name      = $request->name;
-                        $orderShipping->shipping_last_name       = $request->last_name;
-                        $orderShipping->shipping_email           = $request->email;
-                        $orderShipping->shipping_company_name    = $request->shipping_company_name;
-                        $orderShipping->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
-                        $orderShipping->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
-                        $orderShipping->shipping_city            = $request->shipping_city;
-                        $orderShipping->shipping_country         = $request->shipping_country;
-                        $orderShipping->shipping_post_code       = $request->shipping_post_code;
-                        $orderShipping->shipping_phone           = $request->shipping_phone;
+                        $coinHistory = new CoinHistory();
+                        $coinHistory->user_id = auth()->id();
+                        $coinHistory->amount = 100;
+                        $coinHistory->transaction_type = 0;
+                        $coinHistory->earn_expense_type = 0;
+                        $coinHistory->save();
 
-                        $orderShipping->created_by = Auth::id();
-                        $orderShipping->updated_by = Auth::id();
-                        $orderShipping->save();
+                        if ($coinHistory->save()){
+
+                            $orderShipping = new OrderShippingAddress();
+
+                            $orderShipping->user_id                  = $user->id;
+                            $orderShipping->shipping_first_name      = $request->name;
+                            $orderShipping->shipping_last_name       = $request->last_name;
+                            $orderShipping->shipping_email           = $request->email;
+                            $orderShipping->shipping_company_name    = $request->shipping_company_name;
+                            $orderShipping->shipping_adrress_line_1  = $request->shipping_adrress_line_1;
+                            $orderShipping->shipping_adrress_line_2  = $request->shipping_adrress_line_2;
+                            $orderShipping->shipping_city            = $request->shipping_city;
+                            $orderShipping->shipping_country         = $request->shipping_country;
+                            $orderShipping->shipping_post_code       = $request->shipping_post_code;
+                            $orderShipping->shipping_phone           = $request->shipping_phone;
+
+                            $orderShipping->created_by = Auth::id();
+                            $orderShipping->updated_by = Auth::id();
+                            $orderShipping->save();
+                        }
 
                         $success = true;
                         Session::put('shippingAddress',[
@@ -274,7 +289,7 @@ class CheckoutController extends Controller
         $totla_usd = Cart::subtotal()+$deliveryCharge;
         $totla_to_pay = $totla_usd*100;
 
-        $user_have_point = 200000;
+        $user_have_point = Auth::user()->current_coin;
 
         if($totla_to_pay < $point_amount || $totla_to_pay > $user_have_point)
              return response()->json(['payment_error' => 'no', 'point_less' => 'yes', 'order_placed' => 'no']);

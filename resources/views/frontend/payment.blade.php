@@ -165,8 +165,9 @@
                 point_amount:point_amount,
             },
                 success:function (data) {
-                    $("#loading").hide();
+                    
                     if(data.point_less=='yes'){
+                        $("#loading").hide();
                         toastr.options =
                             {
                                 "closeButton" : true,
@@ -175,6 +176,7 @@
                         toastr.error("You don't have sufficient point to place this order.");
                     }
                     else if(data.payment_error=='yes'){
+                        $("#loading").hide();
                         toastr.options =
                             {
                                 "closeButton" : true,

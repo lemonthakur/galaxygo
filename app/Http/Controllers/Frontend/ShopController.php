@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductBid;
+use App\Models\ProductWiseBid;
 
 class ShopController extends Controller
 {
@@ -21,6 +23,23 @@ class ShopController extends Controller
         if($slug){
             $product = Product::where('slug', $slug)->first();
             if($product){
+                $bidder_info = '';
+                if($product->auction_end_date.' '.$product->auction_end_time >= date('Y-m-d H:i:s')){
+                    $from = date("Y-m-d", strtotime($product->auction_start_date)).' '.date("H:i:s", strtotime($product->auction_start_time));
+                    $to = date("Y-m-d", strtotime($product->auction_end_date)).' '.date("H:i:s", strtotime($product->auction_end_time));
+
+                    $check_existing = ProductWiseBid::where('product_id', $product->id);
+                    $check_existing->where(function($query) use($from, $to){
+                        $query->whereBetween('auction_start_date',  [$from, $to]);
+                        $query->orWhereBetween('auction_end_date_time',  [$from, $to]);
+                    });
+                    $check_existing = $check_existing->first();
+
+                    $bidder_info = ProductBid::where('product_wise_bid_id', $check_existing->id)
+                        ->where('user_id', \Auth::id())
+                        ->first();
+                }
+
                 $related_products = Product::where('id', '!=',$product->id);
                 $related_products->where(function($query) use($product){
                     $query->where('category_id', $product->category_id);
@@ -28,7 +47,7 @@ class ShopController extends Controller
                 });
                 $related_products = $related_products->orderBy('id', 'desc')->take(4)->get();
 
-                return view('frontend.product-details', compact('product', 'related_products'));
+                return view('frontend.product-details', compact('product', 'related_products', 'bidder_info'));
             }
             else{
                 abort(404);

@@ -98,7 +98,20 @@ class CartController extends Controller
             $product_upd->bid_end_date = $product->auction_end_date;
             $product_upd->bid_end_time = $product->auction_end_time;
             $product_upd->product_wise_bid_id = $check_existing->id;
-            $product_upd->save();
+            if($product_upd->save()){
+                $max_bidder_info = ProductBid::where('product_wise_bid_id', $check_existing->id)
+                                                ->orderBy('bid_amount', 'DESC')
+                                                ->first();
+                if($max_bidder_info){
+                    $update_pro_ws_bid = ProductWiseBid::find($check_existing->id);
+                    if($update_pro_ws_bid->height_bider_id != $max_bidder_info->user_id || $update_pro_ws_bid->height_bid_amount != $max_bidder_info->bid_amount){
+                        $update_pro_ws_bid->height_bider_id = $user_id;
+                        $update_pro_ws_bid->height_bid_amount = $max_bidder_info->bid_amount;
+                        $update_pro_ws_bid->save();
+                    }
+
+                }
+            }
 
             return 'true';
         }else{

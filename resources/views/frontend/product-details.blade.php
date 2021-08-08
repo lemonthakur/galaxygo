@@ -64,7 +64,7 @@
                     @if( $product->auction_end_date.' '.$product->auction_end_time >= date('Y-m-d H:i:s'))
                         <div class="ic-product-count-buy">
                             <div class="product-count bid-product-count">
-                                <input type="number" value="{{ Session::get("bid_amo") }}" min="1" class="qty"  style="padding-left: 0;">
+                                <input type="number" value="{{ Session::get("bid_amo", $bidder_info ? $bidder_info->bid_amount:'') }}" min="1" class="qty"  style="padding-left: 0;">
                             </div>
                             <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                                  data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
