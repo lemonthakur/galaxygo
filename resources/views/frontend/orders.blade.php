@@ -67,11 +67,13 @@
                                                 @if($bpv->pwb_height_bider_id == \Auth::id())
                                                     @if($bpv->pwb_ordered == 'no')
                                                         <a href="{{ route('bid.checkout', encrypt($bpv->id)) }}" class="fulfilment-btn">Payment</a>
+                                                    @elseif($bpv->pwb_ordered == 'yes' && $bpv->pwb_provied_to_user == 'yes')
+                                                        <a href="javascript:void(0);" class="fulfilment-btn">Fulfilment</a>
                                                     @elseif($bpv->pwb_ordered == 'yes')
                                                         <a href="javascript:void(0);" class="fulfilment-btn">Ordered</a>
                                                     @endif
                                                 @else
-                                                    <a href="javascript:void(0);" class="cancle-btn">End</a>
+                                                    <a href="javascript:void(0);" class="cancle-btn">Canceled</a>
                                                 @endif
                                             {{--if time not end--}}
                                             @else

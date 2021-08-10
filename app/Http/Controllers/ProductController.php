@@ -552,9 +552,10 @@ class ProductController extends Controller
 
                         $check_existing = ProductWiseBid::where('product_id', $product->id);
                                                         $check_existing->where(function($query) use($from, $to){
-                                                            $query->whereBetween('auction_start_date',  [$from, $to]);
-                                                            $query->orWhereBetween('auction_end_date_time',  [$from, $to]);
+                                                            $query->whereBetween('auction_start_date_time',  [$from, $to])
+                                                            ->orWhereBetween('auction_end_date_time',  [$from, $to]);
                                                         });
+
                         $check_existing = $check_existing->first();
 
                         if($check_existing)
