@@ -490,8 +490,7 @@ class CheckoutController extends Controller
                 throw $e;
             }
             DB::commit();
-
-            Cart::destroy();
+            
             session()->flash('order_success','Order placed successfully');
             return response()->json(['point_less' => 'no', 'payment_error' => 'no', 'order_placed' => 'yes']);
             //return redirect()->route('orders');
