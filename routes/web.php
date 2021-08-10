@@ -22,9 +22,9 @@ include ('frontend.php');
 
 //Frontend Route
 Route::get('/',[HomeController::class,'home'])->name('home');
-Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
+//Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
 Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
-Route::get('/entries',[HomeController::class,'entries'])->name('entries');
+//Route::get('/entries',[HomeController::class,'entries'])->name('entries');
 //Route::get('/shop',[HomeController::class,'shop'])->name('shop');
 //Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
 Route::get('/orders',[HomeController::class,'orders'])->name('orders');

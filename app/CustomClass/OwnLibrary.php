@@ -9,6 +9,8 @@
 namespace App\CustomClass;
 
 
+use App\Models\GuestUser;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -19,15 +21,15 @@ class OwnLibrary {
     public static function numberformat($num = 0){
         return number_format($num, 2, '.', ',');
     }
-    
+
     public static function printDate($date = '0000-00-00'){
         return date('F jS, Y', strtotime($date));
     }
-    
+
     public static function printDateTime($dateTime = '0000-00-00 00:00:00'){
         return date('F jS, Y h:i A', strtotime($dateTime));
     }
-    
+
     public static function validateAccess($moduleId = null, $activityId = null) {
         $haystack = Session::get('acl');
 
@@ -39,7 +41,7 @@ class OwnLibrary {
             exit;
         }
     }
-    
+
     public static function in_array_r($needle, $haystack) {
 
         $needleArr = array_keys($needle);
@@ -71,5 +73,26 @@ class OwnLibrary {
         $image_url = $upload_path . $image_full_name;
         $image->move($upload_path, $image_full_name);
         return $image_url;
+    }
+
+    public static function getUserInfo(){
+        $participantType = 1;
+
+        if (Auth::check() && Auth::user()->role_id == 0){
+            $participantType = 0;
+            $participantId = auth()->id();
+        }else{
+            $mac = strtok(exec('getmac'), ' ');
+
+            $guestUser = GuestUser::where('mac','=',$mac)->first();
+            if (empty($guestUser)){
+                $guestUser = new GuestUser();
+                $guestUser->mac = $mac;
+                $guestUser->save();
+            }
+            $participantId = $guestUser->id;
+        }
+
+        return array('type' => $participantType,'id' => $participantId);
     }
 }

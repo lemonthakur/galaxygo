@@ -4,10 +4,23 @@
     <div class="container">
         <div class="ic-header-warper profile-header-warper">
             <div class="logo">
-                <a href="{{route('home')}}" class="large-logo"><img src="{{asset('frontend/images/logo/logo.png')}}"
-                                                                    class="img-fluid" alt="logo"></a>
-                <a href="{{route('home')}}" class="mobile-logo"><img
-                        src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>
+                @if(!empty($siteSetting->logo))
+                    <a href="{{route('home')}}" class="large-logo"><img src="{{asset($siteSetting->logo)}}" class="img-fluid" alt="logo"></a>
+                @else
+                    <a href="{{route('home')}}" class="large-logo"><img src="{{asset('frontend/images/logo/logo.png')}}" class="img-fluid" alt="logo"></a>
+                @endif
+
+                @if(!empty($siteSetting->icon))
+                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset($siteSetting->icon)}}" class="img-fluid" alt="logo"></a>
+                @else
+                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>
+                @endif
+
+{{--                <a href="{{route('home')}}" class="large-logo"><img src="{{asset('frontend/images/logo/logo.png')}}"--}}
+{{--                                                                    class="img-fluid" alt="logo"></a>--}}
+
+{{--                <a href="{{route('home')}}" class="mobile-logo"><img--}}
+{{--                        src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>--}}
             </div>
             <div class="ic-header-right ic-profile-header">
                 <div class="ic-menu-item">

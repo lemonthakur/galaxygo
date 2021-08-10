@@ -19,7 +19,7 @@ class WinCoinController extends Controller
     {
         if($request->ajax()){
 
-            $winCoin = WinCoin::orderBy('win');
+            $winCoin = WinCoin::orderBy('win','desc');
 
             return DataTables::of($winCoin)
                 ->addIndexColumn()

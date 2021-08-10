@@ -12,16 +12,21 @@
                             <h2>how to <span>Play</span></h2>
                         </div>
                         <div class="content">
-                            <p>You can win 100000 coins daily. Start now!!</p>
-                            <p>10 of 10 win 100000 coins</p>
-                            <p>9 of 10 win 10000 coins</p>
-                            <p>8 of 10 win 1000 coins</p>
-                            <p>7 of 10 win 500 coins</p>
+                            <p>You can win {{$winCoins[0]['coin'] ?? 00}} coins daily. Start now!!</p>
+                            @forelse($winCoins as $winCoin)
+                                <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}} coins</p>
+                            @empty
+                                <p>Nothing Found</p>
+                            @endforelse
                         </div>
                         <div class="ic-game-start-btn">
-
+                            @if (Auth::check() && Auth::user()->role_id == 0)
                             <a href="{{route('entries')}}" class="ic-btn">start the contest</a>
-
+                            @else
+                            <a href="{{route('entries')}}" class="ic-btn">Guest try out</a>
+                            <a href="{{route('login')}}" class="ic-btn">login</a>
+                            <a href="{{route('register')}}" class="ic-btn">register</a>
+                            @endif
                         </div>
                     </div>
                     <!-- <div class="ic-guest-btn">

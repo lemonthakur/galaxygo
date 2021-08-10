@@ -170,18 +170,22 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @php
+                                        $sl = 1;
+                                    @endphp
                                     @foreach($contest->contestPlayers as $player)
                                         <tr>
+                                            <td class="text-center">{{$sl++}}</td>
                                             <td>
                                                 <img src="{{asset($player->player_image)}}"
                                                      style="width: 50px;height:50px;border-radius:50%;"/>
                                             </td>
                                             <td>
-                                                Name: {{ucwords($player->name)}} <br/>
-                                                Location: {{ucwords($player->location)}}
+                                                Name: {{ucwords($player->player_name)}} <br/>
+                                                Location: {{strtoupper($player->location)}}
                                             </td>
                                             <td>
-                                                Versus: {{ucwords($player->versus)}} <br/>
+                                                Versus: {{strtoupper($player->versus)}} <br/>
                                                 Score: {{$player->score}}
                                             </td>
                                             <td class="text-center align-middle">

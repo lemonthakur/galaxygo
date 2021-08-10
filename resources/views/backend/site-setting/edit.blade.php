@@ -88,22 +88,8 @@
 
                                         <div class="col-md-6">
                                             <label>
-                                                Upload Icon (50x50)
-                                            </label>
-                                            <p><input type="file"  accept="image/*" name="icon" class="image" id="image" style="display: none;"></p>
-                                            <p><label for="image" style="cursor: pointer;">
-                                                    @if(!$setting->icon)
-                                                        <img id="output" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="180"/>
-                                                    @else
-                                                        <img id="output" src="{{asset($setting->icon)}}" width="180"/>
-                                                    @endif
-                                                </label></p>
-                                            <span class="text-danger"> {{$errors->has("icon") ? $errors->first("icon") : ""}} </span>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label>
-                                                Upload Company Logo (128x128)
+                                                {{--                                                Upload Company Logo (128x128)--}}
+                                                Upload Company Logo
                                             </label>
                                             <p><input type="file"  accept="image/*" name="logo" class="logo" id="logo" style="display: none;"></p>
                                             <p><label for="logo" style="cursor: pointer;">
@@ -114,6 +100,22 @@
                                                     @endif
                                                 </label></p>
                                             <span class="text-danger"> {{$errors->has("logo") ? $errors->first("logo") : ""}} </span>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label>
+{{--                                                Upload Icon (50x50)--}}
+                                                Upload Mobile Logo
+                                            </label>
+                                            <p><input type="file"  accept="image/*" name="mobile_logo" class="image" id="image" style="display: none;"></p>
+                                            <p><label for="image" style="cursor: pointer;">
+                                                    @if(!$setting->icon)
+                                                        <img id="output" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="180"/>
+                                                    @else
+                                                        <img id="output" src="{{asset($setting->icon)}}" width="180"/>
+                                                    @endif
+                                                </label></p>
+                                            <span class="text-danger"> {{$errors->has("mobile_logo") ? $errors->first("mobile_logo") : ""}} </span>
                                         </div>
 
                                     </div>

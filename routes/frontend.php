@@ -2,11 +2,17 @@
 
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\ContestController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
 use App\Http\Controllers\Frontend\PayPalPaymentController;
 use App\Http\Controllers\Frontend\CheckoutController;
+
+//Contest Frontend
+Route::get('/entries',[ContestController::class,'entries'])->name('entries');
+Route::post('/entries/store',[ContestController::class,'entriesStore'])->name('entries.store');
+//Contest Frontend
 
 //minicart
 Route::post('cart/add', [CartController::class,'cartAdd'])->name('cart.add');
@@ -14,7 +20,6 @@ Route::post('cart/add', [CartController::class,'cartAdd'])->name('cart.add');
 Route::post('cart/remove/', [CartController::class,'removeCart'])->name('cart.remove');
 Route::get('/cart',[ShoppingCartController::class,'cart'])->name('shopping.cart');
 Route::post('cart/update',[ShoppingCartController::class,'cartUpdate'])->name('cart.update');
-
 Route::get('cart/get','frontend\CartController@cartGet')->name('cart.get');
 
 

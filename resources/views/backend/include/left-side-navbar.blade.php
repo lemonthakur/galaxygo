@@ -5,12 +5,12 @@
             <img src="{{asset("/public/admin-lte/dist/img/AdminLTELogo.png")}}" alt="Company Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
+            <span class="brand-text font-weight-light">{{ucwords($siteSetting->site_title ?? '')}}</span>
         @else
             <img src="{{asset($siteSetting->logo)}}" alt="Company Logo"
-                 class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
+                 class="brand-image">
         @endif
-        <span class="brand-text font-weight-light">{{ucwords($siteSetting->site_title ?? '')}}</span>
+        <span class="brand-text font-weight-light d-inline-block"></span>
     </a>
 
     <!-- Sidebar -->
