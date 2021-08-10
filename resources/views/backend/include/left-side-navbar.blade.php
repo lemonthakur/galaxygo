@@ -169,7 +169,7 @@
 
                 <li class="nav-item has-treeview {{ ($routeName == 'category.index' || $routeName == 'category.create' || $routeName == 'category.edit'
                  || $routeName == 'brand.index' || $routeName == 'brand.create' || $routeName == 'brand.edit'
-                 || $routeName == 'product.index' || $routeName == 'product.create' || $routeName == 'product.edit') ? 'menu-open' : '' }}">
+                 || $routeName == 'product.index' || $routeName == 'product.create' || $routeName == 'product.edit' || $routeName == 'auction-product.list') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
@@ -220,6 +220,13 @@
                                class="nav-link {{ ($routeName == 'product.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Product Create</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("auction-product.list")}}"
+                               class="nav-link {{ ($routeName == 'auction-product.list') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Auction Product List</p>
                             </a>
                         </li>
                     </ul>

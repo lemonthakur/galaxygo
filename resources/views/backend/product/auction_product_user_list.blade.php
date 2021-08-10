@@ -1,5 +1,5 @@
 @extends("backend.master.main-layout")
-@section("page-title","Product")
+@section("page-title","Auction Product")
 @section("main-content")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Product</h1>
+                        <h1 class="m-0 text-dark">Auction Product</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Product List</h3>
+                                <h3 class="card-title">Auction Product List</h3>
                                 <a href="{{route('product.create')}}" class="btn btn-primary float-right text-white">
                                     <i class="fas fa-plus-circle"></i>
                                     Add New
@@ -39,16 +39,13 @@
                                     <thead>
                                     <tr>
                                         <th>SL</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
-                                        <th>Brand</th>
-                                        <th>Auction On</th>
-                                        <th>Rem. Qty</th>
-                                        <th>Price($)</th>
-                                        {{--<th>Discount($)</th>--}}
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Product Name</th>
+                                        <th>Customer Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Bids Start Amt.</th>
+                                        <th>Bid Amount</th>
+                                        <th>Bid Date</th>
                                     </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -69,6 +66,7 @@
     <script>
         $(document).ready(function () {
             let formData = {};
+            let send_val = "{{ request()->segment(count(request()->segments()))}}";
 
             function loadDataTable(formData) {
                 $('#dTable').dataTable({
@@ -77,7 +75,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Auction Product Bid User List - {{date("d-m-Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -116,60 +114,49 @@
                         }
                     },
                     'ajax': {
-                        'url': '{{route("product.index")}}',
+                        'url': '{{route("bid.users.list")}}',
                         "type": "GET",
-                        "data": formData
+                        "data": {
+                           formData,
+                           id: send_val,
+                           // etc..
+                        },
+                        /*"data": formData*/
                     },
                     'columns': [
                         {data: 'DT_RowIndex'},
-                        {data: 'name'},
-                        /*{data: 'categoryName.name'},
-                        {data: 'subCategoryName.name'},*/
+                        {data: 'product_name'},
                         { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.category_name){
-                                    res = data.category_name.name;
+                                let biddr_name = '';
+                                if (data.bidder_name){
+                                    biddr_name = data.bidder_name +' '+ data.bidder_last_name;
                                 }
-                                return res;
+                                return biddr_name;
                             }
                         },
+                        {data: 'bidder_email'},
+                        {data: 'bidder_contact_no'},
+                        {data: 'pwb_starting_bid_amount'},
+                        {data: 'user_bid_amount'},
+                        
                         { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.sub_category_name){
-                                    res = data.sub_category_name.name;
-                                }
-                                return res;
+                            let dateString = data.user_bid_date;
+
+                            let allDate = dateString.split(' ');
+                            let thisDate = allDate[0].split('-');
+                            let thisTime = allDate[1].split(':');
+                            let newDate = [thisDate[2],thisDate[1],thisDate[0] ].join("-");
+
+                            let suffix = thisTime[0] >= 12 ? " PM":" AM";
+                            let hour = thisTime[0] > 12 ? thisTime[0] - 12 : thisTime[0];
+                                hour = hour < 10 ? hour : hour;
+                            let min = thisTime[1] ;
+                            let sec = thisTime[2] ;
+                            let newTime = hour + ':' + min + suffix;
+                            return newDate + ' ' + newTime;
                             }
                         },
-                        { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.brandName){
-                                    res = data.brandName.name;
-                                }
-                                return res;
-                            }
-                        },
-                        { "data": function ( data, type, row ) {
-                                let pro_type = 'No';
-                                if (data.product_type == "Auction Product"){
-                                    pro_type = 'Yes';
-                                }
-                                return pro_type;
-                            }
-                        },
-                        {data: 'remaining_qty'},
-                        /*{data: 'product_type'},*/
-                        {data: 'price'},
-                        /*{data: 'discount_amount'},*/
-                        { "data": function ( data, type, row ) {
-                                let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
-                                if (data.status == 1){
-                                    status = '<span class="btn btn-success btn-xs">Active</span>';
-                                }
-                                return status;
-                            }
-                        },
-                        {data: 'actions'},
+                        
                     ]
                 });
             }

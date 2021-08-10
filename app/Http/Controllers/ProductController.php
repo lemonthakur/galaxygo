@@ -75,7 +75,8 @@ class ProductController extends Controller
             "model_number" => "max:150",
             'price' => 'required|numeric',
             //'discount_amount' => 'numeric',
-            //"quantity" => "integer",
+            "quantity" => "required|integer",
+            "deliver_charge" => "required",
             "product_type" => "required|min:2|max:30",
             "product_description" => "required|min:2|max:5000",
             "return_policy" => "max:5000",
@@ -90,9 +91,7 @@ class ProductController extends Controller
         if($request->discount_amount){
             $rules["discount_amount"] = "numeric";
         }
-        if($request->quantity){
-            $rules["quantity"] = "integer";
-        }
+
         if($request->product_type == 'Auction Product'){
             if(strlen($request->auction_start_time) == 7)
                 $request['auction_start_time'] = '0'.$request->auction_start_time;
@@ -174,13 +173,17 @@ class ProductController extends Controller
                 $target->brand_id                   = $request->brand_id;
                 $target->product_type               = $request->product_type;
                 $target->price                      = $request->price;
-                $target->discount_amount                      = $request->discount_amount;
+                $target->discount_amount            = $request->discount_amount;
                 $target->model_number               = $request->model_number;
                 $target->product_description        = $request->product_description;
                 $target->return_policy              = $request->return_policy;
 
                 $target->pro_meta                   = $request->pro_meta;
                 $target->pro_mt_description         = $request->pro_mt_description;
+
+                $target->quantity                   = $request->quantity;
+                $target->remaining_qty              = $request->remaining_qty;
+                $target->deliver_charge             = $request->deliver_charge;
 
                 $target->video_url                  = $request->video_url;
                 $target->featureproduct             = $request->featureproduct;
@@ -337,7 +340,8 @@ class ProductController extends Controller
             "model_number" => "max:150",
             'price' => 'required|numeric',
             //'discount_amount' => 'numeric',
-            //"quantity" => "integer",
+            "quantity" => "required|integer",
+            "deliver_charge" => "required",
             "product_type" => "required|min:2|max:30",
             "product_description" => "required|min:2|max:5000",
             "return_policy" => "max:5000",
@@ -351,9 +355,7 @@ class ProductController extends Controller
         if($request->discount_amount){
             $rules["discount_amount"] = "numeric";
         }
-        if($request->quantity){
-            $rules["quantity"] = "integer";
-        }
+
         if(!$product_info->feature_image || $request->feature_image){
             $rules["feature_image"] = "required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024|dimensions:width=1200,height=969";
         }
@@ -445,6 +447,10 @@ class ProductController extends Controller
 
                 $product->pro_meta                   = $request->pro_meta;
                 $product->pro_mt_description         = $request->pro_mt_description;
+
+                $product->quantity                   = $product->quantity;
+                $product->remaining_qty              = $request->quantity;
+                $product->deliver_charge             = $request->deliver_charge;
 
                 $product->video_url                  = $request->video_url;
                 $product->featureproduct             = $request->featureproduct;
@@ -666,7 +672,87 @@ class ProductController extends Controller
                 dd("File does not exist.");
             }
         }
+    }
 
+    public function auctionProducts(Request $request){
+        OwnLibrary::validateAccess($this->moduleId,1);
 
+        if($request->ajax()){
+            $name = $request->name;
+
+            $product_list = ProductWiseBid::with('bid_this_auction')
+                                            ->join('products', 'products.id', '=', 'product_wise_bids.product_id')
+                                            ->leftJoin('users', 'users.id', '=', 'product_wise_bids.height_bider_id')
+                ->select("products.*"
+                        , "product_wise_bids.product_id as pwb_product_id"
+                        , "product_wise_bids.starting_bid_amount as pwb_starting_bid_amount"
+                        , "product_wise_bids.auction_start_date as pwb_auction_start_date"
+                        , "product_wise_bids.auction_start_time as pwb_auction_start_time"
+                        , "product_wise_bids.auction_end_date as pwb_auction_end_date"
+                        , "product_wise_bids.auction_end_time as pwb_auction_end_time"
+                        , "product_wise_bids.auction_start_date_time as pwb_auction_start_date_time"
+                        , "product_wise_bids.auction_end_date_time as pwb_auction_end_date_time"
+                        , "product_wise_bids.height_bider_id as pwb_height_bider_id"
+                        , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
+                        , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                        , "product_wise_bids.provied_to_user as pwb_provied_to_user"
+                        , "product_wise_bids.id as id"
+                        , "users.name as height_biddr_name"
+                        , "users.last_name as height_biddr_last_name"
+                    )
+                ->orderBy('products.id', 'DESC')
+                ->orderBy('products.auction_start_date_time', 'asc')
+                ->get();
+
+            return DataTables::of($product_list)
+                ->addIndexColumn()
+                ->addColumn('actions', 'backend.product.auction_action')
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('backend.product.auction_product_list');
+    }
+
+    public function bidUsersList(Request $request){
+        OwnLibrary::validateAccess($this->moduleId,1);
+
+        if($request->ajax()){
+            $product_list = ProductWiseBid::join('product_bids', 'product_wise_bids.id', '=', 'product_bids.product_wise_bid_id')
+                ->join('products', 'products.id', '=', 'product_wise_bids.product_id')
+                ->join('users', 'users.id', '=', 'product_bids.user_id')
+                ->select("products.name as product_name"
+                    , "product_wise_bids.product_id as pwb_product_id"
+                    , "product_wise_bids.starting_bid_amount as pwb_starting_bid_amount"
+                    , "product_wise_bids.auction_start_date as pwb_auction_start_date"
+                    , "product_wise_bids.auction_start_time as pwb_auction_start_time"
+                    , "product_wise_bids.auction_end_date as pwb_auction_end_date"
+                    , "product_wise_bids.auction_end_time as pwb_auction_end_time"
+                    , "product_wise_bids.auction_start_date_time as pwb_auction_start_date_time"
+                    , "product_wise_bids.auction_end_date_time as pwb_auction_end_date_time"
+                    , "product_wise_bids.height_bider_id as pwb_height_bider_id"
+                    , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
+                    , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                    , "product_wise_bids.provied_to_user as pwb_provied_to_user"
+                    , "product_wise_bids.id as id"
+                    , "users.name as bidder_name"
+                    , "users.last_name as bidder_last_name"
+                    , "users.email as bidder_email"
+                    , "users.contact_no as bidder_contact_no"
+                    , "product_bids.bid_amount as user_bid_amount"
+                    , "product_bids.created_at as user_bid_date"
+                )
+                ->where('product_wise_bids.id', $request->id)
+                ->orderBy('products.id', 'DESC')
+                ->orderBy('products.auction_start_date_time', 'asc')
+                ->orderBy('product_bids.bid_amount', 'DESC')
+                ->get();
+
+            return DataTables::of($product_list)
+                ->addIndexColumn()
+                ->addColumn('actions', '')
+                ->rawColumns([''])
+                ->make(true);
+        }
+        return view('backend.product.auction_product_user_list');
     }
 }

@@ -11,4 +11,18 @@ class ProductWiseBid extends Model
 {
     public $timestamps = false;
 
+    public function bid_this_auction() {
+        return $this->hasMany(ProductBid::class, 'product_wise_bid_id','id');
+    }
+
+    public function product_det()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
+
+    public function user_det()
+    {
+        return $this->belongsTo(User::class, 'height_bider_id');
+    }
+
 }

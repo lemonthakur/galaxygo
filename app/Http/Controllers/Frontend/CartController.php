@@ -33,7 +33,11 @@ class CartController extends Controller
                     'weight' => 0,
                     'taxRate' => 0,
                     'discount' => $request->discount,
-                    'options' => ['discount' => $request->discount, 'tax' => 0, 'image_name' => $request->img_name, 'slug' => $request->slug, 'add_date_time' => date('Y-m-d h:i:s')]
+                    'options' => ['discount' => $request->discount
+                        , 'tax' => 0
+                        , 'delivery_charge' => $request->delivery_charge
+                        , 'image_name' => $request->img_name, 'slug' => $request->slug
+                        , 'add_date_time' => date('Y-m-d h:i:s')]
                 ]);
                 $checkCart = 1;
             }
@@ -48,7 +52,12 @@ class CartController extends Controller
                 'weight' => 0,
                 'taxRate' => 0,
                 'discount' => $request->discount,
-                'options' => ['discount' => $request->discount, 'tax' => 0, 'image_name' => $request->img_name, 'slug' => $request->slug, 'add_date_time' => date('Y-m-d h:i:s')]
+                'options' => [
+                    'discount' => $request->discount
+                    , 'tax' => 0
+                    , 'delivery_charge' => $request->delivery_charge
+                    , 'image_name' => $request->img_name, 'slug' => $request->slug,
+                    'add_date_time' => date('Y-m-d h:i:s')]
                 ]);
         }
         //return view('frontend.ajax.minicart');
@@ -77,6 +86,9 @@ class CartController extends Controller
         $product = Product::find($request->id);
         $user_id = \Auth::user()->id;
 
+        if($product->starting_bid_amount > $request->amount)
+            return 'blnc_less';
+
         if($product){
             $from = date("Y-m-d", strtotime($product->auction_start_date)).' '.date("H:i:s", strtotime($product->auction_start_time));
             $to = date("Y-m-d", strtotime($product->auction_end_date)).' '.date("H:i:s", strtotime($product->auction_end_time));
@@ -89,8 +101,7 @@ class CartController extends Controller
             $check_existing = $check_existing->first();
 
             $product_upd = ProductBid::firstOrNew(
-                ['product_id' =>  $request->id],
-                ['user_id' => $user_id]
+                ['product_id' =>  $request->id, 'user_id' => $user_id]
             );
             $product_upd->product_id = $request->id;
             $product_upd->user_id = $user_id;

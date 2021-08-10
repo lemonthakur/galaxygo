@@ -68,11 +68,11 @@
                             </div>
                             <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                                  data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
-                                 data-slug="{{$product->slug}}">
+                                 data-slug="{{$product->slug}}" data-starting-bid-amount="{{$product->starting_bid_amount}}">
                                 <a href="javasceipt:void(0);" class="ic-btn ic-btn-golden2 custom_product_bid">place bid</a>
                             </div>
                         </div>
-                        <small class="text-white">Enter ${{number_format($price, 2)}} or more</small>
+                        <small class="text-white">Enter ${{number_format($product->starting_bid_amount, 2)}} or more</small>
                         <div class="description mt-0">
                             <strong class="text-white">Conditions: -</strong>
                             <?php
@@ -98,7 +98,7 @@
                         </div>
                         <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                         data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
-                        data-slug="{{$product->slug}}">
+                        data-slug="{{$product->slug}}" data-delivery-charge="{{$product->deliver_charge}}">
                             <a href="{{ route('shopping.cart') }}" class="ic-btn ic-btn-golden2 custom_add_to_cart">buy now</a>
                         </div>
                     </div>
@@ -144,8 +144,11 @@
                                     <p>${{ number_format($price, 2) }}</p>
                                 </a>
                             </div>
-                            <div class="ic-btn-group">
-                                <a href="{{route('shopping.cart')}}" class="buy-btn">buy now</a>
+                            <div class="ic-btn-group custom-add-to-cart-par" data-id="{{$apv->id}}" data-name="{{$apv->name}}" data-price="{{$price}}"
+                                 data-discount="{{$apv->discount_amount}}" data-image="{{$apv->feature_image}}"
+                                 data-slug="{{$apv->slug}}" data-delivery-charge="{{$apv->deliver_charge}}">
+                                <input type="hidden" class="qty" value="1">
+                                <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
                                 @if( $apv->auction_end_date.' '.$apv->auction_end_time >= date('Y-m-d H:i:s'))
                                     <a href="{{ route('product-details', $apv->slug) }}" class="bid-btn">bid now</a>
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#bidModal" class="icon-btn bid-list"><i class="flaticon-time-left"></i></a>
@@ -179,6 +182,7 @@
             var discount   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-discount');
             var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
             var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
+            var delivery_charge = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-delivery-charge');
 
             $.ajax({
                 type:'post',
@@ -192,6 +196,7 @@
                 discount:discount,
                 img_name:img_name,
                 slug:slug,
+                delivery_charge:delivery_charge,
             },
             success:function (data) {
                 window.location.href = "{{ route('shopping.cart')}}";
@@ -204,16 +209,26 @@
             $(document).on("click", ".custom_product_bid", function(e){
                 e.preventDefault();
 
-                var csrf   = "{{csrf_token()}}";
-                var id     = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
-                var amount = $(this).parent().parent().find('.qty').val();
-                var user_id = '{{ \Auth::check() }}';
+                var csrf            = "{{csrf_token()}}";
+                var id              = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
+                var amount          = $(this).parent().parent().find('.qty').val();
+                var user_id         = '{{ \Auth::check() }}';
+                var data_starting_bid_amount = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-starting-bid-amount');
 
                 if(amount == '' || amount <= 0){
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").addClass('quantityError');
                     return false;
                 }else{
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").removeClass('quantityError');
+                    if(data_starting_bid_amount > amount){
+                        toastr.options =
+                            {
+                                "closeButton" : true,
+                                "progressBar" : true
+                            }
+                        toastr.error("Please enter amount $"+data_starting_bid_amount+" or more.");
+                        return false;
+                    }
                 }
 
                 if(user_id !=1){
@@ -242,12 +257,21 @@
                                 }
                             toastr.success("Bid added successfully.");
                         }else{
-                            toastr.options =
-                                {
-                                    "closeButton" : true,
-                                    "progressBar" : true
-                                }
-                            toastr.error("Something went wrong. Bid can not added at this moment. Please contact with admin.");
+                            if(data=='blnc_less'){
+                                toastr.options =
+                                    {
+                                        "closeButton": true,
+                                        "progressBar": true
+                                    }
+                                toastr.error("Please enter amount $"+data_starting_bid_amount+" or more.");
+                            }else {
+                                toastr.options =
+                                    {
+                                        "closeButton": true,
+                                        "progressBar": true
+                                    }
+                                toastr.error("Something went wrong. Bid can not added at this moment. Please contact with admin.");
+                            }
                         }
                         $("#loading").hide();
                     }

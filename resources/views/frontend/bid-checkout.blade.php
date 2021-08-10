@@ -24,14 +24,9 @@
                                 <input class="d-none" id="coin" type="radio" value="2" name="payment_method" {{ (old("payment_method")==2) ? 'checked':'' }}>
                                 <span class="text-danger"> {{$errors->has("payment_method") ? $errors->first("payment_method") : ""}} </span>
                             </div>
-                            <div class="or-pay">
-                                <p><span>OR</span> To pay by credit card, purchase order or check, start by entering your shipping address bellow</p>
-                            </div>
-
+                            <input type="hidden" name="bid_checkout" value="bid_checkout">
+                            <input type="hidden" name="bid_pro_id" value="{{ request()->segment(count(request()->segments())) }}">
                             <div class="ic-payment-checkout-form">
-                                @if(!\Auth::check())
-                                    <p>Already have an account? <a href="{{route('login').'?checkoutpg=pg'}}">Log in</a> </p>
-                                @endif
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
@@ -116,7 +111,7 @@
                             </div>
                         </div>
                         <div class="continue-payment-shipping-btn">
-                            @if(Cart::subtotal()>0 && Cart::count() > 0)
+                            @if($product_info)
                                 <button type="submit" class="ic-btn payment-btn"> <span>Continue Payment</span></button>
                             @endif
                             <!-- <a href="{{route('payment')}}" class="ic-btn shopping-btn" style="background-color: #D6BA4F"> <span>Continue Payment</span></a> -->
@@ -128,27 +123,25 @@
             <div class="col-md-5">
                 <div class="ic-total-cart">
                     <h2>Total cart</h2>
-                    <?php $shipping_cost = 0; ?>
-                    @if(Cart::count() > 0)
-                        @foreach(Cart::content() as $row)
-                            <div class="total-cart-item">
-                                <div class="image-title">
-                                    <div class="image">
-                                        <img src="{{asset('upload/product-thumbnail-82-82/'.$row->options->image_name)}}" alt="">
-                                    </div>
-                                    <div class="title">
-                                        <h4>{{$row->name}}</h4>
-                                        <p>#{{$row->options->slug}}</p>
-                                        <p class="mobile-price">Price: {{$row->qty}} X ${{$row->price}}</p>
-                                    </div>
+                    <?php $total_price = 0; ?>
+                    @if($product_info)
+                        <div class="total-cart-item">
+                            <div class="image-title">
+                                <div class="image">
+                                    <img src="{{asset('upload/product-thumbnail-82-82/'.$product_info->product_det->feature_image)}}" alt="">
                                 </div>
-                                <div class="price">
-                                    <p>Price</p>
-                                    <span>{{$row->qty}} X ${{$row->price}}</span>
+                                <div class="title">
+                                    <h4>{{$product_info->product_det->name}}</h4>
+                                    <p>#{{$product_info->product_det->slug}}</p>
+                                    <p class="mobile-price">Price: ${{$product_info->height_bid_amount}}</p>
                                 </div>
                             </div>
-                            <?php $shipping_cost += $row->options->delivery_charge*$row->qty; ?>
-                        @endforeach
+                            <div class="price">
+                                <p>Price</p>
+                                <span>${{$product_info->height_bid_amount}}</span>
+                            </div>
+                        </div>
+                        <?php $total_price += $product_info->height_bid_amount; ?>
                     @endif
 
                     <div class="ic-coupon-input">
@@ -158,18 +151,21 @@
                     <div class="ic-total-amount-calculate">
                         <div class="ic-subtotal">
                             <h5>subtotal</h5>
-                            <h4>${{Cart::subtotal()}}</h4>
+                            <h4>${{$total_price}}</h4>
                         </div>
                         <div class="ic-shipping-charge-amount">
                             <div class="shipping-charge">
                                 <h5>Shipping Charge</h5>
                                 <p>Calculate Shipping Charge</p>
                             </div>
-                            <h4>${{ $shipping_cost }}</h4>
+                            <h4>
+                                <?php $shipping_cost = $product_info->product_det->deliver_charge; ?>
+                                ${{$shipping_cost}}
+                            </h4>
                         </div>
                         <div class="ic-total-amount">
                             <h5>TOTAL</h5>
-                            <h4>${{Cart::subtotal()+$shipping_cost}}</h4>
+                            <h4>${{$total_price+$shipping_cost}}</h4>
                         </div>
                     </div>
                 </div>
