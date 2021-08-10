@@ -116,7 +116,9 @@
                             </div>
                         </div>
                         <div class="continue-payment-shipping-btn">
-                            <button type="submit" class="ic-btn payment-btn"> <span>Continue Payment</span></button>
+                            @if(Cart::subtotal()>0 && Cart::count() > 0)
+                                <button type="submit" class="ic-btn payment-btn"> <span>Continue Payment</span></button>
+                            @endif
                             <!-- <a href="{{route('payment')}}" class="ic-btn shopping-btn" style="background-color: #D6BA4F"> <span>Continue Payment</span></a> -->
                             <a href="{{route('shop')}}" class="ic-btn shopping-btn">Continue Shopping</a>
                         </div>

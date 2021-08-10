@@ -31,7 +31,6 @@ Route::get('/orders',[HomeController::class,'orders'])->name('orders');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 //Route::get('/cart',[HomeController::class,'cart'])->name('cart');
 //Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
-Route::get('/payment',[HomeController::class,'payment'])->name('payment');
 //Frontend Route
 
 
@@ -74,4 +73,7 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::resource("/product",ProductController::class);
     Route::post("/product-sub-category",[ProductController::class,'getSubCagetories'])->name('product-product-sub-category.get');
     Route::get("/image_show/{type}/{id}",[ProductController::class,'imageShow']);
+
+    Route::get('auction-products', [ProductController::class,'auctionProducts'])->name('auction-product.list');
+    Route::any('bid-user-list/{id?}', [ProductController::class,'bidUsersList'])->name('bid.users.list');
 });

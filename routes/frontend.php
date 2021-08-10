@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
 use App\Http\Controllers\Frontend\PayPalPaymentController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\HomeController;
 
 //minicart
 Route::post('cart/add', [CartController::class,'cartAdd'])->name('cart.add');
@@ -56,4 +57,5 @@ Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpoint
 
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/payment',[HomeController::class,'payment'])->name('payment');
 });

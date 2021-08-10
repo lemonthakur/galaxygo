@@ -155,10 +155,10 @@
                                                         <label>Product Type <span class="text-danger">*</span></label>
                                                         <div class="checkbox checkbox-success">
                                                             <input type="radio" class="product_type" name="product_type" id="general_product" value="General Product" {{(old('product_type', $product->product_type) == "General Product") ? 'checked': ''}} required checked>
-                                                            <label for="general_product" style="font-weight: bold;">General Product</label>
+                                                            <label for="general_product" style="font-weight: bold;">Auction No</label>
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                                             <input type="radio" class="product_type" name="product_type" id="auction_product" value="Auction Product" {{(old('product_type', $product->product_type) == "Auction Product") ? 'checked': ''}} required>
-                                                            <label for="auction_product" style="font-weight: bold;">Auction Product</label>
+                                                            <label for="auction_product" style="font-weight: bold;">Auction Yes</label>
                                                         </div>
                                                     </div>
                                                 </div>

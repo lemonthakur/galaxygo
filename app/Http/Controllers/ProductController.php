@@ -666,7 +666,87 @@ class ProductController extends Controller
                 dd("File does not exist.");
             }
         }
+    }
 
+    public function auctionProducts(Request $request){
+        OwnLibrary::validateAccess($this->moduleId,1);
 
+        if($request->ajax()){
+            $name = $request->name;
+
+            $product_list = ProductWiseBid::with('bid_this_auction')
+                                            ->join('products', 'products.id', '=', 'product_wise_bids.product_id')
+                                            ->leftJoin('users', 'users.id', '=', 'product_wise_bids.height_bider_id')
+                ->select("products.*"
+                        , "product_wise_bids.product_id as pwb_product_id"
+                        , "product_wise_bids.starting_bid_amount as pwb_starting_bid_amount"
+                        , "product_wise_bids.auction_start_date as pwb_auction_start_date"
+                        , "product_wise_bids.auction_start_time as pwb_auction_start_time"
+                        , "product_wise_bids.auction_end_date as pwb_auction_end_date"
+                        , "product_wise_bids.auction_end_time as pwb_auction_end_time"
+                        , "product_wise_bids.auction_start_date_time as pwb_auction_start_date_time"
+                        , "product_wise_bids.auction_end_date_time as pwb_auction_end_date_time"
+                        , "product_wise_bids.height_bider_id as pwb_height_bider_id"
+                        , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
+                        , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                        , "product_wise_bids.provied_to_user as pwb_provied_to_user"
+                        , "product_wise_bids.id as id"
+                        , "users.name as height_biddr_name"
+                        , "users.last_name as height_biddr_last_name"
+                    )
+                ->orderBy('products.id', 'DESC')
+                ->orderBy('products.auction_start_date_time', 'asc')
+                ->get();
+
+            return DataTables::of($product_list)
+                ->addIndexColumn()
+                ->addColumn('actions', 'backend.product.auction_action')
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('backend.product.auction_product_list');
+    }
+
+    public function bidUsersList(Request $request){
+        OwnLibrary::validateAccess($this->moduleId,1);
+
+        if($request->ajax()){
+            $product_list = ProductWiseBid::join('product_bids', 'product_wise_bids.id', '=', 'product_bids.product_wise_bid_id')
+                ->join('products', 'products.id', '=', 'product_wise_bids.product_id')
+                ->join('users', 'users.id', '=', 'product_bids.user_id')
+                ->select("products.name as product_name"
+                    , "product_wise_bids.product_id as pwb_product_id"
+                    , "product_wise_bids.starting_bid_amount as pwb_starting_bid_amount"
+                    , "product_wise_bids.auction_start_date as pwb_auction_start_date"
+                    , "product_wise_bids.auction_start_time as pwb_auction_start_time"
+                    , "product_wise_bids.auction_end_date as pwb_auction_end_date"
+                    , "product_wise_bids.auction_end_time as pwb_auction_end_time"
+                    , "product_wise_bids.auction_start_date_time as pwb_auction_start_date_time"
+                    , "product_wise_bids.auction_end_date_time as pwb_auction_end_date_time"
+                    , "product_wise_bids.height_bider_id as pwb_height_bider_id"
+                    , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
+                    , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                    , "product_wise_bids.provied_to_user as pwb_provied_to_user"
+                    , "product_wise_bids.id as id"
+                    , "users.name as bidder_name"
+                    , "users.last_name as bidder_last_name"
+                    , "users.email as bidder_email"
+                    , "users.contact_no as bidder_contact_no"
+                    , "product_bids.bid_amount as user_bid_amount"
+                    , "product_bids.created_at as user_bid_date"
+                )
+                ->where('product_wise_bids.id', $request->id)
+                ->orderBy('products.id', 'DESC')
+                ->orderBy('products.auction_start_date_time', 'asc')
+                ->orderBy('product_bids.bid_amount', 'DESC')
+                ->get();
+
+            return DataTables::of($product_list)
+                ->addIndexColumn()
+                ->addColumn('actions', '')
+                ->rawColumns([''])
+                ->make(true);
+        }
+        return view('backend.product.auction_product_user_list');
     }
 }

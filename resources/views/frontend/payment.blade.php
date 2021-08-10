@@ -83,7 +83,9 @@
                             </div>
                         </div>
                         <div class="ic-confirm-payment-btn">
-                            <a href="javascript:void(0)" class="confirm_point_payment">Confirm Payment</a>
+                            @if(Cart::subtotal()>0 && Cart::count() > 0)
+                                <a href="javascript:void(0)" class="confirm_point_payment">Confirm Payment</a>
+                            @endif
                         </div>
                     </form>
                 </div>

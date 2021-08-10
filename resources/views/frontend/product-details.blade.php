@@ -68,7 +68,7 @@
                             </div>
                             <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                                  data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
-                                 data-slug="{{$product->slug}}">
+                                 data-slug="{{$product->slug}}" data-starting-bid-amount="{{$product->starting_bid_amount}}">
                                 <a href="javasceipt:void(0);" class="ic-btn ic-btn-golden2 custom_product_bid">place bid</a>
                             </div>
                         </div>
@@ -204,16 +204,26 @@
             $(document).on("click", ".custom_product_bid", function(e){
                 e.preventDefault();
 
-                var csrf   = "{{csrf_token()}}";
-                var id     = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
-                var amount = $(this).parent().parent().find('.qty').val();
-                var user_id = '{{ \Auth::check() }}';
+                var csrf            = "{{csrf_token()}}";
+                var id              = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-id');
+                var amount          = $(this).parent().parent().find('.qty').val();
+                var user_id         = '{{ \Auth::check() }}';
+                var data_starting_bid_amount = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-starting-bid-amount');
 
                 if(amount == '' || amount <= 0){
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").addClass('quantityError');
                     return false;
                 }else{
                     $(".ic-product-details-right .ic-product-count-buy .bid-product-count").removeClass('quantityError');
+                    if(data_starting_bid_amount > amount){
+                        toastr.options =
+                            {
+                                "closeButton" : true,
+                                "progressBar" : true
+                            }
+                        toastr.error("Please enter amount $"+data_starting_bid_amount+" or more.");
+                        return false;
+                    }
                 }
 
                 if(user_id !=1){
@@ -242,12 +252,21 @@
                                 }
                             toastr.success("Bid added successfully.");
                         }else{
-                            toastr.options =
-                                {
-                                    "closeButton" : true,
-                                    "progressBar" : true
-                                }
-                            toastr.error("Something went wrong. Bid can not added at this moment. Please contact with admin.");
+                            if(data=='blnc_less'){
+                                toastr.options =
+                                    {
+                                        "closeButton": true,
+                                        "progressBar": true
+                                    }
+                                toastr.error("Please enter amount $"+data_starting_bid_amount+" or more.");
+                            }else {
+                                toastr.options =
+                                    {
+                                        "closeButton": true,
+                                        "progressBar": true
+                                    }
+                                toastr.error("Something went wrong. Bid can not added at this moment. Please contact with admin.");
+                            }
                         }
                         $("#loading").hide();
                     }

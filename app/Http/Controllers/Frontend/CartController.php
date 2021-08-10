@@ -77,6 +77,9 @@ class CartController extends Controller
         $product = Product::find($request->id);
         $user_id = \Auth::user()->id;
 
+        if($product->starting_bid_amount > $request->amount)
+            return 'blnc_less';
+
         if($product){
             $from = date("Y-m-d", strtotime($product->auction_start_date)).' '.date("H:i:s", strtotime($product->auction_start_time));
             $to = date("Y-m-d", strtotime($product->auction_end_date)).' '.date("H:i:s", strtotime($product->auction_end_time));

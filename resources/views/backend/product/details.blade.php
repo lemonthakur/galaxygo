@@ -49,16 +49,29 @@
                                     </tr>
                                     <tr>
                                         <th>Price</th>
-                                        <td>{!! $product->price !!}</td>
+                                        <td>${!! $product->price !!}</td>
                                         <th>Discount Amount</th>
-                                        <td>{!! $product->discount_amount  !!}</td>
+                                        <td>${!! $product->discount_amount  !!}</td>
                                     </tr>
                                     <tr>
                                         <th>Quantity</th>
                                         <td>{!! $product->quantity !!}</td>
-                                        <th>Product Type</th>
-                                        <td>{!! $product->product_type  !!}</td>
+                                        <th>Auction On</th>
+                                        <td>
+                                            {!! $product->product_type == 'General Product' ? 'No':'Yes' !!}
+                                        </td>
                                     </tr>
+                                    @if($product->product_type == 'Auction Product')
+                                        <tr>
+                                            <th>Bid Start From</th>
+                                            <td>${{ $product->starting_bid_amount }}</td>
+                                            <th>Start - End</th>
+                                            <td>
+                                                {{ date("d-m-Y h:i A", strtotime($product->auction_start_date_time)) }} -
+                                                {{ date("d-m-Y h:i A", strtotime($product->auction_end_date_time)) }}
+                                            </td>
+                                        </tr>
+                                    @endif
                                     <!--  -->
                                     <tr>
                                         <th>Product Description</th>
