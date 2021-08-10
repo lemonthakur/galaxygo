@@ -33,7 +33,11 @@ class CartController extends Controller
                     'weight' => 0,
                     'taxRate' => 0,
                     'discount' => $request->discount,
-                    'options' => ['discount' => $request->discount, 'tax' => 0, 'image_name' => $request->img_name, 'slug' => $request->slug, 'add_date_time' => date('Y-m-d h:i:s')]
+                    'options' => ['discount' => $request->discount
+                        , 'tax' => 0
+                        , 'delivery_charge' => $request->delivery_charge
+                        , 'image_name' => $request->img_name, 'slug' => $request->slug
+                        , 'add_date_time' => date('Y-m-d h:i:s')]
                 ]);
                 $checkCart = 1;
             }
@@ -48,7 +52,12 @@ class CartController extends Controller
                 'weight' => 0,
                 'taxRate' => 0,
                 'discount' => $request->discount,
-                'options' => ['discount' => $request->discount, 'tax' => 0, 'image_name' => $request->img_name, 'slug' => $request->slug, 'add_date_time' => date('Y-m-d h:i:s')]
+                'options' => [
+                    'discount' => $request->discount
+                    , 'tax' => 0
+                    , 'delivery_charge' => $request->delivery_charge
+                    , 'image_name' => $request->img_name, 'slug' => $request->slug,
+                    'add_date_time' => date('Y-m-d h:i:s')]
                 ]);
         }
         //return view('frontend.ajax.minicart');

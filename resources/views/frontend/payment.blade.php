@@ -93,6 +93,7 @@
             <div class="col-md-5">
                 <div class="ic-total-cart">
                     <h2>Total cart</h2>
+                    <?php $shipping_cost = 0; ?>
                     @if(Cart::count() > 0)
                         @foreach(Cart::content() as $row)
                             <div class="total-cart-item">
@@ -111,6 +112,7 @@
                                     <span>{{$row->qty}} X ${{$row->price}}</span>
                                 </div>
                             </div>
+                            <?php $shipping_cost += $row->options->delivery_charge*$row->qty; ?>
                         @endforeach
                     @endif
 
@@ -128,7 +130,7 @@
                                 <h5>Shipping Charge</h5>
                                 <p>Calculate Shipping Charge</p>
                             </div>
-                            <h4><?php $shipping_cost = 60; ?>$60</h4>
+                            <h4>${{ $shipping_cost }}</h4>
                         </div>
                         <div class="ic-total-amount">
                             <h5>TOTAL</h5>

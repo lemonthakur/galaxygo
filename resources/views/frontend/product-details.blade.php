@@ -98,7 +98,7 @@
                         </div>
                         <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
                         data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
-                        data-slug="{{$product->slug}}">
+                        data-slug="{{$product->slug}}" data-delivery-charge="{{$product->deliver_charge}}">
                             <a href="{{ route('shopping.cart') }}" class="ic-btn ic-btn-golden2 custom_add_to_cart">buy now</a>
                         </div>
                     </div>
@@ -144,8 +144,11 @@
                                     <p>${{ number_format($price, 2) }}</p>
                                 </a>
                             </div>
-                            <div class="ic-btn-group">
-                                <a href="{{route('shopping.cart')}}" class="buy-btn">buy now</a>
+                            <div class="ic-btn-group custom-add-to-cart-par" data-id="{{$apv->id}}" data-name="{{$apv->name}}" data-price="{{$price}}"
+                                 data-discount="{{$apv->discount_amount}}" data-image="{{$apv->feature_image}}"
+                                 data-slug="{{$apv->slug}}" data-delivery-charge="{{$apv->deliver_charge}}">
+                                <input type="hidden" class="qty" value="1">
+                                <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
                                 @if( $apv->auction_end_date.' '.$apv->auction_end_time >= date('Y-m-d H:i:s'))
                                     <a href="{{ route('product-details', $apv->slug) }}" class="bid-btn">bid now</a>
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#bidModal" class="icon-btn bid-list"><i class="flaticon-time-left"></i></a>
@@ -179,6 +182,7 @@
             var discount   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-discount');
             var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
             var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
+            var delivery_charge = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-delivery-charge');
 
             $.ajax({
                 type:'post',
@@ -192,6 +196,7 @@
                 discount:discount,
                 img_name:img_name,
                 slug:slug,
+                delivery_charge:delivery_charge,
             },
             success:function (data) {
                 window.location.href = "{{ route('shopping.cart')}}";

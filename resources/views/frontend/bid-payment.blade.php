@@ -90,7 +90,10 @@
                                 <h5>Shipping Charge</h5>
                                 <p>Calculate Shipping Charge</p>
                             </div>
-                            <h4><?php $shipping_cost = 60; ?>$60</h4>
+                            <h4>
+                                <?php $shipping_cost = $product_info->product_det->deliver_charge; ?>
+                                ${{$shipping_cost}}
+                            </h4>
                         </div>
                         <div class="ic-total-amount">
                             <h5>TOTAL</h5>

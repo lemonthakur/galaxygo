@@ -297,7 +297,10 @@ class CheckoutController extends Controller
     public function checkoutpointPayment(Request $request){
         $point_amount = $request->point_amount;
 
-        $deliveryCharge = 60;
+        $deliveryCharge = 0;
+        foreach(Cart::content() as $row){
+            $deliveryCharge += $row->options->delivery_charge*$row->qty;
+        }
         $totla_usd = Cart::subtotal()+$deliveryCharge;
         $totla_to_pay = $totla_usd*100;
 
@@ -345,7 +348,8 @@ class CheckoutController extends Controller
                         $orderDetails->price = $row->price;
                         $orderDetails->discount = $row->discount;
                         $orderDetails->vat_tax = $row->tax;
-                        $orderDetails->total_price = $row->total;
+                        $orderDetails->delivery_charge = $row->options->delivery_charge*$row->qty;
+                        $orderDetails->total_price = $row->total+$row->options->delivery_charge*$row->qty;
                         $orderDetails->created_by = Auth::id();
                         $orderDetails->updated_by = Auth::id();
                         $orderDetails->save();
@@ -399,7 +403,7 @@ class CheckoutController extends Controller
         if(!$product_info)
             return response()->json(['payment_error' => 'yes', 'point_less' => 'no', 'order_placed' => 'no']);
 
-        $deliveryCharge = 60;
+        $deliveryCharge = $product_info->product_det->deliver_charge;
         $totla_usd = $product_info->height_bid_amount+$deliveryCharge;
         $totla_to_pay = $totla_usd*100;
 
@@ -448,7 +452,8 @@ class CheckoutController extends Controller
                     $orderDetails->price = $product_info->height_bid_amount;
                     $orderDetails->discount = 0;
                     $orderDetails->vat_tax = 0;
-                    $orderDetails->total_price = $product_info->height_bid_amount;
+                    $orderDetails->delivery_charge = $deliveryCharge;
+                    $orderDetails->total_price = $product_info->height_bid_amount+$deliveryCharge;
                     $orderDetails->created_by = Auth::id();
                     $orderDetails->updated_by = Auth::id();
                     $orderDetails->save();

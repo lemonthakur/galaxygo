@@ -729,6 +729,7 @@ CREATE TABLE `order_details` (
   `quantity` int(11) NOT NULL,
   `price` double(8,2) NOT NULL,
   `discount` double(10,2) DEFAULT NULL,
+  `delivery_charge` double DEFAULT NULL,
   `vat_tax` double(8,2) DEFAULT NULL,
   `total_price` double(8,2) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1 COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
@@ -737,24 +738,31 @@ CREATE TABLE `order_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `order_details` */
 
-insert  into `order_details`(`id`,`order_id`,`user_id`,`product_id`,`product_wise_bid_id`,`quantity`,`price`,`discount`,`vat_tax`,`total_price`,`status`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(1,'1',14,9,NULL,1,70.00,0.00,14.70,84.70,1,14,14,'2021-08-08 16:11:30','2021-08-08 16:11:30'),
-(2,'2',14,10,NULL,1,100.00,0.00,21.00,121.00,1,14,14,'2021-08-08 16:52:37','2021-08-08 16:52:37'),
-(3,'3',14,9,NULL,1,70.00,0.00,14.70,84.70,1,14,14,'2021-08-08 16:53:44','2021-08-08 16:53:44'),
-(4,'4',17,9,NULL,1,70.00,0.00,14.70,84.70,1,17,17,'2021-08-08 18:42:49','2021-08-08 18:42:49'),
-(5,'5',17,9,NULL,1,70.00,0.00,14.70,84.70,1,17,17,'2021-08-08 18:43:30','2021-08-08 18:43:30'),
-(6,'6',19,9,NULL,1,70.00,0.00,14.70,84.70,1,19,19,'2021-08-10 11:50:13','2021-08-10 11:50:13'),
-(7,'6',19,10,NULL,1,100.00,0.00,21.00,121.00,1,19,19,'2021-08-10 11:50:13','2021-08-10 11:50:13'),
-(8,'7',19,10,NULL,1,100.00,0.00,21.00,121.00,1,19,19,'2021-08-10 12:05:10','2021-08-10 12:05:10'),
-(9,'8',19,8,NULL,1,900.00,0.00,0.00,900.00,1,19,19,'2021-08-10 12:05:47','2021-08-10 12:05:47'),
-(10,'9',19,8,2,1,900.00,0.00,0.00,900.00,1,19,19,'2021-08-10 12:38:24','2021-08-10 12:38:24'),
-(11,'10',19,8,2,1,900.00,0.00,0.00,900.00,1,19,19,'2021-08-10 13:12:34','2021-08-10 13:12:34'),
-(12,'11',19,8,NULL,1,40.00,0.00,8.40,48.40,1,19,19,'2021-08-10 13:14:13','2021-08-10 13:14:13'),
-(13,'12',19,8,2,1,900.00,0.00,0.00,900.00,1,19,19,'2021-08-10 13:31:11','2021-08-10 13:31:11');
+insert  into `order_details`(`id`,`order_id`,`user_id`,`product_id`,`product_wise_bid_id`,`quantity`,`price`,`discount`,`delivery_charge`,`vat_tax`,`total_price`,`status`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
+(1,'1',14,9,NULL,1,70.00,0.00,NULL,14.70,84.70,1,14,14,'2021-08-08 16:11:30','2021-08-08 16:11:30'),
+(2,'2',14,10,NULL,1,100.00,0.00,NULL,21.00,121.00,1,14,14,'2021-08-08 16:52:37','2021-08-08 16:52:37'),
+(3,'3',14,9,NULL,1,70.00,0.00,NULL,14.70,84.70,1,14,14,'2021-08-08 16:53:44','2021-08-08 16:53:44'),
+(4,'4',17,9,NULL,1,70.00,0.00,NULL,14.70,84.70,1,17,17,'2021-08-08 18:42:49','2021-08-08 18:42:49'),
+(5,'5',17,9,NULL,1,70.00,0.00,NULL,14.70,84.70,1,17,17,'2021-08-08 18:43:30','2021-08-08 18:43:30'),
+(6,'6',19,9,NULL,1,70.00,0.00,NULL,14.70,84.70,1,19,19,'2021-08-10 11:50:13','2021-08-10 11:50:13'),
+(7,'6',19,10,NULL,1,100.00,0.00,NULL,21.00,121.00,1,19,19,'2021-08-10 11:50:13','2021-08-10 11:50:13'),
+(8,'7',19,10,NULL,1,100.00,0.00,NULL,21.00,121.00,1,19,19,'2021-08-10 12:05:10','2021-08-10 12:05:10'),
+(9,'8',19,8,NULL,1,900.00,0.00,NULL,0.00,900.00,1,19,19,'2021-08-10 12:05:47','2021-08-10 12:05:47'),
+(10,'9',19,8,2,1,900.00,0.00,NULL,0.00,900.00,1,19,19,'2021-08-10 12:38:24','2021-08-10 12:38:24'),
+(11,'10',19,8,2,1,900.00,0.00,NULL,0.00,900.00,1,19,19,'2021-08-10 13:12:34','2021-08-10 13:12:34'),
+(12,'11',19,8,NULL,1,40.00,0.00,NULL,8.40,48.40,1,19,19,'2021-08-10 13:14:13','2021-08-10 13:14:13'),
+(13,'12',19,8,2,1,900.00,0.00,NULL,0.00,900.00,1,19,19,'2021-08-10 13:31:11','2021-08-10 13:31:11'),
+(14,'13',17,8,2,1,900.00,0.00,20,0.00,920.00,1,17,17,'2021-08-10 16:05:44','2021-08-10 16:05:44'),
+(15,'14',17,8,2,1,900.00,0.00,20,0.00,920.00,1,17,17,'2021-08-10 16:08:23','2021-08-10 16:08:23'),
+(16,'15',19,10,NULL,1,100.00,0.00,0,21.00,121.00,1,19,19,'2021-08-10 16:09:47','2021-08-10 16:09:47'),
+(17,'15',19,9,NULL,1,70.00,0.00,10,14.70,94.70,1,19,19,'2021-08-10 16:09:47','2021-08-10 16:09:47'),
+(18,'16',19,9,NULL,1,70.00,0.00,10,14.70,94.70,1,19,19,'2021-08-10 16:10:16','2021-08-10 16:10:16'),
+(19,'17',19,9,NULL,5,70.00,0.00,50,14.70,473.50,1,19,19,'2021-08-10 16:20:33','2021-08-10 16:20:33'),
+(20,'17',19,8,NULL,1,40.00,0.00,20,8.40,68.40,1,19,19,'2021-08-10 16:20:34','2021-08-10 16:20:34');
 
 /*Table structure for table `order_shipping_addresses` */
 
@@ -815,7 +823,7 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `orders` */
 
@@ -831,7 +839,12 @@ insert  into `orders`(`id`,`user_id`,`shipping_address_id`,`subtotal`,`discount`
 (9,19,0,900,0,0,10,910,'PayPal','00000009','auction','Pending',19,19,'2021-08-10 12:38:24','2021-08-10 12:38:24'),
 (10,19,0,900,0,0,10,910,'PayPal','00000010','auction','Pending',19,19,'2021-08-10 13:12:34','2021-08-10 13:12:34'),
 (11,19,0,40,0,8.4,0,48.4,'PayPal','00000010','general','Pending',19,19,'2021-08-10 13:14:13','2021-08-10 13:14:13'),
-(12,19,0,900,0,0,60,960,'Point','00000012','auction','Pending',19,19,'2021-08-10 13:31:11','2021-08-10 13:31:11');
+(12,19,0,900,0,0,60,960,'Point','00000012','auction','Pending',19,19,'2021-08-10 13:31:11','2021-08-10 13:31:11'),
+(13,17,0,900,0,0,20,920,'Point','00000013','auction','Pending',17,17,'2021-08-10 16:05:44','2021-08-10 16:05:44'),
+(14,17,0,900,0,0,20,920,'PayPal','00000014','auction','Pending',17,17,'2021-08-10 16:08:23','2021-08-10 16:08:23'),
+(15,19,0,170,0,35.7,10,215.7,'PayPal','00000014','general','Pending',19,19,'2021-08-10 16:09:47','2021-08-10 16:09:47'),
+(16,19,0,70,0,14.7,10,94.7,'Point','00000016','general','Pending',19,19,'2021-08-10 16:10:16','2021-08-10 16:10:16'),
+(17,19,0,390,0,81.9,70,541.9,'Point','00000017','general','Pending',19,19,'2021-08-10 16:20:33','2021-08-10 16:20:33');
 
 /*Table structure for table `password_resets` */
 
@@ -871,7 +884,7 @@ insert  into `product_bids`(`id`,`product_id`,`product_wise_bid_id`,`user_id`,`b
 (1,8,1,17,555,'2021-08-15','11:59:00',1,17,'2021-08-05 22:27:04','2021-08-10 14:32:46'),
 (2,8,2,17,70,'2021-08-10','11:59:00',1,19,'2021-08-05 22:27:04','2021-08-08 19:40:56'),
 (3,10,4,17,50,'2021-08-15','20:21:00',1,17,'2021-08-10 14:22:31','2021-08-10 14:24:38'),
-(4,8,1,19,600,'2021-08-15','11:59:00',19,19,'2021-08-10 14:36:59','2021-08-10 14:37:54');
+(4,8,1,17,600,'2021-08-15','11:59:00',19,19,'2021-08-10 14:36:59','2021-08-10 14:37:54');
 
 /*Table structure for table `product_wise_bids` */
 
@@ -893,15 +906,16 @@ CREATE TABLE `product_wise_bids` (
   `ordered` enum('yes','no') DEFAULT 'no',
   `provied_to_user` enum('yes','no') DEFAULT 'no',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_wise_bids` */
 
 insert  into `product_wise_bids`(`id`,`product_id`,`starting_bid_amount`,`auction_start_date`,`auction_start_time`,`auction_end_date`,`auction_end_time`,`auction_start_date_time`,`auction_end_date_time`,`height_bider_id`,`height_bid_amount`,`allow_to_user`,`ordered`,`provied_to_user`) values 
-(1,8,40,'2021-08-05 00:00:00','09:30:00','2021-08-15','11:59:00','2021-08-05 09:30:00','2021-08-15 11:59:00',19,600,'yes','no','no'),
-(2,8,40,'2021-08-01 00:00:00','09:30:00','2021-08-10','11:59:00','2021-08-01 09:30:00','2021-08-10 11:59:00',19,900,'yes','yes','no'),
+(1,8,40,'2021-08-05 00:00:00','09:30:00','2021-08-15','11:59:00','2021-08-05 09:30:00','2021-08-15 11:59:00',17,600,'yes','no','no'),
+(2,8,40,'2021-08-01 00:00:00','09:30:00','2021-08-10','11:59:00','2021-08-01 09:30:00','2021-08-10 11:59:00',17,900,'yes','yes','no'),
 (3,8,40,'2021-08-01 00:00:00','09:30:00','2021-08-05','11:59:00','2021-08-01 09:30:00','2021-08-05 11:59:00',NULL,NULL,'yes','no','no'),
-(4,10,20,'2021-08-05 00:00:00','20:21:00','2021-08-15','20:21:00','2021-08-05 20:21:00','2021-08-15 20:21:00',17,50,'yes','no','no');
+(4,10,20,'2021-08-05 00:00:00','20:21:00','2021-08-15','20:21:00','2021-08-05 20:21:00','2021-08-15 20:21:00',17,50,'yes','no','no'),
+(5,10,20,'2021-08-05 00:00:00','20:21:00','2021-08-09','20:21:00','2021-08-05 20:21:00','2021-08-09 20:21:00',NULL,NULL,'yes','no','no');
 
 /*Table structure for table `products` */
 
@@ -950,9 +964,9 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`name`,`slug`,`category_id`,`sub_category_id`,`brand_id`,`feature_image`,`galler_images`,`product_type`,`attached_file`,`price`,`discount_amount`,`quantity`,`remaining_qty`,`deliver_charge`,`model_number`,`product_description`,`return_policy`,`pro_meta`,`pro_mt_description`,`video_url`,`featureproduct`,`starting_bid_amount`,`auction_start_date`,`auction_start_time`,`auction_end_date`,`auction_end_time`,`auction_start_date_time`,`auction_end_date_time`,`avg_review`,`status`,`deleted_at`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(8,'Product 1','45455ID',2,NULL,1,'ytgvkWxqvOFVYLXEvHTX.png','[\"610c5abb7e880product-details-large.png\"]','Auction Product',NULL,50,10,NULL,NULL,NULL,NULL,'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>','<p>Return plicy</p>','Meta','Meta discritpion',NULL,'yes',40,'2021-08-05','09:30:00','2021-08-15','11:59:00','2021-08-05 09:30:00','2021-08-15 11:59:00',0.00,1,NULL,1,1,'2021-08-05 21:19:40','2021-08-10 14:20:28'),
+(8,'Product 1','45455ID',2,NULL,1,'ytgvkWxqvOFVYLXEvHTX.png','[\"610c5abb7e880product-details-large.png\"]','Auction Product',NULL,50,10,NULL,NULL,20,NULL,'<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>','<p>Return plicy</p>','Meta','Meta discritpion',NULL,'yes',40,'2021-08-05','09:30:00','2021-08-15','11:59:00','2021-08-05 09:30:00','2021-08-15 11:59:00',0.00,1,NULL,1,1,'2021-08-05 21:19:40','2021-08-10 14:20:28'),
 (9,'product 2','product-2-5880',2,NULL,2,'d38reOkhGAJasjHq7KpG.png',NULL,'General Product',NULL,70,NULL,100,70,10,'eeee555ID','<p>Product dEscritpion</p>','<p>Return plicy</p>',NULL,NULL,NULL,'no',NULL,NULL,NULL,NULL,NULL,NULL,NULL,0.00,1,NULL,1,1,'2021-08-05 21:42:57','2021-08-10 14:54:25'),
-(10,'Prouct 3','prouct-3-7928',2,NULL,2,'tgW6WRxeKwyRvxhcQxD1.png',NULL,'Auction Product',NULL,100,NULL,NULL,NULL,NULL,'E-g33333gtt','<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>',NULL,NULL,NULL,'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4','yes',20,'2021-08-05','20:21:00','2021-08-15','20:21:00','2021-08-05 20:21:00','2021-08-15 20:21:00',0.00,1,NULL,1,1,'2021-08-05 21:47:23','2021-08-10 14:21:29');
+(10,'Prouct 3','prouct-3-7928',2,NULL,2,'tgW6WRxeKwyRvxhcQxD1.png',NULL,'Auction Product',NULL,100,NULL,NULL,100,0,'E-g33333gtt','<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>',NULL,NULL,NULL,'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4','yes',20,'2021-08-05','20:21:00','2021-08-09','20:21:00','2021-08-05 20:21:00','2021-08-09 20:21:00',0.00,1,NULL,1,1,'2021-08-05 21:47:23','2021-08-10 16:00:07');
 
 /*Table structure for table `roles` */
 
@@ -1028,7 +1042,7 @@ CREATE TABLE `transactions` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `transactions` */
 
@@ -1044,7 +1058,12 @@ insert  into `transactions`(`id`,`order_id`,`correlationid`,`build`,`email`,`pay
 (9,9,'a407a357ecee9','55890594','sb-phakv7066915@personal.example.com','BD6FQF6LTWVLA','John','Doe','USD',910.00,'00000009','2021-08-10 12:38:24','paypal','2021-08-10 12:38:24','2021-08-10 12:38:24'),
 (10,10,'1a11332306a25','55890594','sb-phakv7066915@personal.example.com','BD6FQF6LTWVLA','John','Doe','USD',910.00,'00000010','2021-08-10 01:12:34','paypal','2021-08-10 13:12:34','2021-08-10 13:12:34'),
 (11,11,'614cfd478b6d4','55890594','sb-jgyeu2645768@personal.example.com','5B659UKFB2MAN','John','Doe','USD',50.00,'00000010','2021-08-10 01:14:13','paypal','2021-08-10 13:14:13','2021-08-10 13:14:13'),
-(12,12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,960.00,'00000012','2021-08-10 01:31:11','point','2021-08-10 13:31:11','2021-08-10 13:31:11');
+(12,12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,960.00,'00000012','2021-08-10 01:31:11','point','2021-08-10 13:31:11','2021-08-10 13:31:11'),
+(13,13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,920.00,'00000013','2021-08-10 04:05:44','point','2021-08-10 16:05:44','2021-08-10 16:05:44'),
+(14,14,'dc5eea16901c1','55890594','sb-jgyeu2645768@personal.example.com','5B659UKFB2MAN','John','Doe','USD',920.00,'00000014','2021-08-10 04:08:23','paypal','2021-08-10 16:08:23','2021-08-10 16:08:23'),
+(15,15,'af4f3e2022df8','55890594','sb-phakv7066915@personal.example.com','BD6FQF6LTWVLA','John','Doe','USD',180.00,'00000014','2021-08-10 04:09:48','paypal','2021-08-10 16:09:47','2021-08-10 16:09:47'),
+(16,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,80.00,'00000016','2021-08-10 04:10:16','point','2021-08-10 16:10:16','2021-08-10 16:10:16'),
+(17,17,NULL,NULL,NULL,NULL,NULL,NULL,NULL,460.00,'00000017','2021-08-10 04:20:34','point','2021-08-10 16:20:34','2021-08-10 16:20:34');
 
 /*Table structure for table `users` */
 
@@ -1091,12 +1110,12 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`role_id`,`name`,`email`,`last_name`,`email_verified_at`,`contact_no`,`photo`,`password`,`lastLoginTime`,`provider`,`provider_id`,`total_coin`,`current_coin`,`withdraw`,`status`,`shipping_first_name`,`shipping_last_name`,`shipping_email`,`shipping_company_name`,`shipping_adrress_line_1`,`shipping_adrress_line_2`,`shipping_city`,`shipping_country`,`shipping_post_code`,`shipping_phone`,`deleted_at`,`remember_token`,`created_by`,`updated_by`,`created_at`,`updated_at`) values 
-(1,1,'admin','admin@email.com',NULL,NULL,'01682234164','upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg','$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm','2021-08-10 14:39:16',NULL,NULL,0.00,0.00,0.00,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'iZZGz3P2GbKfeU5Ud5Wnd4AhebwLxD3ETGCgWOuLgTUxo6r4w02R6gSaRlUE',1,1,'2020-01-18 10:14:02','2021-08-10 14:39:16'),
+(1,1,'admin','admin@email.com',NULL,NULL,'01682234164','upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg','$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm','2021-08-10 15:59:30',NULL,NULL,0.00,0.00,0.00,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'GceCPXLYI1z3PnGZLzQliXqLrTumirZ0EJiaHd9MUGvbKWDKmGrLBh1xoSe2',1,1,'2020-01-18 10:14:02','2021-08-10 15:59:30'),
 (13,0,'Md Miraj Khandaker','mirajkhandaker@yahoo.com',NULL,NULL,'iVVV21080694','https://graph.facebook.com/v3.3/4602665283111962/picture?type=normal',NULL,NULL,'facebook','4602665283111962',0.00,0.00,0.00,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-08-06 07:03:02','2021-08-06 07:03:02'),
 (14,0,'Size','admin@email.comLem','Thakur',NULL,'01876543321',NULL,'$2y$10$eD/xApwzXROi.kfYW9x81.Cu00JCHx8/Yngy3OyE641i0F0bpAzqe','2021-08-08 12:34:01',NULL,NULL,0.00,0.00,0.00,1,'Size','Thakur','admin@email.comLem','ddddd','adddress 1','address2','sdfghjkl;ss',18,'333','01876543321',NULL,NULL,NULL,14,'2021-08-08 12:04:08','2021-08-08 12:34:21'),
 (15,0,'Lemon','lemontest@gmail.com','Thakur',NULL,'01876354334',NULL,'$2y$10$bG4MhPzDp17MNi6J6jlhFe8DHuOozy6717ddypRrJjrFTEMd46c36',NULL,NULL,NULL,0.00,0.00,0.00,1,'Lemon','Thakur','lemontest@gmail.com','Company name','Address 1','Address 2','Dhaka',1,'4444','01876354334',NULL,NULL,NULL,NULL,'2021-08-08 18:40:28','2021-08-08 18:40:28'),
-(17,0,'Heemel','heemle@gmail.com','Thakur',NULL,'01876543324',NULL,'$2y$10$uK1Zk25jFC0ERJzIpXVG8O58l/gvUaxNMa0oXIADcQD6mNy/Xv1Em','2021-08-10 14:24:19',NULL,NULL,0.00,0.00,0.00,1,'Heemels','Thakur','heemle@gmail.com','company','Address 1',NULL,'Kabul',18,'5555666','01876543324',NULL,NULL,NULL,17,'2021-08-08 18:42:11','2021-08-10 14:24:19'),
-(19,0,'Thakur','thakurlemon@gmail.com','Lemon',NULL,'01876543333',NULL,'$2y$10$NR/sgPsb2gWgM9k5ly4gwOHU1b6UkM/gCDgo52vg/khVQjpCdKin.','2021-08-10 11:32:13',NULL,NULL,100.00,1000000.00,0.00,1,'Thakur','Lemon','thakurlemon@gmail.com','Company','Address',NULL,'Dhaka',18,'56444','01876543333',NULL,NULL,18,18,'2021-08-08 18:47:52','2021-08-10 11:32:13');
+(17,0,'Heemel','heemle@gmail.com','Thakur',NULL,'01876543324',NULL,'$2y$10$uK1Zk25jFC0ERJzIpXVG8O58l/gvUaxNMa0oXIADcQD6mNy/Xv1Em','2021-08-10 14:24:19',NULL,NULL,0.00,10000000.00,0.00,1,'Heemels','Thakur','heemle@gmail.com','company','Address 1',NULL,'Kabul',18,'5555666','01876543324',NULL,NULL,NULL,17,'2021-08-08 18:42:11','2021-08-10 14:24:19'),
+(19,0,'Thakur','thakurlemon@gmail.com','Lemon',NULL,'01876543333',NULL,'$2y$10$NR/sgPsb2gWgM9k5ly4gwOHU1b6UkM/gCDgo52vg/khVQjpCdKin.','2021-08-10 16:07:25',NULL,NULL,100.00,1000000.00,0.00,1,'Thakur','Lemon','thakurlemon@gmail.com','Company','Address',NULL,'Dhaka',18,'56444','01876543333',NULL,NULL,18,18,'2021-08-08 18:47:52','2021-08-10 16:07:25');
 
 /*Table structure for table `win_coins` */
 

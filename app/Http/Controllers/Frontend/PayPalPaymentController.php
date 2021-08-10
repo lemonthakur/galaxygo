@@ -27,12 +27,12 @@ class PayPalPaymentController extends Controller
                 $product['items'][] =
                     [
                         'name' => $row->name,
-                        'price' => $row->price + (10 * $row->qty),
+                        'price' => $row->price + ($row->options->delivery_charge),
                         'desc' => $row->name,
                         'qty' => $row->qty
 
                     ];
-                $deliver_charge += 10 * $row->qty;
+                $deliver_charge += $row->options->delivery_charge*$row->qty;
             }
 
             $latestOrder = Order::orderBy('created_at', 'DESC')->first();
@@ -52,15 +52,16 @@ class PayPalPaymentController extends Controller
             $id = decrypt($id);
             $product_info = ProductWiseBid::find($id);
 
+            $deliver_charge += $product_info->product_det->deliver_charge;
             $product['items'][] =
                 [
                     'name' => $product_info->product_det->name,
-                    'price' => $product_info->height_bid_amount + 10,
+                    'price' => $product_info->height_bid_amount + $deliver_charge,
                     'desc' => $id,
                     'qty' => 1
 
                 ];
-            $deliver_charge += 10;
+
 
             $latestOrder = Order::orderBy('created_at', 'DESC')->first();
             if ($latestOrder)
@@ -104,6 +105,9 @@ class PayPalPaymentController extends Controller
             DB::beginTransaction();
             try {
                 $deliveryCharge = 0;
+                foreach(Cart::content() as $row){
+                    $deliveryCharge += $row->options->delivery_charge*$row->qty;
+                }
                 $success = false;
 
                 $order = new Order();
@@ -133,7 +137,8 @@ class PayPalPaymentController extends Controller
                         $orderDetails->price = $row->price;
                         $orderDetails->discount = $row->discount;
                         $orderDetails->vat_tax = $row->tax;
-                        $orderDetails->total_price = $row->total;
+                        $orderDetails->delivery_charge = $row->options->delivery_charge*$row->qty;
+                        $orderDetails->total_price = $row->total+$row->options->delivery_charge*$row->qty;
                         $orderDetails->created_by = Auth::id();
                         $orderDetails->updated_by = Auth::id();
                         $orderDetails->save();
@@ -199,7 +204,7 @@ class PayPalPaymentController extends Controller
             try {
                 $product_info = ProductWiseBid::find($response['L_DESC0']);
 
-                $deliver_charge = 10;
+                $deliver_charge = $product_info->product_det->deliver_charge;
                 $success = false;
 
                 $order = new Order();
@@ -229,7 +234,8 @@ class PayPalPaymentController extends Controller
                     $orderDetails->price = $product_info->height_bid_amount;
                     $orderDetails->discount = 0;
                     $orderDetails->vat_tax = 0;
-                    $orderDetails->total_price = $product_info->height_bid_amount;
+                    $orderDetails->delivery_charge = $deliver_charge;
+                    $orderDetails->total_price = $product_info->height_bid_amount+$deliver_charge;
                     $orderDetails->created_by = Auth::id();
                     $orderDetails->updated_by = Auth::id();
                     $orderDetails->save();

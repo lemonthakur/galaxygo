@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="ic-btn-group  custom-add-to-cart-par" data-id="{{$apv->id}}" data-name="{{$apv->name}}" data-price="{{$price}}"
                                      data-discount="{{$apv->discount_amount}}" data-image="{{$apv->feature_image}}"
-                                     data-slug="{{$apv->slug}}">
+                                     data-slug="{{$apv->slug}}" data-delivery-charge="{{$apv->deliver_charge}}">
                                         <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
                                     @if( $apv->auction_end_date.' '.$apv->auction_end_time >= date('Y-m-d H:i:s'))
                                         <a href="{{ route('product-details', $apv->slug) }}" class="bid-btn">bid now</a>
@@ -161,14 +161,7 @@
                 var discount   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-discount');
                 var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
                 var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
-
-                // for popover
-                var this_pov = $(this).parent().find(".fa-shopping-cart");
-                $(this_pov).popover({
-                    placement : 'top',
-                    container: 'body',
-                    content : "Adding..."
-                }).popover('show');
+                var delivery_charge = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-delivery-charge');
 
                 $.ajax({
                     type:'post',
@@ -182,6 +175,7 @@
                         discount:discount,
                         img_name:img_name,
                         slug:slug,
+                        delivery_charge:delivery_charge,
                     },
                     success:function (data) {
                         window.location.href = "{{ route('shopping.cart')}}";
