@@ -37,6 +37,13 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('.logo').change(function () {
+        var image = document.getElementById('outputLogo');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    });
+});
+
 // date time picker
  $('.datetimepicker').datetimepicker({
     ignoreReadonly: true,
@@ -87,7 +94,8 @@ $('.datepicker').datetimepicker({
 // Time Picker
 $('.timepicker').datetimepicker({
     ignoreReadonly: true,
-    format: 'LT',
+    Default: false,
+    format: 'hh:mm A',
     toolbarPlacement:'top',
     keepOpen:false,
     buttons:{

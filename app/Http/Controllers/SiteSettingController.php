@@ -24,7 +24,7 @@ class SiteSettingController extends Controller
         OwnLibrary::validateAccess($this->moduleId,3);
         $rules = [
             'logo' => 'image',
-            'icon' => 'image',
+            'mobile_logo' => 'image',
             'email' => 'required|email',
             'contact_no' => 'max:15',
             'site_title' => 'max:90',
@@ -58,11 +58,11 @@ class SiteSettingController extends Controller
         $setting->meta_keyword = $request->meta_keyword ?? Null;
         $setting->copy_right = $request->copy_right ?? Null;
 
-        if ($request->hasFile('icon')){
+        if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){
                 @unlink($setting->icon);
             }
-            $icon = OwnLibrary::uploadImage($request->icon, "site-setting");
+            $icon = OwnLibrary::uploadImage($request->mobile_logo, "site-setting");
             $setting->icon = $icon;
         }
 

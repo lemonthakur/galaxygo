@@ -1,14 +1,18 @@
- @foreach(Cart::content() as $row)
+@php
+    $sl = 1;
+@endphp
+@foreach(Cart::content() as $row)
  <tr>
+     <td class="text-center">{{$sl++}}</td>
     <td>
         <img src="{{asset($row->options['player_image'])}}" style="width: 50px;height:50px;border-radius:50%;" />
     </td>
     <td>
         Name: {{ucwords($row->name)}} <br />
-        Location: {{ucwords($row->options['location'])}}
+        Location: {{strtoupper($row->options['location'])}}
     </td>
     <td>
-        Versus: {{ucwords($row->options['versus'])}} <br />
+        Versus: {{strtoupper($row->options['versus'])}} <br />
         Score: {{$row->options['score']}}
     </td>
     <td class="text-center align-middle">

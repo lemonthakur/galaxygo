@@ -7,9 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="HTML5,CSS3,SASS,Bootstrap,JavaScript,Jquery">
     <meta name="author" content="ITCLAN BD" />
-    <title>@yield('title') - Galaxy</title>
+    <title>@yield('title') - {{$siteSetting->site_title ?? env("APP_NAME")}}</title>
     <!-- Favicon -->
-    <!--    <link rel="icon" href="assets/images/icon/favicon.png" type="image/x-icon">-->
+    @if(!empty($siteSetting->icon))
+        <link rel="shortcut icon" type="image/jpg" href="{{asset($siteSetting->icon)}}"/>
+    @endif
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('/frontend/css/bootstrap.min.css')}}">
     <!--Ico Font-->
@@ -27,6 +30,10 @@
     <link rel="stylesheet" href="{{asset('frontend/css/video-js.css')}}">
     <!-- sweetalert2 css--->
     <link rel="stylesheet" href="{{asset("/admin-lte/plugins/toastr/toastr.min.css")}}">
+    <!--Main CSS-->
+    <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
 
     @yield('css')
 
@@ -90,10 +97,6 @@
 <script src="{{asset('frontend/js/custom.js')}}"></script>
 <!--Wow Js-->
 <script src="{{asset('frontend/js/wow.js')}}"></script>
-<!--Main CSS-->
-<link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
-<!--Custom CSS-->
-<link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
 <script>
     new WOW().init();
 

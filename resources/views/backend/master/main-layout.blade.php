@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>@yield("page-title") | {{$siteSetting->site_title ?? env("APP_NAME")}}</title>
 
     @if(!empty($siteSetting->icon))
-        <link rel="shortcut icon" type="image/jpg" href="{{asset($siteSetting->logo)}}"/>
+        <link rel="shortcut icon" type="image/jpg" href="{{asset($siteSetting->icon)}}"/>
     @endif
 
     <link rel="stylesheet" href="{{asset("/admin-lte/plugins/fontawesome-free/css/all.min.css")}}">

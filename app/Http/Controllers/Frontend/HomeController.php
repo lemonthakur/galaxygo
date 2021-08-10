@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\WinCoin;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,7 +17,8 @@ class HomeController extends Controller
     }
 
     public function startContest(){
-        return view('frontend.start-contest');
+        $winCoins = WinCoin::select('win','out_of','coin')->orderBy('win','desc')->get();
+        return view('frontend.start-contest',compact('winCoins'));
     }
 
     public function entries(){

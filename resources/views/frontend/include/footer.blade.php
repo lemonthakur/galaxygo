@@ -104,6 +104,7 @@
 
 <footer class="ic-footer">
     <div class="container">
+        @if(request()->route()->getName() == 'home')
         <div class="ic-footer-area ic-footer-warper">
             <ul class="ic-footer-social">
                 <li>
@@ -145,9 +146,10 @@
 
             </ul>
         </div>
+        @endif
         <div class="ic-footer-copyright">
             <div class="ic-copyright">
-                <p>© 2021 <a href="{{route('home')}}">galaxy go.</a> all right reserved</p>
+                <p>© 2021 <a href="{{route('home')}}">{{$siteSetting->site_title ?? env("APP_NAME")}}.</a> all right reserved</p>
             </div>
             <div class="ic-back-home">
                 <ul>

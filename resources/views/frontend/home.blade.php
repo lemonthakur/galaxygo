@@ -8,19 +8,19 @@
             <div class="ic-user-content-warper">
                 <div class="content">
                     <div class="ic-heading text-center">
-                        <h2>i am
+                        <h2>
                             <span>
                                 @if (Auth::check() && Auth::user()->role_id == 0)
                                     {{ucwords(auth()->user()->name)}}
                                 @else
-                                    Guest
+                                    i am Guest
                                 @endif
                             </span>
                         </h2>
                     </div>
                     <div class="ic-btn-group ic-guest-btn">
                         <div class="ic-today-btn">
-                            <a href="{{route('today-tomorrow')}}">
+                            <a href="{{route('start-contest')}}">
                                 <!-- <svg class="icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0)">
                                         <path class="path-1" d="M8.58984 37.1521H91.4103V98.5842H8.58984V37.1521Z" fill="#FFC73B" />
@@ -51,7 +51,7 @@
                             </a>
                         </div>
                         <div class="ic-tomorrow-btn">
-                            <a href="{{route('today-tomorrow')}}">
+                            <a href="{{route('start-contest')}}">
                                 <!-- <svg class="icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0)">
                                         <path class="path-1" d="M86.2069 50.1724V39.6552H3.44824V96.5517C3.45392 98.4538 4.99445 99.9943 6.89652 100H65.5172L86.2069 50.1724Z" fill="#C4C4C4" />

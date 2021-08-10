@@ -6,7 +6,8 @@
     width: 85px;
 }
 
-button.login-btn{
+button.login-btn,
+.btn-submit{
     width: 100%;
     border: none;
     outline: none;
@@ -27,8 +28,11 @@ button.login-btn{
     background-color:#E2CF61;
     color: #000;
 }
-
-.ic-checkout-payment-left .ic-express-checkout label {
+.btn-submit{
+    transition: all 0.5s ease;
+}
+.ic-checkout-payment-left .ic-express-checkout label,
+.btn-submit{
     height: 56px;
     line-height: 56px;
     display: flex;
@@ -45,7 +49,8 @@ button.login-btn{
     font-family: galano-medium, serif;
     cursor: pointer;
 }
-.ic-checkout-payment-left .ic-express-checkout label.active{
+.ic-checkout-payment-left .ic-express-checkout label.active,
+.btn-submit:hover{
     background: #D6BA4F;
     color: #000;
 }
@@ -57,4 +62,37 @@ button.login-btn{
 .form-group .nice-select ul.list{
     max-height: 250px;
     overflow-y: scroll !important;
+}
+
+.ic-entries-tab-contents .ic-item .over-under-btn label {
+    display: block;
+    border: 1px solid #fff;
+    font-size: 10px;
+    color: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-transform: capitalize;
+    padding: 1px 10px 4px;
+    text-align: center;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.ic-entries-tab-contents .ic-item .over-under-btn label:hover,
+.ic-entries-tab-contents .ic-item .over-under-btn label.active{
+    background: #fff;
+    color: #000000;
+}
+
+.ic-entries-tab-contents .ic-item .over-under-btn label.under-btn {
+    border: 1px solid #E2CF61;
+    color: #E2CF61;
+}
+
+.ic-entries-tab-contents .ic-item .over-under-btn label.under-btn.active {
+    background: #E2CF61;
+    color: #fff;
 }
