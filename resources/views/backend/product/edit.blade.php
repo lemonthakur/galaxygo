@@ -144,10 +144,18 @@
                                                 </div><!-- end discount price -->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="quantity">Quantity</label>
+                                                        <label for="quantity">Quantity <span class="text-danger">*</span></label>
                                                         <input type="number" class="form-control {{$errors->has("quantity") ? "is-invalid":""}}" id="quantity"
-                                                               name="quantity" placeholder="Enter quantity" value="{{old("quantity", $product->quantity)}}">
+                                                               name="quantity" placeholder="Enter quantity" value="{{old("quantity", $product->remaining_qty)}}">
                                                         <span class="text-danger"> {{$errors->has("quantity") ? $errors->first("quantity") : ""}} </span>
+                                                    </div>
+                                                </div><!-- end discount price -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="quantity">Deliver Charge <span class="text-danger">*</span></label>
+                                                        <input type="number" step="any" class="form-control {{$errors->has("deliver_charge") ? "is-invalid":""}}"
+                                                               id="deliver_charge" name="deliver_charge" placeholder="Enter deliver charge" value="{{old("deliver_charge", $product->deliver_charge)}}" required>
+                                                        <span class="text-danger"> {{$errors->has("deliver_charge") ? $errors->first("deliver_charge") : ""}} </span>
                                                     </div>
                                                 </div><!-- end discount price -->
                                                 <div class="col-md-6 product_type_parent">

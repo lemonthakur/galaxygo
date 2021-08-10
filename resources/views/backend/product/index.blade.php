@@ -44,8 +44,9 @@
                                         <th>Sub Category</th>
                                         <th>Brand</th>
                                         <th>Auction On</th>
+                                        <th>Rem. Qty</th>
                                         <th>Price($)</th>
-                                        <th>Discount($)</th>
+                                        {{--<th>Discount($)</th>--}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -156,9 +157,10 @@
                                 return pro_type;
                             }
                         },
+                        {data: 'remaining_qty'},
                         /*{data: 'product_type'},*/
                         {data: 'price'},
-                        {data: 'discount_amount'},
+                        /*{data: 'discount_amount'},*/
                         { "data": function ( data, type, row ) {
                                 let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
                                 if (data.status == 1){

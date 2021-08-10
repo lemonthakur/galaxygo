@@ -92,8 +92,7 @@ class CartController extends Controller
             $check_existing = $check_existing->first();
 
             $product_upd = ProductBid::firstOrNew(
-                ['product_id' =>  $request->id],
-                ['user_id' => $user_id]
+                ['product_id' =>  $request->id, 'user_id' => $user_id]
             );
             $product_upd->product_id = $request->id;
             $product_upd->user_id = $user_id;

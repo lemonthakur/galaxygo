@@ -72,7 +72,7 @@
                                 <a href="javasceipt:void(0);" class="ic-btn ic-btn-golden2 custom_product_bid">place bid</a>
                             </div>
                         </div>
-                        <small class="text-white">Enter ${{number_format($price, 2)}} or more</small>
+                        <small class="text-white">Enter ${{number_format($product->starting_bid_amount, 2)}} or more</small>
                         <div class="description mt-0">
                             <strong class="text-white">Conditions: -</strong>
                             <?php

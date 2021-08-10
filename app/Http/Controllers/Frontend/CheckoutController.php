@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\CoinHistory;
+use App\Models\ProductWiseBid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -251,7 +252,12 @@ class CheckoutController extends Controller
 
 
                 }catch(ValidationException $e) {
-
+                    if(isset($request->bid_checkout) && $request->bid_checkout=='bid_checkout'){
+                        DB::rollback();
+                        return Redirect::to('/bid-checkout/'.$request->bid_pro_id)
+                            ->withErrors( $e->getErrors() )
+                            ->withInput();
+                    }
                     DB::rollback();
                     return Redirect::to('/checkout')
                         ->withErrors( $e->getErrors() )
@@ -264,6 +270,12 @@ class CheckoutController extends Controller
                 DB::commit();
 
                 if ($success){
+                    if(isset($request->bid_checkout) && $request->bid_checkout=='bid_checkout'){
+                        if($request->payment_method==1)
+                            return redirect()->route("make.payment", $request->bid_pro_id);
+                        else
+                            return redirect()->route("bid.payment", $request->bid_pro_id);
+                    }
                     if($request->payment_method==1)
                         return redirect()->route("make.payment");
                     else
@@ -362,6 +374,111 @@ class CheckoutController extends Controller
                 return Redirect::to('/checkout')
                 ->withErrors( $e->getErrors() )
                 ->withInput();
+            }catch(\Exception $e)
+            {
+                DB::rollback();
+                throw $e;
+            }
+            DB::commit();
+
+            Cart::destroy();
+            session()->flash('order_success','Order placed successfully');
+            return response()->json(['point_less' => 'no', 'payment_error' => 'no', 'order_placed' => 'yes']);
+            //return redirect()->route('orders');
+
+        }else{
+            return response()->json(['point_less' => 'no', 'payment_error' => 'yes', 'order_placed' => 'no']);
+        }
+    }
+
+    public function checkoutbidpointPayment(Request $request){
+        $point_amount = $request->point_amount;
+        $id = decrypt($request->auc_bit_id);
+
+        $product_info = ProductWiseBid::find($id);
+        if(!$product_info)
+            return response()->json(['payment_error' => 'yes', 'point_less' => 'no', 'order_placed' => 'no']);
+
+        $deliveryCharge = 60;
+        $totla_usd = $product_info->height_bid_amount+$deliveryCharge;
+        $totla_to_pay = $totla_usd*100;
+
+        $user_have_point = Auth::user()->current_coin;
+
+        if($totla_to_pay < $point_amount || $totla_to_pay > $user_have_point)
+            return response()->json(['payment_error' => 'no', 'point_less' => 'yes', 'order_placed' => 'no']);
+
+        if($point_amount == $totla_to_pay){
+
+            DB::beginTransaction();
+            try {
+
+                $success = false;
+
+                $latestOrder = Order::orderBy('created_at','DESC')->first();
+                if($latestOrder)
+                    $invoice_id = str_pad($latestOrder->id + 1, 8, "0", STR_PAD_LEFT);
+                else
+                    $invoice_id = str_pad(1, 8, "0", STR_PAD_LEFT);
+
+                $order = new Order();
+                $order->user_id                 = auth()->id();
+                $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
+                $order->subtotal = $product_info->height_bid_amount;
+                $order->discount = 0;
+                $order->vat_tax  = 0;
+                $order->delivery_charge = $deliveryCharge;
+                $order->total = $product_info->height_bid_amount + $deliveryCharge;
+                $order->payment_type = 'Point';
+                $order->tran_id = $invoice_id;
+                $order->order_type = 'auction';
+                $order->status = 'Pending';
+                $order->created_by = auth()->id();
+                $order->updated_by = auth()->id();
+
+                if($order->save()){
+
+                    $orderDetails = new OrderDetail();
+
+                    $orderDetails->order_id = $order->id;
+                    $orderDetails->user_id = $order->user_id;
+                    $orderDetails->product_id = $product_info->product_id;
+                    $orderDetails->product_wise_bid_id = $product_info->id;
+                    $orderDetails->quantity = 1;
+                    $orderDetails->price = $product_info->height_bid_amount;
+                    $orderDetails->discount = 0;
+                    $orderDetails->vat_tax = 0;
+                    $orderDetails->total_price = $product_info->height_bid_amount;
+                    $orderDetails->created_by = Auth::id();
+                    $orderDetails->updated_by = Auth::id();
+                    $orderDetails->save();
+
+                    $transaction = new Transaction();
+                    $transaction->order_id = $order->id;
+                    $transaction->correlationid = NULL;
+                    $transaction->build = NULL;
+                    $transaction->email = NULL;
+                    $transaction->payerid = NULL;
+                    $transaction->firstname = NULL;
+                    $transaction->lastname = NULL;
+                    $transaction->currencycode = NULL;
+                    $transaction->amount = $totla_usd;
+                    $transaction->invoice_no = $invoice_id;
+                    $transaction->tran_date = date("Y-m-d h:i:s");
+                    $transaction->payment_type = 'Point';
+                    $transaction->save();
+
+                    $product_info->ordered = 'yes';
+                    $product_info->save();
+
+                    $success = true;
+                }
+
+            }catch(ValidationException $e) {
+                DB::rollback();
+                return Redirect::to('/checkout/'.encrypt($id))
+                    ->withErrors( $e->getErrors() )
+                    ->withInput();
             }catch(\Exception $e)
             {
                 DB::rollback();

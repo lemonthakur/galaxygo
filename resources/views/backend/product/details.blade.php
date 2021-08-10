@@ -56,6 +56,12 @@
                                     <tr>
                                         <th>Quantity</th>
                                         <td>{!! $product->quantity !!}</td>
+                                        <th>Remaining Qty</th>
+                                        <td>{!! $product->remaining_qty !!}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Deliver Charge</th>
+                                        <td>{!! $product->deliver_charge !!}</td>
                                         <th>Auction On</th>
                                         <td>
                                             {!! $product->product_type == 'General Product' ? 'No':'Yes' !!}

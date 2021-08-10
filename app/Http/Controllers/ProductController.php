@@ -75,7 +75,8 @@ class ProductController extends Controller
             "model_number" => "max:150",
             'price' => 'required|numeric',
             //'discount_amount' => 'numeric',
-            //"quantity" => "integer",
+            "quantity" => "required|integer",
+            "deliver_charge" => "required",
             "product_type" => "required|min:2|max:30",
             "product_description" => "required|min:2|max:5000",
             "return_policy" => "max:5000",
@@ -90,9 +91,7 @@ class ProductController extends Controller
         if($request->discount_amount){
             $rules["discount_amount"] = "numeric";
         }
-        if($request->quantity){
-            $rules["quantity"] = "integer";
-        }
+
         if($request->product_type == 'Auction Product'){
             if(strlen($request->auction_start_time) == 7)
                 $request['auction_start_time'] = '0'.$request->auction_start_time;
@@ -174,13 +173,17 @@ class ProductController extends Controller
                 $target->brand_id                   = $request->brand_id;
                 $target->product_type               = $request->product_type;
                 $target->price                      = $request->price;
-                $target->discount_amount                      = $request->discount_amount;
+                $target->discount_amount            = $request->discount_amount;
                 $target->model_number               = $request->model_number;
                 $target->product_description        = $request->product_description;
                 $target->return_policy              = $request->return_policy;
 
                 $target->pro_meta                   = $request->pro_meta;
                 $target->pro_mt_description         = $request->pro_mt_description;
+
+                $target->quantity                   = $request->quantity;
+                $target->remaining_qty              = $request->remaining_qty;
+                $target->deliver_charge             = $request->deliver_charge;
 
                 $target->video_url                  = $request->video_url;
                 $target->featureproduct             = $request->featureproduct;
@@ -337,7 +340,8 @@ class ProductController extends Controller
             "model_number" => "max:150",
             'price' => 'required|numeric',
             //'discount_amount' => 'numeric',
-            //"quantity" => "integer",
+            "quantity" => "required|integer",
+            "deliver_charge" => "required",
             "product_type" => "required|min:2|max:30",
             "product_description" => "required|min:2|max:5000",
             "return_policy" => "max:5000",
@@ -351,9 +355,7 @@ class ProductController extends Controller
         if($request->discount_amount){
             $rules["discount_amount"] = "numeric";
         }
-        if($request->quantity){
-            $rules["quantity"] = "integer";
-        }
+
         if(!$product_info->feature_image || $request->feature_image){
             $rules["feature_image"] = "required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024|dimensions:width=1200,height=969";
         }
@@ -445,6 +447,10 @@ class ProductController extends Controller
 
                 $product->pro_meta                   = $request->pro_meta;
                 $product->pro_mt_description         = $request->pro_mt_description;
+
+                $product->quantity                   = $product->quantity;
+                $product->remaining_qty              = $request->quantity;
+                $product->deliver_charge             = $request->deliver_charge;
 
                 $product->video_url                  = $request->video_url;
                 $product->featureproduct             = $request->featureproduct;

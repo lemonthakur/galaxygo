@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\ShoppingCartController;
 use App\Http\Controllers\Frontend\PayPalPaymentController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\BidProductPaymentController;
 
 //minicart
 Route::post('cart/add', [CartController::class,'cartAdd'])->name('cart.add');
@@ -47,15 +48,23 @@ Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showRese
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
-Route::get('handle-payment', [PayPalPaymentController::class, 'handlePayment'])->name('make.payment');
+Route::get('handle-payment/{id?}', [PayPalPaymentController::class, 'handlePayment'])->name('make.payment');
 Route::get('cancel-payment', [PayPalPaymentController::class, 'paymentCancel'])->name('cancel.payment');
 Route::get('payment-success', [PayPalPaymentController::class, 'paymentSuccess'])->name('success.payment');
+// for bid payment
+Route::get('bid-cancel-payment', [PayPalPaymentController::class, 'bidPaymentCancel'])->name('cancel.bid.payment');
+Route::get('bid-payment-success', [PayPalPaymentController::class, 'bidPaymentSuccess'])->name('success.bid.payment');
 
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
 Route::post('checkout-register', [CheckoutController::class, 'register'])->name('checkout.register');
-Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');
+// Bid payment
+Route::get('/bid-checkout/{id}',[BidProductPaymentController::class,'bidcheckout'])->name('bid.checkout');
+//Route::post('/checkout-bid-payment',[BidProductPaymentController::class,'checkoutBidPayment'])->name('checkout.bid.payment');
 
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');
+    Route::post('checkout-bid-point-payment', [CheckoutController::class, 'checkoutbidpointPayment'])->name('checkout-bid-point.payment');
     Route::get('/payment',[HomeController::class,'payment'])->name('payment');
+    Route::get('/bid-payment/{id}',[HomeController::class,'bidpayment'])->name('bid.payment');
 });
