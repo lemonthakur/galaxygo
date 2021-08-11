@@ -9,7 +9,8 @@
     </td>
     <td>
         Name: {{ucwords($row->name)}} <br />
-        Location: {{strtoupper($row->options['location'])}}
+        Location: {{strtoupper($row->options['location'])}} <br/>
+        Played On: {{$row->options['played_on']}}
     </td>
     <td>
         Versus: {{strtoupper($row->options['versus'])}} <br />

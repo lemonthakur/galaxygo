@@ -74,6 +74,7 @@ class ContestController extends Controller
                     $contestPlayer->player_name = $row->name;
                     $contestPlayer->player_image = $row->options['player_image'];
                     $contestPlayer->location = $row->options['location'];
+                    $contestPlayer->played_on = date('Y-m-d h:i a',strtotime($row->options['played_on']));;
                     $contestPlayer->versus = $row->options['versus'];
                     $contestPlayer->score = $row->options['score'];
                     $contestPlayer->save();

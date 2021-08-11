@@ -17,6 +17,7 @@ class ContestPlayerController extends Controller
         $rules = [
             "player_name" => "required|max:100",
             "location" => "required|max:100",
+            "played_on" =>  "required",
             "versus" => "required|max:100",
             "score" =>  "required",
             "player_image" =>  "required|image"
@@ -52,6 +53,7 @@ class ContestPlayerController extends Controller
             'weight' => 0,
             'options' => [
                 'location' => $request->location,
+                'played_on' => $request->played_on,
                 'versus' => $request->versus,
                 'score' => $request->score,
                 'player_image' => $image_url ?? '',
@@ -73,6 +75,7 @@ class ContestPlayerController extends Controller
         $rules = [
             "player_name" => "required|max:100",
             "location" => "required|max:100",
+            "played_on" =>  "required",
             "versus" => "required|max:100",
             "score" =>  "required",
             "player_image" =>  "required|image"
@@ -103,6 +106,7 @@ class ContestPlayerController extends Controller
         }
 
         $contestPlayer->location = $request->location;
+        $contestPlayer->played_on = date('Y-m-d h:i a',strtotime($request->played_on));
         $contestPlayer->versus = $request->versus;
         $contestPlayer->score = $request->score;
 
@@ -119,9 +123,9 @@ class ContestPlayerController extends Controller
             @unlink($contestPlayer->player_image);
         }
         if ($contestPlayer->delete()){
-            session()->flash('success','Contest Player Delated');
+            session()->flash('success','Contest Player Deleted');
         }else{
-            session()->flash('error','Contest player not delated');
+            session()->flash('error','Contest player not deleted');
         }
         return redirect()->back();
     }

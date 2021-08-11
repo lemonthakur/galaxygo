@@ -39,16 +39,28 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">Name<span class="text-danger">*</span></label>
-                                                <input readonly type="text" class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}" id="name" data-target="#name" data-toggle="datetimepicker" name="name" placeholder="Enter User Name" value="{{old("name")}}">
-                                                <span class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
+                                                <input readonly type="text"
+                                                       class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}"
+                                                       id="name" data-target="#name" data-toggle="datetimepicker"
+                                                       name="name" placeholder="Enter User Name"
+                                                       value="{{old("name")}}">
+                                                <span
+                                                    class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="expaire_time">Count Down Timer<span class="text-danger">*</span></label>
-                                                <input readonly type="text" class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}" id="expaire_time" data-target="#expaire_time" data-toggle="datetimepicker" name="expaire_time" placeholder="Enter Count Down Time" value="{{old("expaire_time")}}">
-                                                <span class="text-danger"> {{$errors->has("expaire_time") ? $errors->first("expaire_time") : ""}} </span>
+                                                <label for="expaire_time">Count Down Timer<span
+                                                        class="text-danger">*</span></label>
+                                                <input readonly type="text"
+                                                       class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}"
+                                                       id="expaire_time" data-target="#expaire_time"
+                                                       data-toggle="datetimepicker" name="expaire_time"
+                                                       placeholder="Enter Count Down Time"
+                                                       value="{{old("expaire_time")}}">
+                                                <span
+                                                    class="text-danger"> {{$errors->has("expaire_time") ? $errors->first("expaire_time") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -61,46 +73,74 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="player_name">Player Name<span class="text-red">*</span></label>
-                                                        <input type="text" class="form-control {{$errors->has("player_name") ? "is-invalid":""}}" id="player_name" placeholder="Player Name">
+                                                        <label for="player_name">Player Name<span
+                                                                class="text-red">*</span></label>
+                                                        <input type="text"
+                                                               class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
+                                                               id="player_name" placeholder="Player Name">
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="location">Location<span class="text-red">*</span></label>
-                                                        <input type="text" class="form-control {{$errors->has("location") ? "is-invalid":""}}" id="location" placeholder="Location">
+                                                        <label for="location">Location<span
+                                                                class="text-red">*</span></label>
+                                                        <input type="text"
+                                                               class="form-control {{$errors->has("location") ? "is-invalid":""}}"
+                                                               id="location" placeholder="Location">
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="versus">Versus<span class="text-red">*</span></label>
-                                                        <input type="text" class="form-control {{$errors->has("versus") ? "is-invalid":""}}" id="versus" placeholder="Versus">
+                                                        <label for="played_on">Played On<span class="text-red">*</span></label>
+                                                        <input readonly type="text"
+                                                               class="form-control datetimepicker {{$errors->has("played_on") ? "is-invalid":""}}"
+                                                               id="played_on" data-target="#played_on"
+                                                               data-toggle="datetimepicker" placeholder="Play Time">
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="versus">Versus<span
+                                                                class="text-red">*</span></label>
+                                                        <input type="text"
+                                                               class="form-control {{$errors->has("versus") ? "is-invalid":""}}"
+                                                               id="versus" placeholder="Versus">
+                                                        <span class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="score">Score<span class="text-red">*</span></label>
-                                                        <input type="number" step="any" class="form-control {{$errors->has("score") ? "is-invalid":""}}" id="score" placeholder="Score">
+                                                        <input type="number" step="any"
+                                                               class="form-control {{$errors->has("score") ? "is-invalid":""}}"
+                                                               id="score" placeholder="Score">
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="player_image">Player Image<span class="text-red">*</span></label>
-                                                        <input type="file" class="form-control {{$errors->has("player_image") ? "is-invalid":""}}" accept="image/png, image/gif, image/jpeg" id="player_image" placeholder="Player Image">
+                                                        <label for="player_image">Player Image<span
+                                                                class="text-red">*</span></label>
+                                                        <input type="file"
+                                                               class="form-control {{$errors->has("player_image") ? "is-invalid":""}}"
+                                                               accept="image/png, image/gif, image/jpeg"
+                                                               id="player_image" placeholder="Player Image">
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 text-right">
-                                                    <button type="button" style="margin-top: 12%;" id="add-player" class="btn btn-info">Add Player</button>
+                                                <div class="col-md-2 text-right">
+                                                    <button type="button" style="margin-top: 24%;" id="add-player"
+                                                            class="btn btn-info">Add Player
+                                                    </button>
                                                 </div>
 
                                             </div>
@@ -108,33 +148,37 @@
 
                                         <table id="player-table" class="table table-bordered table-striped mt-3">
                                             <thead>
-                                                <tr>
+                                            <tr>
                                                 <th colspan="5" class="text-center">Added Player</th>
-                                                </tr>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             @php
-                                            $sl = 1;
+                                                $sl = 1;
                                             @endphp
-                                             @foreach(Cart::content() as $row)
+                                            @foreach(Cart::content() as $row)
                                                 <tr>
                                                     <td class="text-center">{{$sl++}}</td>
                                                     <td>
-                                                        <img src="{{asset($row->options['player_image'])}}" style="width: 50px;height:50px;border-radius:50%;" />
+                                                        <img src="{{asset($row->options['player_image'])}}"
+                                                             style="width: 50px;height:50px;border-radius:50%;"/>
                                                     </td>
                                                     <td>
-                                                        Name: {{ucwords($row->name)}} <br />
-                                                        Location: {{strtoupper($row->options['location'])}}
+                                                        Name: {{ucwords($row->name)}} <br/>
+                                                        Location: {{strtoupper($row->options['location'])}} <br/>
+                                                        Played On: {{$row->options['played_on']}}
                                                     </td>
                                                     <td>
-                                                        Versus: {{strtoupper($row->options['versus'])}} <br />
+                                                        Versus: {{strtoupper($row->options['versus'])}} <br/>
                                                         Score: {{$row->options['score']}}
                                                     </td>
                                                     <td class="text-center align-middle">
-                                                        <button rowId="{{$row->rowId}}" type="button" class="btn btn-danger btn-xs removeCart">                                                <i class="fas fa-trash"></i>                                                     </button>
+                                                        <button rowId="{{$row->rowId}}" type="button"
+                                                                class="btn btn-danger btn-xs removeCart"><i
+                                                                class="fas fa-trash"></i></button>
                                                     </td>
                                                 </tr>
-                                                @endforeach
+                                            @endforeach
                                             </tbody>
                                         </table>
 
@@ -158,84 +202,88 @@
 @endsection
 
 @section('js')
-<script>
+    <script>
 
-$('#add-player').on('click',function() {
-    let playerName = $('#player_name').val();
-    let location = $('#location').val();
-    let versus = $('#versus').val();
-    let score = $('#score').val();
-    let playerImage = $('#player_image')[0].files[0];
-    let _token = '{{ csrf_token() }}';
+        $('#add-player').on('click', function () {
+            let playerName = $('#player_name').val();
+            let location = $('#location').val();
+            let playedOn = $('#played_on').val();
+            let versus = $('#versus').val();
+            let score = $('#score').val();
+            let playerImage = $('#player_image')[0].files[0];
+            let _token = '{{ csrf_token() }}';
 
-    $('#player_name').closest('.form-group').find('.text-danger').text('');
-    $('#location').closest('.form-group').find('.text-danger').text('');
-    $('#versus').closest('.form-group').find('.text-danger').text('');
-    $('#score').closest('.form-group').find('.text-danger').text('');
-    $('#player_image').closest('.form-group').find('.text-danger').text('');
+            $('#player_name').closest('.form-group').find('.text-danger').text('');
+            $('#location').closest('.form-group').find('.text-danger').text('');
+            $('#played_on').closest('.form-group').find('.text-danger').text('');
+            $('#versus').closest('.form-group').find('.text-danger').text('');
+            $('#score').closest('.form-group').find('.text-danger').text('');
+            $('#player_image').closest('.form-group').find('.text-danger').text('');
 
-    let formData = new FormData();
-    formData.append('player_name', playerName);
-    formData.append('location', location);
-    formData.append('versus', versus);
-    formData.append('score', score);
-    formData.append('player_image', playerImage);
-    formData.append('_token',_token);
+            let formData = new FormData();
+            formData.append('player_name', playerName);
+            formData.append('location', location);
+            formData.append('played_on', playedOn);
+            formData.append('versus', versus);
+            formData.append('score', score);
+            formData.append('player_image', playerImage);
+            formData.append('_token', _token);
 
-    $.ajax({
-        url: '{{route("player.add.cart")}}',
-        method: 'POST',
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: function(data){8
-            if (data.status === 1){
-                validate(data);
-                return;
-            }
+            $.ajax({
+                url: '{{route("player.add.cart")}}',
+                method: 'POST',
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (data) {
+                    8
+                    if (data.status === 1) {
+                        validate(data);
+                        return;
+                    }
 
-            $('#player-table tbody').empty();
-            $('#player-table tbody').append(data);
+                    $('#player-table tbody').empty();
+                    $('#player-table tbody').append(data);
 
-            $('#player_name').val('');
-            $('#location').val('');
-            $('#versus').val('');
-            $('#score').val('');
-            $('#player_image').val(null);
-        },
-        error: function(){
-           Swal.fire(
-                    '',
-                    "Unable to add player",
-                    'error'
-                )
+                    $('#player_name').val('');
+                    $('#location').val('');
+                    $('#versus').val('');
+                    $('#score').val('');
+                    $('#player_image').val(null);
+                },
+                error: function () {
+                    Swal.fire(
+                        '',
+                        "Unable to add player",
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+        $(document).on('click', '.removeCart', function () {
+            let selectBtn = $(this);
+            let rowId = selectBtn.attr('rowId');
+            let _token = '{{ csrf_token() }}';
+            $.ajax({
+                type: 'post',
+                url: '{{route("player.remove.cart")}}',
+                data: {rowId, _token},
+                success: function (data) {
+                    $('#player-table tbody').empty();
+                    $('#player-table tbody').append(data);
+                }
+            });
+        })
+
+        // show validation message
+        function validate(data) {
+            $.each(data.errors, function (key, value) {
+                $('#' + key).closest('.form-group').find('.text-danger').text(value[0]);
+                // $('#'+key).addClass('is-invalid');
+            })
         }
-    })
-
-
-});
-
-$(document).on('click','.removeCart',function () {
-    let selectBtn = $(this);
-    let rowId = selectBtn.attr('rowId');
-    let _token = '{{ csrf_token() }}';
-    $.ajax({
-        type:'post',
-         url: '{{route("player.remove.cart")}}',
-        data: {rowId,_token},
-        success:function (data) {
-            $('#player-table tbody').empty();
-            $('#player-table tbody').append(data);
-        }
-    });
-})
-
-// show validation message
-function validate(data){
-    $.each(data.errors,function (key,value) {
-        $('#'+key).closest('.form-group').find('.text-danger').text(value[0]);
-        // $('#'+key).addClass('is-invalid');
-    })
-}
-</script>
+    </script>
 @endsection

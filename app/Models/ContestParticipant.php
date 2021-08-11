@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContestParticipant extends Model
 {
-    use HasFactory;
+    public function participentAnswers(){
+        return $this->hasMany(ParticipantAnswer::class,'contest_participant_id');
+    }
 }

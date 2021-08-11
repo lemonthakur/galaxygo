@@ -119,6 +119,19 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
+                                                <label for="played_on">Played On<span class="text-red">*</span></label>
+                                                <input type="text" readonly
+                                                       class="form-control datetimepicker {{$errors->has("played_on") ? "is-invalid":""}}"
+                                                       id="played_on" data-target="#played_on"
+                                                       data-toggle="datetimepicker" placeholder="play time"
+                                                       name="played_on" value="{{old('played_on')}}">
+                                                <span
+                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
                                                 <label for="versus">Versus<span class="text-red">*</span></label>
                                                 <input type="text"
                                                        class="form-control {{$errors->has("versus") ? "is-invalid":""}}"
@@ -129,7 +142,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="score">Score<span class="text-red">*</span></label>
                                                 <input type="number" step="any"
@@ -154,8 +167,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 text-right">
-                                            <button type="submit" style="margin-top: 12%;"
+                                        <div class="col-md-2 text-right">
+                                            <button type="submit" style="margin-top: 24%;"
                                                     class="btn btn-info">Add Player
                                             </button>
                                         </div>
@@ -182,7 +195,8 @@
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
-                                                Location: {{strtoupper($player->location)}}
+                                                Location: {{strtoupper($player->location)}} <br/>
+                                                Played On: {{date('d-m-Y H:i a',strtotime($player->played_on))}}
                                             </td>
                                             <td>
                                                 Versus: {{strtoupper($player->versus)}} <br/>
