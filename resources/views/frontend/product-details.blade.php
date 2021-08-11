@@ -129,7 +129,9 @@
                     <div class="ic-product-item">
                         <div class="ic-thumbnil">
                             <a href="{{ route('product-details', $apv->slug) }}"><img src="{{asset('upload/product-thumbnail-255-200/'.$apv->feature_image)}}" class="img-fluid" alt="product"></a>
-                            <span class="ic-badge">over</span>
+                            @if($apv->remaining_qty<1)
+                                <span class="ic-badge">over</span>
+                            @endif
                         </div>
                         <div class="ic-content">
                             <div class="title-price">
