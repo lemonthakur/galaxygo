@@ -13,6 +13,9 @@
                 </div>
                 @if(Cart::count() > 0)
                     @foreach(Cart::content() as $row)
+                        @php
+                            $product = \App\Models\Product::find($row->id);
+                        @endphp
                         <div class="ic-cart-item @if($loop->iteration % 2 != 0){{'item-bg'}}@else{{'mobile-item-bg'}}@endif">
                             <div class="image">
                                 <img src="{{asset('upload/product-thumbnail-82-82/'.$row->options->image_name)}}" alt="">
@@ -28,8 +31,9 @@
                                 <p>{{ strtoupper(date('d/m/Y h:i a', strtotime($row->options->add_date_time))) }}</p>
                             </div>
                             <div class="quantity">
-                                <div class="product-count">
+                                <div class="product-count" data-avl-qty="{{$product->remaining_qty}}">
                                     <input type="hidden" name="upd_id[]" value="{{$row->rowId}}">
+                                    <input type="hidden" name="prod_id[]" value="{{$row->id}}">
                                     <input type="hidden" class="price" value="{{$row->price}}">
                                     <a href="javascript:void(0)" class="qty-minus"><i class="flaticon-minus"></i></a>
                                     <input type="number" value="{{$row->qty}}" class="qty" name="qty[]" readonly>
@@ -47,93 +51,6 @@
                     @endforeach
                 @endif
 
-                {{--<div class="ic-cart-item item-bg">
-                    <div class="image">
-                        <img src="{{asset('frontend/images/cart-item.png')}}" alt="">
-                    </div>
-                    <div class="title">
-                        <h5>Product name</h5>
-                        <p class="product-code">#ID26598</p>
-                        <p class="mobile-date">Date: 03/03/2021 </p>
-                        <p class="mobile-time">Time: 10:44 AM</p>
-                    </div>
-                    <div class="date">
-                        <p>Date & Time</p>
-                        <p>03/03/2021 10:44 AM</p>
-                    </div>
-                    <div class="quantity">
-                        <div class="product-count">
-                            <a href="#" class="qty-minus"><i class="flaticon-minus"></i></a>
-                            <input type="number" value="01" class="qty" readonly>
-                            <a href="#" class="qty-plus"><i class="flaticon-plus"></i></a>
-                        </div>
-                    </div>
-                    <div class="price">
-                        <p>price</p>
-                        <p>1 X $540</p>
-                    </div>
-                    <div class="remove">
-                        <a href="#"><i class="flaticon-error"></i></a>
-                    </div>
-                </div>
-                <div class="ic-cart-item mobile-item-bg">
-                    <div class="image">
-                        <img src="{{asset('frontend/images/cart-item.png')}}" alt="">
-                    </div>
-                    <div class="title">
-                        <h5>Product name</h5>
-                        <p class="product-code">#ID26598</p>
-                        <p class="mobile-date">Date: 03/03/2021 </p>
-                        <p class="mobile-time">Time: 10:44 AM</p>
-                    </div>
-                    <div class="date">
-                        <p>Date & Time</p>
-                        <p>03/03/2021 10:44 AM</p>
-                    </div>
-                    <div class="quantity">
-                        <div class="product-count">
-                            <a href="#" class="qty-minus"><i class="flaticon-minus"></i></a>
-                            <input type="number" value="01" class="qty" readonly>
-                            <a href="#" class="qty-plus"><i class="flaticon-plus"></i></a>
-                        </div>
-                    </div>
-                    <div class="price">
-                        <p>price</p>
-                        <p>1 X $540</p>
-                    </div>
-                    <div class="remove">
-                        <a href="#"><i class="flaticon-error"></i></a>
-                    </div>
-                </div>
-                <div class="ic-cart-item item-bg">
-                    <div class="image">
-                        <img src="{{asset('frontend/images/cart-item.png')}}" alt="">
-                    </div>
-                    <div class="title">
-                        <h5>Product name</h5>
-                        <p class="product-code">#ID26598</p>
-                        <p class="mobile-date">Date: 03/03/2021 </p>
-                        <p class="mobile-time">Time: 10:44 AM</p>
-                    </div>
-                    <div class="date">
-                        <p>Date & Time</p>
-                        <p>03/03/2021 10:44 AM</p>
-                    </div>
-                    <div class="quantity">
-                        <div class="product-count">
-                            <a href="#" class="qty-minus"><i class="flaticon-minus"></i></a>
-                            <input type="number" value="01" class="qty" readonly>
-                            <a href="#" class="qty-plus"><i class="flaticon-plus"></i></a>
-                        </div>
-                    </div>
-                    <div class="price">
-                        <p>price</p>
-                        <p>1 X $540</p>
-                    </div>
-                    <div class="remove">
-                        <a href="#"><i class="flaticon-error"></i></a>
-                    </div>
-                </div>--}}
                 <div class="ic-contunue-shipping-total">
                     <div class="contunue-shop-update-btn">
                         <a href="{{route('shop')}}">continue shopping</a>
@@ -239,6 +156,22 @@
                         toastr.success("Cart updated successfully.");
                     }
                 });
+
+            });
+
+            $(document).on("click", ".qty-plus", function(e){
+                var rem_qty    = $(this).parent().parent().find('.product-count').attr('data-avl-qty');
+                var quantity   = $(this).parent().parent().find('.qty').val();
+                if(parseInt(quantity) > parseInt(rem_qty)){
+                    $(this).parent().parent().find('.qty').val(rem_qty);
+                    toastr.options =
+                        {
+                            "closeButton" : true,
+                            "progressBar" : true
+                        }
+                    toastr.error("Exceed the maximum quota.");
+                    return false;
+                }
 
             });
 

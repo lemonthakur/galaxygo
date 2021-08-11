@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\WinCoin;
 use Illuminate\Http\Request;
+use App\CustomClass\OwnLibrary;
 
 class HomeController extends Controller
 {
@@ -59,7 +60,22 @@ class HomeController extends Controller
             ->where('product_bids.user_id', \Auth::id())
             ->orderBy('product_wise_bids.auction_end_date_time', 'ASC')
             ->get(); //dd($bid_applies);
-        return view('frontend.orders', compact('bid_applies'));
+
+        $orders = \App\Models\Order::
+            join('order_details', 'orders.id', '=', 'order_details.order_id')
+            ->join('products', 'products.id', '=', 'order_details.product_id')
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->select("products.name as product_name"
+                , "products.slug as product_slug"
+                , "products.feature_image as feature_image"
+                , "order_details.total_price as product_total"
+                , "orders.created_at as order_date"
+                , "orders.status as order_status"
+            )
+            ->where('orders.user_id', \Auth::id())
+            ->orderBy('orders.created_at', 'DESC')
+            ->get();
+        return view('frontend.orders', compact('bid_applies', 'orders'));
     }
 
     public function profile(){
@@ -75,6 +91,7 @@ class HomeController extends Controller
     }
 
     public function payment(){
+        OwnLibrary::check_cart_qty();
         return view('frontend.payment');
     }
 

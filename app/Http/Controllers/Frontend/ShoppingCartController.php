@@ -20,7 +20,9 @@ class ShoppingCartController extends Controller
     public function cartUpdate(Request $request){
         if(Cart::count() > 0){
             for ($i=0; count($request->upd_id) > $i; $i++){
-                Cart::update($request->upd_id[$i], $request->qty[$i]);
+                $product = \App\Models\Product::find($request->prod_id[$i]);
+                if($request->qty[$i] <= $product->remaining_qty)
+                    Cart::update($request->upd_id[$i], $request->qty[$i]);
             }
         }
         $subtotal = Cart::subtotal();

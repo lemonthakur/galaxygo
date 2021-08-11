@@ -41,7 +41,7 @@ class PayPalPaymentController extends Controller
             else
                 $invoice_id = str_pad(1, 8, "0", STR_PAD_LEFT);
 
-            $total_amt = Cart::subtotal() + $deliver_charge;
+            $total_amt = Cart::subtotal(2, '.', '') + $deliver_charge;
 
             $product['invoice_id'] = $invoice_id;
             $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
@@ -113,11 +113,11 @@ class PayPalPaymentController extends Controller
                 $order = new Order();
                 $order->user_id                 = auth()->id();
                 $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
-                $order->subtotal = Cart::subtotal();
-                $order->discount = Cart::discount();
-                $order->vat_tax  = Cart::tax();
+                $order->subtotal = Cart::subtotal(2, '.', '');
+                $order->discount = Cart::discount(2, '.', '');
+                $order->vat_tax  = Cart::tax(2, '.', '');
                 $order->delivery_charge = $deliveryCharge;
-                $order->total = Cart::total() + $deliveryCharge;
+                $order->total = Cart::total(2, '.', '') + $deliveryCharge;
                 $order->payment_type = 'PayPal';
                 $order->tran_id = $response['INVNUM'];
                 $order->order_type = 'general';

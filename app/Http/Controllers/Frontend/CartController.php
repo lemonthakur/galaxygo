@@ -15,6 +15,9 @@ use Cart;
 class CartController extends Controller
 {
     public function cartAdd(Request $request){
+        $product = Product::find($request->id);
+        if($request->quantity > $product->remaining_qty)
+            return 'qty_error';
 
         $items = Cart::content();
         $checkCart = 0;

@@ -134,8 +134,8 @@
                         </div>
                         <div class="ic-total-amount">
                             <h5>TOTAL</h5>
-                            <h4>${{Cart::subtotal()+$shipping_cost}}</h4>
-                            <?php $totla_usd = Cart::subtotal()+$shipping_cost; ?>
+                            <h4>${{number_format(Cart::subtotal(2, '.', '')+$shipping_cost, 2, '.', ',') }}</h4>
+                            <?php $totla_usd = Cart::subtotal(2, '.', '')+$shipping_cost; ?>
                         </div>
                     </div>
                 </div>

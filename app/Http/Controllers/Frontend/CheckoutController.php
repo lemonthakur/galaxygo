@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use App\CustomClass\OwnLibrary;
 use Cart;
 use DB;
 
@@ -290,7 +291,8 @@ class CheckoutController extends Controller
 
     public function checkout(){
         $countries = Country::all();
-//        $countries = Country::whereIn('id', [150, 200]);
+        OwnLibrary::check_cart_qty();
+
         return view('frontend.checkout', compact('countries'));
     }
 
@@ -301,7 +303,7 @@ class CheckoutController extends Controller
         foreach(Cart::content() as $row){
             $deliveryCharge += $row->options->delivery_charge*$row->qty;
         }
-        $totla_usd = Cart::subtotal()+$deliveryCharge;
+        $totla_usd = Cart::subtotal(2, '.', '')+$deliveryCharge;
         $totla_to_pay = $totla_usd*100;
 
         $user_have_point = Auth::user()->current_coin;
@@ -325,11 +327,11 @@ class CheckoutController extends Controller
                 $order = new Order();
                 $order->user_id                 = auth()->id();
                 $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
-                $order->subtotal = Cart::subtotal();
-                $order->discount = Cart::discount();
+                $order->subtotal = Cart::subtotal(2, '.', '');
+                $order->discount = Cart::discount(2, '.', '');
                 $order->vat_tax  = Cart::tax();
                 $order->delivery_charge = $deliveryCharge;
-                $order->total = Cart::total() + $deliveryCharge;
+                $order->total = Cart::total(2, '.', '') + $deliveryCharge;
                 $order->payment_type = 'Point';
                 $order->tran_id = $invoice_id;
                 $order->status = 'Pending';
