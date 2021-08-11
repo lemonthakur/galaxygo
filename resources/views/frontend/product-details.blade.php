@@ -89,19 +89,20 @@
                         <?php Session::forget(["bid_amo", "pro_dir_url"]); ?>
                     @endif
                     {{--end auction product--}}
-
-                    <div class="ic-product-count-buy">
-                        <div class="product-count">
-                            <a href="javascript:void(0)" class="qty-minus custom_qty_minus"><i class="flaticon-minus"></i></a>
-                            <input type="number" value="01" min="1" class="qty" readonly>
-                            <a href="javascript:void(0)" class="qty-plus custom_qty_plus"><i class="flaticon-plus"></i></a>
+                    @if($product->remaining_qty>0)
+                        <div class="ic-product-count-buy">
+                            <div class="product-count">
+                                <a href="javascript:void(0)" class="qty-minus custom_qty_minus"><i class="flaticon-minus"></i></a>
+                                <input type="number" value="01" min="1" class="qty" readonly>
+                                <a href="javascript:void(0)" class="qty-plus custom_qty_plus"><i class="flaticon-plus"></i></a>
+                            </div>
+                            <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
+                            data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
+                            data-slug="{{$product->slug}}" data-delivery-charge="{{$product->deliver_charge}}" data-avl-qty="{{$product->remaining_qty}}">
+                                <a href="{{ route('shopping.cart') }}" class="ic-btn ic-btn-golden2 custom_add_to_cart">buy now</a>
+                            </div>
                         </div>
-                        <div class="ic-buy-now-btn custom-add-to-cart-par" data-id="{{$product->id}}" data-name="{{$product->name}}" data-price="{{$price}}"
-                        data-discount="{{$product->discount_amount}}" data-image="{{$product->feature_image}}"
-                        data-slug="{{$product->slug}}" data-delivery-charge="{{$product->deliver_charge}}">
-                            <a href="{{ route('shopping.cart') }}" class="ic-btn ic-btn-golden2 custom_add_to_cart">buy now</a>
-                        </div>
-                    </div>
+                    @endif
                     <div class="ic-share-btn">
                         <h5>Share on:</h5>
                         <ul>
@@ -129,7 +130,9 @@
                     <div class="ic-product-item">
                         <div class="ic-thumbnil">
                             <a href="{{ route('product-details', $apv->slug) }}"><img src="{{asset('upload/product-thumbnail-255-200/'.$apv->feature_image)}}" class="img-fluid" alt="product"></a>
-                            <span class="ic-badge">over</span>
+                            @if($apv->remaining_qty<1)
+                                <span class="ic-badge">over</span>
+                            @endif
                         </div>
                         <div class="ic-content">
                             <div class="title-price">
@@ -148,7 +151,9 @@
                                  data-discount="{{$apv->discount_amount}}" data-image="{{$apv->feature_image}}"
                                  data-slug="{{$apv->slug}}" data-delivery-charge="{{$apv->deliver_charge}}">
                                 <input type="hidden" class="qty" value="1">
-                                <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
+                                @if($apv->remaining_qty>0)
+                                    <a href="{{route('shopping.cart')}}" class="buy-btn custom_add_to_cart">buy now</a>
+                                @endif
                                 @if( $apv->auction_end_date.' '.$apv->auction_end_time >= date('Y-m-d H:i:s'))
                                     <a href="{{ route('product-details', $apv->slug) }}" class="bid-btn">bid now</a>
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#bidModal" class="icon-btn bid-list"><i class="flaticon-time-left"></i></a>
@@ -183,6 +188,18 @@
             var img_name   = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-image');
             var slug       = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-slug');
             var delivery_charge = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-delivery-charge');
+            var avaiable_qty = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-avl-qty');
+
+            if(parseInt(quantity) > parseInt(avaiable_qty)){
+                $(this).parent().parent().find('.qty').val(avaiable_qty);
+                toastr.options =
+                    {
+                        "closeButton" : true,
+                        "progressBar" : true
+                    }
+                toastr.error("Exceed the maximum quota.");
+                return false;
+            }
 
             $.ajax({
                 type:'post',
@@ -197,13 +214,41 @@
                 img_name:img_name,
                 slug:slug,
                 delivery_charge:delivery_charge,
+                avaiable_qty:avaiable_qty,
             },
             success:function (data) {
-                window.location.href = "{{ route('shopping.cart')}}";
+                if(data == 'qty_error'){
+                    toastr.options =
+                        {
+                            "closeButton" : true,
+                            "progressBar" : true
+                        }
+                    toastr.error("Exceed the maximum quota.");
+                    return false;
+                }
+                else{
+                    window.location.href = "{{ route('shopping.cart')}}";
+                }
             }
             });
 
-            });
+        });
+
+        $(document).on("click", ".qty-plus", function(e){
+            var rem_qty    = $(this).parent().parent().find('.custom-add-to-cart-par').attr('data-avl-qty');
+            var quantity   = $(this).parent().parent().find('.qty').val();
+            if(parseInt(quantity) > parseInt(rem_qty)){
+                $(this).parent().parent().find('.qty').val(rem_qty);
+                toastr.options =
+                    {
+                        "closeButton" : true,
+                        "progressBar" : true
+                    }
+                toastr.error("Exceed the maximum quota.");
+                return false;
+            }
+
+        });
 
         $(document).ready(function(){
             $(document).on("click", ".custom_product_bid", function(e){

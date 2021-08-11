@@ -95,4 +95,14 @@ class OwnLibrary {
 
         return array('type' => $participantType,'id' => $participantId);
     }
+
+    public static function check_cart_qty(){
+        if(\Cart::count() > 0){
+            foreach(\Cart::content() as $row){
+                $product = \App\Models\Product::find($row->id);
+                if($row->qty > $product->remaining_qty)
+                    \Cart::remove($row->rowId);
+            }
+        }
+    }
 }

@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderDetail extends Model
 {
-    /*public function product() {
-        return $this->belongsTo(Product::class);
+    public function product_det()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
     }
-
-    public function orderInfo(){
-        return $this->belongsTo(Order::class, 'order_id');
-    }*/
 }
