@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\CustomClass\OwnLibrary;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -34,5 +35,12 @@ class Contest extends Model
 
     public function contestPlayers(){
         return $this->hasMany(ContestPlayer::class,'contest_id');
+    }
+
+    public function userPLay() {
+        $user = OwnLibrary::getUserInfo();
+        return $this->hasOne(ContestParticipant::class,'contest_id','id')
+            ->where('participant_type', '=', $user['type'])
+            ->where('participant_id', '=', $user['id']);
     }
 }

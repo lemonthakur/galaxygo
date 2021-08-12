@@ -72,4 +72,7 @@ Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::post('checkout-bid-point-payment', [CheckoutController::class, 'checkoutbidpointPayment'])->name('checkout-bid-point.payment');
     Route::get('/payment',[HomeController::class,'payment'])->name('payment');
     Route::get('/bid-payment/{id}',[HomeController::class,'bidpayment'])->name('bid.payment');
+
+//    Claim Contest Coin
+    Route::post('/entries/claim-coin',[ContestController::class,'claimCoin'])->name('entries.claim.coin');
 });

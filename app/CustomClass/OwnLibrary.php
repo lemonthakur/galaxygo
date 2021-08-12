@@ -9,7 +9,9 @@
 namespace App\CustomClass;
 
 
+use App\Models\ContestParticipant;
 use App\Models\GuestUser;
+use App\Models\WinCoin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -104,5 +106,15 @@ class OwnLibrary {
                     \Cart::remove($row->rowId);
             }
         }
+    }
+
+    public static function entryWon(){
+        $user = self::getUserInfo();
+        $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
+        $win = ContestParticipant::where('participant_type', '=', $user['type'])
+            ->where('participant_id', '=', $user['id'])
+            ->where('correct_answer', '>=', $winCoin[0]->win)
+            ->count();
+        return $win;
     }
 }

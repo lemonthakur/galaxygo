@@ -248,210 +248,102 @@
 
                             <div class="tab-pane fade" id="finalEntries">
                                 <div class="ic-entries-tab-contents final-entries">
-                                    <div class="ic-time">
-                                        <h4>final entries</h4>
-                                    </div>
+                                @if(!empty($contest) && strtotime($contest->expaire_time) <= $now && $contest->is_final_answer == 1)
+                                        <div class="ic-time">
+                                            <h4>Today's final entries</h4>
+                                        </div>
+                                    @forelse($contest->contestPlayers as $key => $contestPlayer)
                                     <!--Item 1-->
-                                    <div class="ic-item item-bg">
+                                    <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
                                         <div class="user">
                                             <div class="image">
-                                                <img src="{{asset('frontend/images/entries-user5.png')}}" alt="user">
+                                                <img src="{{asset($contestPlayer->player_image)}}" alt="user">
                                             </div>
                                             <div class="name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
+                                                <p>{{ucwords($contestPlayer->player_name)}}</p>
+                                                <span>{{strtoupper($contestPlayer->location)}}</span>
                                             </div>
                                             <div class="mobile-name-title name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                                <p class="final-our-score">your score</p>
-                                                <p class="final-score-point">16.5</p>
+                                                <p>{{ucwords($contestPlayer->player_name)}}</p>
+                                                <span>{{strtoupper($contestPlayer->location)}}</span>
+                                                <p class="final-our-score">fantasy score</p>
+                                                <p class="final-score-point">{{$contestPlayer->score}}</p>
                                             </div>
                                         </div>
                                         <div class="over-projection">
-                                            <div class="over-icon">
-                                                <a href="#">over</a>
-                                            </div>
+                                            @if(!empty($contestPlayer->participant->participant_answer))
+                                                @if($contestPlayer->participant->participant_answer == 2)
+                                                    <div class="over-icon">
+                                                        <a href="#">over</a>
+                                                    </div>
+                                                @else
+                                                    <div class="under-icon">
+                                                        <a href="#">under</a>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="over-icon">
+                                                    <a href="#">No Answer</a>
+                                                </div>
+                                            @endif
                                             <span>your projection</span>
                                         </div>
+
                                         <div class="over-projection mobile-over-projection">
-                                            <a href="#"><img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                             class="img-fluid" alt=""> over</a>
-                                            <p>18.2 <span>fantacy score</span></p>
-                                        </div>
-                                        <div class="score">
-                                            <p>5</p>
-                                            <span>fantasy score</span>
-                                        </div>
-                                        <div class="final-fantacy-score">
-                                            <a href="#" class="final-remove"><i class="flaticon-error"></i> final</a>
-                                            <p>6.9 <span>fantasy score</span></p>
-                                        </div>
-                                    </div>
-                                    <!--Item 2-->
-                                    <div class="ic-item item-bg-mobile">
-                                        <div class="user">
-                                            <div class="image">
-                                                <img src="{{asset('frontend/images/entries-user2.png')}}" alt="user">
-                                            </div>
-                                            <div class="name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                            </div>
-                                            <div class="mobile-name-title name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                                <p class="final-our-score">your score</p>
-                                                <p class="final-score-point">16.5</p>
-                                            </div>
-                                        </div>
-                                        <div class="over-projection">
-                                            <div class="under-icon">
-                                                <img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                     class="img-fluid" alt="">
+                                            @if(!empty($contestPlayer->participant->participant_answer))
+                                                @if($contestPlayer->participant->participant_answer == 2)
+                                                    <a href="#">over</a>
+                                                @else
+                                                    <a href="#">under</a>
+                                                @endif
+                                            @else
                                                 <a href="#">under</a>
-                                            </div>
-                                            <span>your projection</span>
+                                            @endif
+                                            <p>{{$contestPlayer->score}}<span>fantasy score</span></p>
                                         </div>
-                                        <div class="over-projection mobile-over-projection">
-                                            <a href="#"><img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                             class="img-fluid" alt=""> under</a>
-                                            <p>18.2 <span>fantacy score</span></p>
-                                        </div>
+
                                         <div class="score">
-                                            <p>18.5</p>
+                                            <p>{{$contestPlayer->score}}</p>
                                             <span>fantasy score</span>
                                         </div>
                                         <div class="final-fantacy-score">
-                                            <a href="#" class="final-remove check"><i class="flaticon-tick-mark"></i>
-                                                final</a>
-                                            <p>99.2 <span>fantasy score</span></p>
+                                            @if(!empty($contestPlayer->participant->participant_answer) &&
+                                              $contestPlayer->answer == $contestPlayer->participant->participant_answer)
+                                            <a href="#" class="final-remove check">
+                                                <i class="flaticon-tick-mark"></i>
+                                                final
+                                            </a>
+                                            @else
+                                            <a href="#" class="final-remove">
+                                                <i class="flaticon-error"></i>
+                                                final
+                                            </a>
+                                            @endif
+                                            <p>{{$contestPlayer->score}} <span>fantasy score</span></p>
                                         </div>
                                     </div>
-                                    <!--Item 3-->
-                                    <div class="ic-item item-bg">
-                                        <div class="user">
-                                            <div class="image">
-                                                <img src="{{asset('frontend/images/entries-user3.png')}}" alt="user">
-                                            </div>
-                                            <div class="name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                            </div>
-                                            <div class="mobile-name-title name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                                <p class="final-our-score">your score</p>
-                                                <p class="final-score-point">16.5</p>
-                                            </div>
+                                        @empty
+                                            <h3 class="text-center">No Players Found</h3>
+                                        @endforelse
+
+                                        <div class="ic-item-load-more">
+                                            @auth()
+                                                @if(!empty($contest->userPLay) && $contest->userPLay->get_coin == 0)
+                                                <form method="post" action="{{route('entries.claim.coin')}}">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{encrypt($contest->id)}}">
+                                                    <button type="submit" class="btn-submit">
+                                                        <i class="icofont-coins mr-1"></i>
+                                                        Claim Coin
+                                                    </button>
+                                                </form>
+                                                @endif
+                                            @endauth
                                         </div>
-                                        <div class="over-projection">
-                                            <div class="under-icon">
-                                                <img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                     class="img-fluid" alt="">
-                                                <a href="#">under</a>
-                                            </div>
-                                            <span>your projection</span>
-                                        </div>
-                                        <div class="over-projection mobile-over-projection">
-                                            <a href="#"><img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                             class="img-fluid" alt=""> under</a>
-                                            <p>18.2 <span>fantacy score</span></p>
-                                        </div>
-                                        <div class="score">
-                                            <p>18.5</p>
-                                            <span>fantasy score</span>
-                                        </div>
-                                        <div class="final-fantacy-score">
-                                            <a href="#" class="final-remove check"><i class="flaticon-tick-mark"></i>
-                                                final</a>
-                                            <p>99.2 <span>fantasy score</span></p>
-                                        </div>
-                                    </div>
-                                    <!--Item 4-->
-                                    <div class="ic-item item-bg-mobile">
-                                        <div class="user">
-                                            <div class="image">
-                                                <img src="{{asset('frontend/images/entries-user4.png')}}" alt="user">
-                                            </div>
-                                            <div class="name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                            </div>
-                                            <div class="mobile-name-title name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                                <p class="final-our-score">your score</p>
-                                                <p class="final-score-point">16.5</p>
-                                            </div>
-                                        </div>
-                                        <div class="over-projection">
-                                            <div class="under-icon">
-                                                <img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                     class="img-fluid" alt="">
-                                                <a href="#">under</a>
-                                            </div>
-                                            <span>your projection</span>
-                                        </div>
-                                        <div class="over-projection mobile-over-projection">
-                                            <a href="#"><img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                             class="img-fluid" alt=""> under</a>
-                                            <p>18.2 <span>fantacy score</span></p>
-                                        </div>
-                                        <div class="score">
-                                            <p>18.5</p>
-                                            <span>fantasy score</span>
-                                        </div>
-                                        <div class="final-fantacy-score">
-                                            <a href="#" class="final-remove check"><i class="flaticon-tick-mark"></i>
-                                                final</a>
-                                            <p>99.2 <span>fantasy score</span></p>
-                                        </div>
-                                    </div>
-                                    <!--Item 5-->
-                                    <div class="ic-item item-bg">
-                                        <div class="user">
-                                            <div class="image">
-                                                <img src="{{asset('frontend/images/entries-user5.png')}}" alt="user">
-                                            </div>
-                                            <div class="name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                            </div>
-                                            <div class="mobile-name-title name-title">
-                                                <p>Merrill Kelly</p>
-                                                <span>BAL - LF</span>
-                                                <p class="final-our-score">your score</p>
-                                                <p class="final-score-point">16.5</p>
-                                            </div>
-                                        </div>
-                                        <div class="over-projection">
-                                            <div class="under-icon">
-                                                <img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                     class="img-fluid" alt="">
-                                                <a href="#">under</a>
-                                            </div>
-                                            <span>your projection</span>
-                                        </div>
-                                        <div class="over-projection mobile-over-projection">
-                                            <a href="#"><img src="{{asset('frontend/images/arrow-shape.png')}}"
-                                                             class="img-fluid" alt=""> under</a>
-                                            <p>18.2 <span>fantacy score</span></p>
-                                        </div>
-                                        <div class="score">
-                                            <p>18.5</p>
-                                            <span>fantasy score</span>
-                                        </div>
-                                        <div class="final-fantacy-score">
-                                            <a href="#" class="final-remove check"><i class="flaticon-tick-mark"></i>
-                                                final</a>
-                                            <p>99.2 <span>fantasy score</span></p>
-                                        </div>
-                                    </div>
-                                    <!--Item End-->
-                                    <div class="ic-item-load-more">
-                                        <a href="#"><i class="flaticon-loading"></i> load more</a>
-                                    </div>
+
+                                    @else
+                                        <h3 class="text-center text-white">Today's answer not submitted yet.</h3>
+                                    @endif
                                 </div>
                             </div>
                         </div>

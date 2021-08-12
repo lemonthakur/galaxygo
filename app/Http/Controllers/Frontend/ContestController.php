@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\CustomClass\OwnLibrary;
 use App\Http\Controllers\Controller;
+use App\Models\CoinHistory;
 use App\Models\Contest;
 use App\Models\ContestParticipant;
 use App\Models\ParticipantAnswer;
+use App\Models\User;
+use App\Models\WinCoin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -18,7 +21,7 @@ class ContestController extends Controller
     {
         //        Today Contest
         $contest = Contest::
-        with(
+        with('userPLay',
             'contestPlayers:id,contest_id,player_name,player_image,location,played_on,versus,score,answer',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name', 'expaire_time', 'is_final_answer')
@@ -104,4 +107,90 @@ class ContestController extends Controller
         }
         return redirect()->route('entries');
     }
+
+    public function claimCoin(Request $request){
+        $contestId = decrypt($request->id);
+
+        DB::beginTransaction();
+        $success = false;
+        $win = 0;
+        $coin = 0;
+        try {
+            $contest = Contest::
+            with('userPLay',
+                'contestPlayers:id,contest_id,player_name,player_image,location,played_on,versus,score,answer',
+                'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+            )->select('id', 'name', 'expaire_time', 'is_final_answer')
+                ->where('id',"=",$contestId)->first();
+
+            if (empty($contest)){
+                Session::flash("error", "Invalid contest");
+                return redirect()->route('entries');
+            }
+
+            if ($contest->userPLay->get_coin == 1){
+                Session::flash("error", "You already claim coin");
+                return redirect()->route('entries');
+            }
+
+            foreach($contest->contestPlayers as  $contestPlayer){
+                //check number of correct and Update participant answer
+                if (!empty($contestPlayer->participant->participant_answer)){
+                    $participantAns = ParticipantAnswer::find($contestPlayer->participant->id);
+                    if($contestPlayer->answer == $contestPlayer->participant->participant_answer){
+                        $participantAns->is_correct = 2;
+                        $win++;
+                    }else{
+                        $participantAns->is_correct = 1;
+                    }
+                    $participantAns->save();
+                }
+            }
+
+            //Based on Win Coin earn
+            $winCoin = WinCoin::select('coin')->where('win','=',$win)->first();
+            $coin = $winCoin->coin ?? 0;
+
+            //Update Coin Participant
+            $contestParticipant = ContestParticipant::find($contest->userPLay->id);
+            $contestParticipant->correct_answer = $win;
+            $contestParticipant->earn = $coin;
+            $contestParticipant->get_coin = 1;
+            $contestParticipant->save();
+
+            //Insert in coin history
+            $coinHistory = new CoinHistory();
+            $coinHistory->user_id = auth()->id();
+            $coinHistory->amount = $coin;
+            $coinHistory->transaction_type = 0;
+            $coinHistory->earn_expense_type = 2;
+            $coinHistory->save();
+
+            //Update user table
+            $user = User::find(auth()->id());
+            $user->total_coin = $user->total_coin + $coin;
+            $user->current_coin = $user->current_coin + $coin;
+            $user->save();
+
+            $success = true;
+        } catch (ValidationException $e) {
+            DB::rollback();
+            session()->flash("error", "Unable to insert data");
+            return redirect()->route('entries')
+                ->withErrors($e->getErrors())
+                ->withInput();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
+
+        if ($success) {
+                Session::flash("success", "You answered $win correctly. Your earned coin is $coin");
+        } else {
+            Session::flash("error", "Unable claim coin");
+        }
+        return redirect()->route('entries');
+    }
+
 }

@@ -38,11 +38,11 @@
                         </div>
                     </div>
                     <div class="ic-win-btn">
-                        <a href="#">00 <span>Entries Won</span></a>
-                        <a href="#">00 <span>Coins Won</span></a>
+                        <a href="#">{{$entryWon}} <span>Entries Won</span></a>
+                        <a href="#">{{auth()->user()->total_coin}} <span>Coins Won</span></a>
                     </div>
                     <div class="ic-total-balance">
-                        <p>Total Coins Balance</p>
+                        <p>Current Coins Balance</p>
                         <h4>{{auth()->user()->current_coin}}</h4>
                     </div>
                 </div>

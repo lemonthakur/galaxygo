@@ -79,7 +79,8 @@ class HomeController extends Controller
     }
 
     public function profile(){
-        return view('frontend.profile');
+        $entryWon = OwnLibrary::entryWon();
+        return view('frontend.profile',compact('entryWon'));
     }
 
     public function cart(){
