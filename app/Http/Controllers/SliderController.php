@@ -19,7 +19,7 @@ class SliderController extends Controller
     public function index()
     {
         OwnLibrary::validateAccess($this->moduleId,1);
-        $sliders = Slider::with('createdBy','updatedBy')->orderBy("order_serial")->paginate(10);
+        $sliders = Slider::with('createdBy','updatedBy')->orderBy("order_serial")->get();
         return view('backend.slider.index',compact('sliders'));
     }
 

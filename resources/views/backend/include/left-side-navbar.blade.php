@@ -283,7 +283,8 @@
                     <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
                     || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
                     || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
-                    || $routeName == 'slider.edit' || $routeName == 'slider.index') ? 'menu-open' : '' }}">
+                    || $routeName == 'slider.edit' || $routeName == 'slider.index' || $routeName == 'footer-circle-image.index'
+                    || $routeName == 'footer-circle-image.create' || $routeName == 'footer-circle-image.edit') ? 'menu-open' : '' }}">
                         <a href="#"
                            class="nav-link">
                             <i class="nav-icon fas fa-cog"></i>
@@ -326,6 +327,16 @@
                                        class="nav-link {{ ($routeName == 'slider.index' || $routeName == 'slider.create'|| $routeName == 'slider.edit') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Slider</p>
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if(!empty($aclList[5][1]))
+                                <li class="nav-item">
+                                    <a href="{{route("footer-circle-image.index")}}"
+                                       class="nav-link {{ ($routeName == 'footer-circle-image.index' || $routeName == 'footer-circle-image.create'|| $routeName == 'footer-circle-image.edit') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Footer circle image</p>
                                     </a>
                                 </li>
                             @endif

@@ -19,6 +19,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\FooterCircleImageController;
 
 include ('frontend.php');
 
@@ -88,4 +89,8 @@ Route::group(['middleware'=>'authCheck'],function (){
 
     Route::resource("slider",SliderController::class);
     Route::get("/slider_image_show/{id}",[SliderController::class,'imageShow'])->name('slider.image.show');
+
+    // Footer icons
+    Route::resource("footer-circle-image",FooterCircleImageController::class);
+    Route::get("/circle_image_show/{id}",[FooterCircleImageController::class,'imageShow'])->name('circle.image.show');
 });

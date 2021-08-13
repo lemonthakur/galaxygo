@@ -7,42 +7,23 @@
     <div class="container">
         <div class="ic-product-banner owl-carousel">
             <!--Item 1-->
-            <div class="item" style="background-image: url('{{asset('frontend/images/product/slider-1.png')}}');">
-                <div class="row">
-                    <div class="col-lg-5 col-md-8  offset-lg-6">
-                        <div class="content">
-                            <h1>Fashion <span> Leather shoes</span></h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas ultrices venenatis, at nulla. </p>
-                            <a href="#" class="ic-btn">buy now</a>
+            @if($all_sliders)
+                @foreach($all_sliders as $sv)
+                    <div class="item" style="background-image: url('{{asset($sv->slider_name)}}');">
+                        <div class="row">
+                            <div class="col-lg-5 col-md-8  offset-lg-6">
+                                <div class="content">
+                                    <h1>{{ $sv->title_black }} <span> {{ $sv->title_color }}</span></h1>
+                                    <p>{!! nl2br($sv->description) !!}</p>
+                                    @if($sv->button_label)
+                                        <a href="{{ $sv->link }}" class="ic-btn">{{ $sv->button_label }}</a>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <!--Item 2-->
-            <div class="item" style="background-image: url('{{asset('frontend/images/product/slider-1.png')}}');">
-                <div class="row">
-                    <div class="col-lg-5 col-md-8  offset-lg-6">
-                        <div class="content">
-                            <h1>Fashion <span> Leather shoes</span></h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas ultrices venenatis, at nulla. </p>
-                            <a href="#" class="ic-btn">buy now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Item 3-->
-            <div class="item" style="background-image: url('{{asset('frontend/images/product/slider-1.png')}}');">
-                <div class="row">
-                    <div class="col-lg-5 col-md-8  offset-lg-6">
-                        <div class="content">
-                            <h1>Fashion <span> Leather shoes</span></h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas ultrices venenatis, at nulla. </p>
-                            <a href="#" class="ic-btn">buy now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                @endforeach
+            @endif
             <!--Item End-->
         </div>
     </div>

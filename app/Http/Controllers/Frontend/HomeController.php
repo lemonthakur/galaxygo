@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\WinCoin;
+use App\Models\FooterCircleImage;
 use Illuminate\Http\Request;
 use App\CustomClass\OwnLibrary;
 
 class HomeController extends Controller
 {
     public function home(){
-        return view('frontend.home');
+        $all_images = FooterCircleImage::where('status', 1)->orderBy('order_serial', 'asc')->get();
+        return view('frontend.home', 'all_images');
     }
 
     public function todayTomorrow(){

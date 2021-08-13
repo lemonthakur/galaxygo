@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductBid;
 use App\Models\ProductWiseBid;
+use App\Models\Slider;
 
 class ShopController extends Controller
 {
     public function allProducts(){
 //        $all_products = Product::where('status', 1)->orderBy('id', 'DESC')->get();
         $all_products = Product::where('status', 1)->orderBy('id', 'DESC')->paginate(8);
+        $all_sliders = Slider::where('status', 1)->orderBy('order_serial', 'asc')->get();
 
         $data['all_products'] = $all_products;
+        $data['all_sliders'] = $all_sliders;
 
         return view('frontend.shop', $data);
     }
