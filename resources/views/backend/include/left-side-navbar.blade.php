@@ -278,12 +278,6 @@
                     </ul>
                 </li>
 
-                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3])
-                 || !empty($aclList[10][3]) )
-                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
-                    || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
-                    || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
-                    || $routeName == 'slider.edit' || $routeName == 'slider.index') ? 'menu-open' : '' }}">
                 <li class="nav-item has-treeview {{ ($routeName == 'about-us.edit' || $routeName == 'other-page.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-coins"></i>
@@ -311,8 +305,13 @@
                     </ul>
                 </li>
 
-                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3]))
-                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create' || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit' || $routeName == 'site.setting.edit') ? 'menu-open' : '' }}">
+                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3])
+                 || !empty($aclList[10][3]) )
+                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
+                    || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
+                    || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
+                    || $routeName == 'slider.edit' || $routeName == 'slider.index') ? 'menu-open' : '' }}">
+
                         <a href="#"
                            class="nav-link">
                             <i class="nav-icon fas fa-cog"></i>
@@ -349,7 +348,6 @@
                                     </a>
                                 </li>
                             @endif
-                            @if(!empty($aclList[5][1]))
                                 <li class="nav-item">
                                     <a href="{{route("slider.index")}}"
                                        class="nav-link {{ ($routeName == 'slider.index' || $routeName == 'slider.create'|| $routeName == 'slider.edit') ? 'active' : '' }}">
@@ -357,10 +355,10 @@
                                         <p>Slider</p>
                                     </a>
                                 </li>
-                            @endif
                         </ul>
                     </li>
                 @endif
+
                 <li class="nav-item">
                     <a href="{{route('admin.logout')}}" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
