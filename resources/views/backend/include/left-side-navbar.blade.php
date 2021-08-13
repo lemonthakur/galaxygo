@@ -232,6 +232,33 @@
                     </ul>
                 </li>
 
+                <li class="nav-item has-treeview {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'
+                || $routeName == 'backend.auction.order.view') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Order Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("backend.order.view")}}"
+                               class="nav-link {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'|| $routeName == 'backend.order.print') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <p>Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("backend.auction.order.view")}}"
+                               class="nav-link {{ ($routeName == 'backend.auction.order.view') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <p>Auction Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3]))
                     <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create' || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit' || $routeName == 'site.setting.edit') ? 'menu-open' : '' }}">
                         <a href="#"

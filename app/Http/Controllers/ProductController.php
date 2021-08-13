@@ -696,6 +696,7 @@ class ProductController extends Controller
                         , "product_wise_bids.height_bider_id as pwb_height_bider_id"
                         , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
                         , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                        , "product_wise_bids.ordered as pwb_ordered"
                         , "product_wise_bids.provied_to_user as pwb_provied_to_user"
                         , "product_wise_bids.id as id"
                         , "users.name as height_biddr_name"

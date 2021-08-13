@@ -43,6 +43,7 @@
                                         <th>Bid From($)</th>
                                         <th>Start Time</th>
                                         <th>End Time</th>
+                                        <th>Bid Status</th>
                                         <th>Bids</th>
                                         <th>Height Bid($)</th>
                                         <th>Height Bidder Name</th>
@@ -162,6 +163,19 @@
                                 //return res;
                             }
                         },
+                        // Bid status
+                        { "data": function ( data, type, row ) {
+                                const date1 = new Date();
+                                const date2 = new Date(data.pwb_auction_end_date_time);
+                                if(date1 > date2)
+                                    return '<span class="btn btn-success btn-xs">End</span>';
+                                else
+                                    return '<span class="btn btn-warning btn-xs">Running</span>';
+
+
+                                //return res;
+                            }
+                        },
                         { "data": function ( data, type, row ) {
                                 let totla_bids = 0;
                                 if (data.bid_this_auction){
@@ -171,9 +185,13 @@
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                let Height_bid_amt = 0;
+                                let rote = "{{route('bid.users.list')}}";
+                                let auid = data.id;
+                                let url = rote+'/'+auid;
+
+                                let Height_bid_amt = '<a href="'+url+'">0</a>';
                                 if (data.pwb_height_bid_amount){
-                                    Height_bid_amt = data.pwb_height_bid_amount;
+                                    Height_bid_amt = '<a href="'+url+'">'+data.pwb_height_bid_amount+'</a>';
                                 }
                                 return Height_bid_amt;
                             }
@@ -195,9 +213,11 @@
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                let string = data.pwb_provied_to_user;
-                                let ret = string.charAt(0).toUpperCase() + string.slice(1);
-                                return ret;
+                                let pay_status = '<span class="btn btn-danger btn-xs">No</span>';
+                                if (data.pwb_ordered == 'yes'){
+                                    pay_status = '<span class="btn btn-success btn-xs">Yes</span>';
+                                }
+                                return pay_status;
                             }
                         },
                         {data: 'actions'},

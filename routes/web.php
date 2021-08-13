@@ -17,6 +17,7 @@ use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 include ('frontend.php');
 
@@ -76,4 +77,10 @@ Route::group(['middleware'=>'authCheck'],function (){
 
     Route::get('auction-products', [ProductController::class,'auctionProducts'])->name('auction-product.list');
     Route::any('bid-user-list/{id?}', [ProductController::class,'bidUsersList'])->name('bid.users.list');
+
+    Route::get('orders',[OrderController::class,'index'])->name('backend.order.view');
+    Route::get('orders-details/{id}/{action?}',[OrderController::class, 'orderDetails'])->name('backend.order.details');
+    Route::post('orders-status-change',[OrderController::class, 'orderStatusChange'])->name('backend.orders-status-change');
+
+    Route::get('auctions-orders',[OrderController::class,'auctionsOrders'])->name('backend.auction.order.view');
 });
