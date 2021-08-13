@@ -155,11 +155,11 @@
                 <ul>
                     <li><a href="{{route('home')}}" class="back-tohome-sm">back to home</a></li>
                     <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Rules</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms & conditions</a></li>
+                    <li><a href="{{route('about-us')}}">About us</a></li>
+                    <li><a href="{{route('contact')}}">Contact us</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Rules</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Privacy</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Terms & Conditions</a></li>
                 </ul>
             </div>
         </div>

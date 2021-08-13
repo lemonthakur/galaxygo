@@ -39,7 +39,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="site_title">Site Title</label>
+                                                <label for="site_title">Site Title<span class="text-red">*</span></label>
                                                 <input type="text" class="form-control {{$errors->has("site_title") ? "is-invalid":""}}" id="site_title" name="site_title" placeholder="Enter site title" value="{{old("site_title",$setting->site_title)}}">
                                                 <span class="text-danger"> {{$errors->has("site_title") ? $errors->first("site_title") : ""}} </span>
                                             </div>
@@ -47,7 +47,7 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="email">Email</label>
+                                                <label for="email">Email<span class="text-red">*</span></label>
                                                 <input type="email" class="form-control {{$errors->has("email") ? "is-invalid":""}}" id="tag_line" name="email" placeholder="Enter email" value="{{old("email",$setting->email)}}"  required>
                                                 <span class="text-danger"> {{$errors->has("email") ? $errors->first("email") : ""}} </span>
                                             </div>
@@ -55,7 +55,7 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="contact_no">Contact number</label>
+                                                <label for="contact_no">Contact number<span class="text-red">*</span></label>
                                                 <input type="text" class="form-control {{$errors->has("contact_no") ? "is-invalid":""}}" id="contact_no" name="contact_no" placeholder="Enter contact number" value="{{old("contact_no",$setting->contact_no)}}">
                                                 <span class="text-danger"> {{$errors->has("contact_no") ? $errors->first("contact_no") : ""}} </span>
                                             </div>
@@ -63,9 +63,17 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="copy_right">Copy Right</label>
-                                                <input type="text" class="form-control {{$errors->has("copy_right") ? "is-invalid":""}}" id="copy_right" name="copy_right" placeholder="" value="{{old("copy_right",$setting->copy_right)}}">
-                                                <span class="text-danger"> {{$errors->has("copy_right") ? $errors->first("copy_right") : ""}} </span>
+                                                <label for="address">Address<span class="text-red">*</span></label>
+                                                <input type="text" class="form-control {{$errors->has("address") ? "is-invalid":""}}" id="address" name="address" placeholder="" value="{{old("address",$setting->address)}}">
+                                                <span class="text-danger"> {{$errors->has("address") ? $errors->first("address") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="google_map">Map Code</label>
+                                                <input type="text" class="form-control {{$errors->has("google_map") ? "is-invalid":""}}" id="google_map" name="google_map" placeholder="Google map iframge code" value="{{old("google_map",$setting->google_map)}}">
+                                                <span class="text-danger"> {{$errors->has("google_map") ? $errors->first("google_map") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -78,11 +86,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="meta_keyword">Meta Keywordst</label>
                                                 <input type="text" class="form-control {{$errors->has("meta_keyword") ? "is-invalid":""}}" id="meta_keyword" name="meta_keyword" placeholder="" value="{{old("meta_keyword",$setting->meta_keyword)}}">
                                                 <span class="text-danger"> {{$errors->has("meta_keyword") ? $errors->first("meta_keyword") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="copy_right">Copy Right</label>
+                                                <input type="text" class="form-control {{$errors->has("copy_right") ? "is-invalid":""}}" id="copy_right" name="copy_right" placeholder="" value="{{old("copy_right",$setting->copy_right)}}">
+                                                <span class="text-danger"> {{$errors->has("copy_right") ? $errors->first("copy_right") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -125,8 +141,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer text-right">
-                                    <button type="submit" class="btn btn-dark">Submit</button>
-                                    <!-- <button type="button" class="btn btn-default cancel">Cancel</button> -->
+                                    <button type="submit" class="btn btn-dark">Update</button>
                                 </div>
                             </form>
                         </div>

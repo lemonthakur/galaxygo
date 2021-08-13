@@ -1,0 +1,77 @@
+.ic-privacy-policy-area {
+    margin-top: 40px;
+}
+
+.ic-privacy-policy-tab {
+    .nav-tabs {
+        border-bottom: none;
+        .nav-link {
+            @include bd-radius(10px);
+            background-color: #ffffff1a;
+            border: none;
+            height: 50px;
+            line-height: 43px;
+            padding: 0px 20px;
+            color: $color-white;
+            text-transform: capitalize;
+            margin-right: 15px;
+            @media #{$max575} {
+                padding: 0px 10px;
+                height: 45px;
+                line-height: 40px;
+            }
+            &.active {
+                background-color: $color-golden3;
+                color: $color-black1;
+            }
+        }
+    }
+}
+
+.ic-privacy-policy-tab-content {
+    margin-top: 24px;
+    h2 {
+        color: $color-white;
+        font-family: $font-semiBold;
+        margin-bottom: 15px;
+    }
+    p {
+        color: $color-white;
+        span {
+            color: $color-golden2;
+        }
+    }
+    .main-description {
+        margin-bottom: 14px;
+        p {
+            margin-bottom: 30px;
+            @media #{$max575} {
+                margin-bottom: 25px;
+            }
+            &:last-child {
+                margin-bottom: 0px;
+            }
+        }
+        .sub-tile {
+            color: $color-golden1;
+            margin-bottom: 0px;
+        }
+    }
+    .sub-description {
+        h6 {
+            font-size: 20px;
+            font-family: $font-medium;
+            color: $color-golden2;
+            margin-bottom: 8px;
+            @media #{$max575} {
+                font-size: 18px;
+            }
+        }
+        p {
+            margin-bottom: 25px;
+            @media #{$max575} {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

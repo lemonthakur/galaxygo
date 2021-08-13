@@ -3,9 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutUs;
+use App\Models\OtherPages;
+use App\Models\SiteSetting;
 use App\Models\WinCoin;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\CustomClass\OwnLibrary;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -100,5 +107,38 @@ class HomeController extends Controller
         $id = decrypt($id);
         $product_info = \App\Models\ProductWiseBid::find($id);
         return view('frontend.bid-payment', compact('product_info'));
+    }
+
+    public function about(){
+        $about  = AboutUs::find(1);
+        return view('frontend.about-us',compact('about'));
+    }
+
+    public function privacyPolicy(){
+        $otherPage  = OtherPages::find(1);
+        return view('frontend.pages',compact('otherPage'));
+    }
+
+    public function contact(){
+        return view('frontend.contact');
+    }
+
+    public function contactMessage(Request $request){
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+
+        $setting = SiteSetting::find(1);
+
+        Mail::send('email.contact', ['setting' => $setting,'request' => $request], function($message) use($request,$setting){
+            $message->from($request->email);
+            $message->to($setting->email);
+            $message->subject('Contact Message');
+        });
+
+        return back()->with('success', 'We received your Message. Soon our support team will contact you.');
     }
 }

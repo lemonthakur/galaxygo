@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{asset('frontend/css/easyzoom.css')}}">
     <!--Video js css--->
     <link rel="stylesheet" href="{{asset('frontend/css/video-js.css')}}">
+    <!--venobox js css--->
+    <link rel="stylesheet" href="{{asset('frontend/css/venobox.min.css')}}">
     <!-- sweetalert2 css--->
     <link rel="stylesheet" href="{{asset("/admin-lte/plugins/toastr/toastr.min.css")}}">
     <!--Main CSS-->
@@ -91,6 +93,8 @@
 <!--Eazyzoom js-->
 <script src="{{asset('frontend/js/easyzoom.js')}}"></script>
 <script src="{{asset('frontend/js/video.min.js')}}"></script>
+{{--venobox js--}}
+<script src="{{asset('frontend/js/venobox.min.js')}}"></script>
 <!--Main Js-->
 <script src="{{asset('frontend/js/main.js')}}"></script>
 <!--Custom Js-->

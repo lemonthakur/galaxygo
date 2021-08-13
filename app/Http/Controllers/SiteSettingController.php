@@ -26,7 +26,9 @@ class SiteSettingController extends Controller
             'logo' => 'image',
             'mobile_logo' => 'image',
             'email' => 'required|email',
-            'contact_no' => 'max:15',
+            'contact_no' => 'required|max:15',
+            'address' => 'required|max:100',
+            'google_map' => 'max:500',
             'site_title' => 'max:90',
             'meta_description' => 'max:180',
             'meta_keyword' => 'max:180',
@@ -53,6 +55,8 @@ class SiteSettingController extends Controller
 
         $setting->email = $request->email ?? Null;
         $setting->contact_no = $request->contact_no ?? Null;
+        $setting->address = $request->address ?? Null;
+        $setting->google_map = $request->google_map ?? Null;
         $setting->site_title = $request->site_title ?? Null;
         $setting->meta_description = $request->meta_description ?? Null;
         $setting->meta_keyword = $request->meta_keyword ?? Null;

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ContestPlayerController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\OtherPagesController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\WinCoinController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,10 @@ Route::get('/orders',[HomeController::class,'orders'])->name('orders');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 //Route::get('/cart',[HomeController::class,'cart'])->name('cart');
 //Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
+Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
+Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
+Route::get('/contact',[HomeController::class,'contact'])->name('contact');
+Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('contact.message');
 //Frontend Route
 
 
@@ -76,4 +82,11 @@ Route::group(['middleware'=>'authCheck'],function (){
 
     Route::get('auction-products', [ProductController::class,'auctionProducts'])->name('auction-product.list');
     Route::any('bid-user-list/{id?}', [ProductController::class,'bidUsersList'])->name('bid.users.list');
+
+//    Pages
+    Route::get('/pages/about-us/edit', [AboutUsController::class,'edit'])->name('about-us.edit');
+    Route::put('/pages/about-us/update', [AboutUsController::class,'update'])->name('about-us.update');
+    Route::get('/pages/other-page/edit', [OtherPagesController::class,'edit'])->name('other-page.edit');
+    Route::put('/pages/other-page/update', [OtherPagesController::class,'update'])->name('other-page.update');
+//    Pages
 });

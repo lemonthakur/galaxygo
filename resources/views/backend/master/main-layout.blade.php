@@ -40,6 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset("/admin-lte/plugins/sweetalert2/sweetalert2.min.js")}}"></script>
     <script src="{{asset("/admin-lte/plugins/moment/moment.min.js")}}"></script>
     <script src="{{asset("/admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js")}}"></script>
+    <script src="{{asset("/admin-lte/plugins/tinymce/tinymce.min.js")}}"></script>
     <script src="{{asset("/admin-lte/dist/js/adminlte.min.js")}}"></script>
     <!-- data table js -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
