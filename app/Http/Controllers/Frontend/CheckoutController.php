@@ -326,7 +326,7 @@ class CheckoutController extends Controller
 
                 $order = new Order();
                 $order->user_id                 = auth()->id();
-                $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
+                $order->shipping_address_id     = Session::get('shippingAddress.shipping_address_id') ?? 0;
                 $order->subtotal = Cart::subtotal(2, '.', '');
                 $order->discount = Cart::discount(2, '.', '');
                 $order->vat_tax  = Cart::tax();
@@ -341,6 +341,7 @@ class CheckoutController extends Controller
                 if($order->save()){
 
                     foreach(Cart::content() as $row){
+                        $total_qty = 0;
                         $orderDetails = new OrderDetail();
 
                         $orderDetails->order_id = $order->id;
@@ -355,7 +356,10 @@ class CheckoutController extends Controller
                         $orderDetails->created_by = Auth::id();
                         $orderDetails->updated_by = Auth::id();
                         $orderDetails->save();
+
+                        $total_qty += $row->qty;
                     }
+                    Order::where('id', $order->id)->update(['total_quantity' => $total_qty]);
 
                     $transaction = new Transaction();
                     $transaction->order_id = $order->id;
@@ -429,7 +433,8 @@ class CheckoutController extends Controller
 
                 $order = new Order();
                 $order->user_id                 = auth()->id();
-                $order->shipping_address_id     = Session::get('shipping_address_id') ?? 0;
+                $order->shipping_address_id     = Session::get('shippingAddress.shipping_address_id') ?? 0;
+                $order->total_quantity = 1;
                 $order->subtotal = $product_info->height_bid_amount;
                 $order->discount = 0;
                 $order->vat_tax  = 0;

@@ -65,6 +65,7 @@ class AuthController extends Controller
                 return Redirect::route('checkout');
             }
 
+
             return Redirect::route('home');
         } else {
             Session::flash('error', 'Invalid login credential!');

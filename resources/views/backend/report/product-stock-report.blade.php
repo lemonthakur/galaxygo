@@ -45,7 +45,21 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="name">Quantity From</label>
+                                                    <input type="number" class="form-control" id="ser_from" name="ser_from" placeholder="Quantity From" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="name">Quantity To</label>
+                                                    <input type="number" class="form-control" id="ser_to" name="ser_to" placeholder="Quantity From" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
                                                 <div class="form-group select2-parent">
                                                     <label for="name">Status</label>
                                                     <select name="ser_status" class="form-control single-select2" id="ser_status" style="width: 100%;" >
@@ -72,12 +86,9 @@
                                         <th>Category</th>
                                         <th>Sub Category</th>
                                         <th>Brand</th>
-                                        <th>Auction On</th>
                                         <th>Rem. Qty</th>
                                         <th>Price($)</th>
-                                        {{--<th>Discount($)</th>--}}
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -145,15 +156,13 @@
                         }
                     },
                     'ajax': {
-                        'url': '{{route("product.index")}}',
+                        'url': '{{route("product.stock.report")}}',
                         "type": "GET",
                         "data": formData
                     },
                     'columns': [
                         {data: 'DT_RowIndex'},
                         {data: 'name'},
-                        /*{data: 'categoryName.name'},
-                        {data: 'subCategoryName.name'},*/
                         { "data": function ( data, type, row ) {
                                 let res = '';
                                 if (data.category_name){
@@ -178,16 +187,7 @@
                                 return res;
                             }
                         },
-                        { "data": function ( data, type, row ) {
-                                let pro_type = 'No';
-                                if (data.product_type == "Auction Product"){
-                                    pro_type = 'Yes';
-                                }
-                                return pro_type;
-                            }
-                        },
                         {data: 'remaining_qty'},
-                        /*{data: 'product_type'},*/
                         {data: 'price'},
                         /*{data: 'discount_amount'},*/
                         { "data": function ( data, type, row ) {
@@ -198,7 +198,6 @@
                                 return status;
                             }
                         },
-                        {data: 'actions'},
                     ]
                 });
             }

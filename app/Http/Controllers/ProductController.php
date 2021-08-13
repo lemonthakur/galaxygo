@@ -29,9 +29,24 @@ class ProductController extends Controller
         OwnLibrary::validateAccess($this->moduleId,1);
 
         if($request->ajax()){
-            $name = $request->name;
+            $ser_product = $request->ser_product;
+            $ser_status = $request->ser_status;
 
-            $products = Product::with('category_name','sub_category_name','brand_name')->orderBy('id','desc');
+            $products = Product::with('category_name','sub_category_name','brand_name');
+            if($ser_product){
+                $products->where(function($query) use($ser_product){
+                    $query->where('name', 'LIKE', "%$ser_product%")
+                        ->orWhere('slug', 'LIKE', "%$ser_product%");
+                });
+            }
+            if($ser_status){
+                if($ser_status == 1)
+                    $products->where('status', $ser_status);
+                else
+                    $products->where('status', 0);
+            }
+
+            $products = $products->orderBy('id','desc');
 
             return DataTables::of($products)
                 ->addIndexColumn()
@@ -696,6 +711,7 @@ class ProductController extends Controller
                         , "product_wise_bids.height_bider_id as pwb_height_bider_id"
                         , "product_wise_bids.height_bid_amount as pwb_height_bid_amount"
                         , "product_wise_bids.allow_to_user as pwb_allow_to_user"
+                        , "product_wise_bids.ordered as pwb_ordered"
                         , "product_wise_bids.provied_to_user as pwb_provied_to_user"
                         , "product_wise_bids.id as id"
                         , "users.name as height_biddr_name"
@@ -755,5 +771,47 @@ class ProductController extends Controller
                 ->make(true);
         }
         return view('backend.product.auction_product_user_list');
+    }
+
+    public function productStockReport(Request $request)
+    {
+        OwnLibrary::validateAccess($this->moduleId,1);
+
+        if($request->ajax()){
+            $ser_product = $request->ser_product;
+            $ser_status = $request->ser_status;
+            $ser_from = $request->ser_from;
+            $ser_to = $request->ser_to;
+
+            $products = Product::with('category_name','sub_category_name','brand_name');
+            if($ser_product){
+                $products->where(function($query) use($ser_product){
+                    $query->where('name', 'LIKE', "%$ser_product%")
+                        ->orWhere('slug', 'LIKE', "%$ser_product%");
+                });
+            }
+            if($ser_from){
+                $products->where('remaining_qty', '>=', $ser_from);
+            }
+            if($ser_to){
+                $products->where('remaining_qty', '<=', $ser_to);
+            }
+            if($ser_status){
+                if($ser_status == 1)
+                    $products->where('status', $ser_status);
+                else
+                    $products->where('status', 0);
+            }
+
+            $products = $products->orderBy('remaining_qty','asc');
+
+            return DataTables::of($products)
+                ->addIndexColumn()
+                //->addColumn('actions', 'backend.product.action')
+                //->rawColumns(['actions'])
+                ->make(true);
+        }
+
+        return view('backend.report.product-stock-report');
     }
 }

@@ -1,5 +1,10 @@
 @extends("backend.master.main-layout")
-@section("page-title","Product")
+@section("page-title","Order")
+
+@section('css')
+    <link rel="stylesheet" href="{{asset("/admin-lte/plugins/datepicker/bootstrap-datepicker.min.css")}}">
+@endsection
+
 @section("main-content")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -7,12 +12,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Product</h1>
+                        <h1 class="m-0 text-dark">Order</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                            {{--<li class="breadcrumb-item active">Starter Page</li>--}}
+
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -27,11 +31,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Product List</h3>
-                                <a href="{{route('product.create')}}" class="btn btn-primary float-right text-white">
-                                    <i class="fas fa-plus-circle"></i>
-                                    Add New
-                                </a>
+                                <h3 class="card-title">Order List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive">
@@ -40,19 +40,33 @@
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="name">Product Name/Product ID</label>
-                                                    <input type="text" class="form-control" id="ser_product" name="ser_product" placeholder="Product Name/Product ID" value="">
+                                                    <label for="name">Order no.</label>
+                                                    <input type="text" class="form-control" id="order_no" name="order_no" placeholder="Enter Order no." value="">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <div class="form-group select2-parent">
-                                                    <label for="name">Status</label>
-                                                    <select name="ser_status" class="form-control single-select2" id="ser_status" style="width: 100%;" >
-                                                        <option selected value="">All</option>
-                                                        <option value="1">Active</option>
-                                                        <option value="2">Inactive</option>
+                                                    <label for="name">Order Status</label>
+                                                    <select name="order_status" class="form-control single-select2" id="order_status" style="width: 100%;" required>
+                                                        <option selected disabled>Select One</option>
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Fulfilment">Fulfilment</option>
+                                                        <option value="Cancle">Cancle</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="start_date">Start Date</label>
+                                                    <input type="text" class="form-control onlydate" id="start_date" name="start_date" value="" autocomplete="off" readonly="">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="end_date">End Date</label>
+                                                    <input type="text" class="form-control onlydate" id="end_date" name="end_date" value="" readonly="">
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
@@ -64,18 +78,17 @@
                                         </div>
                                     </form>
                                 </div>
+
                                 <table class="table table-bordered table-hover" id="dTable">
                                     <thead>
                                     <tr>
                                         <th>SL</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Sub Category</th>
-                                        <th>Brand</th>
-                                        <th>Auction On</th>
-                                        <th>Rem. Qty</th>
-                                        <th>Price($)</th>
-                                        {{--<th>Discount($)</th>--}}
+                                        <th>Order No</th>
+                                        <th>Total Qty</th>
+                                        <th>Sub Total</th>
+                                        <th>Deliver Charge</th>
+                                        <th>Total</th>
+                                        <th>Payment Method</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -95,6 +108,7 @@
 @endsection
 
 @section('js')
+    <script src="{{asset("/admin-lte/plugins/datepicker/bootstrap-datepicker.min.js")}}"></script>
     <script>
         $(document).ready(function () {
             let formData = {};
@@ -106,7 +120,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Order List - {{date("d-m-Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -145,59 +159,19 @@
                         }
                     },
                     'ajax': {
-                        'url': '{{route("product.index")}}',
+                        'url': '{{route("backend.order.view")}}',
                         "type": "GET",
                         "data": formData
                     },
                     'columns': [
                         {data: 'DT_RowIndex'},
-                        {data: 'name'},
-                        /*{data: 'categoryName.name'},
-                        {data: 'subCategoryName.name'},*/
-                        { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.category_name){
-                                    res = data.category_name.name;
-                                }
-                                return res;
-                            }
-                        },
-                        { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.sub_category_name){
-                                    res = data.sub_category_name.name;
-                                }
-                                return res;
-                            }
-                        },
-                        { "data": function ( data, type, row ) {
-                                let res = '';
-                                if (data.brandName){
-                                    res = data.brandName.name;
-                                }
-                                return res;
-                            }
-                        },
-                        { "data": function ( data, type, row ) {
-                                let pro_type = 'No';
-                                if (data.product_type == "Auction Product"){
-                                    pro_type = 'Yes';
-                                }
-                                return pro_type;
-                            }
-                        },
-                        {data: 'remaining_qty'},
-                        /*{data: 'product_type'},*/
-                        {data: 'price'},
-                        /*{data: 'discount_amount'},*/
-                        { "data": function ( data, type, row ) {
-                                let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
-                                if (data.status == 1){
-                                    status = '<span class="btn btn-success btn-xs">Active</span>';
-                                }
-                                return status;
-                            }
-                        },
+                        {data: 'tran_id'},
+                        {data: 'total_quantity'},
+                        {data: 'subtotal'},
+                        {data: 'delivery_charge'},
+                        {data: 'total'},
+                        {data: 'payment_type'},
+                        {data: 'dropdown'},
                         {data: 'actions'},
                     ]
                 });
@@ -225,7 +199,7 @@
                 return indexed_array;
             }
 
-            $(document).on('input', '#ser_product', function () {
+            $(document).on('input', '#name', function () {
                 $('#filterForm').submit();
             });
 
@@ -235,6 +209,66 @@
                 $('#dTable tbody').empty();
                 loadDataTable(formData);
             });
+
+            $('.onlydate').datepicker({
+                //format: 'yyyy/mm/dd',
+                format: 'dd-mm-yyyy',
+                autoclose:true,
+                clearBtn:true,
+                todayHighlight:true,
+            });
+
+            //$('.order_status').on('change', function (e) {
+            $(document).on('change', '.order_status', function (e) {
+                var me = $(this);
+
+                var value       = $(this).val();
+                var order_value = $(this).val();
+                var order_id    = $(this).attr('data-id');
+
+                e.preventDefault();
+                swal.fire({
+                    title: 'Please Confirm',
+                    text: "Order Is "+value+" ??",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: ' No!',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ route('backend.orders-status-change')}}",
+                            type: "post",
+                            data: {"order_value": order_value,"order_id":order_id, _token: '{{csrf_token()}}'},
+                            success:function(data) {
+                                var message_txt = null;
+                                var msg_type = null;
+                                if(data=='success'){
+                                    var message_txt = "Order Is "+value;
+                                    msg_type = 'success';
+                                }
+                                else if(data=="faild"){
+                                    var message_txt = "Something went wrong. Please try again later.";
+                                    msg_type = 'error';
+                                }
+
+                                swal.fire({
+                                    text: message_txt,
+                                    type: msg_type
+                                });
+                            }
+                        });
+
+                    }else{
+                        /*$('#order_status').val(order_status_default_select).select2();*/
+                    }
+                });
+
+
+            });
+
         });
     </script>
 @endsection

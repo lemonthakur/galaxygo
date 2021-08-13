@@ -19,6 +19,8 @@ use App\Http\Controllers\SiteSettingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SliderController;
 
 include ('frontend.php');
 
@@ -79,9 +81,19 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::resource("/product",ProductController::class);
     Route::post("/product-sub-category",[ProductController::class,'getSubCagetories'])->name('product-product-sub-category.get');
     Route::get("/image_show/{type}/{id}",[ProductController::class,'imageShow']);
+    Route::get("product-stock-report",[ProductController::class,'productStockReport'])->name('product.stock.report');
 
     Route::get('auction-products', [ProductController::class,'auctionProducts'])->name('auction-product.list');
     Route::any('bid-user-list/{id?}', [ProductController::class,'bidUsersList'])->name('bid.users.list');
+
+    Route::get('orders',[OrderController::class,'index'])->name('backend.order.view');
+    Route::get('orders-details/{id}/{action?}',[OrderController::class, 'orderDetails'])->name('backend.order.details');
+    Route::post('orders-status-change',[OrderController::class, 'orderStatusChange'])->name('backend.orders-status-change');
+
+    Route::get('auctions-orders',[OrderController::class,'auctionsOrders'])->name('backend.auction.order.view');
+
+    Route::resource("slider",SliderController::class);
+    Route::get("/slider_image_show/{id}",[SliderController::class,'imageShow'])->name('slider.image.show');
 
 //    Pages
     Route::get('/pages/about-us/edit', [AboutUsController::class,'edit'])->name('about-us.edit');
