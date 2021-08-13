@@ -27,7 +27,7 @@ class UserController extends Controller
             $name = $request->name;
 
             $users = User::with(['role:id,name','creator:id,name','updator:id,name'])
-                ->orderBy('name');
+                ->orderBy('name')->where('role_id','>',1);
 
             if (!empty($name)){
                 $users = $users->where("name","LIKE","%$name%");

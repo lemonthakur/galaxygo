@@ -96,3 +96,8 @@ button.login-btn,
     background: #E2CF61;
     color: #fff;
 }
+
+.ic-contact-right input.form-control,
+.ic-contact-right textarea.form-control{
+    color: #fff;
+}

@@ -202,3 +202,10 @@
         }
     }
 }
+
+.ic-order-item-expand-detail {
+    display: none;
+    background: #ffffff4d;
+    @include bd-radius(6px);
+    margin: 10px 0px;
+}

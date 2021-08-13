@@ -107,43 +107,17 @@
         @if(request()->route()->getName() == 'home')
         <div class="ic-footer-area ic-footer-warper">
             <ul class="ic-footer-social">
-                <li>
-                    <a href="#">
-                        <div class="icon">
-                            <img src="{{asset('frontend/images/ads-1.jpg')}}" alt="ads">
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="icon">
-                            <img src="{{asset('frontend/images/ads-2.png')}}" alt="ads">
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="icon">
-                            <img src="{{asset('frontend/images/ads-3.jpg')}}" alt="ads">
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="icon">
-                            <img src="{{asset('frontend/images/ads-4.jpg')}}" alt="ads">
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="icon">
-                            <img src="{{asset('frontend/images/ads-5.jpg')}}" alt="ads">
-                        </div>
-                    </a>
-                </li>
-
-
+                @if($all_images)
+                    @foreach($all_images as $cv)
+                        <li>
+                            <a href="{{ $cv->link }}">
+                                <div class="icon">
+                                    <img src="{{asset($cv->image_name)}}" alt="ads">
+                                </div>
+                            </a>
+                        </li>
+                    @endforeach
+                @endif
             </ul>
         </div>
         @endif
@@ -155,11 +129,11 @@
                 <ul>
                     <li><a href="{{route('home')}}" class="back-tohome-sm">back to home</a></li>
                     <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Rules</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Terms & conditions</a></li>
+                    <li><a href="{{route('about-us')}}">About us</a></li>
+                    <li><a href="{{route('contact')}}">Contact us</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Rules</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Privacy</a></li>
+                    <li><a href="{{route('privacy.policy')}}">Terms & Conditions</a></li>
                 </ul>
             </div>
         </div>

@@ -55,20 +55,6 @@ Please DO NOT EDIT THIS JS, you may need to use "custom.js".
     });
 
 
-    /*=====================================
-       Sticky Menu
-=========================================*/
-
-    //     var icWindow=$(window);
-
-    //     icWindow.on('scroll', function () {
-    // 	var icScroll = icWindow.scrollTop();
-    // 	if (icScroll < 150) {
-    // 		$("#ic-sticky-header").removeClass("ic-sticky");
-    // 	} else {
-    // 		$("#ic-sticky-header").addClass("ic-sticky");
-    // 	}
-    // });
 
 
     /*========================================
@@ -186,14 +172,21 @@ Please DO NOT EDIT THIS JS, you may need to use "custom.js".
     });
 
 
+    // /*========================================
+    //  video
+    //  ========================================*/
 
 
+    $('.ic-about-video-popup').venobox();
 
+    // /*========================================
+    //  order expand
+    //  ========================================*/
 
+    $('.ic-order-item').on('click', function() {
 
-
-
-
+        $(this).next('.ic-order-item-expand-detail').slideToggle('slow');
+    })
 
 
 
