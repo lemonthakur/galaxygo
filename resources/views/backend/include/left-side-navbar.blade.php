@@ -245,22 +245,45 @@
                         <li class="nav-item">
                             <a href="{{route("backend.order.view")}}"
                                class="nav-link {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'|| $routeName == 'backend.order.print') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line nav-icon"></i>
+                                <i class="far fa-circle nav-icon"></i>
                                 <p>Orders</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("backend.auction.order.view")}}"
                                class="nav-link {{ ($routeName == 'backend.auction.order.view') ? 'active' : '' }}">
-                                <i class="fas fa-chart-line nav-icon"></i>
+                                <i class="far fa-circle nav-icon"></i>
                                 <p>Auction Orders</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3]))
-                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create' || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit' || $routeName == 'site.setting.edit') ? 'menu-open' : '' }}">
+                <li class="nav-item has-treeview {{ ($routeName == 'product.stock.report' ) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Report
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("product.stock.report")}}"
+                               class="nav-link {{ ($routeName == 'product.stock.report') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Stock Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3])
+                 || !empty($aclList[10][3]) )
+                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
+                    || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
+                    || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
+                    || $routeName == 'slider.edit' || $routeName == 'slider.index') ? 'menu-open' : '' }}">
                         <a href="#"
                            class="nav-link">
                             <i class="nav-icon fas fa-cog"></i>
@@ -294,6 +317,15 @@
                                        class="nav-link {{ ($routeName == 'site.setting.edit') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Site Setting</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(!empty($aclList[5][1]))
+                                <li class="nav-item">
+                                    <a href="{{route("slider.index")}}"
+                                       class="nav-link {{ ($routeName == 'slider.index' || $routeName == 'slider.create'|| $routeName == 'slider.edit') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Slider</p>
                                     </a>
                                 </li>
                             @endif
