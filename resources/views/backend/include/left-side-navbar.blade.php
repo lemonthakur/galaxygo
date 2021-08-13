@@ -312,7 +312,6 @@
                     || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
                     || $routeName == 'slider.edit' || $routeName == 'slider.index' || $routeName == 'footer-circle-image.index'
                     || $routeName == 'footer-circle-image.create' || $routeName == 'footer-circle-image.edit') ? 'menu-open' : '' }}">
-                    || $routeName == 'slider.edit' || $routeName == 'slider.index') ? 'menu-open' : '' }}">
                         <a href="#"
                            class="nav-link">
                             <i class="nav-icon fas fa-cog"></i>
