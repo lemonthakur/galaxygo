@@ -19,7 +19,8 @@ class UserAccessController extends Controller
     public function index() {
         OwnLibrary::validateAccess($this->moduleId,1);
 
-        $userArr = User::with('role')->where('status', 1)->orderBy('id')->get();
+        $userArr = User::with('role')->where('role_id','>', 1)
+            ->where('status', 1)->orderBy('id')->get();
 
         $userList = array('0' => 'Select User');
         if (!empty($userArr)) {

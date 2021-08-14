@@ -81,7 +81,7 @@ Route::get('/bid-checkout/{id}',[BidProductPaymentController::class,'bidcheckout
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/user-orders',[HomeController::class,'orders'])->name('orders');
+    Route::get('/user-orders',[HomeController::class,'orders'])->name('my.orders');
     Route::get('/profile',[HomeController::class,'profile'])->name('profile');
     Route::put('/profile-update',[HomeController::class,'updateProfile'])->name('profile.update');
     Route::post('/change-cover-photo',[HomeController::class,'changeCoverPhoto'])->name('change.cover.photo');
