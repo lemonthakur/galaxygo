@@ -87,11 +87,13 @@
                                         <p>No Bid Applied</p>
                                     </div>
                                 @endforelse
-                                <div class="ic-item-load-more">
-                                    <a href="#"><i class="flaticon-loading"></i> load more</a>
+                                <?php $bid_has_page =  $bid_applies->lastPage(); ?>
+                                <div class="ic-item-load-more @if($bid_has_page==1){{'d-none'}}@endif" id="bid_order_load_all">
+                                    <a href="javascript:void(0)" id="bid_order_load"><i class="flaticon-loading"></i> load more</a>
                                 </div>
                             </div>
                         </div>
+
                         <div class="tab-pane fade show active" id="orders">
                             <div class="ic-order-tab-content">
                                 <h4>Order History</h4>
@@ -129,131 +131,12 @@
                                     </div>
                                 @empty
                                     <div class="ic-order-item mobile-item-bg">
-                                        <p>No Bid Applied</p>
+                                        <p>No orders found</p>
                                     </div>
                                 @endforelse
-                                {{--<div class="ic-order-item item-bg">
-                                    <div class="image-title">
-                                        <div class="image">
-                                            <img src="{{asset('frontend/images/order-item1.png')}}" class="img-fluid" alt="">
-                                        </div>
-                                        <div class="title">
-                                            <h5>product name</h5>
-                                            <p>#ID26598</p>
-                                            <h5 class="m-price">price: <span>$540</span> </h5>
-                                            <h5 class="m-date">Date: <span>03/03/2021</span> </h5>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <h5>Price</h5>
-                                        <p>$540</p>
-                                    </div>
-                                    <div class="date">
-                                        <h5>date</h5>
-                                        <p>03/03/2021</p>
-                                    </div>
-                                    <div class="status-btn">
-                                        <a href="#" class="fulfilment-btn">fulfilment</a>
-                                    </div>
-                                </div>
-                                <div class="ic-order-item mobile-item-bg">
-                                    <div class="image-title">
-                                        <div class="image">
-                                            <img src="{{asset('frontend/images/order-item1.png')}}" class="img-fluid" alt="">
-                                        </div>
-                                        <div class="title">
-                                            <h5>product name</h5>
-                                            <p>#ID26598</p>
-                                            <h5 class="m-price">price: <span>$540</span> </h5>
-                                            <h5 class="m-date">Date: <span>03/03/2021</span> </h5>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <h5>Price</h5>
-                                        <p>$540</p>
-                                    </div>
-                                    <div class="date">
-                                        <h5>date</h5>
-                                        <p>03/03/2021</p>
-                                    </div>
-                                    <div class="status-btn">
-                                        <a href="#" class="fulfilment-btn">fulfilment</a>
-                                    </div>
-                                </div>
-                                <div class="ic-order-item item-bg">
-                                    <div class="image-title">
-                                        <div class="image">
-                                            <img src="{{asset('frontend/images/order-item1.png')}}" class="img-fluid" alt="">
-                                        </div>
-                                        <div class="title">
-                                            <h5>product name</h5>
-                                            <p>#ID26598</p>
-                                            <h5 class="m-price">price: <span>$540</span> </h5>
-                                            <h5 class="m-date">Date: <span>03/03/2021</span> </h5>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <h5>Price</h5>
-                                        <p>$540</p>
-                                    </div>
-                                    <div class="date">
-                                        <h5>date</h5>
-                                        <p>03/03/2021</p>
-                                    </div>
-                                    <div class="status-btn">
-                                        <a href="#" class="pending-btn">pending</a>
-                                    </div>
-                                </div>
-                                <div class="ic-order-item mobile-item-bg">
-                                    <div class="image-title">
-                                        <div class="image">
-                                            <img src="{{asset('frontend/images/order-item1.png')}}" class="img-fluid" alt="">
-                                        </div>
-                                        <div class="title">
-                                            <h5>product name</h5>
-                                            <p>#ID26598</p>
-                                            <h5 class="m-price">price: <span>$540</span> </h5>
-                                            <h5 class="m-date">Date: <span>03/03/2021</span> </h5>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <h5>Price</h5>
-                                        <p>$540</p>
-                                    </div>
-                                    <div class="date">
-                                        <h5>date</h5>
-                                        <p>03/03/2021</p>
-                                    </div>
-                                    <div class="status-btn">
-                                        <a href="#" class="cancle-btn">cancle</a>
-                                    </div>
-                                </div>
-                                <div class="ic-order-item item-bg">
-                                    <div class="image-title">
-                                        <div class="image">
-                                            <img src="{{asset('frontend/images/order-item1.png')}}" class="img-fluid" alt="">
-                                        </div>
-                                        <div class="title">
-                                            <h5>product name</h5>
-                                            <p>#ID26598</p>
-                                            <h5 class="m-price">price: <span>$540</span> </h5>
-                                            <h5 class="m-date">Date: <span>03/03/2021</span> </h5>
-                                        </div>
-                                    </div>
-                                    <div class="price">
-                                        <h5>Price</h5>
-                                        <p>$540</p>
-                                    </div>
-                                    <div class="date">
-                                        <h5>date</h5>
-                                        <p>03/03/2021</p>
-                                    </div>
-                                    <div class="status-btn">
-                                        <a href="#" class="fulfilment-btn">fulfilment</a>
-                                    </div>
-                                </div>--}}
-                                <div class="ic-item-load-more">
-                                    <a href="#"><i class="flaticon-loading"></i> load more</a>
+                                <?php $has_page =  $orders->lastPage(); ?>
+                                <div class="ic-item-load-more @if($has_page==1){{'d-none'}}@endif" id="order_load_all">
+                                    <a href="javascript:void(0)" id="order_load"><i class="flaticon-loading"></i> load more</a>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +172,70 @@
                 toastr.error("Order can not be placed. Please try again later.");
             }
         });
+
+        // ajax order load more
+        var page = 1;
+        $(document).on('click', '#order_load', function(){
+            page++;
+            loadMoreData(page);
+        });
+        function loadMoreData(page){
+            $.ajax(
+                {
+                    url: '?page=' + page+'&order=1',
+                    type: "get",
+                    beforeSend: function()
+                    {
+                        $("#loading").show();
+                    }
+                })
+                .done(function(data)
+                {
+                    if(data.has_page == page){
+                        $("#order_load_all").addClass('d-none');
+                    }else{
+                        $("#order_load_all").removeClass('d-none');
+                    }
+                    $("#loading").hide();
+                    $( data.html ).insertBefore( "#order_load_all" );
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                    alert('server not responding...');
+                });
+        }
+
+        // ajax order load more
+        var bid_page = 1;
+        $(document).on('click', '#bid_order_load', function(){
+            bid_page++;
+            loadMoreBidData(bid_page);
+        });
+        function loadMoreBidData(page){
+            $.ajax(
+                {
+                    url: '?page=' + page+'&bid_order=1',
+                    type: "get",
+                    beforeSend: function()
+                    {
+                        $("#loading").show();
+                    }
+                })
+                .done(function(data)
+                {
+                    if(data.bid_has_page == page){
+                        $("#bid_order_load_all").addClass('d-none');
+                    }else{
+                        $("#bid_order_load_all").removeClass('d-none');
+                    }
+                    $("#loading").hide();
+                    $( data.html ).insertBefore( "#bid_order_load_all" );
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                    alert('server not responding...');
+                });
+        }
     </script>
 @endsection
 

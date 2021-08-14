@@ -156,3 +156,169 @@
     </section>
 
 @endsection
+
+@section('js')
+
+    <script>
+        $(document).ready(function () {
+            let formData = {};
+
+            function loadDataTable(formData) {
+                $('#dTable').dataTable({
+                    dom: 'Blrtip',
+                    // dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            title: 'Order List - {{date("d-m-Y")}}',
+                            exportOptions: {
+                                stripHtml: false,
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7],
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            title: 'Product List - {{date("d-m-Y")}}',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            }
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            title: 'Product List - {{date("d-m-Y")}}',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            }
+                        }
+                    ],
+                    "responsive": true,
+                    'processing': true,
+                    'serverSide': true,
+                    "pageLength": 10,
+                    "lengthMenu": [[5, 10, 20, 30, 40, 50, 100, -1], [5, 10, 20, 30, 40, 50, 100, "All"]],
+
+                    "bSort": false,
+                    "language": {
+
+                        // Change the Pagination button labels
+                        "paginate": {
+                            "first": "First",
+                            "last": "Last",
+                            "previous": "Previous",
+                            "next": "Next",
+                        }
+                    },
+                    'ajax': {
+                        'url': '{{route("backend.order.view")}}',
+                        "type": "GET",
+                        "data": formData
+                    },
+                    'columns': [
+                        {data: 'DT_RowIndex'},
+                        {data: 'tran_id'},
+                        {data: 'total_quantity'},
+                        {data: 'subtotal'},
+                        {data: 'delivery_charge'},
+                        {data: 'total'},
+                        {data: 'payment_type'},
+                        {data: 'dropdown'},
+                        {data: 'actions'},
+                    ]
+                });
+            }
+
+            loadDataTable();
+
+            $('#filterForm').on('submit', function (event) {
+                event.preventDefault();
+                formData = getFormData($(this));
+
+                $('#dTable').DataTable().destroy();
+                $('#dTable tbody').empty();
+                loadDataTable(formData);
+            });
+
+            function getFormData($form) {
+                let unindexed_array = $form.serializeArray();
+                let indexed_array = {};
+
+                $.map(unindexed_array, function (n, i) {
+                    indexed_array[n['name']] = n['value'];
+                });
+
+                return indexed_array;
+            }
+
+            $(document).on('input', '#name', function () {
+                $('#filterForm').submit();
+            });
+
+            $('#reset').on('click',function () {
+                formData = {};
+                $('#dTable').DataTable().destroy();
+                $('#dTable tbody').empty();
+                loadDataTable(formData);
+            });
+
+            $('.onlydate').datepicker({
+                //format: 'yyyy/mm/dd',
+                format: 'dd-mm-yyyy',
+                autoclose:true,
+                clearBtn:true,
+                todayHighlight:true,
+            });
+
+            //$('.order_status').on('change', function (e) {
+            $(document).on('change', '.order_status', function (e) {
+                var me = $(this);
+
+                var value       = $(this).val();
+                var order_value = $(this).val();
+                var order_id    = $(this).attr('data-id');
+
+                e.preventDefault();
+                swal.fire({
+                    title: 'Please Confirm',
+                    text: "Order Is "+value+" ??",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: ' No!',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ route('backend.orders-status-change')}}",
+                            type: "post",
+                            data: {"order_value": order_value,"order_id":order_id, _token: '{{csrf_token()}}'},
+                            success:function(data) {
+                                var message_txt = null;
+                                var msg_type = null;
+                                if(data=='success'){
+                                    var message_txt = "Order Is "+value;
+                                    msg_type = 'success';
+                                }
+                                else if(data=="faild"){
+                                    var message_txt = "Something went wrong. Please try again later.";
+                                    msg_type = 'error';
+                                }
+
+                                swal.fire({
+                                    text: message_txt,
+                                    type: msg_type
+                                });
+                            }
+                        });
+
+                    }else{
+                        /*$('#order_status').val(order_status_default_select).select2();*/
+                    }
+                });
+
+
+            });
+
+        });
+    </script>
+@endsection

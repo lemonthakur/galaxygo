@@ -27,7 +27,7 @@
                     <ul class="ic-navbar">
                         <li class="ic-nav-item"><a href="#" class="ic-nav-link">Board</a></li>
                         <li class="ic-nav-item"><a href="{{route('entries')}}" class="ic-nav-link">Entries</a></li>
-                        <li class="ic-nav-item"><a href="{{route('orders')}}" class="ic-nav-link">orders</a></li>
+                        <li class="ic-nav-item"><a href="{{route('my.orders')}}" class="ic-nav-link">orders</a></li>
                     </ul>
                 </div>
 

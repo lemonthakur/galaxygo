@@ -32,7 +32,7 @@ Route::get('/start-contest',[HomeController::class,'startContest'])->name('start
 //Route::get('/entries',[HomeController::class,'entries'])->name('entries');
 //Route::get('/shop',[HomeController::class,'shop'])->name('shop');
 //Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
-Route::get('/orders',[HomeController::class,'orders'])->name('orders');
+Route::get('/my-orders',[HomeController::class,'orders'])->name('my.orders');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 //Route::get('/cart',[HomeController::class,'cart'])->name('cart');
 //Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
