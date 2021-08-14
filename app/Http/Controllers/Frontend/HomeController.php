@@ -50,7 +50,7 @@ class HomeController extends Controller
         return view('frontend.product-details');
     }
 
-    public function orders(){
+    public function orders(Request $request){
         $bid_applies = \App\Models\ProductWiseBid::
             join('product_bids', 'product_wise_bids.id', '=', 'product_bids.product_wise_bid_id')
             ->join('products', 'products.id', '=', 'product_wise_bids.product_id')
@@ -75,7 +75,12 @@ class HomeController extends Controller
             )
             ->where('product_bids.user_id', \Auth::id())
             ->orderBy('product_wise_bids.auction_end_date_time', 'ASC')
-            ->get(); //dd($bid_applies);
+            ->paginate(1); //dd($bid_applies);
+
+        if ($request->ajax() && $request->bid_order==1) {
+            $view = view('frontend.bid-orders-ajax-data',compact('bid_applies'))->render();
+            return response()->json(['html'=>$view, 'bid_has_page'=> $bid_applies->lastPage()]);
+        }
 
         $orders = \App\Models\Order::
             join('order_details', 'orders.id', '=', 'order_details.order_id')
@@ -90,7 +95,12 @@ class HomeController extends Controller
             )
             ->where('orders.user_id', \Auth::id())
             ->orderBy('orders.created_at', 'DESC')
-            ->get();
+            ->paginate(4);
+
+        if ($request->ajax() && $request->order==1) {
+            $view = view('frontend.orders-ajax-data',compact('orders'))->render();
+            return response()->json(['html'=>$view, 'has_page'=> $orders->lastPage()]);
+        }
         $entryWon = OwnLibrary::entryWon();
         return view('frontend.orders', compact('bid_applies', 'orders','entryWon'));
     }

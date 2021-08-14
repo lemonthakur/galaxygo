@@ -25,6 +25,24 @@ use App\Http\Controllers\FooterCircleImageController;
 
 include ('frontend.php');
 
+//Frontend Route
+Route::get('/',[HomeController::class,'home'])->name('home');
+//Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
+Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
+//Route::get('/entries',[HomeController::class,'entries'])->name('entries');
+//Route::get('/shop',[HomeController::class,'shop'])->name('shop');
+//Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
+Route::get('/my-orders',[HomeController::class,'orders'])->name('my.orders');
+Route::get('/profile',[HomeController::class,'profile'])->name('profile');
+//Route::get('/cart',[HomeController::class,'cart'])->name('cart');
+//Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
+Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
+Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
+Route::get('/contact',[HomeController::class,'contact'])->name('contact');
+Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('contact.message');
+//Frontend Route
+
+
 Route::get('/admin-login',[AdminLoginController::class,'loginView'])->name('admin.login.view');
 Route::post('/admin-login',[AdminLoginController::class,'login'])->name('admin.login');
 
