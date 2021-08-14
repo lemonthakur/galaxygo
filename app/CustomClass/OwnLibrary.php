@@ -113,7 +113,7 @@ class OwnLibrary {
         $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
         $win = ContestParticipant::where('participant_type', '=', $user['type'])
             ->where('participant_id', '=', $user['id'])
-            ->where('correct_answer', '>=', $winCoin[0]->win)
+            ->where('correct_answer', '>=', $winCoin[0]->win ?? 0)
             ->count();
         return $win;
     }

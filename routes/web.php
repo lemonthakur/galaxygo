@@ -3,10 +3,10 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ContestPlayerController;
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\OtherPagesController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\WinCoinController;
+use App\Http\Controllers\WithdrawRequestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleController;
@@ -25,24 +25,6 @@ use App\Http\Controllers\FooterCircleImageController;
 
 include ('frontend.php');
 
-//Frontend Route
-Route::get('/',[HomeController::class,'home'])->name('home');
-//Route::get('/today-tomorrow',[HomeController::class,'todayTomorrow'])->name('today-tomorrow');
-Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
-//Route::get('/entries',[HomeController::class,'entries'])->name('entries');
-//Route::get('/shop',[HomeController::class,'shop'])->name('shop');
-//Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
-Route::get('/orders',[HomeController::class,'orders'])->name('orders');
-Route::get('/profile',[HomeController::class,'profile'])->name('profile');
-//Route::get('/cart',[HomeController::class,'cart'])->name('cart');
-//Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
-Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
-Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
-Route::get('/contact',[HomeController::class,'contact'])->name('contact');
-Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('contact.message');
-//Frontend Route
-
-
 Route::get('/admin-login',[AdminLoginController::class,'loginView'])->name('admin.login.view');
 Route::post('/admin-login',[AdminLoginController::class,'login'])->name('admin.login');
 
@@ -59,6 +41,7 @@ Route::group(['middleware'=>'authCheck'],function (){
         'contest' => ContestController::class,
         'contest-player' => ContestPlayerController::class,
         'win-coin' => WinCoinController::class,
+        'withdraw' => WithdrawRequestController::class,
     ]);
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');

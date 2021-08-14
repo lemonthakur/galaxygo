@@ -236,7 +236,6 @@
                 processData: false,
                 data: formData,
                 success: function (data) {
-                    8
                     if (data.status === 1) {
                         validate(data);
                         return;

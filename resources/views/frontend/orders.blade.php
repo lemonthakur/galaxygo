@@ -10,19 +10,27 @@
                 <div class="ic-profile-left">
                     <div class="ic-user">
                         <div class="ic-cover-bg">
-                            <img src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="cover">
+                            @if(auth()->user()->cover_photo)
+                                <img id="cover_photo" src="{{asset(auth()->user()->cover_photo)}}" class="img-fluid" alt="cover">
+                            @else
+                                <img id="cover_photo" src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="default cover">
+                            @endif
                         </div>
                         <div class="user-profile">
-                            <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                            @if(auth()->user()->photo)
+                                <img id="profile_pic" src="{{auth()->user()->photo}}" alt="user">
+                            @else
+                                <img id="profile_pic" src="{{asset('demo-pic/download.png')}}" alt="user">
+                            @endif
                         </div>
                     </div>
                     <div class="ic-win-btn">
-                        <a href="#">00 <span>Entries Won</span></a>
-                        <a href="#">00 <span>Coins Won</span></a>
+                        <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
+                        <a href="#">{{auth()->user()->total_coin ?? 00}} <span>Coins Won</span></a>
                     </div>
                     <div class="ic-total-balance">
                         <p>Total Conis Balance</p>
-                        <h4>00</h4>
+                        <h4>{{auth()->user()->current_coin ?? 00}}</h4>
                     </div>
                 </div>
             </div>

@@ -4,16 +4,23 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AboutUs;
+use App\Models\CoinHistory;
 use App\Models\OtherPages;
 use App\Models\SiteSetting;
+use App\Models\User;
 use App\Models\WinCoin;
 use App\Models\FooterCircleImage;
+use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\CustomClass\OwnLibrary;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
 {
@@ -84,7 +91,8 @@ class HomeController extends Controller
             ->where('orders.user_id', \Auth::id())
             ->orderBy('orders.created_at', 'DESC')
             ->get();
-        return view('frontend.orders', compact('bid_applies', 'orders'));
+        $entryWon = OwnLibrary::entryWon();
+        return view('frontend.orders', compact('bid_applies', 'orders','entryWon'));
     }
 
     public function profile(){
@@ -142,5 +150,208 @@ class HomeController extends Controller
         });
 
         return back()->with('success', 'We received your Message. Soon our support team will contact you.');
+    }
+
+    public function updateProfile(Request $request){
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.auth()->id(),
+            'paypal_email' => 'required|email',
+        ];
+
+        $message = [];
+
+        if (!empty($request->password)){
+            $rules['password'] = 'required|min:5';
+            $rules['confirm_password'] = 'required|same:password|min:5';
+        }
+
+        $validation = Validator::make($request->all(),$rules,$message);
+
+        if ($validation->fails()){
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validation);
+        }
+        $user = User::find(auth()->id());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->paypal_email = $request->paypal_email;
+        if(!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
+        if ($user->save()){
+            session()->flash('success','User info updated');
+        }else{
+            session()->flash('error','User info not updated');
+        }
+        return redirect()->back();
+    }
+
+    public function changeCoverPhoto(Request $request){
+        $rules = [
+            "cover_photo" =>  "required|image"
+        ];
+
+        $message = [];
+
+        $validation = Validator::make($request->all(), $rules, $message);
+        if ($validation->fails()){
+            return response()->json([
+                'status' => 1,
+                'errors' => $validation->getMessageBag(),
+                'data' => ''
+            ], 200);
+        }
+
+        if ($request->file('cover_photo')) {
+            $image = OwnLibrary::uploadImage($request->cover_photo, "cover_photo");
+            Image::make($image)->resize(350,150)->save($image,70,'jpg');
+            if (auth()->user()->cover_photo){
+                @unlink(auth()->user()->cover_photo);
+            }
+        }
+
+        if ($image){
+            $user = User::find(auth()->id());
+            $user->cover_photo = $image;
+            if ($user->save()){
+                return response()->json([
+                    'status' => 2,
+                    'data' => asset($user->cover_photo)
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => 3
+                ], 200);
+            }
+        }else{
+            return response()->json([
+                'status' => 2
+            ], 200);
+        }
+
+    }
+
+    public function changeProfilePhoto(Request $request){
+        $rules = [
+            "photo" =>  "required|image"
+        ];
+
+        $message = [];
+
+        $validation = Validator::make($request->all(), $rules, $message);
+        if ($validation->fails()){
+            return response()->json([
+                'status' => 1,
+                'errors' => $validation->getMessageBag(),
+                'data' => ''
+            ], 200);
+        }
+
+        if ($request->file('photo')) {
+            $image = OwnLibrary::uploadImage($request->photo, "profile-pic");
+            Image::make($image)->resize(225,225)->save($image,70,'jpg');
+            if (auth()->user()->photo){
+                @unlink(auth()->user()->photo);
+            }
+        }
+
+        if ($image){
+            $user = User::find(auth()->id());
+            $user->photo = $image;
+            if ($user->save()){
+                return response()->json([
+                    'status' => 2,
+                    'data' => asset($user->photo)
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => 3
+                ], 200);
+            }
+        }else{
+            return response()->json([
+                'status' => 2
+            ], 200);
+        }
+    }
+
+    public function withdrawRequest(Request $request){
+
+        $rules = [
+            'amount' => 'required|numeric|min:2500',
+        ];
+
+        $message = [];
+
+        $validation = Validator::make($request->all(),$rules,$message);
+
+        if ($validation->fails()){
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($validation);
+        }
+
+        if (!auth()->user()->paypal_email){
+            session()->flash('error','Please provide PayPal email first');
+            return redirect()->back()->withInput();
+        }
+
+        if (auth()->user()->current_coin < $request->amount){
+            session()->flash('error','You dosen\'t have sufficient coin.');
+            return redirect()->back()->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $success = false;
+            //Deduct Coin from user table
+            $user = User::find(auth()->id());
+            $user->current_coin = $user->current_coin - $request->amount;
+            $user->withdraw = $user->withdraw + $request->amount;
+            $user->save();
+
+            //Insert in coin history
+            $coinHistory = new CoinHistory();
+            $coinHistory->user_id = auth()->id();
+            $coinHistory->amount = $request->amount;
+            $coinHistory->transaction_type = 1;
+            $coinHistory->earn_expense_type = 3;
+            $coinHistory->save();
+
+            //Insert into withdraw request table
+            $withdraw = new WithdrawRequest();
+            $withdraw->user_id = auth()->id();
+            $withdraw->paypal_email = auth()->user()->paypal_email;
+            $withdraw->amount = $request->amount / 100;
+            $withdraw->coin_amount = $request->amount;
+            $withdraw->before_withdraw = auth()->user()->current_coin;
+            $withdraw->after_withdraw = auth()->user()->current_coin - $request->amount;
+            $withdraw->status = 0;
+            $withdraw->coin_history_id = $coinHistory->id;
+            $withdraw->save();
+
+            $success = true;
+
+        }catch(ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->withErrors( $e->getErrors() )
+                ->withInput();
+        }catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
+
+        if ($success){
+            session()->flash('success','We received your request');
+        }else{
+            session()->flash('error','Unable to process your request. Please try again');
+        }
+        return redirect()->back();
     }
 }

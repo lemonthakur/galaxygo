@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2021 at 09:16 PM
+-- Generation Time: Aug 14, 2021 at 07:19 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -41,13 +41,6 @@ CREATE TABLE `about_us` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `about_us`
---
-
-INSERT INTO `about_us` (`id`, `image`, `title`, `description`, `button_text`, `button_url`, `video_url`, `video_banner`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'upload/about-us/jyFGy989Kp0f9ZzmIbZP.png', 'About Galaxy Go', '<p>Lorem ipsum dolor sit amet consectetur adipiscing eli. Condimentum porttitor malesuada et commodo, nisi etiam quis. Risus com placerat hendrerit nulla ac. Eu mauris ornare justo turpis molest. Tellus mauris aliquam eu augue sit tortor potenti.</p>\r\n<p>Arcu auctor consectetur molestie euismod siti. Adipiscing in iegestas mauris amet. Ut fames pretium turpis posuere. Scelerisque arcu quis tortor sapien. Ac etiam felis erat fermentum, amet. Velit nec, ultrices ut suspendisse turpis placerat risus sem.</p>\r\n<p>Maecenas sit orci curabitur ac velit nulla lobortis egestas. Cnisipurus nisl tortor mi nullam.</p>', 'visit our store', 'http://localhost/l/galaxygo/public/shop', 'https://www.youtube.com/watch?v=vVXnYdHwDqM', 'upload/about-us/EKt0eYnq7N1J26JSPTGr.png', 1, 1, '2021-08-13 17:21:20', '2021-08-13 17:38:18');
 
 -- --------------------------------------------------------
 
@@ -157,9 +150,8 @@ CREATE TABLE `coin_histories` (
 --
 
 INSERT INTO `coin_histories` (`id`, `user_id`, `amount`, `transaction_type`, `earn_expense_type`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 25, '100.00', 0, 0, 25, 25, NULL, '2021-08-11 16:33:38', '2021-08-11 16:33:38'),
-(6, 24, '0.00', 0, 2, 24, 24, NULL, '2021-08-12 16:31:52', '2021-08-12 16:31:52'),
-(7, 25, '1000.00', 0, 2, 25, 25, NULL, '2021-08-12 16:32:22', '2021-08-12 16:32:22');
+(1, 21, '100.00', 0, 0, 21, 21, NULL, '2021-08-14 14:34:09', '2021-08-14 14:34:09'),
+(3, 20, '2500.00', 1, 3, 20, 20, '2021-08-14 16:58:48', '2021-08-14 15:52:16', '2021-08-14 16:58:48');
 
 -- --------------------------------------------------------
 
@@ -180,17 +172,6 @@ CREATE TABLE `contests` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `contests`
---
-
-INSERT INTO `contests` (`id`, `name`, `expaire_time`, `is_final_answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '2021-07-01', '2021-07-01 5:44 PM', 0, 1, 1, 1, NULL, '2021-07-24 01:46:04', '2021-07-24 01:46:04'),
-(2, '2021-07-30', '2021-07-30 6:04 PM', 0, 1, 1, 1, NULL, '2021-07-24 04:04:53', '2021-07-24 04:04:53'),
-(3, '2021-08-10', '2021-08-10 11:30 PM', 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-10 17:26:19'),
-(5, '2021-08-11', '2021-08-11 10:50 PM', 0, 1, 1, 1, NULL, '2021-08-11 05:00:27', '2021-08-11 16:46:33'),
-(6, '2021-08-12', '2021-08-12 07:32 PM', 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:37:50');
-
 -- --------------------------------------------------------
 
 --
@@ -208,18 +189,6 @@ CREATE TABLE `contest_participants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contest_participants`
---
-
-INSERT INTO `contest_participants` (`id`, `participant_type`, `participant_id`, `contest_id`, `correct_answer`, `earn`, `get_coin`, `created_at`, `updated_at`) VALUES
-(1, 0, 24, 3, 0, 0, 0, '2021-08-10 16:30:27', '2021-08-10 16:30:27'),
-(2, 1, 8, 3, 0, 0, 0, '2021-08-10 17:17:54', '2021-08-10 17:17:54'),
-(4, 1, 8, 5, 0, 0, 0, '2021-08-11 15:45:04', '2021-08-11 15:45:04'),
-(5, 0, 24, 5, 0, 0, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(6, 0, 24, 6, 4, 0, 1, '2021-08-12 13:29:37', '2021-08-12 16:31:52'),
-(7, 0, 25, 6, 8, 1000, 1, '2021-08-12 13:30:10', '2021-08-12 16:32:22');
 
 -- --------------------------------------------------------
 
@@ -244,45 +213,6 @@ CREATE TABLE `contest_players` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `contest_players`
---
-
-INSERT INTO `contest_players` (`id`, `contest_id`, `player_name`, `player_image`, `location`, `played_on`, `versus`, `score`, `answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Lemon', 'upload/player-pic/ejmdfEiko4KeMC6AEjBq210724.jpg', 'Thakur', NULL, 'Versus', 4555.00, 0, 1, 1, 1, NULL, '2021-07-24 01:46:04', '2021-07-24 01:46:04'),
-(2, 1, 'Lemo', 'upload/player-pic/gpGi4OlGID476pPyTnvI.jpg', 'city', NULL, '332222', 65555.00, 0, 1, 1, 1, NULL, '2021-07-24 01:47:15', '2021-07-24 01:47:15'),
-(3, 2, 'Thakur', 'upload/player-pic/n0EixSI4cLAz3vZ16er7210724.jpg', 'Sylhet', NULL, '332222', 5555.00, 0, 1, 1, 1, NULL, '2021-07-24 04:04:53', '2021-07-24 04:04:53'),
-(4, 3, 'Player 1', 'upload/player-pic/nbegMBsrqMwvUHKfEWtr210810.png', 'BAL - LF', NULL, 'bos', 5.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(5, 3, 'Player 2', 'upload/player-pic/MjICv51hH8Vfa67buKR4210810.png', 'BAL - LF', NULL, 'bos', 5.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(6, 3, 'player 3', 'upload/player-pic/3WYpsxeKk7CrsfB3lWQX210810.png', 'Bal-lf', NULL, 'bos', 6.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(7, 3, 'player 4', 'upload/player-pic/J0uelRQKlgxHMgKIFMfu210810.jpg', 'bal - lf', NULL, 'bos', 3.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(8, 3, 'player 5', 'upload/player-pic/YNgd1GpqieAKNpT8dLgc210810.png', 'bal-lf', NULL, 'bos', 8.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(9, 3, 'Player 6', 'upload/player-pic/7CPlJm58fTirOHm7jYro210810.png', 'BAL - LF', NULL, 'bos', 6.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(10, 3, 'player 7', 'upload/player-pic/OvyYgsb7BEPektEVOThC210810.png', 'BAL - LF', NULL, 'bos', 5.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(11, 3, 'player 8', 'upload/player-pic/VZB94d0hq7Aeu0g7COOV210810.png', 'bal -LF', NULL, 'bos', 5.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(12, 3, 'player 9', 'upload/player-pic/WnUbyNCGVLxWZrdWgXrl210810.png', 'bal - lf', NULL, 'bos', 4.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(13, 3, 'player 10', 'upload/player-pic/ZwUHwuXMpjHxW5MDmCzG210810.png', 'bal - lf', NULL, 'bos', 8.00, 0, 1, 1, 1, NULL, '2021-08-09 23:22:53', '2021-08-09 23:22:53'),
-(18, 5, 'pl 1', 'upload/player-pic/T4nNF2Kd4IkOqgg76IMG210811.png', 'fd', '2021-08-18 10:59 am', 'df', 5.00, 0, 1, 1, 1, NULL, '2021-08-11 05:00:27', '2021-08-11 05:00:27'),
-(19, 5, 'pl 2', 'upload/player-pic/Q4IKHnHtJyibKTvPpgMM.png', 'df', '2021-08-11 11:09 am', 'edd', 5.00, 0, 1, 1, 1, NULL, '2021-08-11 05:09:41', '2021-08-11 05:09:41'),
-(20, 5, 'Hayfa Waters', 'upload/player-pic/4Oir2whHrEggyDQXqbNz.png', 'Rerum', '2021-08-11 11:11 am', 'Officiis', 9.00, 0, 1, 1, 1, NULL, '2021-08-11 05:12:44', '2021-08-11 05:12:44'),
-(21, 5, 'Cleo Evans', 'upload/player-pic/uuqll7w7MY7nPFpDDUDn.png', 'Quisquam', '2021-08-04 11:12 am', 'Et et', 42.00, 0, 1, 1, 1, NULL, '2021-08-11 05:13:05', '2021-08-11 05:13:05'),
-(22, 5, 'Cassady Cooley', 'upload/player-pic/FQ22fpN4Vla5OC64UypZ.png', 'Qui', '2021-08-26 11:13 am', 'Ducimus', 79.00, 0, 1, 1, 1, NULL, '2021-08-11 05:13:23', '2021-08-11 05:13:23'),
-(23, 5, 'Skyler Gordon', 'upload/player-pic/0R1WmH7xWTNESyVKPo6l.png', 'In asper', '2021-02-03 11:13 am', 'Ex fugiat', 64.00, 0, 1, 1, 1, NULL, '2021-08-11 05:13:45', '2021-08-11 05:13:45'),
-(24, 5, 'Lila Schmidt', 'upload/player-pic/b1VShxymKJllRGDhtkh3.png', 'Voluptas', '2021-08-18 11:13 am', 'Adipisci', 19.00, 0, 1, 1, 1, NULL, '2021-08-11 05:14:04', '2021-08-11 05:14:04'),
-(25, 5, 'Brittany Haley', 'upload/player-pic/PGpDQcHWsLyLcTROpEs8.png', 'Do Nam', '2021-08-11 11:14 am', 'Aperiam', 91.00, 0, 1, 1, 1, NULL, '2021-08-11 05:14:26', '2021-08-11 05:14:26'),
-(26, 5, 'Noble', 'upload/player-pic/Iwy8IhxH7Q684LWyfeAm.png', 'Adipisci', '2021-08-13 11:14 am', 'Elit quo', 82.00, 0, 1, 1, 1, NULL, '2021-08-11 05:14:42', '2021-08-11 05:14:42'),
-(27, 5, 'Risa Vasquez', 'upload/player-pic/vOHNOobF7oPfE8T6hLcT.png', 'Dolor', '2021-08-04 11:14 am', 'Et la', 80.00, 0, 1, 1, 1, NULL, '2021-08-11 05:14:58', '2021-08-11 05:14:58'),
-(28, 6, 'George York', 'upload/player-pic/R78m7wAME8DWF7Aqh6Ek210812.png', 'Incidunt in reprehe', '2021-08-11 07:26 pm', 'Totam quibusdam nobi', 67.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(29, 6, 'Fay Bradford', 'upload/player-pic/V4y4EDo5DLYHxlhwFTMP210812.png', 'Asperiores aute quae', '2021-08-11 07:26 pm', 'Qui cum esse sapien', 61.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(30, 6, 'Vanna Duncan', 'upload/player-pic/bcPzqUXScmXZubtwIcfp210812.png', 'Aliquip sequi repreh', '2021-08-11 07:26 pm', 'Expedita fuga Nemo', 9.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(31, 6, 'Jermaine Boyle', 'upload/player-pic/Yy3nnvGXnTwMB5U6M6So210812.png', 'Inventore similique', '2021-08-11 07:26 pm', 'Voluptatem Ipsam ex', 68.00, 2, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(32, 6, 'Idola Miller', 'upload/player-pic/HocJWZrgYNeCnIpYZDGI210812.png', 'Dolore nostrum place', '2021-08-11 07:26 pm', 'Officia aut minima o', 65.00, 2, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(33, 6, 'Nita Church', 'upload/player-pic/tIqqsDM8VH6z2lGyWarN210812.png', 'Qui ex accusamus rep', '2021-08-11 07:26 pm', 'Sit laboris assumend', 93.00, 2, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(34, 6, 'Lance Pruitt', 'upload/player-pic/YOtvstTmU7KBHzeTTiN3210812.png', 'Pariatur Proident', '2021-08-11 07:26 pm', 'Ipsum laboriosam ex', 9.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(35, 6, 'Paula Gross', 'upload/player-pic/nrP0YfPdS184zPpiloAV210812.png', 'Ut ab voluptate esse', '2021-08-11 07:26 pm', 'Ipsa maiores quidem', 73.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(36, 6, 'Anastasia Horn', 'upload/player-pic/09PnBFm95h9hZq9rTFgY210812.png', 'Eos eum facere tempo', '2021-08-11 07:26 pm', 'Impedit velit repr', 85.00, 1, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58'),
-(37, 6, 'Ira Christian', 'upload/player-pic/lbLeZpNwK5EKqfvxziML210812.png', 'Quia distinctio Vel', '2021-08-11 07:26 pm', 'Nam nisi quasi lauda', 33.00, 2, 1, 1, 1, NULL, '2021-08-12 13:28:08', '2021-08-12 13:33:58');
 
 -- --------------------------------------------------------
 
@@ -563,6 +493,33 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `footer_circle_images`
+--
+
+CREATE TABLE `footer_circle_images` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_serial` int(11) DEFAULT NULL,
+  `image_name` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1 = Active, 0 = Inactive',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `updated_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `footer_circle_images`
+--
+
+INSERT INTO `footer_circle_images` (`id`, `title`, `link`, `order_serial`, `image_name`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Tesr services', 'link nay', 1, 'upload/footer-circle-image/L58vkJjEl3mF5iCOB7ap.jpg', 1, NULL, 1, 1, '2021-08-13 14:06:33', '2021-08-13 14:06:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `guest_users`
 --
 
@@ -575,13 +532,6 @@ CREATE TABLE `guest_users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `guest_users`
---
-
-INSERT INTO `guest_users` (`id`, `mac`, `total_coin`, `current_coin`, `withdraw`, `created_at`, `updated_at`) VALUES
-(8, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-08-10 17:17:54', '2021-08-10 17:17:54');
 
 -- --------------------------------------------------------
 
@@ -615,16 +565,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (43, '2021_07_19_142601_create_contest_players_table', 3),
 (44, '2021_07_23_140119_add_column_is_final_answer_to_contests', 4),
 (45, '2021_07_23_160401_create_win_coins_table', 5),
-(50, '2021_08_06_121217_add_for_social_login_column_in_users_table', 6),
-(51, '2021_08_08_153041_create_coin_histories_table', 6),
-(52, '2021_08_10_201006_create_contest_participants_table', 6),
-(53, '2021_08_10_201043_create_participant_answers_table', 6),
-(55, '2021_08_10_225242_create_guest_users_table', 7),
-(56, '2021_08_11_102645_add_column_played_on_in_contest_players', 8),
-(57, '2021_08_11_214151_add_column_participant_type_in_participant_answers', 9),
-(59, '2021_08_13_222223_create_about_us_table', 10),
-(61, '2021_08_13_234507_create_other_pages_table', 11),
-(63, '2021_08_14_002701_add_column_address_in_site_settings', 12);
+(46, '2021_08_06_121217_add_for_social_login_column_in_users_table', 6),
+(47, '2021_08_08_153041_create_coin_histories_table', 7),
+(48, '2021_08_10_201006_create_contest_participants_table', 8),
+(49, '2021_08_10_201043_create_participant_answers_table', 9),
+(50, '2021_08_10_225242_create_guest_users_table', 10),
+(51, '2021_08_11_102645_add_column_played_on_in_contest_players', 11),
+(52, '2021_08_11_214151_add_column_participant_type_in_participant_answers', 11),
+(53, '2021_08_13_222223_create_about_us_table', 12),
+(54, '2021_08_13_234507_create_other_pages_table', 13),
+(55, '2021_08_14_002701_add_column_address_in_site_settings', 14),
+(56, '2021_08_14_172522_add_column_cover_photo_and_paypal_email_in_users', 14),
+(59, '2021_08_14_211010_create_withdraw_requests_table', 15);
 
 -- --------------------------------------------------------
 
@@ -898,6 +850,7 @@ CREATE TABLE `orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `shipping_address_id` int(11) DEFAULT NULL,
+  `total_quantity` int(11) DEFAULT NULL,
   `subtotal` double NOT NULL,
   `discount` double DEFAULT NULL,
   `vat_tax` double NOT NULL,
@@ -905,6 +858,7 @@ CREATE TABLE `orders` (
   `total` double NOT NULL,
   `payment_type` varchar(28) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tran_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_type` enum('general','auction') COLLATE utf8mb4_unicode_ci DEFAULT 'general',
   `status` enum('Pending','Fulfilment','Cancle') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending' COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
   `created_by` bigint(20) NOT NULL,
   `updated_by` bigint(20) NOT NULL,
@@ -916,15 +870,30 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `shipping_address_id`, `subtotal`, `discount`, `vat_tax`, `delivery_charge`, `total`, `payment_type`, `tran_id`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 14, 0, 70, 0, 14.7, 500, 84.7, 'PayPal', '00000001', 'Pending', 14, 14, '2021-08-08 10:11:30', '2021-08-08 10:11:30'),
-(2, 14, 0, 100, 0, 21, 60, 181, 'Point', '00000002', 'Pending', 14, 14, '2021-08-08 10:52:37', '2021-08-08 10:52:37'),
-(3, 14, 0, 70, 0, 14.7, 60, 144.7, 'Point', '00000003', 'Pending', 14, 14, '2021-08-08 10:53:44', '2021-08-08 10:53:44'),
-(4, 15, 0, 170, 0, 35.7, 60, 265.7, 'Point', '00000004', 'Pending', 15, 15, '2021-08-08 11:56:25', '2021-08-08 11:56:25'),
-(5, 16, 0, 70, 0, 14.7, 60, 144.7, 'Point', '00000005', 'Pending', 16, 16, '2021-08-08 12:01:20', '2021-08-08 12:01:20'),
-(6, 17, 0, 70, 0, 14.7, 60, 144.7, 'Point', '00000006', 'Pending', 17, 17, '2021-08-08 12:02:16', '2021-08-08 12:02:16'),
-(7, 17, 0, 70, 0, 14.7, 60, 144.7, 'Point', '00000007', 'Pending', 17, 17, '2021-08-08 12:02:59', '2021-08-08 12:02:59'),
-(8, 24, 0, 300, 0, 63, 0, 363, 'PayPal', '00000008', 'Pending', 24, 24, '2021-08-08 12:53:01', '2021-08-08 12:53:01');
+INSERT INTO `orders` (`id`, `user_id`, `shipping_address_id`, `total_quantity`, `subtotal`, `discount`, `vat_tax`, `delivery_charge`, `total`, `payment_type`, `tran_id`, `order_type`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 14, 18, NULL, 70, 0, 14.7, 500, 84.7, 'PayPal', '00000001', 'general', 'Fulfilment', 14, 14, '2021-08-08 10:11:30', '2021-08-08 10:11:30'),
+(2, 14, 18, NULL, 100, 0, 21, 60, 181, 'Point', '00000002', 'general', 'Cancle', 14, 14, '2021-08-08 10:52:37', '2021-08-08 10:52:37'),
+(3, 14, 18, NULL, 70, 0, 14.7, 60, 144.7, 'Point', '00000003', 'general', 'Pending', 14, 14, '2021-08-08 10:53:44', '2021-08-08 10:53:44'),
+(4, 17, 18, NULL, 70, 0, 14.7, 60, 144.7, 'Point', '00000004', 'general', 'Pending', 17, 17, '2021-08-08 12:42:49', '2021-08-08 12:42:49'),
+(5, 17, 18, NULL, 70, 0, 14.7, 60, 144.7, 'Point', '00000005', 'general', 'Pending', 17, 17, '2021-08-08 12:43:30', '2021-08-08 12:43:30'),
+(6, 19, 18, NULL, 170, 0, 35.7, 0, 205.7, 'PayPal', '00000006', 'general', 'Pending', 19, 19, '2021-08-10 05:50:13', '2021-08-10 05:50:13'),
+(7, 19, 18, NULL, 100, 0, 21, 0, 121, 'PayPal', '00000007', 'general', 'Pending', 19, 19, '2021-08-10 06:05:10', '2021-08-10 06:05:10'),
+(8, 19, 18, NULL, 900, 0, 0, 10, 910, 'PayPal', '00000007', 'auction', 'Pending', 19, 19, '2021-08-10 06:05:47', '2021-08-10 06:05:47'),
+(9, 19, 18, NULL, 900, 0, 0, 10, 910, 'PayPal', '00000009', 'auction', 'Pending', 19, 19, '2021-08-10 06:38:24', '2021-08-10 06:38:24'),
+(10, 19, 18, NULL, 900, 0, 0, 10, 910, 'PayPal', '00000010', 'auction', 'Pending', 19, 19, '2021-08-10 07:12:34', '2021-08-10 07:12:34'),
+(11, 19, 18, NULL, 40, 0, 8.4, 0, 48.4, 'PayPal', '00000010', 'general', 'Pending', 19, 19, '2021-08-10 07:14:13', '2021-08-10 07:14:13'),
+(12, 19, 18, NULL, 900, 0, 0, 60, 960, 'Point', '00000012', 'auction', 'Pending', 19, 19, '2021-08-10 07:31:11', '2021-08-10 07:31:11'),
+(13, 17, 18, NULL, 900, 0, 0, 20, 920, 'Point', '00000013', 'auction', 'Pending', 17, 17, '2021-08-10 10:05:44', '2021-08-13 00:05:53'),
+(14, 17, 18, NULL, 900, 0, 0, 20, 920, 'PayPal', '00000014', 'auction', 'Pending', 17, 17, '2021-08-10 10:08:23', '2021-08-13 00:03:13'),
+(15, 19, 18, NULL, 170, 0, 35.7, 10, 215.7, 'PayPal', '00000014', 'general', 'Pending', 19, 19, '2021-08-10 10:09:47', '2021-08-10 10:09:47'),
+(16, 19, 18, NULL, 70, 0, 14.7, 10, 94.7, 'Point', '00000016', 'general', 'Pending', 19, 19, '2021-08-10 10:10:16', '2021-08-10 10:10:16'),
+(17, 19, 18, NULL, 390, 0, 81.9, 70, 541.9, 'Point', '00000017', 'general', 'Pending', 19, 19, '2021-08-10 10:20:33', '2021-08-10 10:20:33'),
+(18, 19, 18, NULL, 3680, 0, 772.8, 40, 4492.8, 'Point', '00000018', 'general', 'Cancle', 19, 19, '2021-08-11 09:41:05', '2021-08-11 09:41:05'),
+(19, 19, 18, NULL, 3100, 0, 0, 0, 3100, 'PayPal', '00000019', 'general', 'Fulfilment', 19, 19, '2021-08-11 09:49:59', '2021-08-11 09:49:59'),
+(20, 0, 18, NULL, 0, NULL, 0, 0, 0, '', NULL, 'general', 'Cancle', 0, 0, NULL, NULL),
+(21, 19, 18, 1, 100, 0, 0, 0, 100, 'PayPal', '00000020', 'general', 'Pending', 19, 19, '2021-08-12 14:54:16', '2021-08-12 14:54:16'),
+(22, 19, 18, 1, 40, 0, 0, 20, 60, 'Point', '00000022', 'general', 'Pending', 19, 19, '2021-08-12 14:55:36', '2021-08-13 00:06:11'),
+(23, 19, 18, 1, 70, 0, 0, 10, 80, 'Point', '00000023', 'general', 'Fulfilment', 19, 19, '2021-08-12 15:05:10', '2021-08-13 00:07:39');
 
 -- --------------------------------------------------------
 
@@ -937,12 +906,14 @@ CREATE TABLE `order_details` (
   `order_id` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `product_id` bigint(20) NOT NULL,
+  `product_wise_bid_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
   `price` double(8,2) NOT NULL,
   `discount` double(10,2) DEFAULT NULL,
+  `delivery_charge` double DEFAULT NULL,
   `vat_tax` double(8,2) DEFAULT NULL,
   `total_price` double(8,2) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
+  `status` enum('Pending','Fulfilment','Cancle') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending' COMMENT '1=pending,2=processing,3=complete,4=on holod,5=cancel',
   `created_by` bigint(20) DEFAULT NULL,
   `updated_by` bigint(20) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -953,16 +924,33 @@ CREATE TABLE `order_details` (
 -- Dumping data for table `order_details`
 --
 
-INSERT INTO `order_details` (`id`, `order_id`, `user_id`, `product_id`, `quantity`, `price`, `discount`, `vat_tax`, `total_price`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '1', 14, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 14, 14, '2021-08-08 10:11:30', '2021-08-08 10:11:30'),
-(2, '2', 14, 10, 1, 100.00, 0.00, 21.00, 121.00, 1, 14, 14, '2021-08-08 10:52:37', '2021-08-08 10:52:37'),
-(3, '3', 14, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 14, 14, '2021-08-08 10:53:44', '2021-08-08 10:53:44'),
-(4, '4', 15, 10, 1, 100.00, 0.00, 21.00, 121.00, 1, 15, 15, '2021-08-08 11:56:25', '2021-08-08 11:56:25'),
-(5, '4', 15, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 15, 15, '2021-08-08 11:56:25', '2021-08-08 11:56:25'),
-(6, '5', 16, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 16, 16, '2021-08-08 12:01:20', '2021-08-08 12:01:20'),
-(7, '6', 17, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 17, 17, '2021-08-08 12:02:16', '2021-08-08 12:02:16'),
-(8, '7', 17, 9, 1, 70.00, 0.00, 14.70, 84.70, 1, 17, 17, '2021-08-08 12:02:59', '2021-08-08 12:02:59'),
-(9, '8', 24, 10, 3, 100.00, 0.00, 21.00, 363.00, 1, 24, 24, '2021-08-08 12:53:01', '2021-08-08 12:53:01');
+INSERT INTO `order_details` (`id`, `order_id`, `user_id`, `product_id`, `product_wise_bid_id`, `quantity`, `price`, `discount`, `delivery_charge`, `vat_tax`, `total_price`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '1', 14, 9, NULL, 1, 70.00, 0.00, NULL, 14.70, 84.70, 'Pending', 14, 14, '2021-08-08 10:11:30', '2021-08-08 10:11:30'),
+(2, '2', 14, 10, NULL, 1, 100.00, 0.00, NULL, 21.00, 121.00, 'Pending', 14, 14, '2021-08-08 10:52:37', '2021-08-08 10:52:37'),
+(3, '3', 14, 9, NULL, 1, 70.00, 0.00, NULL, 14.70, 84.70, 'Pending', 14, 14, '2021-08-08 10:53:44', '2021-08-08 10:53:44'),
+(4, '4', 17, 9, NULL, 1, 70.00, 0.00, NULL, 14.70, 84.70, 'Pending', 17, 17, '2021-08-08 12:42:49', '2021-08-08 12:42:49'),
+(5, '5', 17, 9, NULL, 1, 70.00, 0.00, NULL, 14.70, 84.70, 'Pending', 17, 17, '2021-08-08 12:43:30', '2021-08-08 12:43:30'),
+(6, '6', 19, 9, NULL, 1, 70.00, 0.00, NULL, 14.70, 84.70, 'Pending', 19, 19, '2021-08-10 05:50:13', '2021-08-10 05:50:13'),
+(7, '6', 19, 10, NULL, 1, 100.00, 0.00, NULL, 21.00, 121.00, 'Pending', 19, 19, '2021-08-10 05:50:13', '2021-08-10 05:50:13'),
+(8, '7', 19, 10, NULL, 1, 100.00, 0.00, NULL, 21.00, 121.00, 'Pending', 19, 19, '2021-08-10 06:05:10', '2021-08-10 06:05:10'),
+(9, '8', 19, 8, NULL, 1, 900.00, 0.00, NULL, 0.00, 900.00, 'Pending', 19, 19, '2021-08-10 06:05:47', '2021-08-10 06:05:47'),
+(10, '9', 19, 8, 2, 1, 900.00, 0.00, NULL, 0.00, 900.00, 'Pending', 19, 19, '2021-08-10 06:38:24', '2021-08-10 06:38:24'),
+(11, '10', 19, 8, 2, 1, 900.00, 0.00, NULL, 0.00, 900.00, 'Pending', 19, 19, '2021-08-10 07:12:34', '2021-08-10 07:12:34'),
+(12, '11', 19, 8, NULL, 1, 40.00, 0.00, NULL, 8.40, 48.40, 'Pending', 19, 19, '2021-08-10 07:14:13', '2021-08-10 07:14:13'),
+(13, '12', 19, 8, 2, 1, 900.00, 0.00, NULL, 0.00, 900.00, 'Pending', 19, 19, '2021-08-10 07:31:11', '2021-08-10 07:31:11'),
+(14, '13', 17, 8, 2, 1, 900.00, 0.00, 20, 0.00, 920.00, 'Pending', 17, 17, '2021-08-10 10:05:44', '2021-08-13 00:05:54'),
+(15, '14', 17, 8, 2, 1, 900.00, 0.00, 20, 0.00, 920.00, 'Pending', 17, 17, '2021-08-10 10:08:23', '2021-08-13 00:03:14'),
+(16, '15', 19, 10, NULL, 1, 100.00, 0.00, 0, 21.00, 121.00, 'Pending', 19, 19, '2021-08-10 10:09:47', '2021-08-10 10:09:47'),
+(17, '15', 19, 9, NULL, 1, 70.00, 0.00, 10, 14.70, 94.70, 'Pending', 19, 19, '2021-08-10 10:09:47', '2021-08-10 10:09:47'),
+(18, '16', 19, 9, NULL, 1, 70.00, 0.00, 10, 14.70, 94.70, 'Pending', 19, 19, '2021-08-10 10:10:16', '2021-08-10 10:10:16'),
+(19, '17', 19, 9, NULL, 5, 70.00, 0.00, 50, 14.70, 473.50, 'Pending', 19, 19, '2021-08-10 10:20:33', '2021-08-10 10:20:33'),
+(20, '17', 19, 8, NULL, 1, 40.00, 0.00, 20, 8.40, 68.40, 'Pending', 19, 19, '2021-08-10 10:20:34', '2021-08-10 10:20:34'),
+(21, '18', 19, 8, NULL, 2, 40.00, 0.00, 40, 8.40, 136.80, 'Pending', 19, 19, '2021-08-11 09:41:05', '2021-08-11 09:41:05'),
+(22, '18', 19, 10, NULL, 36, 100.00, 0.00, 0, 21.00, 4356.00, 'Pending', 19, 19, '2021-08-11 09:41:05', '2021-08-11 09:41:05'),
+(23, '19', 19, 10, NULL, 31, 100.00, 0.00, 0, 0.00, 3100.00, 'Pending', 19, 19, '2021-08-11 09:49:59', '2021-08-11 09:49:59'),
+(24, '21', 19, 10, NULL, 1, 100.00, 0.00, 0, 0.00, 100.00, 'Pending', 19, 19, '2021-08-12 14:54:16', '2021-08-12 14:54:16'),
+(25, '22', 19, 8, NULL, 1, 40.00, 0.00, 20, 0.00, 60.00, 'Pending', 19, 19, '2021-08-12 14:55:36', '2021-08-13 00:06:13'),
+(26, '23', 19, 9, NULL, 1, 70.00, 0.00, 10, 0.00, 80.00, 'Fulfilment', 19, 19, '2021-08-12 15:05:11', '2021-08-13 00:07:39');
 
 -- --------------------------------------------------------
 
@@ -998,10 +986,11 @@ INSERT INTO `order_shipping_addresses` (`id`, `user_id`, `shipping_first_name`, 
 (13, 14, 'Size', 'Thakur', 'admin@email.comLem', 'ddddd', 'adddress 1', 'address2', 'sdfghjkl;ss', 18, '333', '01876543321', 1, 14, 14, '2021-08-08 06:04:08', '2021-08-08 06:04:08'),
 (14, 14, 'Sizes', 'Thakur', 'admin@email.comLem', 'ddddd', 'adddress 1', 'address2', 'sdfghjkl;ss', 18, '333', '01876543321', 1, 14, 14, '2021-08-08 06:26:37', '2021-08-08 06:26:37'),
 (15, 14, 'Size', 'Thakur', 'admin@email.comLem', 'ddddd', 'adddress 1', 'address2', 'sdfghjkl;ss', 18, '333', '01876543321', 1, 14, 14, '2021-08-08 06:34:21', '2021-08-08 06:34:21'),
-(16, 15, 'Cora Lloyd', 'Bishop', 'nupilo@mailinator.com', 'Long Sims Trading', 'Irure reprehenderit', 'Reprehenderit et qu', 'Sit aut sunt rerum u', 4, 'Ut sint dolores sint', '+1 (402) 371-1809', 1, 15, 15, '2021-08-08 11:55:20', '2021-08-08 11:55:20'),
-(17, 16, 'Justin Padilla', 'Ashley', 'myxexu@mailinator.com', 'Marks and Chan Co', 'Molestiae cupidatat', 'Saepe aliqua Cum vo', 'Ut aliqua Qui sit n', 1, 'Nisi a excepteur ea', '+1 (701) 644-5962', 1, 16, 16, '2021-08-08 12:01:17', '2021-08-08 12:01:17'),
-(18, 17, 'Jennifer Greene', 'Vega', 'bubyvewit@mailinator.com', 'Wells Nunez LLC', 'Perferendis est vel', 'Fuga Elit non cons', 'Nostrud debitis temp', 3, 'Molestiae temporibus', '+1 (472) 429-9385', 1, 17, 17, '2021-08-08 12:02:11', '2021-08-08 12:02:11'),
-(19, 24, 'user', 'Lara', 'user@email.com', 'Wong and Ferguson Inc', 'Irure reprehenderit', 'Reprehenderit et qu', 'Non earum nihil ea i', 3, '70312', '7034954485', 1, 24, 24, '2021-08-08 12:48:48', '2021-08-08 12:48:48');
+(16, 15, 'Lemon', 'Thakur', 'lemontest@gmail.com', 'Company name', 'Address 1', 'Address 2', 'Dhaka', 1, '4444', '01876354334', 1, 15, 15, '2021-08-08 12:40:28', '2021-08-08 12:40:28'),
+(17, 17, 'Heemel', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555', '01876543324', 1, 17, 17, '2021-08-08 12:42:11', '2021-08-08 12:42:11'),
+(18, 17, 'Heemel', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555666', '01876543324', 1, 17, 17, '2021-08-08 12:42:33', '2021-08-08 12:42:33'),
+(19, 17, 'Heemels', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555666', '01876543324', 1, 17, 17, '2021-08-08 12:46:09', '2021-08-08 12:46:09'),
+(20, 19, 'Thakur', 'Lemon', 'thakurlemon@gmail.com', 'Company', 'Address', NULL, 'Dhaka', 18, '56444', '01876543333', 1, 19, 19, '2021-08-08 12:47:52', '2021-08-08 12:47:52');
 
 -- --------------------------------------------------------
 
@@ -1019,13 +1008,6 @@ CREATE TABLE `other_pages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `other_pages`
---
-
-INSERT INTO `other_pages` (`id`, `privacy_policy`, `terms_condition`, `rules`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '<div class=\"main-description\">\r\n<p>A privacy policy, also called a \"privacy policy\" or a \"privacy policy\", is a document that states what personal data you are processing, for what purpose and how you protect it. The goal of the privacy policy is to inform users about how their data is processed. Hence, the policy should be accessible to your users and formulated in clear and simple language. Most countries have privacy laws that require website owners who process personal data to have \'set a proper privacy policy on their site, and failure to comply can result in hefty fines and even prosecutions.</p>\r\n<p class=\"sub-tile\">What are personal data?</p>\r\n<p>Personal data is information that can identify an individual, either directly or in combination with other data. Names, email addresses, locations, IP addresses, photos, and account information are all examples of directly identifying data. Information regarding an individual\'s health, income, religion or cultural profile is also personal data. Furthermore, and crucial in the present context, data on the actions of users\' digital lives are considered personal. Cookies are able to track and record the browsing activities of individual users, for example which articles scroll and which ones they choose to read. Not sure if your site complies with the laws on the processing of personal data? Check it out with Cookiebot - it\'s free !</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>Probably yes. If your site tracks personal data, you need a statement that informs users about it. Most websites track user data. Often even without the site owner\'s awareness, through cookies .If your site is hosted, does it use plug-ins, if it has social media buttons, or if you have implemented analytics tools etc. on your site, then it sets cookies on users\' browsers and tracks data deemed personal by the GDPR.</p>\r\n<p>With the entry into force of the GDPR and the directive on privacy and electronic communications (e-Privacy), a correct privacy policy is essential for EU sites and for sites that have users from the EU. Scan your site here if you are in doubt about the compliance of cookies and online tracking.</p>\r\n<p>The free verification scans five pages of your website and sends a full report of the cookies and online tracking on those pages, including information on where they come from, purpose and whether or not they are compliant. Sign up for Cookiebot , if you want a complete overview of all the pages on your website.</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>The privacy policy can be written as a standalone page on your website, and made accessible with a link to the header or footer, or on the information page. It can also be hosted by a privacy policy service with a link from your site. Basically it doesn\'t matter where you decide to allocate it, as long as your users have access to it. The privacy policy is a legal text. The phrasing depends on the jurisdictions you are subject to and how your site treats the data.</p>\r\n<p>Here it is enough to say that all websites are different. We always recommend using legal counsel to ensure that your privacy policy complies with all applicable laws.However, this might seem like a high cost if you are, for example, a hobby blogger or a small business. What you should never do is copy a privacy policy from some other website .</p>\r\n</div>', '<div class=\"main-description\">\r\n<p>A privacy policy, also called a \"privacy policy\" or a \"privacy policy\", is a document that states what personal data you are processing, for what purpose and how you protect it. The goal of the privacy policy is to inform users about how their data is processed. Hence, the policy should be accessible to your users and formulated in clear and simple language. Most countries have privacy laws that require website owners who process personal data to have \'set a proper privacy policy on their site, and failure to comply can result in hefty fines and even prosecutions.</p>\r\n<p class=\"sub-tile\">What are personal data?</p>\r\n<p>Personal data is information that can identify an individual, either directly or in combination with other data. Names, email addresses, locations, IP addresses, photos, and account information are all examples of directly identifying data. Information regarding an individual\'s health, income, religion or cultural profile is also personal data. Furthermore, and crucial in the present context, data on the actions of users\' digital lives are considered personal. Cookies are able to track and record the browsing activities of individual users, for example which articles scroll and which ones they choose to read. Not sure if your site complies with the laws on the processing of personal data? Check it out with Cookiebot - it\'s free !</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>Probably yes. If your site tracks personal data, you need a statement that informs users about it. Most websites track user data. Often even without the site owner\'s awareness, through cookies .If your site is hosted, does it use plug-ins, if it has social media buttons, or if you have implemented analytics tools etc. on your site, then it sets cookies on users\' browsers and tracks data deemed personal by the GDPR.</p>\r\n<p>With the entry into force of the GDPR and the directive on privacy and electronic communications (e-Privacy), a correct privacy policy is essential for EU sites and for sites that have users from the EU. Scan your site here if you are in doubt about the compliance of cookies and online tracking.</p>\r\n<p>The free verification scans five pages of your website and sends a full report of the cookies and online tracking on those pages, including information on where they come from, purpose and whether or not they are compliant. Sign up for Cookiebot , if you want a complete overview of all the pages on your website.</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>The privacy policy can be written as a standalone page on your website, and made accessible with a link to the header or footer, or on the information page. It can also be hosted by a privacy policy service with a link from your site. Basically it doesn\'t matter where you decide to allocate it, as long as your users have access to it. The privacy policy is a legal text. The phrasing depends on the jurisdictions you are subject to and how your site treats the data.</p>\r\n<p>Here it is enough to say that all websites are different. We always recommend using legal counsel to ensure that your privacy policy complies with all applicable laws.However, this might seem like a high cost if you are, for example, a hobby blogger or a small business. What you should never do is copy a privacy policy from some other website .</p>\r\n</div>', '<div class=\"main-description\">\r\n<p>A privacy policy, also called a \"privacy policy\" or a \"privacy policy\", is a document that states what personal data you are processing, for what purpose and how you protect it. The goal of the privacy policy is to inform users about how their data is processed. Hence, the policy should be accessible to your users and formulated in clear and simple language. Most countries have privacy laws that require website owners who process personal data to have \'set a proper privacy policy on their site, and failure to comply can result in hefty fines and even prosecutions.</p>\r\n<p class=\"sub-tile\">What are personal data?</p>\r\n<p>Personal data is information that can identify an individual, either directly or in combination with other data. Names, email addresses, locations, IP addresses, photos, and account information are all examples of directly identifying data. Information regarding an individual\'s health, income, religion or cultural profile is also personal data. Furthermore, and crucial in the present context, data on the actions of users\' digital lives are considered personal. Cookies are able to track and record the browsing activities of individual users, for example which articles scroll and which ones they choose to read. Not sure if your site complies with the laws on the processing of personal data? Check it out with Cookiebot - it\'s free !</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>Probably yes. If your site tracks personal data, you need a statement that informs users about it. Most websites track user data. Often even without the site owner\'s awareness, through cookies .If your site is hosted, does it use plug-ins, if it has social media buttons, or if you have implemented analytics tools etc. on your site, then it sets cookies on users\' browsers and tracks data deemed personal by the GDPR.</p>\r\n<p>With the entry into force of the GDPR and the directive on privacy and electronic communications (e-Privacy), a correct privacy policy is essential for EU sites and for sites that have users from the EU. Scan your site here if you are in doubt about the compliance of cookies and online tracking.</p>\r\n<p>The free verification scans five pages of your website and sends a full report of the cookies and online tracking on those pages, including information on where they come from, purpose and whether or not they are compliant. Sign up for Cookiebot , if you want a complete overview of all the pages on your website.</p>\r\n</div>\r\n<div class=\"sub-description\">\r\n<h6>Do I need a privacy policy for my website?</h6>\r\n<p>The privacy policy can be written as a standalone page on your website, and made accessible with a link to the header or footer, or on the information page. It can also be hosted by a privacy policy service with a link from your site. Basically it doesn\'t matter where you decide to allocate it, as long as your users have access to it. The privacy policy is a legal text. The phrasing depends on the jurisdictions you are subject to and how your site treats the data.</p>\r\n<p>Here it is enough to say that all websites are different. We always recommend using legal counsel to ensure that your privacy policy complies with all applicable laws.However, this might seem like a high cost if you are, for example, a hobby blogger or a small business. What you should never do is copy a privacy policy from some other website .</p>\r\n</div>', 1, 1, '2021-08-13 18:19:25', '2021-08-13 18:21:15');
 
 -- --------------------------------------------------------
 
@@ -1046,72 +1028,6 @@ CREATE TABLE `participant_answers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `participant_answers`
---
-
-INSERT INTO `participant_answers` (`id`, `contest_participant_id`, `contest_id`, `contest_player_id`, `participant_type`, `participant_id`, `participant_answer`, `is_correct`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 4, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:39:26'),
-(2, 1, 3, 5, 0, 24, 1, 0, '2021-08-10 16:30:27', '2021-08-10 16:37:59'),
-(3, 1, 3, 6, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:40:18'),
-(4, 1, 3, 7, 0, 24, 1, 0, '2021-08-10 16:30:27', '2021-08-10 16:34:27'),
-(5, 1, 3, 8, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:39:26'),
-(6, 1, 3, 9, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:40:18'),
-(7, 1, 3, 10, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:40:18'),
-(8, 1, 3, 11, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:40:18'),
-(9, 1, 3, 12, 0, 24, 1, 0, '2021-08-10 16:30:27', '2021-08-10 16:34:27'),
-(10, 1, 3, 13, 0, 24, 2, 0, '2021-08-10 16:30:27', '2021-08-10 16:37:59'),
-(11, 2, 3, 4, 0, 8, 2, 0, '2021-08-10 17:17:54', '2021-08-10 17:17:54'),
-(12, 2, 3, 5, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(13, 2, 3, 6, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(14, 2, 3, 7, 0, 8, 2, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(15, 2, 3, 8, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(16, 2, 3, 9, 0, 8, 2, 0, '2021-08-10 17:17:54', '2021-08-10 17:17:54'),
-(17, 2, 3, 10, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(18, 2, 3, 11, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:18:33'),
-(19, 2, 3, 12, 0, 8, 2, 0, '2021-08-10 17:17:54', '2021-08-10 17:17:54'),
-(20, 2, 3, 13, 0, 8, 1, 0, '2021-08-10 17:17:54', '2021-08-10 17:17:54'),
-(31, 4, 5, 18, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:01'),
-(32, 4, 5, 19, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 15:45:04'),
-(33, 4, 5, 20, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:01'),
-(34, 4, 5, 21, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 15:45:04'),
-(35, 4, 5, 22, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:01'),
-(36, 4, 5, 23, 1, 8, 2, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:09'),
-(37, 4, 5, 24, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:01'),
-(38, 4, 5, 25, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 15:45:04'),
-(39, 4, 5, 26, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 16:33:01'),
-(40, 4, 5, 27, 1, 8, 1, 0, '2021-08-11 15:45:04', '2021-08-11 15:45:04'),
-(41, 5, 5, 18, 0, 24, 1, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(42, 5, 5, 19, 0, 24, 2, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(43, 5, 5, 20, 0, 24, 1, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(44, 5, 5, 21, 0, 24, 2, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(45, 5, 5, 22, 0, 24, 1, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(46, 5, 5, 23, 0, 24, 2, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(47, 5, 5, 24, 0, 24, 1, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(48, 5, 5, 25, 0, 24, 2, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(49, 5, 5, 26, 0, 24, 1, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(50, 5, 5, 27, 0, 24, 2, 0, '2021-08-11 15:50:54', '2021-08-11 15:50:54'),
-(51, 6, 6, 28, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(52, 6, 6, 29, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(53, 6, 6, 30, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(54, 6, 6, 31, 0, 24, 2, 2, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(55, 6, 6, 32, 0, 24, 2, 2, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(56, 6, 6, 33, 0, 24, 2, 2, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(57, 6, 6, 34, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(58, 6, 6, 35, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(59, 6, 6, 36, 0, 24, 2, 1, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(60, 6, 6, 37, 0, 24, 2, 2, '2021-08-12 13:29:37', '2021-08-12 16:25:22'),
-(61, 7, 6, 28, 0, 25, 1, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(62, 7, 6, 29, 0, 25, 1, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(63, 7, 6, 30, 0, 25, 1, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(64, 7, 6, 31, 0, 25, 2, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(65, 7, 6, 32, 0, 25, 2, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(66, 7, 6, 33, 0, 25, 1, 1, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(67, 7, 6, 34, 0, 25, 1, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(68, 7, 6, 35, 0, 25, 1, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(69, 7, 6, 36, 0, 25, 2, 1, '2021-08-12 13:30:10', '2021-08-12 16:30:04'),
-(70, 7, 6, 37, 0, 25, 2, 2, '2021-08-12 13:30:10', '2021-08-12 16:30:04');
-
 -- --------------------------------------------------------
 
 --
@@ -1123,13 +1039,6 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `password_resets`
---
-
-INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-('user2@email.com', '7fqfpaGO8RVZVuwJTNA3rgCTc9NHnYq7euOpYxzC9CP6brYEgPEotegoGcyTJckG', '2021-08-08 12:21:08');
 
 -- --------------------------------------------------------
 
@@ -1151,6 +1060,8 @@ CREATE TABLE `products` (
   `price` double DEFAULT NULL,
   `discount_amount` double DEFAULT NULL,
   `quantity` bigint(20) DEFAULT NULL,
+  `remaining_qty` int(11) DEFAULT NULL,
+  `deliver_charge` double DEFAULT NULL,
   `model_number` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `return_policy` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1178,10 +1089,10 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `slug`, `category_id`, `sub_category_id`, `brand_id`, `feature_image`, `galler_images`, `product_type`, `attached_file`, `price`, `discount_amount`, `quantity`, `model_number`, `product_description`, `return_policy`, `pro_meta`, `pro_mt_description`, `video_url`, `featureproduct`, `starting_bid_amount`, `auction_start_date`, `auction_start_time`, `auction_end_date`, `auction_end_time`, `auction_start_date_time`, `auction_end_date_time`, `avg_review`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(8, 'Product 1', '45455ID', 2, NULL, 1, 'ytgvkWxqvOFVYLXEvHTX.png', '[\"610c5abb7e880product-details-large.png\"]', 'Auction Product', NULL, 50, 10, NULL, NULL, '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>', '<p>Return plicy</p>', 'Meta', 'Meta discritpion', NULL, 'yes', 40, '2021-08-01', '09:30:00', '2021-08-10', '11:59:00', '2021-08-01 03:30:00', '2021-08-10 05:59:00', 0.00, 1, NULL, 1, 1, '2021-08-05 15:19:40', '2021-08-06 14:13:06'),
-(9, 'product 2', 'product-2-5880', 2, NULL, 2, 'd38reOkhGAJasjHq7KpG.png', NULL, 'General Product', NULL, 70, NULL, NULL, 'eeee555ID', '<p>Product dEscritpion</p>', '<p>Return plicy</p>', NULL, NULL, NULL, 'no', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 1, NULL, 1, 1, '2021-08-05 15:42:57', '2021-08-05 15:45:42'),
-(10, 'Prouct 3', 'prouct-3-7928', 2, NULL, 2, 'tgW6WRxeKwyRvxhcQxD1.png', NULL, 'General Product', NULL, 100, NULL, NULL, 'E-g33333gtt', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>', NULL, NULL, NULL, 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4', 'yes', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 1, NULL, 1, 1, '2021-08-05 15:47:23', '2021-08-06 14:05:54');
+INSERT INTO `products` (`id`, `name`, `slug`, `category_id`, `sub_category_id`, `brand_id`, `feature_image`, `galler_images`, `product_type`, `attached_file`, `price`, `discount_amount`, `quantity`, `remaining_qty`, `deliver_charge`, `model_number`, `product_description`, `return_policy`, `pro_meta`, `pro_mt_description`, `video_url`, `featureproduct`, `starting_bid_amount`, `auction_start_date`, `auction_start_time`, `auction_end_date`, `auction_end_time`, `auction_start_date_time`, `auction_end_date_time`, `avg_review`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(8, 'Product 1', '45455ID', 2, NULL, 1, 'ytgvkWxqvOFVYLXEvHTX.png', '[\"610c5abb7e880product-details-large.png\"]', 'Auction Product', NULL, 50, 10, NULL, 0, 20, NULL, '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>', '<p>Return plicy</p>', 'Meta', 'Meta discritpion', NULL, 'yes', 40, '2021-08-05', '09:30:00', '2021-08-15', '11:59:00', '2021-08-05 03:30:00', '2021-08-15 05:59:00', 0.00, 0, NULL, 1, 1, '2021-08-05 15:19:40', '2021-08-13 10:04:36'),
+(9, 'product 2', 'product-2-5880', 2, NULL, 2, 'd38reOkhGAJasjHq7KpG.png', NULL, 'General Product', NULL, 70, NULL, 100, 68, 10, 'eeee555ID', '<p>Product dEscritpion</p>', '<p>Return plicy</p>', NULL, NULL, NULL, 'no', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 1, NULL, 1, 1, '2021-08-05 15:42:57', '2021-08-13 00:07:40'),
+(10, 'Prouct 3', 'prouct-3-7928', 2, NULL, 2, 'tgW6WRxeKwyRvxhcQxD1.png', NULL, 'Auction Product', NULL, 100, NULL, NULL, 100, 0, 'E-g33333gtt', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>', NULL, NULL, NULL, NULL, 'yes', 20, '2021-08-05', '20:21:00', '2021-08-09', '20:21:00', '2021-08-05 14:21:00', '2021-08-09 14:21:00', 0.00, 1, NULL, 1, 1, '2021-08-05 15:47:23', '2021-08-10 11:10:50');
 
 -- --------------------------------------------------------
 
@@ -1208,7 +1119,8 @@ CREATE TABLE `product_bids` (
 --
 
 INSERT INTO `product_bids` (`id`, `product_id`, `product_wise_bid_id`, `user_id`, `bid_amount`, `bid_end_date`, `bid_end_time`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 8, 2, 12, 6007, '2021-08-10', '11:59:00', 1, 12, '2021-08-05 16:27:04', '2021-08-06 16:12:55');
+(1, 8, 2, 17, 700, '2021-08-15', '11:59:00', 17, 17, '2021-08-10 11:25:28', '2021-08-10 11:28:03'),
+(2, 8, 2, 19, 800, '2021-08-15', '11:59:00', 19, 19, '2021-08-10 11:27:48', '2021-08-10 11:27:57');
 
 -- --------------------------------------------------------
 
@@ -1225,17 +1137,21 @@ CREATE TABLE `product_wise_bids` (
   `auction_end_date` date NOT NULL,
   `auction_end_time` time NOT NULL,
   `auction_start_date_time` timestamp NULL DEFAULT NULL,
-  `auction_end_date_time` timestamp NULL DEFAULT NULL
+  `auction_end_date_time` timestamp NULL DEFAULT NULL,
+  `height_bider_id` int(11) DEFAULT NULL,
+  `height_bid_amount` double DEFAULT NULL,
+  `allow_to_user` enum('yes','no') DEFAULT 'yes',
+  `ordered` enum('yes','no') DEFAULT 'no',
+  `provied_to_user` enum('yes','no') DEFAULT 'no'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product_wise_bids`
 --
 
-INSERT INTO `product_wise_bids` (`id`, `product_id`, `starting_bid_amount`, `auction_start_date`, `auction_start_time`, `auction_end_date`, `auction_end_time`, `auction_start_date_time`, `auction_end_date_time`) VALUES
-(1, 8, 40, '2021-08-15 00:00:00', '09:30:00', '2021-08-17', '11:59:00', '2021-08-15 03:30:00', '2021-08-17 05:59:00'),
-(2, 8, 40, '2021-08-01 00:00:00', '09:30:00', '2021-08-10', '11:59:00', '2021-08-01 03:30:00', '2021-08-10 05:59:00'),
-(3, 8, 40, '2021-08-01 00:00:00', '09:30:00', '2021-08-05', '11:59:00', '2021-08-01 03:30:00', '2021-08-05 05:59:00');
+INSERT INTO `product_wise_bids` (`id`, `product_id`, `starting_bid_amount`, `auction_start_date`, `auction_start_time`, `auction_end_date`, `auction_end_time`, `auction_start_date_time`, `auction_end_date_time`, `height_bider_id`, `height_bid_amount`, `allow_to_user`, `ordered`, `provied_to_user`) VALUES
+(1, 10, 20, '2021-08-05 00:00:00', '20:21:00', '2021-08-09', '20:21:00', '2021-08-05 14:21:00', '2021-08-09 14:21:00', NULL, NULL, 'yes', 'no', 'no'),
+(2, 8, 40, '2021-08-05 00:00:00', '09:30:00', '2021-08-15', '11:59:00', '2021-08-05 03:30:00', '2021-08-15 05:59:00', 19, 800, 'yes', 'no', 'no');
 
 -- --------------------------------------------------------
 
@@ -1296,7 +1212,38 @@ CREATE TABLE `site_settings` (
 --
 
 INSERT INTO `site_settings` (`id`, `logo`, `icon`, `email`, `contact_no`, `address`, `google_map`, `site_title`, `meta_description`, `meta_keyword`, `copy_right`, `alert_quantity`, `display_unit`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'upload/site-setting/XOx4YG1M6p4tN169Myo8.png', 'upload/site-setting/2kb2Z1FTACjKCyOhwVJm.png', 'galaxy.go@gmail.com', '01719287734', '1470 S Washington St, North Attleboro MA 2760, USA', '<iframe src=\"https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"></iframe>', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 15000, 1, 1, 1, '2021-06-02 00:26:39', '2021-08-13 19:09:10');
+(1, 'upload/site-setting/MKoyX7hlbe0in2ve0svj.png', 'upload/site-setting/DozsjVyND2BWKQ17VfCu.png', 'thakurlemon@gmail.com', '01719287734', '', '', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 15000, 1, 1, 1, '2021-06-02 00:26:39', '2021-08-14 06:23:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sliders`
+--
+
+CREATE TABLE `sliders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title_black` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_color` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `button_label` varchar(58) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_serial` int(11) DEFAULT NULL,
+  `slider_name` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1 = Active, 0 = Inactive',
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(10) UNSIGNED DEFAULT NULL,
+  `updated_by` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sliders`
+--
+
+INSERT INTO `sliders` (`id`, `title_black`, `title_color`, `description`, `button_label`, `link`, `order_serial`, `slider_name`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(3, 'Fashionss', 'Men shoes', 'Filler text is text that shares some characteristics of a real written text, \r\nbut is random or otherwise', 'Buy now', 'facebook.com', 1, 'upload/slider-image/E5a1Z8LUXl5mSK7Q1hxl.png', 1, '2021-08-13 12:56:02', 1, 1, '2021-08-13 12:44:15', '2021-08-13 12:56:02'),
+(4, 'Fashion', 'Men shoes', 'Filler text is text that shares some characteristics of a real written text, \r\nbut is random or otherwise', 'Buy now', 'https://www.w3schools.com/php/func_string_nl2br.asp', 1, 'upload/slider-image/iLf5CDcjG0FpEbgETv6J.png', 1, NULL, 1, 1, '2021-08-13 12:56:37', '2021-08-13 12:59:48');
 
 -- --------------------------------------------------------
 
@@ -1330,11 +1277,25 @@ INSERT INTO `transactions` (`id`, `order_id`, `correlationid`, `build`, `email`,
 (1, 1, '400bf434c6131', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 70.00, '00000001', '2021-08-08 04:11:29', 'paypal', '2021-08-08 10:11:30', '2021-08-08 10:11:30'),
 (2, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 160.00, '00000002', '2021-08-08 04:52:37', 'point', '2021-08-08 10:52:37', '2021-08-08 10:52:37'),
 (3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000003', '2021-08-08 04:53:44', 'point', '2021-08-08 10:53:44', '2021-08-08 10:53:44'),
-(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 230.00, '00000004', '2021-08-08 05:56:25', 'point', '2021-08-08 11:56:25', '2021-08-08 11:56:25'),
-(5, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000005', '2021-08-08 06:01:20', 'point', '2021-08-08 12:01:20', '2021-08-08 12:01:20'),
-(6, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000006', '2021-08-08 06:02:16', 'point', '2021-08-08 12:02:16', '2021-08-08 12:02:16'),
-(7, 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000007', '2021-08-08 06:02:59', 'point', '2021-08-08 12:02:59', '2021-08-08 12:02:59'),
-(8, 8, 'a9d07abee55fa', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 300.00, '00000008', '2021-08-08 06:53:02', 'paypal', '2021-08-08 12:53:01', '2021-08-08 12:53:01');
+(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000004', '2021-08-08 06:42:49', 'point', '2021-08-08 12:42:49', '2021-08-08 12:42:49'),
+(5, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 130.00, '00000005', '2021-08-08 06:43:30', 'point', '2021-08-08 12:43:30', '2021-08-08 12:43:30'),
+(6, 6, 'd2ba13b451b45', '55890594', 'sb-jgyeu2645768@personal.example.com', '5B659UKFB2MAN', 'John', 'Doe', 'USD', 190.00, '00000006', '2021-08-10 11:50:13', 'paypal', '2021-08-10 05:50:13', '2021-08-10 05:50:13'),
+(7, 7, '1f575a5ad72a0', '55890594', 'sb-jgyeu2645768@personal.example.com', '5B659UKFB2MAN', 'John', 'Doe', 'USD', 110.00, '00000007', '2021-08-10 12:05:10', 'paypal', '2021-08-10 06:05:10', '2021-08-10 06:05:10'),
+(8, 8, 'a66a538f5e92e', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 910.00, '00000007', '2021-08-10 12:05:48', 'paypal', '2021-08-10 06:05:47', '2021-08-10 06:05:47'),
+(9, 9, 'a407a357ecee9', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 910.00, '00000009', '2021-08-10 12:38:24', 'paypal', '2021-08-10 06:38:24', '2021-08-10 06:38:24'),
+(10, 10, '1a11332306a25', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 910.00, '00000010', '2021-08-10 01:12:34', 'paypal', '2021-08-10 07:12:34', '2021-08-10 07:12:34'),
+(11, 11, '614cfd478b6d4', '55890594', 'sb-jgyeu2645768@personal.example.com', '5B659UKFB2MAN', 'John', 'Doe', 'USD', 50.00, '00000010', '2021-08-10 01:14:13', 'paypal', '2021-08-10 07:14:13', '2021-08-10 07:14:13'),
+(12, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 960.00, '00000012', '2021-08-10 01:31:11', 'point', '2021-08-10 07:31:11', '2021-08-10 07:31:11'),
+(13, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 920.00, '00000013', '2021-08-10 04:05:44', 'point', '2021-08-10 10:05:44', '2021-08-10 10:05:44'),
+(14, 14, 'dc5eea16901c1', '55890594', 'sb-jgyeu2645768@personal.example.com', '5B659UKFB2MAN', 'John', 'Doe', 'USD', 920.00, '00000014', '2021-08-10 04:08:23', 'paypal', '2021-08-10 10:08:23', '2021-08-10 10:08:23'),
+(15, 15, 'af4f3e2022df8', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 180.00, '00000014', '2021-08-10 04:09:48', 'paypal', '2021-08-10 10:09:47', '2021-08-10 10:09:47'),
+(16, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 80.00, '00000016', '2021-08-10 04:10:16', 'point', '2021-08-10 10:10:16', '2021-08-10 10:10:16'),
+(17, 17, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 460.00, '00000017', '2021-08-10 04:20:34', 'point', '2021-08-10 10:20:34', '2021-08-10 10:20:34'),
+(18, 18, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3720.00, '00000018', '2021-08-11 03:41:06', 'point', '2021-08-11 09:41:06', '2021-08-11 09:41:06'),
+(19, 19, 'cb3a33b118edf', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 3100.00, '00000019', '2021-08-11 03:49:59', 'paypal', '2021-08-11 09:49:59', '2021-08-11 09:49:59'),
+(20, 21, 'e1813138f18ef', '55890594', 'sb-phakv7066915@personal.example.com', 'BD6FQF6LTWVLA', 'John', 'Doe', 'USD', 100.00, '00000020', '2021-08-12 08:54:16', 'paypal', '2021-08-12 14:54:16', '2021-08-12 14:54:16'),
+(21, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 60.00, '00000022', '2021-08-12 08:55:36', 'point', '2021-08-12 14:55:36', '2021-08-12 14:55:36'),
+(22, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 80.00, '00000023', '2021-08-12 09:05:11', 'point', '2021-08-12 15:05:11', '2021-08-12 15:05:11');
 
 -- --------------------------------------------------------
 
@@ -1346,11 +1307,13 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `role_id` int(11) NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paypal_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `contact_no` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastLoginTime` datetime DEFAULT NULL,
   `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1358,6 +1321,7 @@ CREATE TABLE `users` (
   `total_coin` decimal(14,2) NOT NULL DEFAULT 0.00,
   `current_coin` decimal(14,2) NOT NULL DEFAULT 0.00,
   `withdraw` decimal(14,2) NOT NULL DEFAULT 0.00,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `shipping_first_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipping_last_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipping_email` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1368,7 +1332,6 @@ CREATE TABLE `users` (
   `shipping_country` int(11) DEFAULT NULL,
   `shipping_post_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipping_phone` varchar(55) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -1381,11 +1344,15 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `last_name`, `email`, `email_verified_at`, `contact_no`, `photo`, `password`, `lastLoginTime`, `provider`, `provider_id`, `total_coin`, `current_coin`, `withdraw`, `shipping_first_name`, `shipping_last_name`, `shipping_email`, `shipping_company_name`, `shipping_adrress_line_1`, `shipping_adrress_line_2`, `shipping_city`, `shipping_country`, `shipping_post_code`, `shipping_phone`, `status`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', NULL, 'admin@email.com', NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-08-13 22:21:36', NULL, NULL, '0.00', '0.00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 'ZyJgxhVME79oElyeomNgL2BxM0UkfV9Fkk7ImhEsG7R2X7JwYlxTOfJwiEhY', 1, 1, '2020-01-18 04:14:02', '2021-08-13 16:21:36'),
-(23, 0, 'Md Miraj Khandaker', NULL, 'mirajkhandaker@yahoo.com', NULL, '2B9Z21080828', 'https://graph.facebook.com/v3.3/4602665283111962/picture?type=normal', NULL, NULL, NULL, NULL, '0.00', '0.00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2021-08-08 12:45:35', '2021-08-08 12:45:35'),
-(24, 0, 'user', NULL, 'user@email.com', NULL, 'qMlP21080821', NULL, '$2y$10$WVZ.mSKKjKFnmOzxajBT8euAiBHCfd4ulE7P/U3kLQf3rH0Pb088S', '2021-08-13 22:18:41', NULL, NULL, '0.00', '0.00', '0.00', 'user', 'Lara', 'user@email.com', 'Wong and Ferguson Inc', 'Irure reprehenderit', 'Reprehenderit et qu', 'Non earum nihil ea i', 3, '70312', '7034954485', 1, NULL, NULL, NULL, 24, '2021-08-08 12:46:18', '2021-08-13 16:18:41'),
-(25, 0, 'user2', NULL, 'user2@email.com', NULL, 'Vz3G21081174', NULL, '$2y$10$CDaqSsMl6O9pd8HKFsl9WupxQgSVVD1UV4iw60gRqMCCMAsHYsUDG', '2021-08-13 20:03:42', NULL, NULL, '1100.00', '1100.00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 25, '2021-08-11 16:33:38', '2021-08-13 14:03:42');
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `paypal_email`, `last_name`, `email_verified_at`, `contact_no`, `photo`, `cover_photo`, `password`, `lastLoginTime`, `provider`, `provider_id`, `total_coin`, `current_coin`, `withdraw`, `status`, `shipping_first_name`, `shipping_last_name`, `shipping_email`, `shipping_company_name`, `shipping_adrress_line_1`, `shipping_adrress_line_2`, `shipping_city`, `shipping_country`, `shipping_post_code`, `shipping_phone`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-08-14 23:08:16', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'GVB2UdeOZXHSAaZpOCy72scWPl3A2ML1cdFmF7Po9qZveC7e6P9w79hDWzQ3', 1, 1, '2020-01-18 04:14:02', '2021-08-14 17:08:16'),
+(13, 0, 'Md Miraj Khandaker', 'mirajkhandaker@yahoo.com', NULL, NULL, NULL, 'iVVV21080694', 'https://graph.facebook.com/v3.3/4602665283111962/picture?type=normal', NULL, NULL, NULL, NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-06 01:03:02', '2021-08-06 01:03:02'),
+(14, 0, 'Size', 'admin@email.comLem', NULL, 'Thakur', NULL, '01876543321', NULL, NULL, '$2y$10$eD/xApwzXROi.kfYW9x81.Cu00JCHx8/Yngy3OyE641i0F0bpAzqe', '2021-08-08 12:34:01', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Size', 'Thakur', 'admin@email.comLem', 'ddddd', 'adddress 1', 'address2', 'sdfghjkl;ss', 18, '333', '01876543321', NULL, NULL, NULL, 14, '2021-08-08 06:04:08', '2021-08-08 06:34:21'),
+(15, 0, 'Lemon', 'lemontest@gmail.com', NULL, 'Thakur', NULL, '01876354334', NULL, NULL, '$2y$10$bG4MhPzDp17MNi6J6jlhFe8DHuOozy6717ddypRrJjrFTEMd46c36', NULL, NULL, NULL, '0.00', '0.00', '0.00', 1, 'Lemon', 'Thakur', 'lemontest@gmail.com', 'Company name', 'Address 1', 'Address 2', 'Dhaka', 1, '4444', '01876354334', NULL, NULL, NULL, NULL, '2021-08-08 12:40:28', '2021-08-08 12:40:28'),
+(17, 0, 'Heemel', 'heemle@gmail.com', NULL, 'Thakur', NULL, '01876543324', NULL, NULL, '$2y$10$uK1Zk25jFC0ERJzIpXVG8O58l/gvUaxNMa0oXIADcQD6mNy/Xv1Em', '2021-08-11 15:32:02', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Heemels', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555666', '01876543324', NULL, NULL, NULL, 17, '2021-08-08 12:42:11', '2021-08-11 09:32:02'),
+(19, 0, 'Thakur', 'thakurlemon@gmail.com', NULL, 'Lemon', NULL, '01876543333', NULL, NULL, '$2y$10$NR/sgPsb2gWgM9k5ly4gwOHU1b6UkM/gCDgo52vg/khVQjpCdKin.', '2021-08-12 20:53:15', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Thakur', 'Lemon', 'thakurlemon@gmail.com', 'Company', 'Address', NULL, 'Dhaka', 18, '56444', '01876543333', NULL, NULL, 18, 18, '2021-08-08 12:47:52', '2021-08-12 14:53:15'),
+(20, 0, 'user', 'user@email.com', 'user@email.com', NULL, NULL, 'TBXA21081472', 'upload/profile-pic/54NR014ogmJcFn8ji7Ld.jpg', 'upload/cover_photo/ffBWnwqgA2hfQhExOnJS.png', '$2y$10$Me3YRpOA4lW0777iagjPyOXb7K26yx6qUXtE1kauTkf8yqqgZ/4N6', '2021-08-14 21:53:58', NULL, NULL, '9999.00', '12499.00', '-2500.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 24, 1, '2021-08-14 06:52:13', '2021-08-14 17:00:05'),
+(21, 0, 'user2', 'user2@email.com', NULL, NULL, NULL, 'Ozsa21081455', NULL, NULL, '$2y$10$8yaYNQjK9DC9U8EI3KzL4OIh0ZWn9/4D.o3UzB2Ee7lwCH0Des/My', '2021-08-14 20:35:02', NULL, NULL, '100.00', '100.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-14 14:34:09', '2021-08-14 14:35:02');
 
 -- --------------------------------------------------------
 
@@ -1406,15 +1373,34 @@ CREATE TABLE `win_coins` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `win_coins`
+-- Table structure for table `withdraw_requests`
 --
 
-INSERT INTO `win_coins` (`id`, `win`, `out_of`, `coin`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(2, 9, 10, 10000, 1, 1, 1, NULL, '2021-08-09 22:42:43', '2021-08-09 22:42:43'),
-(3, 8, 10, 1000, 1, 1, 1, NULL, '2021-08-09 22:43:13', '2021-08-09 22:43:13'),
-(4, 7, 10, 500, 1, 1, 1, NULL, '2021-08-09 22:43:45', '2021-08-09 22:43:45'),
-(5, 10, 10, 100000, 1, 1, 1, NULL, '2021-08-09 22:53:28', '2021-08-09 22:53:28');
+CREATE TABLE `withdraw_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `paypal_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` decimal(14,2) NOT NULL,
+  `coin_amount` decimal(14,2) NOT NULL,
+  `before_withdraw` decimal(14,2) NOT NULL,
+  `after_withdraw` decimal(14,2) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0 = pending, 1 = confirm, 2 = cancel',
+  `coin_history_id` bigint(20) UNSIGNED NOT NULL,
+  `created_by` bigint(20) UNSIGNED NOT NULL,
+  `updated_by` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `withdraw_requests`
+--
+
+INSERT INTO `withdraw_requests` (`id`, `user_id`, `paypal_email`, `amount`, `coin_amount`, `before_withdraw`, `after_withdraw`, `status`, `coin_history_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 20, 'user@email.com', '25.00', '2500.00', '9999.00', '7499.00', 0, 3, 20, 1, '2021-08-14 15:52:16', '2021-08-14 17:00:05');
 
 --
 -- Indexes for dumped tables
@@ -1479,6 +1465,12 @@ ALTER TABLE `countries`
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `footer_circle_images`
+--
+ALTER TABLE `footer_circle_images`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1584,6 +1576,12 @@ ALTER TABLE `site_settings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sliders`
+--
+ALTER TABLE `sliders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
@@ -1604,6 +1602,12 @@ ALTER TABLE `win_coins`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `withdraw_requests`
+--
+ALTER TABLE `withdraw_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1611,7 +1615,7 @@ ALTER TABLE `win_coins`
 -- AUTO_INCREMENT for table `about_us`
 --
 ALTER TABLE `about_us`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `activities`
@@ -1635,25 +1639,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coin_histories`
 --
 ALTER TABLE `coin_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contest_participants`
 --
 ALTER TABLE `contest_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contest_players`
 --
 ALTER TABLE `contest_players`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -1668,16 +1672,22 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `footer_circle_images`
+--
+ALTER TABLE `footer_circle_images`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `guest_users`
 --
 ALTER TABLE `guest_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -1707,31 +1717,31 @@ ALTER TABLE `module_to_users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `order_shipping_addresses`
 --
 ALTER TABLE `order_shipping_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `other_pages`
 --
 ALTER TABLE `other_pages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `participant_answers`
 --
 ALTER TABLE `participant_answers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1743,7 +1753,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_bids`
 --
 ALTER TABLE `product_bids`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_wise_bids`
@@ -1764,22 +1774,34 @@ ALTER TABLE `site_settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `win_coins`
 --
 ALTER TABLE `win_coins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `withdraw_requests`
+--
+ALTER TABLE `withdraw_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ContestController;
@@ -8,8 +9,19 @@ use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
 use App\Http\Controllers\Frontend\PayPalPaymentController;
 use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\BidProductPaymentController;
+
+//Frontend Route
+Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
+//Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
+//Route::get('/cart',[HomeController::class,'cart'])->name('cart');
+//Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
+Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
+Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
+Route::get('/contact',[HomeController::class,'contact'])->name('contact');
+Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('contact.message');
+//Frontend Route
 
 //Contest Frontend
 Route::get('/entries',[ContestController::class,'entries'])->name('entries');
@@ -68,6 +80,14 @@ Route::get('/bid-checkout/{id}',[BidProductPaymentController::class,'bidcheckout
 
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/user-orders',[HomeController::class,'orders'])->name('orders');
+    Route::get('/profile',[HomeController::class,'profile'])->name('profile');
+    Route::put('/profile-update',[HomeController::class,'updateProfile'])->name('profile.update');
+    Route::post('/change-cover-photo',[HomeController::class,'changeCoverPhoto'])->name('change.cover.photo');
+    Route::post('/change-profile-photo',[HomeController::class,'changeProfilePhoto'])->name('change.profile.photo');
+    Route::post('/withdraw-request',[HomeController::class,'withdrawRequest'])->name('withdraw.request');
+
     Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');
     Route::post('checkout-bid-point-payment', [CheckoutController::class, 'checkoutbidpointPayment'])->name('checkout-bid-point.payment');
     Route::get('/payment',[HomeController::class,'payment'])->name('payment');

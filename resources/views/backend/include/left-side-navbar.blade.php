@@ -259,6 +259,25 @@
                     </ul>
                 </li>
 
+                <li class="nav-item has-treeview {{ ($routeName == 'withdraw.index' ) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Withdraw
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("withdraw.index")}}"
+                               class="nav-link {{ ($routeName == 'withdraw.index') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>WIthdraw Request List</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item has-treeview {{ ($routeName == 'product.stock.report' ) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>

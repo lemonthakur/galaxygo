@@ -35,14 +35,14 @@ class FrontAuthCheck
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->route('home');
+                return redirect()->route('login');
             }
         }else{
             if($this->auth->user() != null && $this->auth->user()->role_id == 0){
                 return $next($request);
             }
             else {
-                return redirect()->route('home');
+                return redirect()->route('login');
             }
         }
     }

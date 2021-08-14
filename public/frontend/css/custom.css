@@ -101,3 +101,60 @@ button.login-btn,
 .ic-contact-right textarea.form-control{
     color: #fff;
 }
+
+.ic-profile-left .ic-user .ic-cover-bg .ic-edit-cover-photo a label {
+    font-size: 13px;
+    margin-top: -3px;
+    color: #E2CF61;
+    cursor: pointer;
+}
+.ic-profile-left .ic-user .user-profile .ic-edit-profile a i {
+    cursor: pointer;
+}
+
+.ic-withdraw{
+    margin-top: 20px;
+    padding: 35px;
+    background: #ffffff0d;
+}
+
+.ic-withdraw .title h4{
+    color: #E2CF61;
+    font-family: galano-semibold;
+    text-transform: capitalize;
+    margin-bottom: 25px;
+    text-align: center;
+}
+.ic-withdraw .ic-profile-basic-info label {
+    font-size: 15px;
+    color: #fff;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+.ic-withdraw .form-control {
+    background: #fff3;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: none;
+    padding: 0px 24px;
+    color: #E2CF61;
+}
+
+.ic-withdraw .ic-btn:hover {
+    background: #C39A35;
+}
+
+.ic-withdraw .ic-btn{
+    line-height: 28px;
+    height: 33px;
+    background: #D6BA4F;
+    display: block;
+    border: none;
+    text-transform: uppercase;
+    color: #000000;
+    font-family: galano-medium;
+    width: 100%;
+    margin-top: 22px;
+}

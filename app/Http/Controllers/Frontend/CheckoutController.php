@@ -376,6 +376,20 @@ class CheckoutController extends Controller
                     $transaction->payment_type = 'Point';
                     $transaction->save();
 
+                    //Deduct Coin from user table
+                    $user = User::find(auth()->id());
+                    $user->current_coin = $user->current_coin - $totla_to_pay;
+                    $user->withdraw = $user->withdraw + $totla_to_pay;
+                    $user->save();
+
+                    //Insert in coin history
+                    $coinHistory = new CoinHistory();
+                    $coinHistory->user_id = auth()->id();
+                    $coinHistory->amount = $totla_to_pay;
+                    $coinHistory->transaction_type = 1;
+                    $coinHistory->earn_expense_type = 4;
+                    $coinHistory->save();
+
                     $success = true;
                 }
 
@@ -482,6 +496,20 @@ class CheckoutController extends Controller
 
                     $product_info->ordered = 'yes';
                     $product_info->save();
+
+                    //Deduct Coin from user table
+                    $user = User::find(auth()->id());
+                    $user->current_coin = $user->current_coin - $totla_to_pay;
+                    $user->withdraw = $user->withdraw + $totla_to_pay;
+                    $user->save();
+
+                    //Insert in coin history
+                    $coinHistory = new CoinHistory();
+                    $coinHistory->user_id = auth()->id();
+                    $coinHistory->amount = $totla_to_pay;
+                    $coinHistory->transaction_type = 1;
+                    $coinHistory->earn_expense_type = 4;
+                    $coinHistory->save();
 
                     $success = true;
                 }

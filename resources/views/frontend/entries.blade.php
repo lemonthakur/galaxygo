@@ -10,29 +10,36 @@
                     <div class="ic-profile-left">
                         <div class="ic-user">
                             <div class="ic-cover-bg">
-                                <img src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="cover">
+                                @if(Auth::check() && Auth::user()->role_id == 0 && !empty(auth()->user()->cover_photo))
+                                    <img id="cover_photo" src="{{asset(auth()->user()->cover_photo)}}" class="img-fluid" alt="cover">
+                                @else
+                                    <img src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="cover">
+                                @endif
                             </div>
                             <div class="user-profile">
-                                @guest()
-                                    <img src="{{asset('frontend/images/user.png')}}" alt="user">
-                                @endguest
-
-                                @auth()
-                                    @if(auth()->user()->photo)
+                                    @if(Auth::check() && Auth::user()->role_id == 0 && !empty(auth()->user()->photo))
                                         <img src="{{auth()->user()->photo}}" alt="user">
                                     @else
-                                        <img src="{{asset('frontend/images/user.png')}}" alt="user">
+                                    <img id="profile_pic" src="{{asset('demo-pic/download.png')}}" alt="user">
                                     @endif
-                                @endauth
                             </div>
                         </div>
                         <div class="ic-win-btn">
-                            <a href="#">00 <span>Entries Won</span></a>
-                            <a href="#">00 <span>Coins Won</span></a>
+                            @if(Auth::check() && Auth::user()->role_id == 0)
+                                <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
+                                <a href="#">{{auth()->user()->total_coin ?? 00}} <span>Coins Won</span></a>
+                            @else
+                                <a href="#">00 <span>Entries Won</span></a>
+                                <a href="#">00 <span>Coins Won</span></a>
+                            @endif
                         </div>
                         <div class="ic-total-balance">
                             <p>Total Coins Balance</p>
-                            <h4>00</h4>
+                            @if(Auth::check() && Auth::user()->role_id == 0)
+                            <h4>{{auth()->user()->current_coin ?? 00}}</h4>
+                            @else
+                                <h4>00</h4>
+                            @endif
                         </div>
                     </div>
                 </div>
