@@ -135,16 +135,14 @@
 
                                 <span class="public-chat-txt">public <br> chat</span>
                             </a>
-                            <a href="#" class="ic-faceboob-share-btn">
+                            <a href="javascript:void(0)" class="ic-faceboob-share-btn" id="fbShareTg">
                             <span class="facebook-svg-warper">
                                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05888 27.9411 0 18 0C8.05888 0 0 8.05888 0 18C0 27.9411 8.05888 36 18 36Z" fill="#3B5998" />
                                     <path d="M22.5254 18.7046H19.3135V30.4715H14.4472V18.7046H12.1328V14.5693H14.4472V11.8933C14.4472 9.97961 15.3562 6.98303 19.3568 6.98303L22.9614 6.99811V11.0122H20.346C19.917 11.0122 19.3138 11.2265 19.3138 12.1394V14.5731H22.9505L22.5254 18.7046Z" fill="white" />
                                 </svg>
                             </span>
-
                                 <span class="facebook-bonus-txt">Share, Get <br> Instant Bonus!</span>
-
                             </a>
 
 
@@ -320,5 +318,74 @@
             });
 
         });
+    </script>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <div id="shareBtn" class="btn btn-success clearfix">Share Dialog</div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : '542974070289636',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v11.0'
+            });
+        };
+
+        document.getElementById('fbShareTg').onclick = function() {
+            var fb_share_link = "{{ $fb_share_link->facebook_share_link }}";
+            FB.ui({
+                display: 'popup',
+                method: 'share',
+                href: fb_share_link,
+            }, function(response){
+                if(response){
+                    var csrf = "{{csrf_token()}}";
+                    $.ajax(
+                        {
+                            url: "{{ route('facebook-share.coin') }}",
+                            type: "post",
+                            data: {_token: csrf}
+                        })
+                        .done(function(data)
+                        {
+                            if(data.ret == 'today_share'){
+                                toastr.options =
+                                    {
+                                        "closeButton" : true,
+                                        "progressBar" : true
+                                    }
+                                toastr.error("Thanks for you share. You have already received point for today.");
+                            }
+                            else if(data.ret == 'db_error'){
+                                toastr.options =
+                                    {
+                                        "closeButton" : true,
+                                        "progressBar" : true
+                                    }
+                                toastr.error("Something went wrong. Please try again later.");
+                            }
+                            else if(data.ret == 'success'){
+                                $(".aft-bd-share").empty().text(parseFloat(data.val).toFixed(2));
+                                toastr.options =
+                                    {
+                                        "closeButton" : true,
+                                        "progressBar" : true
+                                    }
+                                toastr.success("Thanks for your share. you have received 100 coins.");
+                            }
+                        });
+                }
+                else{
+                    toastr.options =
+                        {
+                            "closeButton" : true,
+                            "progressBar" : true
+                        }
+                    toastr.error("Facebook share canceled.");
+                }
+
+            });
+        }
     </script>
 @endsection

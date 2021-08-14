@@ -78,6 +78,9 @@ Route::post('checkout-register', [CheckoutController::class, 'register'])->name(
 Route::get('/bid-checkout/{id}',[BidProductPaymentController::class,'bidcheckout'])->name('bid.checkout');
 //Route::post('/checkout-bid-payment',[BidProductPaymentController::class,'checkoutBidPayment'])->name('checkout.bid.payment');
 
+// Facebook share coin
+Route::post('facebook-share-coin', [HomeController::class, 'facebook_share_response'])->name('facebook-share.coin');
+
 Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

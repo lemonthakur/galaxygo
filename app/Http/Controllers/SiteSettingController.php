@@ -61,6 +61,7 @@ class SiteSettingController extends Controller
         $setting->meta_description = $request->meta_description ?? Null;
         $setting->meta_keyword = $request->meta_keyword ?? Null;
         $setting->copy_right = $request->copy_right ?? Null;
+        $setting->facebook_share_link = $request->facebook_share_link ?? Null;
 
         if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){

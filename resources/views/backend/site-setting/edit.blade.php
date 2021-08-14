@@ -79,6 +79,14 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label for="google_map">Facebook Share Link</label>
+                                                <input type="text" class="form-control {{$errors->has("facebook_share_link") ? "is-invalid":""}}" id="facebook_share_link" name="facebook_share_link" placeholder="Facebook share link" value="{{old("facebook_share_link",$setting->facebook_share_link)}}">
+                                                <span class="text-danger"> {{$errors->has("facebook_share_link") ? $errors->first("facebook_share_link") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label for="meta_description">Meta Description</label>
                                                 <textarea class="form-control {{$errors->has("meta_description") ? "is-invalid":""}}" id="meta_description" name="meta_description" placeholder="Enter meta description" maxlength="180">{{old("meta_description",$setting->meta_description)}}</textarea>
 

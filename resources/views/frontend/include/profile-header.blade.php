@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Coins Balance: {{auth()->user()->current_coin}}</span></a>
+                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Coins Balance: <span class="aft-bd-share">{{auth()->user()->current_coin}}</span></span></a>
                     {{--                        <a href="#" class="ic-btn ml-2"><i class="icofont-sign-out"></i> <span>Logout</span></a>--}}
 
                     @guest()

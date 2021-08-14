@@ -18,8 +18,17 @@
                 @endif
             </div>
             <div class="ic-header-right">
+                @php
+                    $total_coins = 0.00;
+                    if(!\Auth::check()){
+                        $mac = strtok(exec('getmac'), ' ');
+                        $guestUser = \App\Models\GuestUser::where('mac','=',$mac)->first();
+                        if($guestUser)
+                            $total_coins = $guestUser->current_coin;
+                    }
+                @endphp
                 <a href="{{route('login')}}" class="ic-btn"><i class="flaticon-login"></i> <span>login</span></a>
-                <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">Coins Balance: 0.00</span> <span class="sm-coin-bal">0.00</span></a>
+                <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">Coins Balance: <sapn class="aft-bd-share">{{ $total_coins }}</sapn></span> <span class="sm-coin-bal aft-bd-share">0.00</span></a>
             </div>
         </div>
     </div>
