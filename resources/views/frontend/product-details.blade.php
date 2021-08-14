@@ -106,10 +106,10 @@
                     <div class="ic-share-btn">
                         <h5>Share on:</h5>
                         <ul>
-                            <li><a href="#"><i class="flaticon-facebook"></i></a></li>
-                            <li><a href="#"><i class="flaticon-twitter"></i></a></li>
-                            <li><a href="#"><i class="flaticon-instagram"></i></a></li>
-                            <li><a href="#"><i class="flaticon-pinterest"></i></a></li>
+                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{route('product-details', $product->slug)}}"><i class="flaticon-facebook"></i></a></li>
+                            <li><a href="https://twitter.com/intent/tweet?url={{route('product-details', $product->slug)}}"><i class="flaticon-twitter"></i></a></li>
+{{--                            <li><a href="#"><i class="flaticon-instagram"></i></a></li>--}}
+                            <li><a href="https://pinterest.com/pin/create/button/?url={{route('product-details', $product->slug)}}"><i class="flaticon-pinterest"></i></a></li>
                         </ul>
                     </div>
                 </div>
