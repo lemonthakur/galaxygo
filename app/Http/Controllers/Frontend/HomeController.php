@@ -78,7 +78,8 @@ class HomeController extends Controller
             )
             ->where('product_bids.user_id', \Auth::id())
             ->orderBy('product_wise_bids.auction_end_date_time', 'ASC')
-            ->paginate(1); //dd($bid_applies);
+            ->get();
+            //->paginate(1); //dd($bid_applies);
 
         if ($request->ajax() && $request->bid_order==1) {
             $view = view('frontend.bid-orders-ajax-data',compact('bid_applies'))->render();
@@ -98,7 +99,8 @@ class HomeController extends Controller
             )
             ->where('orders.user_id', \Auth::id())
             ->orderBy('orders.created_at', 'DESC')
-            ->paginate(4);
+            ->get();
+            //->paginate(4);
 
         if ($request->ajax() && $request->order==1) {
             $view = view('frontend.orders-ajax-data',compact('orders'))->render();

@@ -95,7 +95,7 @@
                                         <p>No Bid Applied</p>
                                     </div>
                                 @endforelse
-                                <?php $bid_has_page =  $bid_applies->lastPage(); ?>
+                                <?php $bid_has_page =  1; /*$bid_has_page =  $bid_applies->lastPage();*/ ?>
                                 <div class="ic-item-load-more @if($bid_has_page==1){{'d-none'}}@endif" id="bid_order_load_all">
                                     <a href="javascript:void(0)" id="bid_order_load"><i class="flaticon-loading"></i> load more</a>
                                 </div>
@@ -142,7 +142,7 @@
                                         <p>No orders found</p>
                                     </div>
                                 @endforelse
-                                <?php $has_page =  $orders->lastPage(); ?>
+                                <?php $has_page = 1; /*$has_page =  $orders->lastPage();*/ ?>
                                 <div class="ic-item-load-more @if($has_page==1){{'d-none'}}@endif" id="order_load_all">
                                     <a href="javascript:void(0)" id="order_load"><i class="flaticon-loading"></i> load more</a>
                                 </div>
