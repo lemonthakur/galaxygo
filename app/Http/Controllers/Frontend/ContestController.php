@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CoinHistory;
 use App\Models\Contest;
 use App\Models\ContestParticipant;
+use App\Models\GuestUser;
 use App\Models\ParticipantAnswer;
 use App\Models\User;
 use App\Models\WinCoin;
@@ -27,9 +28,20 @@ class ContestController extends Controller
         )->select('id', 'name', 'expaire_time', 'is_final_answer')
         ->whereDate('name', date('Y-m-d'))->first();
 
+        $latest7contests = Contest::
+        with('userPLay',
+            'contestPlayers:id,contest_id,player_name,player_image,location,played_on,versus,score,answer',
+            'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+        )->select('id', 'name', 'expaire_time', 'is_final_answer')
+        ->orderBy('id','desc')
+        ->skip(1)->take(7)->get();
+
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));
-        return view('frontend.entries', compact('contest', 'now'));
+
+        //Total entry won
+        $entryWon = OwnLibrary::entryWon();
+        return view('frontend.entries', compact('contest', 'latest7contests','now','entryWon'));
     }
 
     public function entriesStore(Request $request)
@@ -110,6 +122,7 @@ class ContestController extends Controller
 
     public function claimCoin(Request $request){
         $contestId = decrypt($request->id);
+        $user = OwnLibrary::getUserInfo();
 
         DB::beginTransaction();
         $success = false;
@@ -160,17 +173,26 @@ class ContestController extends Controller
 
             //Insert in coin history
             $coinHistory = new CoinHistory();
-            $coinHistory->user_id = auth()->id();
+            $coinHistory->user_id = $user['id'];
+            $coinHistory->user_type = $user['type'];
             $coinHistory->amount = $coin;
             $coinHistory->transaction_type = 0;
             $coinHistory->earn_expense_type = 2;
             $coinHistory->save();
 
-            //Update user table
-            $user = User::find(auth()->id());
-            $user->total_coin = $user->total_coin + $coin;
-            $user->current_coin = $user->current_coin + $coin;
-            $user->save();
+            if ($user['type'] == 0){
+                //Update user table
+                $user = User::find(auth()->id());
+                $user->total_coin = $user->total_coin + $coin;
+                $user->current_coin = $user->current_coin + $coin;
+                $user->save();
+            }else{
+                //update guest_user table
+                $guest = GuestUser::find($user['id']);
+                $guest->total_coin = $guest->total_coin + $coin;
+                $guest->current_coin = $guest->current_coin + $coin;
+                $guest->save();
+            }
 
             $success = true;
         } catch (ValidationException $e) {

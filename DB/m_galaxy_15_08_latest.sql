@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2021 at 12:03 PM
+-- Generation Time: Aug 15, 2021 at 02:52 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -135,9 +135,10 @@ INSERT INTO `categories` (`id`, `name`, `parent_id`, `slug`, `created_by`, `upda
 CREATE TABLE `coin_histories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
+  `user_type` tinyint(2) DEFAULT NULL COMMENT '0 = user, 1 = guest',
   `amount` decimal(10,2) NOT NULL,
   `transaction_type` tinyint(1) NOT NULL COMMENT '0 = earn, 1 = expense',
-  `earn_expense_type` int(11) NOT NULL COMMENT '0 = register, 1 = share, 2 = contest, 3 = withdraw,4 = buy',
+  `earn_expense_type` int(11) NOT NULL COMMENT '0 = register, 1 = share, 2 = contest, 3 = withdraw,4 = buy, 5 = facebook share, 6 = guest to user',
   `created_by` bigint(20) UNSIGNED DEFAULT NULL,
   `updated_by` bigint(20) UNSIGNED DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -149,9 +150,21 @@ CREATE TABLE `coin_histories` (
 -- Dumping data for table `coin_histories`
 --
 
-INSERT INTO `coin_histories` (`id`, `user_id`, `amount`, `transaction_type`, `earn_expense_type`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 21, '100.00', 0, 0, 21, 21, NULL, '2021-08-14 14:34:09', '2021-08-14 14:34:09'),
-(3, 20, '2500.00', 1, 3, 20, 20, '2021-08-14 16:58:48', '2021-08-14 15:52:16', '2021-08-14 16:58:48');
+INSERT INTO `coin_histories` (`id`, `user_id`, `user_type`, `amount`, `transaction_type`, `earn_expense_type`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 19, NULL, '100.00', 0, 0, 19, 19, NULL, '2021-08-08 12:47:52', '2021-08-08 12:47:52'),
+(2, 1, 1, '100.00', 0, 5, NULL, NULL, NULL, '2021-08-14 16:27:11', '2021-08-14 16:27:11'),
+(3, 1, 1, '100.00', 0, 5, NULL, NULL, NULL, '2021-08-14 16:35:29', '2021-08-14 16:35:29'),
+(4, 20, NULL, '100.00', 0, 0, 20, 20, NULL, '2021-08-15 10:29:44', '2021-08-15 10:29:44'),
+(5, 3, 1, '100000.00', 0, 2, NULL, NULL, NULL, '2021-08-15 11:11:09', '2021-08-15 11:11:09'),
+(6, 20, 0, '100000.00', 0, 2, 20, 20, NULL, '2021-08-15 11:15:18', '2021-08-15 11:15:18'),
+(8, 22, 0, '100.00', 0, 0, 22, 22, NULL, '2021-08-15 12:21:44', '2021-08-15 12:21:44'),
+(9, 23, 0, '100.00', 0, 0, 23, 23, NULL, '2021-08-15 12:22:49', '2021-08-15 12:22:49'),
+(10, 24, 0, '100.00', 0, 0, 24, 24, NULL, '2021-08-15 12:24:14', '2021-08-15 12:24:14'),
+(11, 25, 0, '100.00', 0, 0, 25, 25, NULL, '2021-08-15 12:25:11', '2021-08-15 12:25:11'),
+(12, 26, 0, '100.00', 0, 0, 26, 26, NULL, '2021-08-15 12:25:53', '2021-08-15 12:25:53'),
+(13, 27, 0, '100.00', 0, 0, 27, 27, NULL, '2021-08-15 12:26:49', '2021-08-15 12:26:49'),
+(14, 27, 0, '100000.00', 0, 6, 27, 27, NULL, '2021-08-15 12:26:49', '2021-08-15 12:26:49'),
+(15, 28, 0, '100.00', 0, 0, 28, 28, NULL, '2021-08-15 12:27:38', '2021-08-15 12:27:38');
 
 -- --------------------------------------------------------
 
@@ -172,6 +185,15 @@ CREATE TABLE `contests` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `contests`
+--
+
+INSERT INTO `contests` (`id`, `name`, `expaire_time`, `is_final_answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '2021-08-14', '2021-08-14 08:44 PM', 1, 1, 1, 1, NULL, '2021-07-24 01:46:04', '2021-08-15 12:49:42'),
+(2, '2021-07-30', '2021-07-30 6:04 PM', 1, 1, 1, 1, NULL, '2021-07-24 04:04:53', '2021-08-15 12:49:54'),
+(3, '2021-08-15', '2021-08-15 04:34 PM', 1, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17');
+
 -- --------------------------------------------------------
 
 --
@@ -189,6 +211,14 @@ CREATE TABLE `contest_participants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contest_participants`
+--
+
+INSERT INTO `contest_participants` (`id`, `participant_type`, `participant_id`, `contest_id`, `correct_answer`, `earn`, `get_coin`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 3, 10, 100000, 1, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(2, 0, 20, 3, 10, 100000, 1, '2021-08-15 10:30:12', '2021-08-15 11:15:18');
 
 -- --------------------------------------------------------
 
@@ -213,6 +243,25 @@ CREATE TABLE `contest_players` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contest_players`
+--
+
+INSERT INTO `contest_players` (`id`, `contest_id`, `player_name`, `player_image`, `location`, `played_on`, `versus`, `score`, `answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Lemon', 'upload/player-pic/ejmdfEiko4KeMC6AEjBq210724.jpg', 'Thakur', NULL, 'Versus', 4555.00, 1, 1, 1, 1, NULL, '2021-07-24 01:46:04', '2021-08-15 12:49:42'),
+(2, 1, 'Lemo', 'upload/player-pic/gpGi4OlGID476pPyTnvI.jpg', 'city', NULL, '332222', 65555.00, 1, 1, 1, 1, NULL, '2021-07-24 01:47:15', '2021-08-15 12:49:42'),
+(3, 2, 'Thakur', 'upload/player-pic/n0EixSI4cLAz3vZ16er7210724.jpg', 'Sylhet', NULL, '332222', 5555.00, 1, 1, 1, 1, NULL, '2021-07-24 04:04:53', '2021-08-15 12:49:54'),
+(4, 3, 'Tate Ward', 'upload/player-pic/4TfZ9qG0CWuDrRtCVgfP210815.jpg', 'Accusamus odio sint', '2021-08-13 04:07 pm', 'Enim dignissimos ut', 97.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(5, 3, 'Maxine Holmes', 'upload/player-pic/OVGqPbOFZaqjJMiAL8HA210815.jpg', 'Et sint dolore non', '2021-08-13 04:07 pm', 'Consequatur ipsum', 15.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(6, 3, 'Hector Melton', 'upload/player-pic/8T50lhCHOtc5VZCepiAm210815.jpg', 'Architecto iste ut r', '2021-08-13 04:07 pm', 'Numquam et fugiat r', 2.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(7, 3, 'Aiko Newton', 'upload/player-pic/DDUXINRqICtVxfdMmXtO210815.jpg', 'Nesciunt aut corrup', '2021-08-13 04:07 pm', 'Nulla quia voluptas', 95.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(8, 3, 'Kalia Burnett', 'upload/player-pic/cRlwPRffPzTYAmHdjiki210815.jpg', 'Pariatur In vero er', '2021-08-13 04:07 pm', 'Proident fuga Ipsa', 64.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(9, 3, 'Audra Hobbs', 'upload/player-pic/nitCOg9rBDGCH3TUOSZs210815.jpg', 'Aliqua Consequuntur', '2021-08-13 04:07 pm', 'Magnam reiciendis vo', 70.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(10, 3, 'Angela Beasley', 'upload/player-pic/Bsv5wenwBkDDi3CyNJTx210815.jpg', 'Dolores cumque ipsa', '2021-08-13 04:07 pm', 'Hic eum est aut neq', 61.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(11, 3, 'Ivana Freeman', 'upload/player-pic/DNWArylYVRZYs6WBfuhJ210815.jpg', 'Eveniet eius volupt', '2021-08-13 04:07 pm', 'Vel aut aliquid mini', 33.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(12, 3, 'Carl Roy', 'upload/player-pic/rexmwMiG2PGS9wRm9PAU210815.jpg', 'Quia ex proident co', '2021-08-13 04:07 pm', 'Dolores consequuntur', 94.00, 2, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:17'),
+(13, 3, 'Hilel Maxwell', 'upload/player-pic/NDViXSHg3QdgVulxokTo210815.jpg', 'Molestiae qui distin', '2021-08-13 04:07 pm', 'Eum cupidatat saepe', 4.00, 1, 1, 1, 1, NULL, '2021-08-15 10:09:07', '2021-08-15 10:43:18');
 
 -- --------------------------------------------------------
 
@@ -478,6 +527,29 @@ INSERT INTO `countries` (`id`, `iso`, `name`, `nicename`, `iso3`, `numcode`, `ph
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `facebook_shares`
+--
+
+CREATE TABLE `facebook_shares` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_type` tinyint(2) DEFAULT 0 COMMENT '0 = user, 1 = guest',
+  `share_date` date DEFAULT NULL,
+  `share_time` time DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `facebook_shares`
+--
+
+INSERT INTO `facebook_shares` (`id`, `user_id`, `user_type`, `share_date`, `share_time`, `created_at`, `updated_at`) VALUES
+(2, 1, 1, '2021-08-14', '22:35:29', '2021-08-14 16:35:29', '2021-08-14 16:35:29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -533,6 +605,14 @@ CREATE TABLE `guest_users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `guest_users`
+--
+
+INSERT INTO `guest_users` (`id`, `mac`, `total_coin`, `current_coin`, `withdraw`, `created_at`, `updated_at`) VALUES
+(1, '3C-A0-67-E3-44-6E', '200.00', '200.00', '0.00', '2021-08-14 16:27:11', '2021-08-14 16:35:29'),
+(3, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-08-15 10:28:58', '2021-08-15 12:26:49');
+
 -- --------------------------------------------------------
 
 --
@@ -562,21 +642,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (31, '2020_01_18_111739_add_created_by_to_roles', 1),
 (41, '2021_06_01_171209_create_site_settings_table', 2),
 (42, '2021_07_19_142035_create_contests_table', 3),
-(43, '2021_07_19_142601_create_contest_players_table', 3),
-(44, '2021_07_23_140119_add_column_is_final_answer_to_contests', 4),
-(45, '2021_07_23_160401_create_win_coins_table', 5),
-(46, '2021_08_06_121217_add_for_social_login_column_in_users_table', 6),
-(47, '2021_08_08_153041_create_coin_histories_table', 7),
-(48, '2021_08_10_201006_create_contest_participants_table', 8),
-(49, '2021_08_10_201043_create_participant_answers_table', 9),
-(50, '2021_08_10_225242_create_guest_users_table', 10),
-(51, '2021_08_11_102645_add_column_played_on_in_contest_players', 11),
-(52, '2021_08_11_214151_add_column_participant_type_in_participant_answers', 11),
-(53, '2021_08_13_222223_create_about_us_table', 12),
-(54, '2021_08_13_234507_create_other_pages_table', 13),
-(55, '2021_08_14_002701_add_column_address_in_site_settings', 14),
-(56, '2021_08_14_172522_add_column_cover_photo_and_paypal_email_in_users', 14),
-(59, '2021_08_14_211010_create_withdraw_requests_table', 15);
+(43, '2021_07_19_142601_create_contest_players_table', 3);
 
 -- --------------------------------------------------------
 
@@ -1028,6 +1094,32 @@ CREATE TABLE `participant_answers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `participant_answers`
+--
+
+INSERT INTO `participant_answers` (`id`, `contest_participant_id`, `contest_id`, `contest_player_id`, `participant_type`, `participant_id`, `participant_answer`, `is_correct`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 4, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(2, 1, 3, 5, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(3, 1, 3, 6, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(4, 1, 3, 7, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(5, 1, 3, 8, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(6, 1, 3, 9, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(7, 1, 3, 10, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(8, 1, 3, 11, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(9, 1, 3, 12, 1, 3, 2, 2, '2021-08-15 10:28:58', '2021-08-15 11:11:09'),
+(10, 1, 3, 13, 1, 3, 1, 2, '2021-08-15 10:29:08', '2021-08-15 11:11:09'),
+(11, 2, 3, 4, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(12, 2, 3, 5, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(13, 2, 3, 6, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(14, 2, 3, 7, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(15, 2, 3, 8, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(16, 2, 3, 9, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(17, 2, 3, 10, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(18, 2, 3, 11, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(19, 2, 3, 12, 0, 20, 2, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18'),
+(20, 2, 3, 13, 0, 20, 1, 2, '2021-08-15 10:30:12', '2021-08-15 11:15:18');
+
 -- --------------------------------------------------------
 
 --
@@ -1119,7 +1211,7 @@ CREATE TABLE `product_bids` (
 --
 
 INSERT INTO `product_bids` (`id`, `product_id`, `product_wise_bid_id`, `user_id`, `bid_amount`, `bid_end_date`, `bid_end_time`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 8, 2, 17, 700, '2021-08-15', '11:59:00', 17, 17, '2021-08-10 11:25:28', '2021-08-10 11:28:03'),
+(1, 8, 2, 19, 700, '2021-08-15', '11:59:00', 17, 17, '2021-08-10 11:25:28', '2021-08-10 11:28:03'),
 (2, 8, 2, 19, 800, '2021-08-15', '11:59:00', 19, 19, '2021-08-10 11:27:48', '2021-08-10 11:27:57');
 
 -- --------------------------------------------------------
@@ -1194,13 +1286,14 @@ CREATE TABLE `site_settings` (
   `email` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact_no` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `google_map` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `google_map` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `site_title` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_description` varchar(765) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keyword` varchar(765) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `copy_right` varchar(765) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alert_quantity` int(11) NOT NULL DEFAULT 5,
   `display_unit` int(11) DEFAULT NULL,
+  `facebook_share_link` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` bigint(20) UNSIGNED NOT NULL,
   `updated_by` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1211,8 +1304,8 @@ CREATE TABLE `site_settings` (
 -- Dumping data for table `site_settings`
 --
 
-INSERT INTO `site_settings` (`id`, `logo`, `icon`, `email`, `contact_no`, `address`, `google_map`, `site_title`, `meta_description`, `meta_keyword`, `copy_right`, `alert_quantity`, `display_unit`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'upload/site-setting/MKoyX7hlbe0in2ve0svj.png', 'upload/site-setting/DozsjVyND2BWKQ17VfCu.png', 'thakurlemon@gmail.com', '01719287734', '', '', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 'GalaxyGo', 15000, 1, 1, 1, '2021-06-02 00:26:39', '2021-08-14 06:23:53');
+INSERT INTO `site_settings` (`id`, `logo`, `icon`, `email`, `contact_no`, `address`, `google_map`, `site_title`, `meta_description`, `meta_keyword`, `copy_right`, `alert_quantity`, `display_unit`, `facebook_share_link`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'upload/site-setting/qMPDTDFThCSaPSsGUf74.png', 'upload/site-setting/rJ4DcypuQQz0gSm74UXn.png', 'thakurlemon@gmail.com', '01719287734', 'Dhaka', NULL, 'Contest', 'Web Embed', 'Inventory', 'Contest', 15000, 1, 'https://galaxygo.duckbd.com/admin-login', 1, 1, '2021-06-02 00:26:39', '2021-08-14 16:22:40');
 
 -- --------------------------------------------------------
 
@@ -1345,14 +1438,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `paypal_email`, `last_name`, `email_verified_at`, `contact_no`, `photo`, `cover_photo`, `password`, `lastLoginTime`, `provider`, `provider_id`, `total_coin`, `current_coin`, `withdraw`, `status`, `shipping_first_name`, `shipping_last_name`, `shipping_email`, `shipping_company_name`, `shipping_adrress_line_1`, `shipping_adrress_line_2`, `shipping_city`, `shipping_country`, `shipping_post_code`, `shipping_phone`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-08-14 23:08:16', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'rtiraN69wiPqnFabXKBItbJuFBfrCEkcnUo2G0gIgczTBedOHWtiCdvCC4QI', 1, 1, '2020-01-18 04:14:02', '2021-08-14 17:08:16'),
-(13, 0, 'Md Miraj Khandaker', 'mirajkhandaker@yahoo.com', NULL, NULL, NULL, 'iVVV21080694', 'https://graph.facebook.com/v3.3/4602665283111962/picture?type=normal', NULL, NULL, NULL, NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-06 01:03:02', '2021-08-06 01:03:02'),
+(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-08-15 18:49:18', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pPJsSulIX2mYVXFKCfesoislTWdSrLyF2OxwJrRaY3Y54koUpqN3dCEuvVH1', 1, 1, '2020-01-18 04:14:02', '2021-08-15 12:49:18'),
+(13, 0, 'Md Miraj Khandaker', 'mirajkhandaker@yahoo.com', NULL, NULL, NULL, 'iVVV21080694', 'https://graph.facebook.com/v3.3/4602665283111962/picture?type=normal', NULL, NULL, NULL, 'facebook', '4602665283111962', '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-06 01:03:02', '2021-08-06 01:03:02'),
 (14, 0, 'Size', 'admin@email.comLem', NULL, 'Thakur', NULL, '01876543321', NULL, NULL, '$2y$10$eD/xApwzXROi.kfYW9x81.Cu00JCHx8/Yngy3OyE641i0F0bpAzqe', '2021-08-08 12:34:01', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Size', 'Thakur', 'admin@email.comLem', 'ddddd', 'adddress 1', 'address2', 'sdfghjkl;ss', 18, '333', '01876543321', NULL, NULL, NULL, 14, '2021-08-08 06:04:08', '2021-08-08 06:34:21'),
 (15, 0, 'Lemon', 'lemontest@gmail.com', NULL, 'Thakur', NULL, '01876354334', NULL, NULL, '$2y$10$bG4MhPzDp17MNi6J6jlhFe8DHuOozy6717ddypRrJjrFTEMd46c36', NULL, NULL, NULL, '0.00', '0.00', '0.00', 1, 'Lemon', 'Thakur', 'lemontest@gmail.com', 'Company name', 'Address 1', 'Address 2', 'Dhaka', 1, '4444', '01876354334', NULL, NULL, NULL, NULL, '2021-08-08 12:40:28', '2021-08-08 12:40:28'),
-(17, 0, 'Heemel', 'heemle@gmail.com', NULL, 'Thakur', NULL, '01876543324', NULL, NULL, '$2y$10$uK1Zk25jFC0ERJzIpXVG8O58l/gvUaxNMa0oXIADcQD6mNy/Xv1Em', '2021-08-11 15:32:02', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Heemels', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555666', '01876543324', NULL, NULL, NULL, 17, '2021-08-08 12:42:11', '2021-08-11 09:32:02'),
-(19, 0, 'Thakur', 'thakurlemon@gmail.com', NULL, 'Lemon', NULL, '01876543333', NULL, NULL, '$2y$10$NR/sgPsb2gWgM9k5ly4gwOHU1b6UkM/gCDgo52vg/khVQjpCdKin.', '2021-08-12 20:53:15', NULL, NULL, '0.00', '0.00', '0.00', 1, 'Thakur', 'Lemon', 'thakurlemon@gmail.com', 'Company', 'Address', NULL, 'Dhaka', 18, '56444', '01876543333', NULL, NULL, 18, 18, '2021-08-08 12:47:52', '2021-08-12 14:53:15'),
-(20, 0, 'user', 'user@email.com', 'user@email.com', NULL, NULL, 'TBXA21081472', 'upload/profile-pic/54NR014ogmJcFn8ji7Ld.jpg', 'upload/cover_photo/ffBWnwqgA2hfQhExOnJS.png', '$2y$10$Me3YRpOA4lW0777iagjPyOXb7K26yx6qUXtE1kauTkf8yqqgZ/4N6', '2021-08-14 23:32:25', NULL, NULL, '9999.00', '12499.00', '-2500.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 24, 1, '2021-08-14 06:52:13', '2021-08-14 17:32:25'),
-(21, 0, 'user2', 'user2@email.com', NULL, NULL, NULL, 'Ozsa21081455', NULL, NULL, '$2y$10$8yaYNQjK9DC9U8EI3KzL4OIh0ZWn9/4D.o3UzB2Ee7lwCH0Des/My', '2021-08-14 20:35:02', NULL, NULL, '100.00', '100.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-14 14:34:09', '2021-08-14 14:35:02');
+(17, 0, 'Heemel', 'heemle@gmail.com', NULL, 'Thakur', NULL, '01876543324', NULL, NULL, '$2y$10$uK1Zk25jFC0ERJzIpXVG8O58l/gvUaxNMa0oXIADcQD6mNy/Xv1Em', '2021-08-14 11:00:41', NULL, NULL, '0.00', '10000000.00', '0.00', 1, 'Heemels', 'Thakur', 'heemle@gmail.com', 'company', 'Address 1', NULL, 'Kabul', 18, '5555666', '01876543324', NULL, NULL, NULL, 17, '2021-08-08 12:42:11', '2021-08-14 05:00:41'),
+(19, 0, 'Thakur', 'thakurlemon@gmail.com', NULL, 'Lemon', NULL, '01876543333', NULL, NULL, '$2y$10$NR/sgPsb2gWgM9k5ly4gwOHU1b6UkM/gCDgo52vg/khVQjpCdKin.', '2021-08-14 11:09:00', NULL, NULL, '100.00', '1000000.00', '0.00', 1, 'Thakur', 'Lemon', 'thakurlemon@gmail.com', 'Company', 'Address', NULL, 'Dhaka', 18, '56444', '01876543333', NULL, NULL, 18, 18, '2021-08-08 12:47:52', '2021-08-14 05:09:00'),
+(20, 0, 'user', 'user@email.com', NULL, NULL, NULL, 'hSUi21081551', NULL, NULL, '$2y$10$Tt0R9KkRyvCINBotBSsoW.YczPS8K.0Ddr9GEk0jye0nOIIfA2ukC', NULL, NULL, NULL, '100100.00', '100100.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, '2021-08-15 10:29:44', '2021-08-15 11:15:18'),
+(27, 0, 'Reuben Jennings', 'gufo@mailinator.com', NULL, NULL, NULL, '78ks21081547', NULL, NULL, '$2y$10$2zjrUwg/KE4hXjGK94DOqOIDj0R/msPtwdiNUPM0oRnhzpVvAI1FO', NULL, NULL, NULL, '100100.00', '100100.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 26, 27, '2021-08-15 12:26:49', '2021-08-15 12:26:49'),
+(28, 0, 'Hadley May', 'fodyzup@mailinator.com', NULL, NULL, NULL, 'ucX821081551', NULL, NULL, '$2y$10$ZWzRrvMJtzWAmR2ltFdSzuCdBW6QKdGBT0z5UvqqB2OW60H3N3mli', NULL, NULL, NULL, '100.00', '100.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-08-15 12:27:38', '2021-08-15 12:27:38');
 
 -- --------------------------------------------------------
 
@@ -1372,6 +1466,16 @@ CREATE TABLE `win_coins` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `win_coins`
+--
+
+INSERT INTO `win_coins` (`id`, `win`, `out_of`, `coin`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 10, 10, 100000, 1, 1, 1, NULL, '2021-08-15 11:01:42', '2021-08-15 11:01:42'),
+(2, 9, 10, 10000, 1, 1, 1, NULL, '2021-08-15 11:02:22', '2021-08-15 11:02:22'),
+(3, 7, 10, 500, 1, 1, 1, NULL, '2021-08-15 11:02:37', '2021-08-15 11:02:37'),
+(4, 8, 10, 1000, 1, 1, 1, NULL, '2021-08-15 11:02:50', '2021-08-15 11:02:50');
 
 -- --------------------------------------------------------
 
@@ -1394,13 +1498,6 @@ CREATE TABLE `withdraw_requests` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `withdraw_requests`
---
-
-INSERT INTO `withdraw_requests` (`id`, `user_id`, `paypal_email`, `amount`, `coin_amount`, `before_withdraw`, `after_withdraw`, `status`, `coin_history_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 20, 'user@email.com', '25.00', '2500.00', '9999.00', '7499.00', 0, 3, 20, 1, '2021-08-14 15:52:16', '2021-08-14 17:00:05');
 
 --
 -- Indexes for dumped tables
@@ -1459,6 +1556,12 @@ ALTER TABLE `contest_players`
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `facebook_shares`
+--
+ALTER TABLE `facebook_shares`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1639,31 +1742,37 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coin_histories`
 --
 ALTER TABLE `coin_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `contest_participants`
 --
 ALTER TABLE `contest_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contest_players`
 --
 ALTER TABLE `contest_players`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
+
+--
+-- AUTO_INCREMENT for table `facebook_shares`
+--
+ALTER TABLE `facebook_shares`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1681,13 +1790,13 @@ ALTER TABLE `footer_circle_images`
 -- AUTO_INCREMENT for table `guest_users`
 --
 ALTER TABLE `guest_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -1741,7 +1850,7 @@ ALTER TABLE `other_pages`
 -- AUTO_INCREMENT for table `participant_answers`
 --
 ALTER TABLE `participant_answers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1789,19 +1898,19 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `win_coins`
 --
 ALTER TABLE `win_coins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `withdraw_requests`
 --
 ALTER TABLE `withdraw_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

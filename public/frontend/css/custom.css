@@ -158,3 +158,11 @@ button.login-btn,
     width: 100%;
     margin-top: 22px;
 }
+.ic-profile-left .ic-user .user-profile img{
+    border-radius: 8% !important;
+    border: 5px solid #D6BA4F;
+}
+.ic-entries-tab-contents .ic-item .user .image img{
+    border-radius: 8% !important;
+    border: 2px solid #D6BA4F;
+}

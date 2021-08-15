@@ -5,6 +5,7 @@
 
     <section class="ic-entries-area">
         <div class="container">
+
             <div class="row">
                 <div class="col-lg-4 col-md-5">
                     <div class="ic-profile-left">
@@ -24,22 +25,24 @@
                                     @endif
                             </div>
                         </div>
+                        @php
+                            if(Auth::check() && Auth::user()->role_id == 0){
+                               $total_coins = auth()->user()->total_coin ?? 00;
+                               $current_coins = auth()->user()->current_coin ?? 00;
+                                }else{
+                                    $mac = strtok(exec('getmac'), ' ');
+                                    $guestUser = \App\Models\GuestUser::where('mac','=',$mac)->first();
+                                    $total_coins = $guestUser->total_coin ?? 00;
+                                    $current_coins = $guestUser->current_coin ?? 00;
+                                }
+                        @endphp
                         <div class="ic-win-btn">
-                            @if(Auth::check() && Auth::user()->role_id == 0)
-                                <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
-                                <a href="#">{{auth()->user()->total_coin ?? 00}} <span>Coins Won</span></a>
-                            @else
-                                <a href="#">00 <span>Entries Won</span></a>
-                                <a href="#">00 <span>Coins Won</span></a>
-                            @endif
+                            <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
+                            <a href="#">{{$total_coins}} <span>Coins Won</span></a>
                         </div>
                         <div class="ic-total-balance">
                             <p>Total Coins Balance</p>
-                            @if(Auth::check() && Auth::user()->role_id == 0)
-                            <h4>{{auth()->user()->current_coin ?? 00}}</h4>
-                            @else
-                                <h4>00</h4>
-                            @endif
+                            <h4>{{$current_coins}}</h4>
                         </div>
                     </div>
                 </div>
@@ -65,11 +68,10 @@
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
                                             <div class="ic-pending-entries-title">
-                                                <h5>Played On
-                                                    : {{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h5>
+                                                <h5>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h5>
                                                 <div class="ic-timer">
                                                     <span class="d-none"
-                                                          id="timer-time">{{$contest->expaire_time ?? date('Y-m-d 0:00')}}</span>
+                                                          id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->expaire_time)) ?? date('Y-m-d 0:00')}}</span>
                                                     {{--                                        <div class="days">--}}
                                                     {{--                                            <h4 id="day">0</h4>--}}
                                                     {{--                                            <p>days</p>--}}
@@ -334,7 +336,6 @@
                                         @endforelse
 
                                         <div class="ic-item-load-more">
-                                            @auth()
                                                 @if(!empty($contest->userPLay) && $contest->userPLay->get_coin == 0)
                                                 <form method="post" action="{{route('entries.claim.coin')}}">
                                                     @csrf
@@ -345,13 +346,114 @@
                                                     </button>
                                                 </form>
                                                 @endif
-                                            @endauth
                                         </div>
 
                                     @else
                                         <h3 class="text-center text-white">Today's answer not submitted yet.</h3>
                                     @endif
                                 </div>
+                                {{--Last seven entry data--}}
+                                @if(!empty($latest7contests))
+                                    @foreach($latest7contests as $contest)
+                                        <div class="ic-entries-tab-contents mt-3 final-entries">
+                                            <div class="ic-time">
+                                                <h4>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h4>
+                                            </div>
+                                            @if(!empty($contest) && strtotime($contest->expaire_time) <= $now && $contest->is_final_answer == 1)
+                                                @forelse($contest->contestPlayers as $key => $contestPlayer)
+                                                <!--Item 1-->
+                                                    <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
+                                                        <div class="user">
+                                                            <div class="image">
+                                                                <img src="{{asset($contestPlayer->player_image)}}" alt="user">
+                                                            </div>
+                                                            <div class="name-title">
+                                                                <p>{{ucwords($contestPlayer->player_name)}}</p>
+                                                                <span>{{strtoupper($contestPlayer->location)}}</span>
+                                                            </div>
+                                                            <div class="mobile-name-title name-title">
+                                                                <p>{{ucwords($contestPlayer->player_name)}}</p>
+                                                                <span>{{strtoupper($contestPlayer->location)}}</span>
+                                                                <p class="final-our-score">fantasy score</p>
+                                                                <p class="final-score-point">{{$contestPlayer->score}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="over-projection">
+                                                            @if(!empty($contestPlayer->participant->participant_answer))
+                                                                @if($contestPlayer->participant->participant_answer == 2)
+                                                                    <div class="over-icon">
+                                                                        <a href="#">over</a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="under-icon">
+                                                                        <a href="#">under</a>
+                                                                    </div>
+                                                                @endif
+                                                            @else
+                                                                <div class="over-icon">
+                                                                    <a href="#">No Answer</a>
+                                                                </div>
+                                                            @endif
+                                                            <span>your projection</span>
+                                                        </div>
+
+                                                        <div class="over-projection mobile-over-projection">
+                                                            @if(!empty($contestPlayer->participant->participant_answer))
+                                                                @if($contestPlayer->participant->participant_answer == 2)
+                                                                    <a href="#">over</a>
+                                                                @else
+                                                                    <a href="#">under</a>
+                                                                @endif
+                                                            @else
+                                                                <a href="#">under</a>
+                                                            @endif
+                                                            <p>{{$contestPlayer->score}}<span>fantasy score</span></p>
+                                                        </div>
+
+                                                        <div class="score">
+                                                            <p>{{$contestPlayer->score}}</p>
+                                                            <span>fantasy score</span>
+                                                        </div>
+                                                        <div class="final-fantacy-score">
+                                                            @if(!empty($contestPlayer->participant->participant_answer) &&
+                                                              $contestPlayer->answer == $contestPlayer->participant->participant_answer)
+                                                                <a href="#" class="final-remove check">
+                                                                    <i class="flaticon-tick-mark"></i>
+                                                                    final
+                                                                </a>
+                                                            @else
+                                                                <a href="#" class="final-remove">
+                                                                    <i class="flaticon-error"></i>
+                                                                    final
+                                                                </a>
+                                                            @endif
+                                                            <p>{{$contestPlayer->score}} <span>fantasy score</span></p>
+                                                        </div>
+                                                    </div>
+                                                @empty
+                                                    <h3 class="text-center">No Players Found</h3>
+                                                @endforelse
+
+                                                <div class="ic-item-load-more">
+                                                    @if(!empty($contest->userPLay) && $contest->userPLay->get_coin == 0)
+                                                        <form method="post" action="{{route('entries.claim.coin')}}">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{encrypt($contest->id)}}">
+                                                            <button type="submit" class="btn-submit">
+                                                                <i class="icofont-coins mr-1"></i>
+                                                                Claim Coin
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                </div>
+
+                                            @else
+                                                <h4 class="text-center text-white">Answer not submitted.</h4>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                @endif
+                                {{--Last seven entry data--}}
                             </div>
                         </div>
                     </div>
@@ -364,7 +466,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $(document).ready(function (){
+
                 $(".rlabel").on('click',function (){
                     let pid = $(this).attr('pid');
                     let ltype = $(this).attr('ltype');
@@ -380,7 +482,6 @@
                         $('#under_lavel_'+pid).removeClass('active');
                     }
                 });
-            });
 
             // Count down timer
             var getTime = $('#timer-time').text();
@@ -393,6 +494,7 @@
                 }
 
                 var endTime = new Date(getTime);
+                console.log(endTime);
                 endTime = (Date.parse(endTime) / 1000);
 
                 var now = new Date();

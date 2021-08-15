@@ -26,6 +26,8 @@ Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('
 //Contest Frontend
 Route::get('/entries',[ContestController::class,'entries'])->name('entries');
 Route::post('/entries/store',[ContestController::class,'entriesStore'])->name('entries.store');
+//    Claim Contest Coin
+Route::post('/entries/claim-coin',[ContestController::class,'claimCoin'])->name('entries.claim.coin');
 //Contest Frontend
 
 //minicart
@@ -95,7 +97,4 @@ Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::post('checkout-bid-point-payment', [CheckoutController::class, 'checkoutbidpointPayment'])->name('checkout-bid-point.payment');
     Route::get('/payment',[HomeController::class,'payment'])->name('payment');
     Route::get('/bid-payment/{id}',[HomeController::class,'bidpayment'])->name('bid.payment');
-
-//    Claim Contest Coin
-    Route::post('/entries/claim-coin',[ContestController::class,'claimCoin'])->name('entries.claim.coin');
 });

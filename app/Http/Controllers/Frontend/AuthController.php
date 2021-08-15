@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\CoinHistory;
+use App\Models\GuestUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -109,10 +110,18 @@ class AuthController extends Controller
 
             $coinHistory = new CoinHistory();
             $coinHistory->user_id = auth()->id();
+            $coinHistory->user_type = 0;
             $coinHistory->amount = 100;
             $coinHistory->transaction_type = 0;
             $coinHistory->earn_expense_type = 0;
             $coinHistory->save();
+
+            $mac = strtok(exec('getmac'), ' ');
+            $guestUser = GuestUser::where('mac','=',$mac)->first();
+
+            if (!empty($guestUser) && $guestUser->current_coin > 0){
+                $res = $this->coinTransfer($guestUser);
+            }
 
             session()->flash("success","Successfully register");
             return redirect()->route("home");
@@ -156,6 +165,13 @@ class AuthController extends Controller
                 $coinHistory->earn_expense_type = 0;
                 $coinHistory->save();
 
+                $mac = strtok(exec('getmac'), ' ');
+                $guestUser = GuestUser::where('mac','=',$mac)->first();
+
+                if (!empty($guestUser) && $guestUser->current_coin > 0){
+                    $res = $this->coinTransfer($guestUser);
+                }
+
             }else{
                 session()->flash("error","Unable to login");
                 return redirect()->route("login");
@@ -171,5 +187,29 @@ class AuthController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route("home");
+    }
+
+    public function coinTransfer($guestUser){
+        $res = false;
+        $user = User::find(auth()->id());
+        $user->total_coin = $user->total_coin + $guestUser->current_coin;
+        $user->current_coin = $user->current_coin + $guestUser->current_coin;
+        if ($user->save()){
+            $coinHistory = new CoinHistory();
+            $coinHistory->user_id = auth()->id();
+            $coinHistory->user_type = 0;
+            $coinHistory->amount = $guestUser->current_coin;
+            $coinHistory->transaction_type = 0;
+            $coinHistory->earn_expense_type = 6;
+            $coinHistory->save();
+
+            $guestUser->total_coin = 0;
+            $guestUser->current_coin = 0;
+            $guestUser->save();
+
+            $res = true;
+        }
+
+        return $res;
     }
 }
