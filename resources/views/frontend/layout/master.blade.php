@@ -7,6 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="HTML5,CSS3,SASS,Bootstrap,JavaScript,Jquery">
     <meta name="author" content="ITCLAN BD" />
+
+    {{--meta tag for social share--}}
+    <meta property="og:title" content="{{$siteSetting->site_title ?? env("APP_NAME")}}">
+    <meta property="og:description" content="{{$siteSetting->meta_description ?? ''}}">
+    <meta property="og:image" content="{{$siteSetting->logo ?? ''}}">
+    <meta property="og:url" content="{{route('home')}}">
+    <meta name="twitter:card" content="{{$siteSetting->logo ?? ''}}">
+    <meta property="og:site_name" content="{{$siteSetting->site_title ?? env("APP_NAME")}}">
+    <meta name="twitter:image:alt" content="Site Logo">
+
     <title>@yield('title') - {{$siteSetting->site_title ?? env("APP_NAME")}}</title>
     <!-- Favicon -->
     @if(!empty($siteSetting->icon))
@@ -101,6 +111,11 @@
 <script src="{{asset('frontend/js/custom.js')}}"></script>
 <!--Wow Js-->
 <script src="{{asset('frontend/js/wow.js')}}"></script>
+
+@if($siteSetting->chat_widget)
+    {!! $siteSetting->chat_widget !!}
+    @endif
+
 <script>
     new WOW().init();
 

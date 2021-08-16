@@ -79,6 +79,14 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label for="chat_widget">Chat Widget Code</label>
+                                                <input type="text" class="form-control {{$errors->has("chat_widget") ? "is-invalid":""}}" id="google_map" name="chat_widget" placeholder="Chat widget code" value="{{old("chat_widget",$setting->chat_widget)}}">
+                                                <span class="text-danger"> {{$errors->has("chat_widget") ? $errors->first("chat_widget") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label for="google_map">Facebook Share Link</label>
                                                 <input type="text" class="form-control {{$errors->has("facebook_share_link") ? "is-invalid":""}}" id="facebook_share_link" name="facebook_share_link" placeholder="Facebook share link" value="{{old("facebook_share_link",$setting->facebook_share_link)}}">
                                                 <span class="text-danger"> {{$errors->has("facebook_share_link") ? $errors->first("facebook_share_link") : ""}} </span>

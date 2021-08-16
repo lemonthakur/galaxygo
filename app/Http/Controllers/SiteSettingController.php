@@ -57,6 +57,7 @@ class SiteSettingController extends Controller
         $setting->contact_no = $request->contact_no ?? Null;
         $setting->address = $request->address ?? Null;
         $setting->google_map = $request->google_map ?? Null;
+        $setting->chat_widget = $request->chat_widget ?? Null;
         $setting->site_title = $request->site_title ?? Null;
         $setting->meta_description = $request->meta_description ?? Null;
         $setting->meta_keyword = $request->meta_keyword ?? Null;

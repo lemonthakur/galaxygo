@@ -112,7 +112,7 @@
                             </a>
                         </div>
                         <div class="ic-get-share-btn">
-                            <a href="#" class="ic-chat-icon">
+                            <a href="#" class="ic-chat-icon" id="chatToggle">
                             <span class="chat-svg-warper">
                                 <svg id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
                                     <g>
@@ -159,6 +159,9 @@
 
     <script>
         $(document).ready(function () {
+            $('#chatToggle').on('click',function(){
+                Tawk_API.toggle();
+            });
             let formData = {};
 
             function loadDataTable(formData) {

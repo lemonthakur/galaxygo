@@ -34,7 +34,7 @@ class ContestController extends Controller
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name', 'expaire_time', 'is_final_answer')
         ->orderBy('id','desc')
-        ->skip(1)->take(7)->get();
+            ->whereDate('name','<',date('Y-m-d'))->limit(7)->get();
 
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));

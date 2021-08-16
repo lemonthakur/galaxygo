@@ -1,10 +1,14 @@
 @extends("backend.master.main-layout")
 @section("page-title","Order Details")
-<style type="text/css">
-    .table td, .table th {
-    padding: .25rem !important;
-}
-</style>
+
+@section('css')
+    <style type="text/css">
+        .table td, .table th {
+            padding: .25rem !important;
+        }
+    </style>
+@endsection
+
 @section("main-content")
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -31,34 +35,34 @@
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-                            <div class="row">
+                                <div class="row">
 
-                                <div class="col-md-4">
-                                    <strong class="text-lg">Customer</strong><br>
-                                    <strong>{{ $order_shipping->user_inf->name.' '.$order_shipping->user_inf->last_name }}</strong><br>
-                                    <span>{{ $order_shipping->shipping_first_name.' '.$order_shipping->shipping_last_name }}</span><br>
-                                    <span>{{ $order_shipping->shipping_phone }}</span><br>
-                                    <span>{{ $order_shipping->shipping_email }}</span><br>
-                                    <span>{{ $order_shipping->shipping_adrress_line_1 }}</span>,
-                                    <span>{{ $order_shipping->shipping_adrress_line_2 }}</span><br>
-                                    <span>{{ $order_shipping->shipping_post_code }}</span>,
-                                    <span>{{ $order_shipping->shipping_city }}</span>,
-                                    <span>{{ $order_shipping->country_name->name }}</span><br>
-                                </div>
-                                <div class="col-md-4 text-center">
-                                    <span class="text-xlg">Invoice</span><br>
-                                    <strong>{{ $orders->tran_id }}</strong>
-                                </div>
+                                    <div class="col-md-4">
+                                        <strong class="text-lg">Customer</strong><br>
+                                        <strong>{{ $order_shipping->user_inf->name.' '.$order_shipping->user_inf->last_name }}</strong><br>
+                                        <span>{{ $order_shipping->shipping_first_name.' '.$order_shipping->shipping_last_name }}</span><br>
+                                        <span>{{ $order_shipping->shipping_phone }}</span><br>
+                                        <span>{{ $order_shipping->shipping_email }}</span><br>
+                                        <span>{{ $order_shipping->shipping_adrress_line_1 }}</span>,
+                                        <span>{{ $order_shipping->shipping_adrress_line_2 }}</span><br>
+                                        <span>{{ $order_shipping->shipping_post_code }}</span>,
+                                        <span>{{ $order_shipping->shipping_city }}</span>,
+                                        <span>{{ $order_shipping->country_name->name }}</span><br>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <span class="text-xlg">Invoice</span><br>
+                                        <strong>{{ $orders->tran_id }}</strong>
+                                    </div>
 
-                                <div class="col-md-4 text-right">
-                                    <strong class="text-lg">Order</strong><br>
-                                    Date: {!! $orders->created_at->format('d-M-Y') !!}<br>
-                                    Time: {!! $orders->created_at->format('h:i A') !!}<br>
-                                    Status: {!! $orders->status !!}<br>
-                                    Payment: {!! 'Paid' !!}<br>
-                                </div>
+                                    <div class="col-md-4 text-right">
+                                        <strong class="text-lg">Order</strong><br>
+                                        Date: {!! $orders->created_at->format('d-M-Y') !!}<br>
+                                        Time: {!! $orders->created_at->format('h:i A') !!}<br>
+                                        Status: {!! $orders->status !!}<br>
+                                        Payment: {!! 'Paid' !!}<br>
+                                    </div>
 
-                            </div>
+                                </div>
                             </div>
                             <div class="card-body table-responsive">
                                 @if($order_details)
@@ -73,9 +77,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php 
-                                            $i = 1; 
-                                            $total_sub = 0;
+                                        <?php
+                                        $i = 1;
+                                        $total_sub = 0;
                                         ?>
                                         @forelse($order_details as $od)
                                             <tr>
@@ -155,7 +159,7 @@
                                         </tbody>
                                     </table>
                                 @endif
-                                
+
                                 <div class="row" style="padding-top: 15px;">
                                     <div class="col-md-5"></div>
                                     <div class="col-md-1">Status:</div>
@@ -177,7 +181,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            
+
 
                             </div>
                             <!-- /.card-body -->
@@ -193,66 +197,66 @@
 @endsection
 
 @section('js')
-<script>
+    <script>
 
-    $(document).ready(function(){
-        
-        $('#order_status').on('change', function (e) {
-            var me = $(this);
-            var spinner = $(this).closest('div').find('.spinner');
-            spinner.show();
+        $(document).ready(function(){
 
-            var value       = $('#order_status option:selected').text();
-            var order_value = $('#order_status').val();
-            var order_id    = "{!! $orders->id !!}";
-            var order_status_default_select = "{!! $orders->status !!}";;
-            
-            e.preventDefault();
-            swal.fire({
-                title: 'Please Confirm',
-                text: "Order Is "+value+" ??",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: ' No!',
-                confirmButtonText: 'Yes!'
-            }).then((result) => {
-                if (result.value) {
-                $.ajax({
-                    url: "{{ route('backend.orders-status-change')}}",
-                    type: "post",
-                    data: {"order_value": order_value,"order_id":order_id, _token: '{{csrf_token()}}'},
-                    success:function(data) {
-                        var message_txt = null;
-                        var msg_type = null;
-                        if(data=='success'){
-                            var message_txt = "Order Is "+value;
-                            msg_type = 'success';
-                        }
-                        else if(data=="faild"){
-                            var message_txt = "Something went wrong. Please try again later.";
-                            msg_type = 'error';
-                        }
-                        
-                        swal.fire({
-                            text: message_txt,
-                            type: msg_type
+            $('#order_status').on('change', function (e) {
+                var me = $(this);
+                var spinner = $(this).closest('div').find('.spinner');
+                spinner.show();
+
+                var value       = $('#order_status option:selected').text();
+                var order_value = $('#order_status').val();
+                var order_id    = "{!! $orders->id !!}";
+                var order_status_default_select = "{!! $orders->status !!}";;
+
+                e.preventDefault();
+                swal.fire({
+                    title: 'Please Confirm',
+                    text: "Order Is "+value+" ??",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: ' No!',
+                    confirmButtonText: 'Yes!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ route('backend.orders-status-change')}}",
+                            type: "post",
+                            data: {"order_value": order_value,"order_id":order_id, _token: '{{csrf_token()}}'},
+                            success:function(data) {
+                                var message_txt = null;
+                                var msg_type = null;
+                                if(data=='success'){
+                                    var message_txt = "Order Is "+value;
+                                    msg_type = 'success';
+                                }
+                                else if(data=="faild"){
+                                    var message_txt = "Something went wrong. Please try again later.";
+                                    msg_type = 'error';
+                                }
+
+                                swal.fire({
+                                    text: message_txt,
+                                    type: msg_type
+                                });
+                                spinner.hide();
+                            }
                         });
+
+                    }else{
+                        $('#order_status').val(order_status_default_select).select2();
                         spinner.hide();
                     }
                 });
 
-            }else{
-                $('#order_status').val(order_status_default_select).select2();
-                spinner.hide();
-            }
+
+            });
+
         });
 
-             
-        });
-
-    });
-
-</script>
+    </script>
 @endsection
