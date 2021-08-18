@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomClass\OwnLibrary;
 use App\Models\ContestPlayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 use Cart;
+use Intervention\Image\Facades\Image;
 
 class ContestPlayerController extends Controller
 {
@@ -43,6 +45,7 @@ class ContestPlayerController extends Controller
                 $upload_path = 'upload/player-pic/';
                 $image_url = $upload_path . $image_full_name;
                 $image->move($upload_path, $image_full_name);
+                Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
             }
 
         Cart::add([
@@ -102,6 +105,7 @@ class ContestPlayerController extends Controller
             $upload_path = 'upload/player-pic/';
             $image_url = $upload_path . $image_full_name;
             $image->move($upload_path, $image_full_name);
+            Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
             $contestPlayer->player_image = $image_url;
         }
 

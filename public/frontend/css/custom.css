@@ -94,7 +94,7 @@ button.login-btn,
 
 .ic-entries-tab-contents .ic-item .over-under-btn label.under-btn.active {
     background: #E2CF61;
-    color: #fff;
+    color: #000;
 }
 
 .ic-contact-right input.form-control,
@@ -165,4 +165,12 @@ button.login-btn,
 .ic-entries-tab-contents .ic-item .user .image img{
     border-radius: 8% !important;
     border: 2px solid #D6BA4F;
+}
+
+@media only screen and (min-width: 576px) {
+    .ic-entries-tab-contents .ic-item .user .image img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+    }
 }

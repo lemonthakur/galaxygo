@@ -156,14 +156,24 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="player_image">Player Image<span
-                                                        class="text-red">*</span></label>
-                                                <input type="file"
-                                                       class="form-control {{$errors->has("player_image") ? "is-invalid":""}}"
-                                                       accept="image/png, image/gif, image/jpeg" id="player_image"
-                                                       placeholder="Player Image" name="player_image">
-                                                <span
-                                                    class="text-danger">{{$errors->has("player_image") ? $errors->first("player_image") : ""}}</span>
+                                                <label for="player_image">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p>Player Image<span class="text-red">*</span></p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <span
+                                                                class="text-danger" style="font-weight: normal;">{{$errors->has("player_image") ? $errors->first("player_image") : ""}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <input type="file"
+                                                           class="form-control image d-none {{$errors->has("player_image") ? "is-invalid":""}}"
+                                                           accept="image/png, image/gif, image/jpeg"
+                                                           id="player_image" name="player_image" placeholder="Player Image">
+                                                </label>
                                             </div>
                                         </div>
 

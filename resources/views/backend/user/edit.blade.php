@@ -109,7 +109,7 @@
                                                     @if($user->photo)
                                                         <img id="output" src="{{asset($user->photo)}}" width="200"/>
                                                         @else
-                                                        <img id="output" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="200"/>
+                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="200"/>
                                                         @endif
 
                                                 </label></p>

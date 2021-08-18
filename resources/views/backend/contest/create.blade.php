@@ -127,19 +127,35 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="player_image">Player Image<span
-                                                                class="text-red">*</span></label>
-                                                        <input type="file"
-                                                               class="form-control {{$errors->has("player_image") ? "is-invalid":""}}"
-                                                               accept="image/png, image/gif, image/jpeg"
-                                                               id="player_image" placeholder="Player Image">
-                                                        <span class="text-danger"></span>
+                                                        <label for="player_image">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <p>Player Image<span class="text-red">*</span></p>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <span style="font-weight: normal" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <input type="file"
+                                                                   class="form-control image d-none {{$errors->has("player_image") ? "is-invalid":""}}"
+                                                                   accept="image/png, image/gif, image/jpeg"
+                                                                   id="player_image" placeholder="Player Image">
+                                                        </label>
+
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-2 text-right">
                                                     <button type="button" style="margin-top: 24%;" id="add-player"
                                                             class="btn btn-info">Add Player
+                                                    </button>
+
+                                                    <button id="btn-loader" class="btn btn-info" type="button" style="margin-top: 24%;" disabled>
+                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                        Add Player...
                                                     </button>
                                                 </div>
 
@@ -203,8 +219,12 @@
 
 @section('js')
     <script>
-
+        $('#btn-loader').hide();
         $('#add-player').on('click', function () {
+
+            $('#add-player').hide();
+            $('#btn-loader').show();
+
             let playerName = $('#player_name').val();
             let location = $('#location').val();
             let playedOn = $('#played_on').val();
@@ -236,6 +256,9 @@
                 processData: false,
                 data: formData,
                 success: function (data) {
+                    $('#add-player').show();
+                    $('#btn-loader').hide();
+                    $('#output').attr('src',"{{asset('/demo-pic/upload-image.jpg')}}");
                     if (data.status === 1) {
                         validate(data);
                         return;
@@ -251,6 +274,9 @@
                     $('#player_image').val(null);
                 },
                 error: function () {
+                    $('#add-player').css('display','block');
+                    $('#btn-loader').css('display','none');
+                    $('#output').attr('src',"{{asset('/demo-pic/upload-image.jpg')}}");
                     Swal.fire(
                         '',
                         "Unable to add player",

@@ -125,10 +125,10 @@
                                             </label>
                                             <p><input type="file"  accept="image/*" name="logo" class="logo" id="logo" style="display: none;"></p>
                                             <p><label for="logo" style="cursor: pointer;">
-                                                    @if(!$setting->logo)
-                                                        <img id="outputLogo" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="180"/>
-                                                    @else
+                                                    @if($setting->logo && file_exists($setting->logo))
                                                         <img id="outputLogo" src="{{asset($setting->logo)}}" width="180"/>
+                                                    @else
+                                                        <img id="outputLogo" src="{{asset('/demo-pic/upload-image.jpg')}}" width="180"/>
                                                     @endif
                                                 </label></p>
                                             <span class="text-danger"> {{$errors->has("logo") ? $errors->first("logo") : ""}} </span>
@@ -141,10 +141,10 @@
                                             </label>
                                             <p><input type="file"  accept="image/*" name="mobile_logo" class="image" id="image" style="display: none;"></p>
                                             <p><label for="image" style="cursor: pointer;">
-                                                    @if(!$setting->icon)
-                                                        <img id="output" src="{{asset('/public/demo-pic/upload-image.jpg')}}" width="180"/>
-                                                    @else
+                                                    @if($setting->icon && file_exists($setting->icon))
                                                         <img id="output" src="{{asset($setting->icon)}}" width="180"/>
+                                                    @else
+                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="180"/>
                                                     @endif
                                                 </label></p>
                                             <span class="text-danger"> {{$errors->has("mobile_logo") ? $errors->first("mobile_logo") : ""}} </span>

@@ -144,7 +144,7 @@
                         {data: 'expaire_time'},
                         { "data": function ( data, type, row ) {
                                 let answer = "";
-                                if (data.is_final_answer === 0){
+                                if (data.is_final_answer == 0){
                                     answer = ' <label class="btn btn-danger btn-xs">No</label>'
                                 }else {
                                     answer = ' <label class="btn btn-success btn-xs">Yes</label>'
