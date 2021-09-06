@@ -115,6 +115,32 @@
                     </li>
                 @endif
 
+                <li class="nav-item has-treeview {{ ($routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-friends"></i>
+                        <p>
+                            Players
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route("players.index")}}"
+                               class="nav-link {{ ($routeName == 'players.index' || $routeName == 'players.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Player List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("players.create")}}"
+                               class="nav-link {{ ($routeName == 'players.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Player Create</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' || $routeName == 'contest.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-play-circle"></i>

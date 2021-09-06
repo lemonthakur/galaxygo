@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\ContestPlayerController;
 use App\Http\Controllers\OtherPagesController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\WinCoinController;
 use App\Http\Controllers\WithdrawRequestController;
@@ -41,6 +42,7 @@ Route::group(['middleware'=>'authCheck'],function (){
         'contest-player' => ContestPlayerController::class,
         'win-coin' => WinCoinController::class,
         'withdraw' => WithdrawRequestController::class,
+        'players' => PlayerController::class,
     ]);
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');
@@ -53,6 +55,8 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::get('user-access', [UserAccessController::class,'index'])->name('user.access');
     Route::post('userAclSetup', [UserAccessController::class,'userAclSetup']);
     Route::post('useracl', [UserAccessController::class,'save']);
+
+    Route::get('contest/excel/create',[ContestController::class,'contestExcel']);
 
     Route::post('add-player-to-cart',[ContestPlayerController::class,'addPlayerToCart'])->name('player.add.cart');
     Route::post('remove-player-from-cart',[ContestPlayerController::class,'removeCart'])->name('player.remove.cart');
