@@ -39,7 +39,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="name">Name<span class="text-danger">*</span></label>
+                                                <label for="name">Game Date<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}"
                                                        id="name" data-target="#name" data-toggle="datetimepicker"
@@ -52,7 +52,7 @@
 
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="expaire_time">Count Down Timer<span
+                                                <label for="expaire_time">Game Begin At<span
                                                         class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}"

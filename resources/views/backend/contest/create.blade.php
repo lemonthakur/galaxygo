@@ -35,14 +35,13 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
-
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Name<span class="text-danger">*</span></label>
+                                                <label for="name">Game Date<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}"
                                                        id="name" data-target="#name" data-toggle="datetimepicker"
-                                                       name="name" placeholder="Enter User Name"
+                                                       name="name" placeholder="Select Game Date"
                                                        value="{{old("name")}}">
                                                 <span
                                                     class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
@@ -51,13 +50,13 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="expaire_time">Count Down Timer<span
+                                                <label for="expaire_time">Game Begin At<span
                                                         class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}"
                                                        id="expaire_time" data-target="#expaire_time"
                                                        data-toggle="datetimepicker" name="expaire_time"
-                                                       placeholder="Enter Count Down Time"
+                                                       placeholder="Select Game Begin Time"
                                                        value="{{old("expaire_time")}}">
                                                 <span
                                                     class="text-danger"> {{$errors->has("expaire_time") ? $errors->first("expaire_time") : ""}} </span>
@@ -72,12 +71,46 @@
                                                 </div>
 
                                                 <div class="col-md-4">
-                                                    <div class="form-group">
+                                                    <div class="form-group" style="position: relative">
                                                         <label for="player_name">Player Name<span
                                                                 class="text-red">*</span></label>
                                                         <input type="text"
                                                                class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
-                                                               id="player_name" placeholder="Player Name">
+                                                               id="player_name" placeholder="Player Name" autocomplete="off">
+                                                        <div id="playerSearch">
+                                                            <div class="d-flex flex-row align-content-center player" pid="1">
+                                                                <div class="">
+                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/Nk9zadS8fV.png')}}" alt="">
+                                                                </div>
+                                                                <div class="name">
+                                                                    Drake Lamb
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex flex-row align-content-center player" pid="2">
+                                                                <div class="">
+                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/y0jmvBwIKD.png')}}" alt="">
+                                                                </div>
+                                                                <div class="name">
+                                                                    Drake Lamb
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex flex-row align-content-center player" pid="3">
+                                                                <div class="">
+                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/Nk9zadS8fV.png')}}" alt="">
+                                                                </div>
+                                                                <div class="name">
+                                                                    Drake Lamb
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex flex-row align-content-center player">
+                                                                <div class="">
+                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/y0jmvBwIKD.png')}}" alt="">
+                                                                </div>
+                                                                <div class="name">
+                                                                    Drake Lamb
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
@@ -219,6 +252,16 @@
 
 @section('js')
     <script>
+
+        $("#player_name").on('input',function () {
+            $("#playerSearch").css('display','block')
+        });
+
+        $(document).on('click','.player',function () {
+            alert($(this).attr('pid'));
+            $("#playerSearch").css('display','none');
+        });
+
         $('#btn-loader').hide();
         $('#add-player').on('click', function () {
 
