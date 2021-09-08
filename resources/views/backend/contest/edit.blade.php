@@ -52,7 +52,7 @@
                                                        id="time_start" data-target="#time_start"
                                                        data-toggle="datetimepicker" name="time_start"
                                                        placeholder="Select Count Down Begin Time"
-                                                       value="{{old("time_start",$contest->time_start)}}">
+                                                       value="{{old("time_start",$contest->time_start ? date("h:i A", strtotime($contest->time_start)) : "")}}">
                                                 <span
                                                     class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
                                             </div>
@@ -66,7 +66,7 @@
                                                        id="time_end" data-target="#time_end"
                                                        data-toggle="datetimepicker" name="time_end"
                                                        placeholder="Select Count Down End Time"
-                                                       value="{{old("time_end",$contest->time_end)}}">
+                                                       value="{{old("time_end",$contest->time_end ? date("h:i A", strtotime($contest->time_end)) : "")}}">
                                                 <span
                                                     class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
                                             </div>
@@ -196,8 +196,8 @@
                                         <tr>
                                             <td class="text-center">{{$sl++}}</td>
                                             <td>
-                                                <img src="{{$player->player_image}}"
-                                                     style="width: 50px;height:50px;"/>
+                                                <img src="{{asset($player->player->image)}}"
+                                                     style="width: 100px;height:100px;"/>
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
