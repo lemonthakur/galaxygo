@@ -31,35 +31,49 @@
                                 @method('put')
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="name">Game Date<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}"
                                                        id="name" data-target="#name" data-toggle="datetimepicker"
-                                                       name="name" placeholder="Enter User Name"
+                                                       name="name" placeholder="Select Game Date"
                                                        value="{{old("name",date('d-m-Y',strtotime($contest->name)))}}">
                                                 <span
                                                     class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="expaire_time">Game Begin At<span
-                                                        class="text-danger">*</span></label>
+                                                <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}"
-                                                       id="expaire_time" data-target="#expaire_time"
-                                                       data-toggle="datetimepicker" name="expaire_time"
-                                                       placeholder="Enter Count Down Time"
-                                                       value="{{old("expaire_time",$contest->expaire_time)}}">
+                                                       class="form-control timepicker {{$errors->has("time_start") ? "is-invalid":""}}"
+                                                       id="time_start" data-target="#time_start"
+                                                       data-toggle="datetimepicker" name="time_start"
+                                                       placeholder="Select Count Down Begin Time"
+                                                       value="{{old("time_start",$contest->time_start)}}">
                                                 <span
-                                                    class="text-danger"> {{$errors->has("expaire_time") ? $errors->first("expaire_time") : ""}} </span>
+                                                    class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>
+                                                <input readonly type="text"
+                                                       class="form-control timepicker {{$errors->has("time_end") ? "is-invalid":""}}"
+                                                       id="time_end" data-target="#time_end"
+                                                       data-toggle="datetimepicker" name="time_end"
+                                                       placeholder="Select Count Down End Time"
+                                                       value="{{old("time_end",$contest->time_end)}}">
+                                                <span
+                                                    class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-2">
-                                            <button style="margin-top: 25%;" type="submit" class="btn btn-dark">Update
+                                            <button style="margin-top: 15%;" type="submit" class="btn btn-dark">Update
                                             </button>
                                         </div>
                                     </div>
@@ -102,17 +116,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="location">Location<span class="text-red">*</span></label>
-                                                <input type="text"
-                                                       class="form-control {{$errors->has("location") ? "is-invalid":""}}"
-                                                       id="location" placeholder="Location"
-                                                name="location" value="{{old('location')}}">
-                                                <span
-                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-md-4">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="location">Location<span class="text-red">*</span></label>--}}
+{{--                                                <input type="text"--}}
+{{--                                                       class="form-control {{$errors->has("location") ? "is-invalid":""}}"--}}
+{{--                                                       id="location" placeholder="Location"--}}
+{{--                                                name="location" value="{{old('location')}}">--}}
+{{--                                                <span--}}
+{{--                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -127,7 +141,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="versus">Versus<span class="text-red">*</span></label>
                                                 <input type="text"
@@ -139,37 +153,27 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="score">Score<span class="text-red">*</span></label>
                                                 <input type="number" step="any"
                                                        class="form-control {{$errors->has("score") ? "is-invalid":""}}"
                                                        id="score" placeholder="Score"
                                                 name="score" value="{{old('score')}}">
-                                                <span
-                                                    class="text-danger">{{$errors->has("score") ? $errors->first("score") : ""}}</span>
+                                                <span class="text-danger">{{$errors->has("score") ? $errors->first("score") : ""}}</span>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <p>Player Image<span class="text-red">*</span></p>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <span style="font-weight: normal" class="text-danger"></span>
-                                                    </div>
-                                                </div>
-                                                <input type="text" class="form-control image d-none" id="player_image" name="player_image">
-
+                                                <label for="score">Player Image<span class="text-red">*</span></label><br/>
+                                                <img class="ml-5" id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="120"/><br/>
+                                                <input type="text" class="form-control image d-none" id="player_image" name="player_image" value="{{old('player_image')}}">
+                                                <span class="text-danger">{{$errors->has("player_image") ? $errors->first("player_image") : ""}}</span>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 text-right">
+                                        <div class="col-md-4 text-right">
                                             <button type="submit" style="margin-top: 24%;"
                                                     class="btn btn-info">Add Player
                                             </button>
@@ -197,8 +201,8 @@
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
-                                                Location: {{strtoupper($player->location)}} <br/>
-                                                Played On: {{date('d-m-Y H:i a',strtotime($player->played_on))}}
+{{--                                                Location: {{strtoupper($player->location)}} <br/>--}}
+                                                Played On: {{date('d-m-Y h:i a',strtotime($player->played_on))}}
                                             </td>
                                             <td>
                                                 Versus: {{strtoupper($player->versus)}} <br/>

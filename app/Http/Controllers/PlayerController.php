@@ -68,7 +68,7 @@ class PlayerController extends Controller
                 $image_url = $upload_path . $image_full_name;
                 $image->move($upload_path, $image_full_name);
                 $player->image = $image_url;
-                Image::make($image_url)->resize(70,70)->save($image_url,70,$ext);
+                Image::make($image_url)->resize(200,200)->save($image_url,70,$ext);
             }
 
             if ($player->save()){
@@ -117,7 +117,7 @@ class PlayerController extends Controller
                 $image_url = $upload_path . $image_full_name;
                 $image->move($upload_path, $image_full_name);
                 $player->image = $image_url;
-                Image::make($image_url)->resize(70,70)->save($image_url,70,$ext);
+                Image::make($image_url)->resize(200,200)->save($image_url,70,$ext);
             }
 
             if ($player->save()){

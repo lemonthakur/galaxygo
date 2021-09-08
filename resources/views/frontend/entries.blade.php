@@ -38,11 +38,11 @@
                         @endphp
                         <div class="ic-win-btn">
                             <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
-                            <a href="#">{{$total_coins}} <span>Coins Won</span></a>
+                            <a href="#">{{(int) $total_coins}} <span>Coins Won</span></a>
                         </div>
                         <div class="ic-total-balance">
                             <p>Total Coins Balance</p>
-                            <h4>{{$current_coins}}</h4>
+                            <h4>{{(int) $current_coins}}</h4>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,8 @@
                             {{-- Open Enries--}}
                             <div class="tab-pane fade show active" id="openEntries">
                                 <div class="ic-entries-tab-contents open-entries">
-                                    @if(!empty($contest) && strtotime($contest->expaire_time) >= $now)
+                                    @if(!empty($contest))
+                                        @if($now >= strtotime($contest->time_start) && strtotime($contest->time_end) >=  $now)
                                         <form method="post" action="{{route('entries.store')}}">
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
@@ -71,7 +72,7 @@
                                                 <h5>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h5>
                                                 <div class="ic-timer">
                                                     <span class="d-none"
-                                                          id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->expaire_time)) ?? date('Y-m-d 0:00')}}</span>
+                                                          id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
                                                     {{--                                        <div class="days">--}}
                                                     {{--                                            <h4 id="day">0</h4>--}}
                                                     {{--                                            <p>days</p>--}}
@@ -97,34 +98,22 @@
                                                     class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
                                                     <div class="user">
                                                         <div class="image">
-                                                            <img src="{{asset($contestPlayer->player_image)}}"
-                                                                 alt="user">
+                                                            <img src="{{asset($contestPlayer->player->image)}}" alt="user">
                                                         </div>
-                                                        <div class="name-title">
-                                                            <p class="mb-2">{{ucwords($contestPlayer->player_name)}}</p>
-                                                            <p class="m-date mb-2">
-                                                                {{strtoupper($contestPlayer->versus)}}</p>
-                                                            <p class="m-date mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                            <p class="m-date mb-2">{{strtoupper($contestPlayer->location)}}</p>
-                                                            <p class="m-date mb-2">project fantasy score {{$contestPlayer->score}}</p>
+                                                        <div class="name-title pt-3">
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                            <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
-                                                            <p>{{ucwords($contestPlayer->player_name)}}</p>
-                                                            <p class="m-vs">
-                                                                VS {{strtoupper($contestPlayer->versus)}}</p>
-                                                            <p class="m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                            <p class="d-block">{{strtoupper($contestPlayer->location)}}</p>
-                                                            <p class="d-block">project fantasy score {{$contestPlayer->score}}</p>
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                            <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                         </div>
                                                     </div>
-                                                    {{--                                                    <div class="date">--}}
-                                                    {{--                                                        <span>{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</span>--}}
-                                                    {{--                                                        <p>VS {{strtoupper($contestPlayer->versus)}}</p>--}}
-                                                    {{--                                                    </div>--}}
-                                                    {{--                                                    <div class="score">--}}
-                                                    {{--                                                        <p>{{$contestPlayer->score}}</p>--}}
-                                                    {{--                                                        <span>projets score</span>--}}
-                                                    {{--                                                    </div>--}}
+
                                                     <div class="over-under-btn">
                                                         {{--Over--}}
                                                         <input class="d-none" type="radio"
@@ -168,8 +157,13 @@
                                                 <button type="submit" class="btn-submit">Submit</button>
                                             </div>
                                         </form>
+                                        @elseif($now > strtotime($contest->time_end))
+                                            <h3 class="text-center text-white">Today's Contest End</h3>
+                                        @else
+                                            <h3 class="text-center text-white">The contest hasn't started yet.</h3>
+                                            @endif
                                     @else
-                                        <h3 class="text-center text-white">Today's contest end</h3>
+                                        <h3 class="text-center text-white">No contest found</h3>
                                     @endif
                                 </div>
                             </div>
@@ -181,41 +175,29 @@
                                     <div class="ic-pending-entries-title">
                                         <h5>pending entries</h5>
                                     </div>
-                                @if(!empty($contest) && strtotime($contest->expaire_time) <= $now && $contest->is_final_answer == 0)
+                                @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 0)
                                     @forelse($contest->contestPlayers as $key => $contestPlayer)
                                         <!--Item-->
                                             <div
                                                 class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
                                                 <div class="user">
                                                     <div class="image">
-                                                        <img src="{{asset($contestPlayer->player_image)}}"
+                                                        <img src="{{asset($contestPlayer->player->image)}}"
                                                              alt="user">
                                                     </div>
-                                                    <div class="name-title">
-                                                        <p class="mb-2">{{ucwords($contestPlayer->player_name)}}</p>
-                                                        <p class="m-date mb-2">
-                                                            {{strtoupper($contestPlayer->versus)}}</p>
-                                                        <p class="m-date mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                        <p class="m-date mb-2">{{strtoupper($contestPlayer->location)}}</p>
-                                                        <p class="m-date mb-2">project fantasy score {{$contestPlayer->score}}</p>
+                                                    <div class="name-title pt-3">
+                                                        <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                        <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                        <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                        <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                     </div>
                                                     <div class="mobile-name-title name-title">
-                                                        <p>{{ucwords($contestPlayer->player_name)}}</p>
-                                                        <p class="m-vs">
-                                                            VS {{strtoupper($contestPlayer->versus)}}</p>
-                                                        <p class="m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                        <p class="d-block">{{strtoupper($contestPlayer->location)}}</p>
-                                                        <p class="d-block">project fantasy score {{$contestPlayer->score}}</p>
+                                                        <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                        <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                        <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                     </div>
                                                 </div>
-                                                {{--                                                <div class="date">--}}
-                                                {{--                                                    <span>{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</span>--}}
-                                                {{--                                                    <p>VS {{strtoupper($contestPlayer->versus)}}</p>--}}
-                                                {{--                                                </div>--}}
-                                                {{--                                                <div class="score">--}}
-                                                {{--                                                    <p>{{$contestPlayer->score}}</p>--}}
-                                                {{--                                                    <span>projets score</span>--}}
-                                                {{--                                                </div>--}}
                                                 <div class="over-under-btn">
                                                     @if(!empty($contestPlayer->participant->participant_answer)
                                                         && $contestPlayer->participant->participant_answer == 2)
@@ -269,7 +251,7 @@
 
                             <div class="tab-pane fade" id="finalEntries">
                                 <div class="ic-entries-tab-contents final-entries">
-                                    @if(!empty($contest) && strtotime($contest->expaire_time) <= $now && $contest->is_final_answer == 1)
+                                    @if(!empty($contest)  && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 1)
                                         <div class="ic-time">
                                             <h4>Today's final entries</h4>
                                         </div>
@@ -278,28 +260,25 @@
                                             <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
                                                 <div class="user">
                                                     <div class="image">
-                                                        <img src="{{asset($contestPlayer->player_image)}}" alt="user">
+                                                        <img src="{{asset($contestPlayer->player->image)}}"
+                                                             alt="user">
                                                     </div>
-                                                    <div class="name-title">
-                                                        <p class="mb-2">{{ucwords($contestPlayer->player_name)}}</p>
-                                                        <p class="m-date mb-2">
-                                                            {{strtoupper($contestPlayer->versus)}}</p>
-                                                        <p class="m-date mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                        <p class="m-date mb-2">{{strtoupper($contestPlayer->location)}}</p>
-                                                        <p class="m-date mb-2">project fantasy score {{$contestPlayer->score}}</p>
+                                                    <div class="name-title pt-3">
+                                                        <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                        <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                        <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                        <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                     </div>
                                                     <div class="mobile-name-title name-title">
-                                                        <p>{{ucwords($contestPlayer->player_name)}}</p>
-                                                        <p class="m-vs">
-                                                            VS {{strtoupper($contestPlayer->versus)}}</p>
-                                                        <p class="m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                        <p class="d-block">{{strtoupper($contestPlayer->location)}}</p>
-                                                        <p class="final-our-score">fantasy score</p>
-                                                        <p class="final-score-point">{{$contestPlayer->score}}</p>
+                                                        <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                        <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                        <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                     </div>
                                                 </div>
                                                 <div class="over-projection">
                                                     @if(!empty($contestPlayer->participant->participant_answer))
+                                                        <span>your projection</span>
                                                         @if($contestPlayer->participant->participant_answer == 2)
                                                             <div class="over-icon">
                                                                 <a href="#">over</a>
@@ -314,26 +293,20 @@
                                                             <a href="#">No Answer</a>
                                                         </div>
                                                     @endif
-                                                    <span>your projection</span>
                                                 </div>
 
                                                 <div class="over-projection mobile-over-projection">
                                                     @if(!empty($contestPlayer->participant->participant_answer))
+                                                        <span>your projection</span>
                                                         @if($contestPlayer->participant->participant_answer == 2)
                                                             <a href="#">over</a>
                                                         @else
                                                             <a href="#">under</a>
                                                         @endif
                                                     @else
-                                                        <a href="#">under</a>
+                                                        <a href="#">No Answer</a>
                                                     @endif
-                                                    <p>{{$contestPlayer->score}}<span>fantasy score</span></p>
                                                 </div>
-
-{{--                                                <div class="score">--}}
-{{--                                                    <p>{{$contestPlayer->score}}</p>--}}
-{{--                                                    <span>fantasy score</span>--}}
-{{--                                                </div>--}}
                                                 <div class="final-fantacy-score">
                                                     @if(!empty($contestPlayer->participant->participant_answer) &&
                                                       $contestPlayer->answer == $contestPlayer->participant->participant_answer)
@@ -347,7 +320,7 @@
                                                             final
                                                         </a>
                                                     @endif
-                                                    <p>{{$contestPlayer->score}} <span>fantasy score</span></p>
+                                                    <p>{{$contestPlayer->final_score}} <span>fantasy score</span></p>
                                                 </div>
                                             </div>
                                         @empty
@@ -378,34 +351,31 @@
                                             <div class="ic-time">
                                                 <h4>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h4>
                                             </div>
-                                        @if(!empty($contest) && strtotime($contest->expaire_time) <= $now && $contest->is_final_answer == 1)
+                                        @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 1)
                                             @forelse($contest->contestPlayers as $key => $contestPlayer)
                                                 <!--Item 1-->
                                                     <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
                                                         <div class="user">
                                                             <div class="image">
-                                                                <img src="{{asset($contestPlayer->player_image)}}" alt="user">
+                                                                <img src="{{asset($contestPlayer->player->image)}}"
+                                                                     alt="user">
                                                             </div>
-                                                            <div class="name-title">
-                                                                <p class="mb-2">{{ucwords($contestPlayer->player_name)}}</p>
-                                                                <p class="m-date mb-2">
-                                                                    {{strtoupper($contestPlayer->versus)}}</p>
-                                                                <p class="m-date mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                                <p class="m-date mb-2">{{strtoupper($contestPlayer->location)}}</p>
-                                                                <p class="m-date mb-2">project fantasy score {{$contestPlayer->score}}</p>
+                                                            <div class="name-title pt-3">
+                                                                <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                                <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                                <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                                <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                             </div>
                                                             <div class="mobile-name-title name-title">
-                                                                <p>{{ucwords($contestPlayer->player_name)}}</p>
-                                                                <p class="m-vs">
-                                                                    VS {{strtoupper($contestPlayer->versus)}}</p>
-                                                                <p class="m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</p>
-                                                                <p class="d-block">{{strtoupper($contestPlayer->location)}}</p>
-                                                                <p class="final-our-score">fantasy score</p>
-                                                                <p class="final-score-point">{{$contestPlayer->score}}</p>
+                                                                <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                                <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
+                                                                <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                                <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
                                                             </div>
                                                         </div>
                                                         <div class="over-projection">
                                                             @if(!empty($contestPlayer->participant->participant_answer))
+                                                            <span>your projection</span>
                                                                 @if($contestPlayer->participant->participant_answer == 2)
                                                                     <div class="over-icon">
                                                                         <a href="#">over</a>
@@ -420,7 +390,6 @@
                                                                     <a href="#">No Answer</a>
                                                                 </div>
                                                             @endif
-                                                            <span>your projection</span>
                                                         </div>
 
                                                         <div class="over-projection mobile-over-projection">
@@ -431,15 +400,9 @@
                                                                     <a href="#">under</a>
                                                                 @endif
                                                             @else
-                                                                <a href="#">under</a>
+                                                                <a href="#">No Answer</a>
                                                             @endif
-                                                            <p>{{$contestPlayer->score}}<span>fantasy score</span></p>
                                                         </div>
-
-{{--                                                        <div class="score">--}}
-{{--                                                            <p>{{$contestPlayer->score}}</p>--}}
-{{--                                                            <span>fantasy score</span>--}}
-{{--                                                        </div>--}}
 
                                                         <div class="final-fantacy-score">
                                                             @if(!empty($contestPlayer->participant->participant_answer) &&
@@ -454,7 +417,7 @@
                                                                     final
                                                                 </a>
                                                             @endif
-                                                            <p>{{$contestPlayer->score}} <span>fantasy score</span></p>
+                                                            <p>{{$contestPlayer->final_score}} <span>fantasy score</span></p>
                                                         </div>
                                                     </div>
                                                 @empty
@@ -500,12 +463,8 @@
                 $(this).addClass('active');
 
                 if (ltype === "1"){
-                    console.log(pid,ltype);
-                    console.log('#over_lavel_'+pid)
                     $('#over_lavel_'+pid).removeClass('active');
                 }else{
-                    console.log(pid,ltype);
-                    console.log('#under_lavel_'+pid)
                     $('#under_lavel_'+pid).removeClass('active');
                 }
             });
@@ -521,7 +480,6 @@
                 }
 
                 var endTime = new Date(getTime);
-                console.log(endTime);
                 endTime = (Date.parse(endTime) / 1000);
 
                 var now = new Date();

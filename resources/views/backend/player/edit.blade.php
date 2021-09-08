@@ -53,7 +53,7 @@
                                             <p class="text-center">
                                                 <label for="image" style="cursor: pointer;">
                                                     @if($player->image)
-                                                    <img id="output" src="{{asset($player->image)}}" width="100"/>
+                                                    <img id="output" src="{{asset($player->image)}}" width="200"/>
                                                     @else
                                                     <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="200"/>
                                                         @endif

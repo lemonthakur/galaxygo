@@ -49,11 +49,14 @@ class ContestController extends Controller
 
         $rules = [
             "name" => "required|unique:contests,name",
-            "expaire_time" => "required"
+            "time_start" => "required",
+            "time_end" => "required"
         ];
 
         $message = [
-            "expaire_time.required" => "Count Down Timer is required",
+            "name.required" => "Game Date is required",
+            "time_start.required" => "Count Down Begin Time is required",
+            "time_end.required" => "Count Down End Time is required",
         ];
 
         $validation = Validator::make($request->all(), $rules, $message);
@@ -72,7 +75,8 @@ class ContestController extends Controller
             $contest = new Contest();
 
             $contest->name = $request->name;
-            $contest->expaire_time = $request->name . ' ' . $request->expaire_time;
+            $contest->time_start = $request->name . ' ' . $request->time_start;
+            $contest->time_end = $request->name . ' ' . $request->time_end;
 
             if ($contest->save()) {
                 $contestId = $contest->id;
@@ -83,7 +87,7 @@ class ContestController extends Controller
                     $contestPlayer->player_id = $row->id;
                     $contestPlayer->player_name = $row->name;
                     $contestPlayer->player_image = $row->options['player_image'];
-                    $contestPlayer->location = $row->options['location'];
+//                    $contestPlayer->location = $row->options['location'];
                     $contestPlayer->played_on = date('Y-m-d h:i a', strtotime($row->options['played_on']));;
                     $contestPlayer->versus = $row->options['versus'];
                     $contestPlayer->score = $row->options['score'];
@@ -125,16 +129,21 @@ class ContestController extends Controller
     {
 
         if ($request->name) {
-            $request->name = date('Y-m-d', strtotime($request->name));
+            $request->merge([
+                'name' => date('Y-m-d', strtotime($request->name)),
+            ]);
         }
 
         $rules = [
-            "name" => "required|unique:contests,name," . $contest->id,
-            "expaire_time" => "required"
+            "name" => "required|unique:contests,name,".$contest->id,
+            "time_start" => "required",
+            "time_end" => "required"
         ];
 
         $message = [
-            "expaire_time.required" => "Count Down Timer is required",
+            "name.required" => "Game Date is required",
+            "time_start.required" => "Count Down Begin Time is required",
+            "time_end.required" => "Count Down End Time is required",
         ];
 
         $validation = Validator::make($request->all(), $rules, $message);
@@ -143,7 +152,8 @@ class ContestController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
         $contest->name = $request->name;
-        $contest->expaire_time = $request->name . ' ' . $request->expaire_time;
+        $contest->time_start = $request->name . ' ' . $request->time_start;
+        $contest->time_end = $request->name . ' ' . $request->time_end;
 
         if ($contest->save()) {
             session()->flash("success", "Data successfully updated");
@@ -165,17 +175,39 @@ class ContestController extends Controller
 
     public function contestAnswerSubmit(Request $request)
     {
-        $contest = Contest::where('id', $request->contest_id)->update(['is_final_answer' => 1]);
-        if ($contest) {
-            for ($i = 0; $i < count($request->contest_player_id); $i++) {
-                $contestPlayer = ContestPlayer::where('id', $request->contest_player_id[$i])
-                    ->update(['answer' => $request->contest_player_answer[$i]]);
+        $success = false;
+        DB::beginTransaction();
+        try {
+            $contest = Contest::where('id', $request->contest_id)->update(['is_final_answer' => 1]);
+            if ($contest) {
+                for ($i = 0; $i < count($request->contest_player_id); $i++) {
+                    $contestPlayer = ContestPlayer::find($request->contest_player_id[$i]);
+                    $contestPlayer->final_score = $request->final_score[$i];
+                    $contestPlayer->answer = $request->final_score[$i] < $contestPlayer->score ? 1 : 2;
+                    $contestPlayer->save();
+                }
             }
-            session()->flash('success', 'Contest Answer Submitter');
-        } else {
-            session()->flash('error', 'Contest Answer Not Submitter');
+            $success = true;
+        }catch(ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->withErrors( $e->getErrors() )
+                ->withInput();
+        }catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
         }
-        return redirect()->back();
+
+        DB::commit();
+
+        if($success){
+            session()->flash('success', 'Contest Answer Submitter');
+            return redirect()->back();
+        }else{
+            session()->flash('error', 'Contest Answer Not Submitter');
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy(Contest $contest)
@@ -186,33 +218,5 @@ class ContestController extends Controller
             session()->flash('error', 'Contest not Delated');
         }
         return redirect()->back();
-    }
-
-    public function contestExcel(Request $request)
-    {
-        $allowedExtensions = ['png', 'jpg','jpeg'];
-        $fileUrl = "https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png";
-
-        $fileName = basename($fileUrl);
-        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-
-        try {
-            file_get_contents($fileUrl);
-            echo "possible";
-        }catch(Exception $e) {
-            echo 'Message: ' .$e->getMessage();
-        }
-
-//        if(array_search($extension, $allowedExtensions) === false) {
-//            throw new \Exception($extension .' is not allowed');
-//        }
-//
-//        $image_name = Str::random(20).date('ymd');
-//        $image_full_name = $image_name . '.' . $extension;
-//        $upload_path = 'upload/player-pic/';
-//        $image_url = $upload_path . $image_full_name;
-//
-//        file_put_contents($image_url, file_get_contents($fileUrl));
-//        Image::make($image_url)->resize(70,70)->save($image_url,70,$extension);
     }
 }

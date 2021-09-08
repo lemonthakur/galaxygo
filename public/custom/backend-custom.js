@@ -109,28 +109,29 @@ $('.datepicker').datetimepicker({
         clear: "fas fa-trash"
     }
 });
-
-// Time Picker
-$('.timepicker').datetimepicker({
-    ignoreReadonly: true,
-    Default: false,
-    format: 'hh:mm A',
-    toolbarPlacement:'top',
-    keepOpen:false,
-    buttons:{
-        showClear: true,
-        showClose: true
-    },
-    icons: {
-        time: "fas fa-clock",
-        date: "fas fa-calendar",
-        up: "fas fa-arrow-up",
-        down: "fas fa-arrow-down",
-        previous: "fas fa-chevron-left",
-        next: "fas fa-chevron-right",
-        today: "fas fa-calendar-check",
-        clear: "fas fa-trash"
-    }
+$(document).ready(function() {
+    // Time Picker
+    $('.timepicker').datetimepicker({
+        ignoreReadonly: true,
+        Default: false,
+        format: 'hh:mm A',
+        toolbarPlacement:'top',
+        keepOpen:false,
+        buttons:{
+            showClear: true,
+            showClose: true
+        },
+        icons: {
+            time: "fas fa-clock",
+            date: "fas fa-calendar",
+            up: "fas fa-arrow-up",
+            down: "fas fa-arrow-down",
+            previous: "fas fa-chevron-left",
+            next: "fas fa-chevron-right",
+            today: "fas fa-calendar-check",
+            clear: "fas fa-trash"
+        }
+    });
 });
 // Date tiem picker close on blur
 $('.datetimepicker,.datepicker,.timepicker').on('blur', function(){

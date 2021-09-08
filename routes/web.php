@@ -56,8 +56,6 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::post('userAclSetup', [UserAccessController::class,'userAclSetup']);
     Route::post('useracl', [UserAccessController::class,'save']);
 
-    Route::get('contest/excel/create',[ContestController::class,'contestExcel']);
-
     Route::post('add-player-to-cart',[ContestPlayerController::class,'addPlayerToCart'])->name('player.add.cart');
     Route::post('remove-player-from-cart',[ContestPlayerController::class,'removeCart'])->name('player.remove.cart');
     Route::get('contest/answer/{id}',[ContestController::class,'contestAnswer'])->name('contest.answer');

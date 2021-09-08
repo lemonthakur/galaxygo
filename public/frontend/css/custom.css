@@ -167,10 +167,25 @@ button.login-btn,
     border: 2px solid #D6BA4F;
 }
 
-@media only screen and (min-width: 576px) {
+.ic-item .player-name{
+    color: #fff70a !important;
+}
+.ic-item .score{
+    color: #D6BA4F !important;
+}
+.ic-entries-tab-contents .ic-item .user .image img {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.ic-entries-tab-contents .ic-item .over-under-btn {
+    padding: 25px 0 15px 0;
+}
+
+@media only screen and (max-width: 576px) {
     .ic-entries-tab-contents .ic-item .user .image img {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
+        width: 90px !important;
+        height: 90px !important;
+        /*border-radius: 50%;*/
     }
 }

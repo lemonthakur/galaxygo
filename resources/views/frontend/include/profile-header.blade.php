@@ -16,11 +16,6 @@
                     <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>
                 @endif
 
-{{--                <a href="{{route('home')}}" class="large-logo"><img src="{{asset('frontend/images/logo/logo.png')}}"--}}
-{{--                                                                    class="img-fluid" alt="logo"></a>--}}
-
-{{--                <a href="{{route('home')}}" class="mobile-logo"><img--}}
-{{--                        src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>--}}
             </div>
             <div class="ic-header-right ic-profile-header">
                 <div class="ic-menu-item">
@@ -32,9 +27,6 @@
                 </div>
 
                 <div class="ic-profile-header-btn">
-{{--                    <a href="{{route('profile')}}" class="ic-btn profile-dropdown-item"><i class="flaticon-login"></i>--}}
-{{--                        <span>mr. jaxon</span></a>--}}
-
                     <div class="dropdown show">
                         <a class="ic-btn profile-dropdown-item dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,8 +40,7 @@
                         </div>
                     </div>
 
-                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Coins Balance: <span class="aft-bd-share">{{auth()->user()->current_coin}}</span></span></a>
-                    {{--                        <a href="#" class="ic-btn ml-2"><i class="icofont-sign-out"></i> <span>Logout</span></a>--}}
+                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>Coins Balance: <span class="aft-bd-share">{{(int) auth()->user()->current_coin}}</span></span></a>
 
                     @guest()
                     <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
@@ -61,7 +52,7 @@
                     <a href="#" class="mobile-profile-user"><img src="{{auth()->user()->photo}}"
                                                                  alt=""></a>
                         @else
-                            <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
+                            <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-cover.png')}}"
                                                                          alt=""></a>
                             @endif
                     @endauth
@@ -85,39 +76,35 @@
                 </div>
                 <div id="menu" class="text-left ">
                     <ul class="ic-mobile-menu">
-
-                        <li class="ic-menu-item-has-children">
-                            <a href="#">Board</a>
-                        </li>
                         <li class="ic-menu-item-has-children">
                             <a href="{{route('entries')}}">Entries</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">orders</a>
+                            <a href="{{route('my.orders')}}">orders</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">About us</a>
+                            <a href="{{route('about-us')}}">About us</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">Contact us</a>
+                            <a href="{{route('contact')}}">Contact us</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">Rules</a>
+                            <a href="{{route('privacy.policy')}}">Rules</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">Privacy</a>
+                            <a href="{{route('privacy.policy')}}">Privacy</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#">Terms & Condition</a>
+                            <a href="{{route('privacy.policy')}}">Terms & Condition</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                                <span class="menu-expand">
-                                    <i class="icofont-simple-down"></i>
-                                </span>
-                            <a href="#"><i class="flaticon-login menu-icon"></i> {{ucwords(auth()->user()->name)}}</a>
+                            <a href="{{route('profile')}}">Profile</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> Coins Balance: {{auth()->user()->current_coin}}</a>
+                            <a href="{{route('logout')}}">Logout</a>
+                        </li>
+                        <li class="ic-menu-item-has-children">
+                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> Coins Balance: {{(int) auth()->user()->current_coin}}</a>
                         </li>
                     </ul>
 

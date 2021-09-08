@@ -56,7 +56,8 @@
                                         <thead>
                                         <tr>
                                             <th>SL</th>
-                                            <th>Name</th>
+                                            <th>Game Date</th>
+                                            <th>Count Down Begin</th>
                                             <th>Count Down End</th>
                                             <th>Is Answer Submit</th>
                                             <th>Action</th>
@@ -141,7 +142,14 @@
                                 return name;
                             }
                         },
-                        {data: 'expaire_time'},
+                        { "data": function ( data, type, row ) {
+                                return moment(data.time_start).format('h:mm A');
+                            }
+                        },
+                        { "data": function ( data, type, row ) {
+                                return moment(data.time_end).format('h:mm A');
+                            }
+                        },
                         { "data": function ( data, type, row ) {
                                 let answer = "";
                                 if (data.is_final_answer == 0){

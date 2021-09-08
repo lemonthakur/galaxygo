@@ -35,7 +35,7 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="name">Game Date<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
@@ -48,18 +48,31 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="expaire_time">Game Begin At<span
-                                                        class="text-danger">*</span></label>
+                                                <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("expaire_time") ? "is-invalid":""}}"
-                                                       id="expaire_time" data-target="#expaire_time"
-                                                       data-toggle="datetimepicker" name="expaire_time"
-                                                       placeholder="Select Game Begin Time"
-                                                       value="{{old("expaire_time")}}">
+                                                       class="form-control timepicker {{$errors->has("time_start") ? "is-invalid":""}}"
+                                                       id="time_start" data-target="#time_start"
+                                                       data-toggle="datetimepicker" name="time_start"
+                                                       placeholder="Select Count Down Begin Time"
+                                                       value="{{old("time_start")}}">
                                                 <span
-                                                    class="text-danger"> {{$errors->has("expaire_time") ? $errors->first("expaire_time") : ""}} </span>
+                                                    class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>
+                                                <input readonly type="text"
+                                                       class="form-control timepicker {{$errors->has("time_end") ? "is-invalid":""}}"
+                                                       id="time_end" data-target="#time_end"
+                                                       data-toggle="datetimepicker" name="time_end"
+                                                       placeholder="Select Count Down End Time"
+                                                       value="{{old("time_end")}}">
+                                                <span
+                                                    class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -87,17 +100,6 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="location">Location<span
-                                                                class="text-red">*</span></label>
-                                                        <input type="text"
-                                                               class="form-control {{$errors->has("location") ? "is-invalid":""}}"
-                                                               id="location" placeholder="Location">
-                                                        <span class="text-danger"></span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
                                                         <label for="played_on">Played On<span class="text-red">*</span></label>
                                                         <input readonly type="text"
                                                                class="form-control datetimepicker {{$errors->has("played_on") ? "is-invalid":""}}"
@@ -107,7 +109,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="versus">Versus<span
                                                                 class="text-red">*</span></label>
@@ -118,7 +120,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="score">Score<span class="text-red">*</span></label>
                                                         <input type="number" step="any"
@@ -130,23 +132,14 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <p>Player Image<span class="text-red">*</span></p>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <span style="font-weight: normal" class="text-danger"></span>
-                                                                </div>
-                                                            </div>
-                                                            <input type="text" class="form-control image d-none" id="player_image">
-
+                                                        <label for="score">Player Image<span class="text-red">*</span></label><br/>
+                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="120"/><br/>
+                                                        <input type="text" class="form-control image d-none" id="player_image">
+                                                        <span style="font-weight: normal" class="text-danger d-block"></span>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-2 text-right">
+                                                <div class="col-md-4 text-right">
                                                     <button type="button" style="margin-top: 24%;" id="add-player"
                                                             class="btn btn-info">Add Player
                                                     </button>
@@ -175,11 +168,11 @@
                                                     <td class="text-center">{{$sl++}}</td>
                                                     <td>
                                                         <img src="{{asset($row->options['player_image'])}}"
-                                                             style="width: 50px;height:50px;"/>
+                                                             style="width: 100px;"/>
                                                     </td>
                                                     <td>
                                                         Name: {{ucwords($row->name)}} <br/>
-                                                        Location: {{strtoupper($row->options['location'])}} <br/>
+{{--                                                        Location: {{strtoupper($row->options['location'])}} <br/>--}}
                                                         Played On: {{$row->options['played_on']}}
                                                     </td>
                                                     <td>
@@ -252,7 +245,7 @@
 
             let playerName = $('#player_name').val();
             let playerId = $('#player_id').val();
-            let location = $('#location').val();
+            // let location = $('#location').val();
             let playedOn = $('#played_on').val();
             let versus = $('#versus').val();
             let score = $('#score').val();
@@ -260,7 +253,7 @@
             let _token = '{{ csrf_token() }}';
 
             $('#player_name').closest('.form-group').find('.text-danger').text('');
-            $('#location').closest('.form-group').find('.text-danger').text('');
+            // $('#location').closest('.form-group').find('.text-danger').text('');
             $('#played_on').closest('.form-group').find('.text-danger').text('');
             $('#versus').closest('.form-group').find('.text-danger').text('');
             $('#score').closest('.form-group').find('.text-danger').text('');
@@ -269,7 +262,7 @@
             let formData = new FormData();
             formData.append('player_name', playerName);
             formData.append('player_id', playerId);
-            formData.append('location', location);
+            // formData.append('location', location);
             formData.append('played_on', playedOn);
             formData.append('versus', versus);
             formData.append('score', score);
@@ -295,10 +288,11 @@
                     $('#player-table tbody').append(data);
 
                     $('#player_name').val('');
+                    $('#player_id').val('');
                     $('#location').val('');
                     $('#versus').val('');
                     $('#score').val('');
-                    $('#player_image').val(null);
+                    $('#player_image').val('');
                 },
                 error: function () {
                     $('#add-player').css('display','block');

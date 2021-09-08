@@ -5,11 +5,11 @@
  <tr>
      <td class="text-center">{{$sl++}}</td>
     <td>
-        <img src="{{$row->options['player_image']}}" style="width: 50px;height:50px;" />
+        <img src="{{$row->options['player_image']}}" style="width: 100px;" />
     </td>
     <td>
         Name: {{ucwords($row->name)}} <br />
-        Location: {{strtoupper($row->options['location'])}} <br/>
+{{--        Location: {{strtoupper($row->options['location'])}} <br/>--}}
         Played On: {{$row->options['played_on']}}
     </td>
     <td>

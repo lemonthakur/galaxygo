@@ -134,7 +134,7 @@
                                 if(!data.image){
                                     return '';
                                 }
-                                return '<img width="70" src="'+data.image+'"/>';
+                                return '<img width="100" src="'+data.image+'"/>';
                             }
                         },
                         { data: 'name' },

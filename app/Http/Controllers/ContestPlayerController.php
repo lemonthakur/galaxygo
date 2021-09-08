@@ -18,7 +18,7 @@ class ContestPlayerController extends Controller
 
         $rules = [
             "player_name" => "required|max:100",
-            "location" => "required|max:100",
+//            "location" => "required|max:100",
             "played_on" =>  "required",
             "versus" => "required|max:100",
             "score" =>  "required",
@@ -54,7 +54,7 @@ class ContestPlayerController extends Controller
             'price' => 0,
             'weight' => 0,
             'options' => [
-                'location' => $request->location,
+//                'location' => $request->location,
                 'played_on' => $request->played_on,
                 'versus' => $request->versus,
                 'score' => $request->score,
@@ -76,10 +76,11 @@ class ContestPlayerController extends Controller
     public function store(Request $request){
         $rules = [
             "player_name" => "required|max:100",
-            "location" => "required|max:100",
+//            "location" => "required|max:100",
             "played_on" =>  "required",
             "versus" => "required|max:100",
-            "score" =>  "required"
+            "score" =>  "required",
+            "player_image" =>  "required",
         ];
 
         $message = [];
@@ -95,7 +96,7 @@ class ContestPlayerController extends Controller
         $contestPlayer->player_id = $request->player_id;
         $contestPlayer->player_name = $request->player_name;
         $contestPlayer->player_image = $request->player_image;
-        $contestPlayer->location = $request->location;
+//        $contestPlayer->location = $request->location;
         $contestPlayer->played_on = date('Y-m-d h:i a',strtotime($request->played_on));
         $contestPlayer->versus = $request->versus;
         $contestPlayer->score = $request->score;

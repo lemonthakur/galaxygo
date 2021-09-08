@@ -35,7 +35,7 @@ class ContestPlayer extends Model
     }
 
     public function player(){
-        return $this->belongsTo(Player::class,'player_id');
+        return $this->belongsTo(Player::class,'player_id','id');
     }
 
     public function participant() {

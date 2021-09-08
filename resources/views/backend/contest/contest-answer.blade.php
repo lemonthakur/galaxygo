@@ -56,27 +56,19 @@
                                                 </td>
                                                 <td>
                                                     @if($player->answer == 0)
-                                                        <label class="btn btn-danger btn-xs">No Answer</label>
+                                                        Status: <small class="bg-danger p-1 text-white">No Answer</small>
                                                     @elseif($player->answer == 1)
-                                                        <label class="btn btn-primary btn-xs">Under</label>
+                                                        Final Score: {{$player->final_score}} <br />
+                                                        Status: <small class="bg-warning p-1 text-white">Under</small>
                                                     @else
-                                                        <label class="btn btn-info btn-xs">Over</label>
+                                                        Final Score: {{$player->final_score}} <br />
+                                                        Status: <small class="bg-info p-1 text-white">Over</small>
                                                     @endif
                                                 </td>
                                                 <td class="text-center align-middle">
                                                     <input name="contest_player_id[]" type="hidden"
                                                            value="{{$player->id}}">
-                                                    <select class="form-control" name="contest_player_answer[]">
-                                                        <option @if($player->answer == 0) selected
-                                                                @endif value="0"> No Answer Submitted
-                                                        </option>
-                                                        <option @if($player->answer == 1) selected
-                                                                @endif value="1"> Under
-                                                        </option>
-                                                        <option @if($player->answer == 2) selected
-                                                                @endif value="2"> Over
-                                                        </option>
-                                                    </select>
+                                                    <input type="number" step="any" min="0" class="form-control" name="final_score[]" placeholder="Enter final score"/>
                                                 </td>
                                             </tr>
                                         @endforeach
