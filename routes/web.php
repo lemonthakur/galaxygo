@@ -92,4 +92,7 @@ Route::group(['middleware'=>'authCheck'],function (){
     Route::get('/pages/other-page/edit', [OtherPagesController::class,'edit'])->name('other-page.edit');
     Route::put('/pages/other-page/update', [OtherPagesController::class,'update'])->name('other-page.update');
 //  Pages
+
+//    Playear search
+    Route::post('players/search',[PlayerController::class,'search'])->name('player.search');
 });

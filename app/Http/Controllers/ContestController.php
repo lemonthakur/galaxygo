@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
-use mysql_xdevapi\Exception;
 use Yajra\DataTables\Facades\DataTables;
-
-use Cart;
 
 use App\Models\Contest;
 use App\Models\ContestPlayer;
+use Cart;
+use DB;
 
 class ContestController extends Controller
 {
@@ -44,7 +42,9 @@ class ContestController extends Controller
     public function store(Request $request)
     {
         if ($request->name) {
-            $request->name = date('Y-m-d', strtotime($request->name));
+            $request->merge([
+                'name' => date('Y-m-d', strtotime($request->name)),
+            ]);
         }
 
         $rules = [
@@ -66,33 +66,53 @@ class ContestController extends Controller
             session()->flash('error', 'Please, Add Player');
             return redirect()->back()->withInput();
         }
-        $contest = new Contest();
+        DB::beginTransaction();
+        try {
+            $success = false;
+            $contest = new Contest();
 
-        $contest->name = $request->name;
-        $contest->expaire_time = $request->name . ' ' . $request->expaire_time;
+            $contest->name = $request->name;
+            $contest->expaire_time = $request->name . ' ' . $request->expaire_time;
 
-        if ($contest->save()) {
-            $contestId = $contest->id;
+            if ($contest->save()) {
+                $contestId = $contest->id;
 
-            foreach (Cart::content() as $row) {
-                $contestPlayer = new ContestPlayer();
-                $contestPlayer->contest_id = $contestId;
-                $contestPlayer->player_name = $row->name;
-                $contestPlayer->player_image = $row->options['player_image'];
-                $contestPlayer->location = $row->options['location'];
-                $contestPlayer->played_on = date('Y-m-d h:i a', strtotime($row->options['played_on']));;
-                $contestPlayer->versus = $row->options['versus'];
-                $contestPlayer->score = $row->options['score'];
-                $contestPlayer->save();
+                foreach (Cart::content() as $row) {
+                    $contestPlayer = new ContestPlayer();
+                    $contestPlayer->contest_id = $contestId;
+                    $contestPlayer->player_id = $row->id;
+                    $contestPlayer->player_name = $row->name;
+                    $contestPlayer->player_image = $row->options['player_image'];
+                    $contestPlayer->location = $row->options['location'];
+                    $contestPlayer->played_on = date('Y-m-d h:i a', strtotime($row->options['played_on']));;
+                    $contestPlayer->versus = $row->options['versus'];
+                    $contestPlayer->score = $row->options['score'];
+                    $contestPlayer->save();
+                }
+
+                Cart::destroy();
             }
 
-            Cart::destroy();
+            $success = true;
+        }catch(ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->withErrors( $e->getErrors() )
+                ->withInput();
+        }catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
+        }
 
+        DB::commit();
+
+        if($success){
             session()->flash("success", "Data successfully created");
-            return redirect()->route("contest.index");
-        } else {
-            session()->flash("error", "Data not created");
-            return redirect()->back();
+            return redirect()->route('contest.index');
+        }else{
+            session()->flash('error','Product Not Created');
+            return redirect()->back()->withInput();
         }
     }
 

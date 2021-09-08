@@ -34,6 +34,10 @@ class ContestPlayer extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
+    public function player(){
+        return $this->belongsTo(Player::class,'player_id');
+    }
+
     public function participant() {
         $user = OwnLibrary::getUserInfo();
         return $this->hasOne(ParticipantAnswer::class,'contest_player_id','id')

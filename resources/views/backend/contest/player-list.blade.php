@@ -5,7 +5,7 @@
  <tr>
      <td class="text-center">{{$sl++}}</td>
     <td>
-        <img src="{{asset($row->options['player_image'])}}" style="width: 50px;height:50px;border-radius:50%;" />
+        <img src="{{$row->options['player_image']}}" style="width: 50px;height:50px;" />
     </td>
     <td>
         Name: {{ucwords($row->name)}} <br />

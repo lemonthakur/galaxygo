@@ -9,12 +9,6 @@
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">Contest</h1>
                     </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                            {{--<li class="breadcrumb-item active">Starter Page</li>--}}
-                        </ol>
-                    </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -93,13 +87,16 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group" style="position: relative">
                                                 <label for="player_name">Player Name<span
                                                         class="text-red">*</span></label>
                                                 <input type="text"
                                                        class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
                                                        name="player_name" id="player_name" placeholder="Player Name"
-                                                       value="{{old('player_name')}}">
+                                                       value="{{old('player_name')}}" autocomplete="off">
+                                                <input type="text" class="d-none" id="player_id" name="player_id" value="{{old('player_id')}}">
+
+                                                <div id="playerSearch"></div>
                                                 <span
                                                     class="text-danger">{{$errors->has("player_name") ? $errors->first("player_name") : ""}}</span>
                                             </div>
@@ -156,24 +153,19 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="player_image">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p>Player Image<span class="text-red">*</span></p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <span
-                                                                class="text-danger" style="font-weight: normal;">{{$errors->has("player_image") ? $errors->first("player_image") : ""}}</span>
-                                                        </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p>Player Image<span class="text-red">*</span></p>
                                                     </div>
-                                                    <input type="file"
-                                                           class="form-control image d-none {{$errors->has("player_image") ? "is-invalid":""}}"
-                                                           accept="image/png, image/gif, image/jpeg"
-                                                           id="player_image" name="player_image" placeholder="Player Image">
-                                                </label>
+                                                    <div class="col-md-6">
+                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="100"/>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <span style="font-weight: normal" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control image d-none" id="player_image" name="player_image">
+
                                             </div>
                                         </div>
 
@@ -200,8 +192,8 @@
                                         <tr>
                                             <td class="text-center">{{$sl++}}</td>
                                             <td>
-                                                <img src="{{asset($player->player_image)}}"
-                                                     style="width: 50px;height:50px;border-radius:50%;"/>
+                                                <img src="{{$player->player_image}}"
+                                                     style="width: 50px;height:50px;"/>
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
@@ -238,4 +230,34 @@
         </div>
         <!-- /.content -->
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $("#player_name").on('input',function () {
+            var search = $(this).val();
+            $("#playerSearch").css('display','block');
+            var _token = "{{csrf_token()}}";
+            $.ajax({
+                url: '{{route("player.search")}}',
+                method: 'POST',
+                data: {search:search, _token:_token},
+                success:function (data) {
+                    $("#playerSearch").empty();
+                    $("#playerSearch").append(data);
+                }
+            });
+        });
+
+        $(document).on('click','.player',function () {
+
+            $("#player_name").val($(this).attr('name'));
+            $("#player_id").val($(this).attr('pid'));
+
+            $("#output").attr('src',$(this).attr('imgUrl'));
+            $("#player_image").val($(this).attr('imgUrl'));
+
+            $("#playerSearch").css('display','none');
+        });
+    </script>
 @endsection

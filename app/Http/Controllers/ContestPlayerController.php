@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 use Cart;
-use Intervention\Image\Facades\Image;
+//use Intervention\Image\Facades\Image;
 
 class ContestPlayerController extends Controller
 {
@@ -22,7 +22,6 @@ class ContestPlayerController extends Controller
             "played_on" =>  "required",
             "versus" => "required|max:100",
             "score" =>  "required",
-            "player_image" =>  "required|image"
         ];
 
         $message = [];
@@ -36,20 +35,20 @@ class ContestPlayerController extends Controller
             ], 200);
         }
 
-        $image = $request->file('player_image');
-
-            if ($image) {
-                $image_name = Str::random(20).date('ymd');
-                $ext = strtolower($image->getClientOriginalExtension());
-                $image_full_name = $image_name . '.' . $ext;
-                $upload_path = 'upload/player-pic/';
-                $image_url = $upload_path . $image_full_name;
-                $image->move($upload_path, $image_full_name);
-                Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
-            }
+//        $image = $request->file('player_image');
+//
+//            if ($image) {
+//                $image_name = Str::random(20).date('ymd');
+//                $ext = strtolower($image->getClientOriginalExtension());
+//                $image_full_name = $image_name . '.' . $ext;
+//                $upload_path = 'upload/player-pic/';
+//                $image_url = $upload_path . $image_full_name;
+//                $image->move($upload_path, $image_full_name);
+//                Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
+//            }
 
         Cart::add([
-            'id' => rand(0,1000),
+            'id' => $request->player_id,
             'name' => $request->player_name,
             'qty' => 1,
             'price' => 0,
@@ -59,7 +58,7 @@ class ContestPlayerController extends Controller
                 'played_on' => $request->played_on,
                 'versus' => $request->versus,
                 'score' => $request->score,
-                'player_image' => $image_url ?? '',
+                'player_image' => $request->player_image,
             ],
             'taxRate' => 0,
         ]);
@@ -80,8 +79,7 @@ class ContestPlayerController extends Controller
             "location" => "required|max:100",
             "played_on" =>  "required",
             "versus" => "required|max:100",
-            "score" =>  "required",
-            "player_image" =>  "required|image"
+            "score" =>  "required"
         ];
 
         $message = [];
@@ -94,21 +92,9 @@ class ContestPlayerController extends Controller
 
         $contestPlayer = new ContestPlayer();
         $contestPlayer->contest_id = $request->contest_id;
+        $contestPlayer->player_id = $request->player_id;
         $contestPlayer->player_name = $request->player_name;
-
-        $image = $request->file('player_image');
-
-        if ($image) {
-            $image_name = Str::random(20);
-            $ext = strtolower($image->getClientOriginalExtension());
-            $image_full_name = $image_name . '.' . $ext;
-            $upload_path = 'upload/player-pic/';
-            $image_url = $upload_path . $image_full_name;
-            $image->move($upload_path, $image_full_name);
-            Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
-            $contestPlayer->player_image = $image_url;
-        }
-
+        $contestPlayer->player_image = $request->player_image;
         $contestPlayer->location = $request->location;
         $contestPlayer->played_on = date('Y-m-d h:i a',strtotime($request->played_on));
         $contestPlayer->versus = $request->versus;

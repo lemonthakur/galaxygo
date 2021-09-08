@@ -77,40 +77,10 @@
                                                         <input type="text"
                                                                class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
                                                                id="player_name" placeholder="Player Name" autocomplete="off">
-                                                        <div id="playerSearch">
-                                                            <div class="d-flex flex-row align-content-center player" pid="1">
-                                                                <div class="">
-                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/Nk9zadS8fV.png')}}" alt="">
-                                                                </div>
-                                                                <div class="name">
-                                                                    Drake Lamb
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex flex-row align-content-center player" pid="2">
-                                                                <div class="">
-                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/y0jmvBwIKD.png')}}" alt="">
-                                                                </div>
-                                                                <div class="name">
-                                                                    Drake Lamb
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex flex-row align-content-center player" pid="3">
-                                                                <div class="">
-                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/Nk9zadS8fV.png')}}" alt="">
-                                                                </div>
-                                                                <div class="name">
-                                                                    Drake Lamb
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex flex-row align-content-center player">
-                                                                <div class="">
-                                                                    <img class="img-fluid" src="{{asset('upload/player/210906/y0jmvBwIKD.png')}}" alt="">
-                                                                </div>
-                                                                <div class="name">
-                                                                    Drake Lamb
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+                                                        <input type="text" class="d-none" id="player_id" name="player_id">
+
+                                                        <div id="playerSearch"></div>
                                                         <span class="text-danger"></span>
                                                     </div>
                                                 </div>
@@ -160,7 +130,6 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="player_image">
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <p>Player Image<span class="text-red">*</span></p>
@@ -172,11 +141,7 @@
                                                                     <span style="font-weight: normal" class="text-danger"></span>
                                                                 </div>
                                                             </div>
-                                                            <input type="file"
-                                                                   class="form-control image d-none {{$errors->has("player_image") ? "is-invalid":""}}"
-                                                                   accept="image/png, image/gif, image/jpeg"
-                                                                   id="player_image" placeholder="Player Image">
-                                                        </label>
+                                                            <input type="text" class="form-control image d-none" id="player_image">
 
                                                     </div>
                                                 </div>
@@ -210,7 +175,7 @@
                                                     <td class="text-center">{{$sl++}}</td>
                                                     <td>
                                                         <img src="{{asset($row->options['player_image'])}}"
-                                                             style="width: 50px;height:50px;border-radius:50%;"/>
+                                                             style="width: 50px;height:50px;"/>
                                                     </td>
                                                     <td>
                                                         Name: {{ucwords($row->name)}} <br/>
@@ -254,14 +219,31 @@
     <script>
 
         $("#player_name").on('input',function () {
-            $("#playerSearch").css('display','block')
+            var search = $(this).val();
+            $("#playerSearch").css('display','block');
+            var _token = "{{csrf_token()}}";
+            $.ajax({
+                url: '{{route("player.search")}}',
+                method: 'POST',
+                data: {search:search, _token:_token},
+                success:function (data) {
+                    $("#playerSearch").empty();
+                    $("#playerSearch").append(data);
+                }
+            });
         });
 
         $(document).on('click','.player',function () {
-            alert($(this).attr('pid'));
+
+            $("#player_name").val($(this).attr('name'));
+            $("#player_id").val($(this).attr('pid'));
+
+            $("#output").attr('src',$(this).attr('imgUrl'));
+            $("#player_image").val($(this).attr('imgUrl'));
+
             $("#playerSearch").css('display','none');
         });
-
+        // Add Player
         $('#btn-loader').hide();
         $('#add-player').on('click', function () {
 
@@ -269,11 +251,12 @@
             $('#btn-loader').show();
 
             let playerName = $('#player_name').val();
+            let playerId = $('#player_id').val();
             let location = $('#location').val();
             let playedOn = $('#played_on').val();
             let versus = $('#versus').val();
             let score = $('#score').val();
-            let playerImage = $('#player_image')[0].files[0];
+            let playerImage = $('#player_image').val();
             let _token = '{{ csrf_token() }}';
 
             $('#player_name').closest('.form-group').find('.text-danger').text('');
@@ -285,6 +268,7 @@
 
             let formData = new FormData();
             formData.append('player_name', playerName);
+            formData.append('player_id', playerId);
             formData.append('location', location);
             formData.append('played_on', playedOn);
             formData.append('versus', versus);
