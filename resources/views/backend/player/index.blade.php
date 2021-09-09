@@ -56,7 +56,7 @@
                                             <th>SL</th>
                                             <th>Photo</th>
                                             <th>Name</th>
-                                            <th>Action</th>
+                                            <th style="text-align: center;">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -80,6 +80,11 @@
 
             function loadDataTable(formData){
                 $('#dTable').dataTable({
+                    'columnDefs': [
+                     {
+                          "targets": 3,
+                          "className": "text-center",
+                     }],
                     dom: 'Blrtip',
                     // dom: 'Blfrtip',
                     buttons: [
