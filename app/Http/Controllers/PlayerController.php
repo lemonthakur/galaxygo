@@ -142,8 +142,8 @@ class PlayerController extends Controller
     }
 
     public function search(Request $request){
-        $search = $request->search;
-        $players = Player::select('id','name','image')->where("name",'Like',"%$search%")->limit(5)->get();
+//        $search = $request->search;
+        $players = Player::select('id','name','image')->orderBy('name')->get();
         return view('backend.player.search',compact("players"));
     }
 }

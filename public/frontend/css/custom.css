@@ -172,6 +172,13 @@ button.login-btn,
 }
 .ic-item .score{
     color: #D6BA4F !important;
+    font-size: 14px;
+}
+.ic-item .score span,
+.final-fantacy-score p span.final-score{
+    font-size: 17px;
+    font-weight: bolder;
+    color: #fff70a !important;
 }
 .ic-entries-tab-contents .ic-item .user .image img {
     width: 100px !important;
@@ -181,11 +188,21 @@ button.login-btn,
 .ic-entries-tab-contents .ic-item .over-under-btn {
     padding: 25px 0 15px 0;
 }
-
+.not-vote{
+    width: 55px;
+    padding: 2px 0 !important;
+}
+.over-projection .under-btn.not-vote{
+    color: #f8da20;
+    font-size: 10px;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 4px;
+}
 @media only screen and (max-width: 576px) {
     .ic-entries-tab-contents .ic-item .user .image img {
-        width: 90px !important;
-        height: 90px !important;
+        width: 100px !important;
+        height: 100px !important;
         /*border-radius: 50%;*/
     }
 }

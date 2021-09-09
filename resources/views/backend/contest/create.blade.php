@@ -211,23 +211,23 @@
 @section('js')
     <script>
 
-        $("#player_name").on('input',function () {
+        $("#player_name").on('focus',function () {
             var search = $(this).val();
-            $("#playerSearch").css('display','block');
             var _token = "{{csrf_token()}}";
             $.ajax({
                 url: '{{route("player.search")}}',
                 method: 'POST',
-                data: {search:search, _token:_token},
+                data: {_token:_token},
                 success:function (data) {
                     $("#playerSearch").empty();
                     $("#playerSearch").append(data);
+                    $("#playerSearch").css('display','block');
+                    $("#playerSearch").css('overflow-y','scroll');
                 }
             });
         });
 
         $(document).on('click','.player',function () {
-
             $("#player_name").val($(this).attr('name'));
             $("#player_id").val($(this).attr('pid'));
 
@@ -236,6 +236,7 @@
 
             $("#playerSearch").css('display','none');
         });
+
         // Add Player
         $('#btn-loader').hide();
         $('#add-player').on('click', function () {

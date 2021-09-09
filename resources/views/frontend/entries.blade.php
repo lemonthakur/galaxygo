@@ -73,10 +73,6 @@
                                                 <div class="ic-timer">
                                                     <span class="d-none"
                                                           id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
-                                                    {{--                                        <div class="days">--}}
-                                                    {{--                                            <h4 id="day">0</h4>--}}
-                                                    {{--                                            <p>days</p>--}}
-                                                    {{--                                        </div>--}}
                                                     <div class="hours">
                                                         <h4 id="hour">00</h4>
                                                         <p>hours</p>
@@ -104,13 +100,13 @@
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                             <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                            <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                            <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                                            <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                            <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                     </div>
 
@@ -189,30 +185,20 @@
                                                         <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                         <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                         <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                        <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                        <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                     </div>
                                                     <div class="mobile-name-title name-title">
                                                         <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                         <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                         <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                     </div>
                                                 </div>
                                                 <div class="over-under-btn">
                                                     @if(!empty($contestPlayer->participant->participant_answer)
                                                         && $contestPlayer->participant->participant_answer == 2)
                                                         {{--Over--}}
-                                                        <input class="d-none" type="radio"
-                                                               id="over_{{$contestPlayer->id}}_2" value="2"
-                                                               name="players[{{$contestPlayer->id}}]"
-                                                            {{(!empty($contestPlayer->participant->participant_answer)
-                                                            && $contestPlayer->participant->participant_answer == 2)
-                                                                ? 'checked' : ''}}>
-
-                                                        <label id="over_lavel_{{$contestPlayer->id}}"
-                                                               pid="{{$contestPlayer->id}}" ltype="2"
-                                                               for="over_{{$contestPlayer->id}}_2"
-                                                               class="over-btn mb-1 rlabel  {{(!empty($contestPlayer->participant->participant_answer)
+                                                        <label class="over-btn mb-1 rlabel  {{(!empty($contestPlayer->participant->participant_answer)
                                                         && $contestPlayer->participant->participant_answer == 2)
                                                             ? 'active' : ''}}">over</label>
                                                         {{--Over--}}
@@ -221,21 +207,16 @@
                                                     @if(!empty($contestPlayer->participant->participant_answer)
                                                                                                             && $contestPlayer->participant->participant_answer == 1)
                                                         {{--Under--}}
-                                                        <input class="d-none" type="radio"
-                                                               id="under_{{$contestPlayer->id}}_1" value="1"
-                                                               name="players[{{$contestPlayer->id}}]"
-                                                            {{(!empty($contestPlayer->participant->participant_answer)
-                                                           && $contestPlayer->participant->participant_answer == 1)
-                                                               ? 'checked' : ''}}>
-
-                                                        <label id="under_lavel_{{$contestPlayer->id}}"
-                                                               pid="{{$contestPlayer->id}}" ltype="1"
-                                                               for="under_{{$contestPlayer->id}}_1" class="under-btn rlabel
+                                                        <label class="under-btn rlabel
                                                         {{(!empty($contestPlayer->participant->participant_answer)
                                                         && $contestPlayer->participant->participant_answer == 1)
                                                             ? 'active' : ''}}">under</label>
                                                         {{--Under--}}
                                                     @endif
+
+                                                    @if(empty($contestPlayer->participant->participant_answer))
+                                                            <label class="under-btn not-vote">Did Not Vote</label>
+                                                        @endif
                                                 </div>
                                             </div>
                                             <!--Item-->
@@ -267,61 +248,94 @@
                                                         <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                         <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                         <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                        <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                        <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                     </div>
                                                     <div class="mobile-name-title name-title">
                                                         <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                         <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                         <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                        <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                     </div>
                                                 </div>
-                                                <div class="over-projection">
-                                                    @if(!empty($contestPlayer->participant->participant_answer))
+
+                                                <div class="over-projection final-fantacy-score text-center">
                                                         <span>your projection</span>
+                                                    @if(!empty($contestPlayer->participant->participant_answer))
                                                         @if($contestPlayer->participant->participant_answer == 2)
-                                                            <div class="over-icon">
-                                                                <a href="#">over</a>
+                                                            <div class="over-icon text-center">
+                                                                <a class="d-inline-block" href="#">over</a>
                                                             </div>
                                                         @else
-                                                            <div class="under-icon">
-                                                                <a href="#">under</a>
+                                                            <div class="under-icon justify-content-center">
+                                                                <a class="d-inline-block" href="#">under</a>
                                                             </div>
                                                         @endif
                                                     @else
-                                                        <div class="over-icon">
-                                                            <a href="#">No Answer</a>
+                                                        <div class="over-icon text-center">
+                                                            <label class="under-btn not-vote d-inline-block">Did Not Vote</label>
                                                         </div>
                                                     @endif
-                                                </div>
 
-                                                <div class="over-projection mobile-over-projection">
-                                                    @if(!empty($contestPlayer->participant->participant_answer))
-                                                        <span>your projection</span>
-                                                        @if($contestPlayer->participant->participant_answer == 2)
-                                                            <a href="#">over</a>
-                                                        @else
-                                                            <a href="#">under</a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#">No Answer</a>
-                                                    @endif
-                                                </div>
-                                                <div class="final-fantacy-score">
+                                                    <span class="mt-2 mb-1">Final projection</span>
+
                                                     @if(!empty($contestPlayer->participant->participant_answer) &&
                                                       $contestPlayer->answer == $contestPlayer->participant->participant_answer)
-                                                        <a href="#" class="final-remove check">
-                                                            <i class="flaticon-tick-mark"></i>
-                                                            final
-                                                        </a>
+                                                        <div class="text-center">
+                                                            <a href="#" class="final-remove check d-inline-block">
+                                                                <i class="flaticon-tick-mark"></i>
+                                                                final
+                                                            </a>
+                                                        </div>
                                                     @else
-                                                        <a href="#" class="final-remove">
-                                                            <i class="flaticon-error"></i>
-                                                            final
-                                                        </a>
+                                                        <div class="text-center">
+                                                            <a href="#" class="final-remove d-inline-block">
+                                                                <i class="flaticon-error"></i>
+                                                                final
+                                                            </a>
+                                                        </div>
                                                     @endif
-                                                    <p>{{$contestPlayer->final_score}} <span>fantasy score</span></p>
+                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
                                                 </div>
+
+                                                <div class="over-projection mobile-over-projection final-fantacy-score text-center">
+                                                    <span>your projection</span>
+                                                    @if(!empty($contestPlayer->participant->participant_answer))
+                                                        @if($contestPlayer->participant->participant_answer == 2)
+                                                            <div class="over-icon text-center">
+                                                                <a class="d-inline-block" href="#">over</a>
+                                                            </div>
+                                                        @else
+                                                            <div class="under-icon justify-content-center">
+                                                                <a class="d-inline-block text-dark" href="#">under</a>
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        <div class="over-icon text-center">
+                                                            <label class="under-btn not-vote d-inline-block">Did Not Vote</label>
+                                                        </div>
+                                                    @endif
+
+                                                    <span class="my-2"></span>
+
+                                                    @if(!empty($contestPlayer->participant->participant_answer) &&
+                                                      $contestPlayer->answer == $contestPlayer->participant->participant_answer)
+                                                        <div class="text-center">
+                                                            <a href="#" class="final-remove check d-inline-block">
+                                                                <i class="flaticon-tick-mark"></i>
+                                                                final
+                                                            </a>
+                                                        </div>
+                                                    @else
+                                                        <div class="text-center">
+                                                            <a href="#" class="final-remove d-inline-block">
+                                                                <i class="flaticon-error"></i>
+                                                                final
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                </div>
+
                                             </div>
                                         @empty
                                             <h3 class="text-center">No Players Found</h3>

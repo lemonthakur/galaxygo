@@ -29,6 +29,7 @@ div.dt-buttons {
     width: 100%;
     top: 100%;
     display: none;
+    max-height: 180px;
 }
 #playerSearch .player .name{
     border-bottom: 2px solid #8080807a;;
