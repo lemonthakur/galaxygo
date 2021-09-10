@@ -81,6 +81,34 @@ class PlayerController extends Controller
         }
     }
 
+    public function show(Player $player){
+        if($player && $player->image){
+
+            $name = $player->name.'.jpeg';
+            $image = Image::make(asset($player->image))->resize(200, 200);  
+            $image->text($player->name, 100, 195, function($font) {  
+              $font->file(public_path('frontend/fonts/text-fonts/Galano-Grotesque-Medium.otf'));
+              $font->size(20);  
+              $font->color('#ff0500');  
+              $font->align('center');  
+              $font->valign('bottom');  
+              $font->angle(0);  
+          });  
+            $image = Image::make($image)->encode('jpeg');
+
+            $headers = [
+                'Content-Type' => 'image/jpeg',
+                'Content-Disposition' => 'attachment; filename='. $name,
+            ];
+            return response()->stream(function() use ($image) {
+                echo $image;
+            }, 200, $headers);
+
+        }else{
+            echo "<h1 style='text-align: center;'>No image for download</h1>";
+        }
+    }
+
     public function edit(Player $player)
     {
         return view('backend.player.edit',compact('player'));
