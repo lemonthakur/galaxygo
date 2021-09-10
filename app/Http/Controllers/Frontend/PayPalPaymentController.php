@@ -180,7 +180,7 @@ class PayPalPaymentController extends Controller
 
             Cart::destroy();
             session()->flash('order_success','Order placed successfully');
-            return redirect()->route('orders');
+            return redirect()->route('my.orders');
             ///////////////////////////////////////////////////////////
         }
   
@@ -192,7 +192,7 @@ class PayPalPaymentController extends Controller
     {
 
         session()->flash('order_error','Order can not placed.');
-        return redirect()->route('orders');
+        return redirect()->route('my.orders');
         //dd('Your payment has been declend. The payment cancelation page goes here!');
     }
 
@@ -279,11 +279,11 @@ class PayPalPaymentController extends Controller
             DB::commit();
 
             session()->flash('order_success','Order placed successfully');
-            return redirect()->route('orders');
+            return redirect()->route('my.orders');
             ///////////////////////////////////////////////////////////
         }
 
         session()->flash('order_error','Order can not placed.');
-        return redirect()->route('orders');
+        return redirect()->route('my.orders');
     }
 }
