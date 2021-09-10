@@ -378,60 +378,93 @@
                                                                 <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                                 <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                                 <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                                <p class="score text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                                <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                             </div>
                                                             <div class="mobile-name-title name-title">
                                                                 <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                                 <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                                 <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                                                <p class="score text-white d-block text-capitalize">proj fantasy score: {{$contestPlayer->score}}</p><br />
+                                                                <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</p><br />
                                                             </div>
                                                         </div>
-                                                        <div class="over-projection">
-                                                            @if(!empty($contestPlayer->participant->participant_answer))
+
+
+                                                        <div class="over-projection final-fantacy-score text-center">
                                                             <span>your projection</span>
+                                                            @if(!empty($contestPlayer->participant->participant_answer))
                                                                 @if($contestPlayer->participant->participant_answer == 2)
-                                                                    <div class="over-icon">
-                                                                        <a href="#">over</a>
+                                                                    <div class="over-icon text-center">
+                                                                        <a class="d-inline-block" href="#">over</a>
                                                                     </div>
                                                                 @else
-                                                                    <div class="under-icon">
-                                                                        <a href="#">under</a>
+                                                                    <div class="under-icon justify-content-center">
+                                                                        <a class="d-inline-block" href="#">under</a>
                                                                     </div>
                                                                 @endif
                                                             @else
-                                                                <div class="over-icon">
-                                                                    <a href="#">No Answer</a>
+                                                                <div class="over-icon text-center">
+                                                                    <label class="under-btn not-vote d-inline-block">Did Not Vote</label>
                                                                 </div>
                                                             @endif
-                                                        </div>
 
-                                                        <div class="over-projection mobile-over-projection">
-                                                            @if(!empty($contestPlayer->participant->participant_answer))
-                                                                @if($contestPlayer->participant->participant_answer == 2)
-                                                                    <a href="#">over</a>
-                                                                @else
-                                                                    <a href="#">under</a>
-                                                                @endif
-                                                            @else
-                                                                <a href="#">No Answer</a>
-                                                            @endif
-                                                        </div>
+                                                            <span class="mt-2 mb-1">Final projection</span>
 
-                                                        <div class="final-fantacy-score">
                                                             @if(!empty($contestPlayer->participant->participant_answer) &&
                                                               $contestPlayer->answer == $contestPlayer->participant->participant_answer)
-                                                                <a href="#" class="final-remove check">
-                                                                    <i class="flaticon-tick-mark"></i>
-                                                                    final
-                                                                </a>
+                                                                <div class="text-center">
+                                                                    <a href="#" class="final-remove check d-inline-block">
+                                                                        <i class="flaticon-tick-mark"></i>
+                                                                        final
+                                                                    </a>
+                                                                </div>
                                                             @else
-                                                                <a href="#" class="final-remove">
-                                                                    <i class="flaticon-error"></i>
-                                                                    final
-                                                                </a>
+                                                                <div class="text-center">
+                                                                    <a href="#" class="final-remove d-inline-block">
+                                                                        <i class="flaticon-error"></i>
+                                                                        final
+                                                                    </a>
+                                                                </div>
                                                             @endif
-                                                            <p>{{$contestPlayer->final_score}} <span>fantasy score</span></p>
+                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                        </div>
+
+                                                        <div class="over-projection mobile-over-projection final-fantacy-score text-center">
+                                                            <span>your projection</span>
+                                                            @if(!empty($contestPlayer->participant->participant_answer))
+                                                                @if($contestPlayer->participant->participant_answer == 2)
+                                                                    <div class="over-icon text-center">
+                                                                        <a class="d-inline-block" href="#">over</a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="under-icon justify-content-center">
+                                                                        <a class="d-inline-block text-dark" href="#">under</a>
+                                                                    </div>
+                                                                @endif
+                                                            @else
+                                                                <div class="over-icon text-center">
+                                                                    <label class="under-btn not-vote d-inline-block">Did Not Vote</label>
+                                                                </div>
+                                                            @endif
+
+                                                            <span class="my-2"></span>
+
+                                                            @if(!empty($contestPlayer->participant->participant_answer) &&
+                                                              $contestPlayer->answer == $contestPlayer->participant->participant_answer)
+                                                                <div class="text-center">
+                                                                    <a href="#" class="final-remove check d-inline-block">
+                                                                        <i class="flaticon-tick-mark"></i>
+                                                                        final
+                                                                    </a>
+                                                                </div>
+                                                            @else
+                                                                <div class="text-center">
+                                                                    <a href="#" class="final-remove d-inline-block">
+                                                                        <i class="flaticon-error"></i>
+                                                                        final
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
                                                         </div>
                                                     </div>
                                                 @empty
