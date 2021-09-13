@@ -76,7 +76,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="forTarget">
                                             <div class="row">
 
                                                 <div class="col-md-12 text-center">
@@ -140,6 +140,11 @@
                                                 </div>
 
                                                 <div class="col-md-4 text-right">
+                                                    <button type="button" style="margin-top: 24%;" id="cancel-player"
+                                                            class="btn btn-danger d-none">Cancel
+                                                    </button>
+                                                    <input type="hidden" id="edit_id" name="edit_id">
+
                                                     <button type="button" style="margin-top: 24%;" id="add-player"
                                                             class="btn btn-info">Add Player
                                                     </button>
@@ -183,6 +188,12 @@
                                                         <button rowId="{{$row->rowId}}" type="button"
                                                                 class="btn btn-danger btn-xs removeCart"><i
                                                                 class="fas fa-trash"></i></button>
+                                                        <button editRowId="{{$row->rowId}}" type="button" class="btn btn-success btn-xs editCart"
+                                                                attr-player="{{$row->name}}" attr-player-id="{{$row->id}}" attr-played-on="{{$row->options['played_on']}}"
+                                                                attr-versus="{{$row->options['versus']}}" attr-score="{{$row->options['score']}}"
+                                                                attr-player-image="{{$row->options['player_image']}}">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -251,6 +262,7 @@
             let versus = $('#versus').val();
             let score = $('#score').val();
             let playerImage = $('#player_image').val();
+            let edit_id = $('#edit_id').val();
             let _token = '{{ csrf_token() }}';
 
             $('#player_name').closest('.form-group').find('.text-danger').text('');
@@ -269,6 +281,7 @@
             formData.append('score', score);
             formData.append('player_image', playerImage);
             formData.append('_token', _token);
+            formData.append('rowId', edit_id);
 
             $.ajax({
                 url: '{{route("player.add.cart")}}',
@@ -290,10 +303,15 @@
 
                     $('#player_name').val('');
                     $('#player_id').val('');
+                    $('#played_on').val('');
                     $('#location').val('');
                     $('#versus').val('');
                     $('#score').val('');
                     $('#player_image').val('');
+                    $('#edit_id').val('');
+
+                    $("#add-player").html("Add Player");
+                    $("#cancel-player").addClass("d-none");
                 },
                 error: function () {
                     $('#add-player').css('display','block');
@@ -332,5 +350,48 @@
                 // $('#'+key).addClass('is-invalid');
             })
         }
+
+        // Edit contest player
+        $(document).on("click", ".editCart", function(){
+            let editRowId       = $(this).attr("editRowId");
+            let edt_player_id   = $(this).attr("attr-player-id");
+            let edt_player      = $(this).attr("attr-player");
+            let edt_played_on   = $(this).attr("attr-played-on");
+            let edt_versus      = $(this).attr("attr-versus");
+            let edt_score       = $(this).attr("attr-score");
+            let edt_player_image      = $(this).attr("attr-player-image");
+
+            $("#player_name").val(edt_player);
+            $("#player_id").val(edt_player_id);
+            $("#played_on").val(edt_played_on);
+            $("#versus").val(edt_versus);
+            $("#score").val(edt_score);
+
+            $("#output").attr('src',edt_player_image);
+            $("#player_image").val(edt_player_image);
+
+            $("#add-player").html("Update Player");
+            $("#cancel-player").removeClass("d-none");
+            $("#edit_id").val(editRowId);
+
+            $('html, body').animate({
+                scrollTop: $("#forTarget").offset().top
+            }, 200);
+        });
+
+        $(document).on("click", "#cancel-player", function(){
+            $('#player_name').val('');
+            $('#player_id').val('');
+            $('#played_on').val('');
+            $('#location').val('');
+            $('#versus').val('');
+            $('#score').val('');
+            $('#player_image').val('');
+            $("#output").attr('src','');
+            $('#edit_id').val('');
+
+            $("#add-player").html("Add Player");
+            $("#cancel-player").addClass("d-none");
+        });
     </script>
 @endsection

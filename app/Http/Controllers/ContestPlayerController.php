@@ -47,21 +47,39 @@ class ContestPlayerController extends Controller
 //                Image::make($image_url)->resize(70,70)->save($image_url,70,'jpg');
 //            }
 
-        Cart::add([
-            'id' => $request->player_id,
-            'name' => $request->player_name,
-            'qty' => 1,
-            'price' => 0,
-            'weight' => 0,
-            'options' => [
-//                'location' => $request->location,
-                'played_on' => $request->played_on,
-                'versus' => $request->versus,
-                'score' => $request->score,
-                'player_image' => $request->player_image,
-            ],
-            'taxRate' => 0,
-        ]);
+        if($request->rowId && $request->rowId !=null && !empty($request->rowId)){
+            Cart::update($request->rowId, [
+                'id' => $request->player_id,
+                'name' => $request->player_name,
+                'qty' => 1,
+                'price' => 0,
+                'weight' => 0,
+                'options' => [
+                    // 'location' => $request->location,
+                    'played_on' => $request->played_on,
+                    'versus' => $request->versus,
+                    'score' => $request->score,
+                    'player_image' => $request->player_image,
+                ],
+                'taxRate' => 0,
+            ]);
+        }else{
+            Cart::add([
+                'id' => $request->player_id,
+                'name' => $request->player_name,
+                'qty' => 1,
+                'price' => 0,
+                'weight' => 0,
+                'options' => [
+                    // 'location' => $request->location,
+                    'played_on' => $request->played_on,
+                    'versus' => $request->versus,
+                    'score' => $request->score,
+                    'player_image' => $request->player_image,
+                ],
+                'taxRate' => 0,
+            ]);
+        }
 
         return view('backend.contest.player-list');
     }
@@ -91,7 +109,11 @@ class ContestPlayerController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
 
+        if($request->edit_id && $request->edit_id !=null && !empty($request->edit_id))
+        $contestPlayer = ContestPlayer::find($request->edit_id);
+        else
         $contestPlayer = new ContestPlayer();
+
         $contestPlayer->contest_id = $request->contest_id;
         $contestPlayer->player_id = $request->player_id;
         $contestPlayer->player_name = $request->player_name;

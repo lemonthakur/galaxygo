@@ -96,7 +96,7 @@
                                     <input type="hidden" name="contest_id" value="{{$contest->id}}">
                                     <div class="row">
 
-                                        <div class="col-md-12 text-center">
+                                        <div class="col-md-12 text-center" id="forTarget">
                                             <h4 class="text-center">Player Add</h4>
                                         </div>
 
@@ -174,7 +174,12 @@
                                         </div>
 
                                         <div class="col-md-4 text-right">
-                                            <button type="submit" style="margin-top: 24%;"
+                                            <button type="button" style="margin-top: 24%;" id="cancel-player"
+                                                    class="btn btn-danger d-none">Cancel
+                                            </button>
+                                            <input type="hidden" id="edit_id" name="edit_id">
+
+                                            <button type="submit" style="margin-top: 24%;" id="add-player"
                                                     class="btn btn-info">Add Player
                                             </button>
                                         </div>
@@ -217,6 +222,12 @@
                                                             class="btn btn-xs btn-danger text-white delete"
                                                             title="Delete">
                                                         <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <button editRowId="{{$player->id}}" type="button" class="btn btn-success btn-xs editCart"
+                                                            attr-player="{{$player->player_name}}" attr-player-id="{{$player->player_id}}" attr-played-on="{{date('d-m-Y h:i a',strtotime($player->played_on))}}"
+                                                            attr-versus="{{$player->versus}}" attr-score="{{$player->score}}"
+                                                            attr-player-image="{{$player->player_image}}">
+                                                        <i class="fas fa-edit"></i>
                                                     </button>
                                                 </form>
                                             </td>
@@ -262,6 +273,49 @@
             $("#player_image").val($(this).attr('imgUrl'));
 
             $("#playerSearch").css('display','none');
+        });
+
+        // Edit contest player
+        $(document).on("click", ".editCart", function(){
+            let editRowId       = $(this).attr("editRowId");
+            let edt_player_id   = $(this).attr("attr-player-id");
+            let edt_player      = $(this).attr("attr-player");
+            let edt_played_on   = $(this).attr("attr-played-on");
+            let edt_versus      = $(this).attr("attr-versus");
+            let edt_score       = $(this).attr("attr-score");
+            let edt_player_image      = $(this).attr("attr-player-image");
+
+            $("#player_name").val(edt_player);
+            $("#player_id").val(edt_player_id);
+            $("#played_on").val(edt_played_on);
+            $("#versus").val(edt_versus);
+            $("#score").val(edt_score);
+
+            $("#output").attr('src',edt_player_image);
+            $("#player_image").val(edt_player_image);
+
+            $("#add-player").html("Update Player");
+            $("#cancel-player").removeClass("d-none");
+            $("#edit_id").val(editRowId);
+
+            $('html, body').animate({
+                scrollTop: $("#forTarget").offset().top
+            }, 200);
+        });
+
+        $(document).on("click", "#cancel-player", function(){
+            $('#player_name').val('');
+            $('#player_id').val('');
+            $('#played_on').val('');
+            $('#location').val('');
+            $('#versus').val('');
+            $('#score').val('');
+            $('#player_image').val('');
+            $("#output").attr('src','');
+            $('#edit_id').val('');
+
+            $("#add-player").html("Add Player");
+            $("#cancel-player").addClass("d-none");
         });
     </script>
 @endsection
