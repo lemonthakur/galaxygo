@@ -82,7 +82,7 @@
                                     <label>
                                         Upload Image (460X300 px)
                                     </label>
-                                    <p><input name="image_name" type="file"  accept="image/*" name="image" class="image" id="image" style="display: none;" required></p>
+                                    <p><input name="image_name" type="file"  accept="image/*" name="image" class="image" id="image" style="display: none;"></p>
                                     <p><label for="image" style="cursor: pointer;">
                                             <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="180"/>
                                         </label></p>

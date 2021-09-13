@@ -116,7 +116,7 @@
                 @endif
 
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' ||
-                    $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit') ? 'menu-open' : '' }}">
+                    $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit' || $routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-play-circle"></i>
                         <p>
@@ -153,10 +153,24 @@
                                 <p>Contest Create</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route("win-coin.index")}}"
+                               class="nav-link {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.edit') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contest Win Coin List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("win-coin.create")}}"
+                               class="nav-link {{ ($routeName == 'win-coin.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Contest Win Coin Create</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
-                <li class="nav-item has-treeview {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
+                {{--<li class="nav-item has-treeview {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-coins"></i>
                         <p>
@@ -180,7 +194,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li>--}}
 
                 <li class="nav-item has-treeview {{ ($routeName == 'category.index' || $routeName == 'category.create' || $routeName == 'category.edit'
                  || $routeName == 'brand.index' || $routeName == 'brand.create' || $routeName == 'brand.edit'

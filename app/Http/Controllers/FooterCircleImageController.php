@@ -46,7 +46,7 @@ class FooterCircleImageController extends Controller
         $rules = [
             'image_name' => 'required|mimes:jpeg,jpg,png|max:1024',
             "title" => "required|min:2|max:500",
-            'order_serial' => "required|integer|min:1|max:11",
+            'order_serial' => "required|numeric|digits_between:1,10",
         ];
 
         $message = [
@@ -127,7 +127,7 @@ class FooterCircleImageController extends Controller
         $rules = [
             //'image_name' => 'required|mimes:jpeg,jpg,png|max:1024',
             "title" => "required|min:2|max:500",
-            'order_serial' => "required|integer|min:1|max:11",
+            'order_serial' => "required|numeric|digits_between:1,10",
         ];
 
         if(!$FooterCircleImage->image_name){

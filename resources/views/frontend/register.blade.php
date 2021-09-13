@@ -25,7 +25,7 @@
                                 <i class="icofont-ui-user"></i>
                             </div>
                             <input type="text" class="form-control login-input" name="name"
-                                   placeholder="Enter User Name" value="{{old('name')}}">
+                                   placeholder="User Name" value="{{old('name')}}">
                         </div>
                         <div class="mb-3">
                             <span class="text-danger">{{$errors->has("name") ? $errors->first("name") : ""}}</span>
@@ -36,7 +36,7 @@
                                 <i class="flaticon-at"></i>
                             </div>
                             <input type="email" class="form-control login-input" name="email"
-                                   placeholder="Enter Email Address" value="{{old('email')}}">
+                                   placeholder="Email Address" value="{{old('email')}}">
                         </div>
                         <div class="mb-3">
                             <span class="text-danger">{{$errors->has("email") ? $errors->first("email") : ""}}</span>
@@ -47,20 +47,20 @@
                                 <i class="flaticon-key"></i>
                             </div>
                             <input type="password" class="form-control login-input" name="password"
-                                   placeholder="Enter Password">
+                                   placeholder="Password">
                         </div>
                         <div class="mb-3">
                             <span
                                 class="text-danger">{{$errors->has("password") ? $errors->first("password") : ""}}</span>
                         </div>
 
-                        <div class="form-group input-form-group mb-0">
+                        {{--<div class="form-group input-form-group mb-0">
                             <div class="icon">
                                 <i class="flaticon-key"></i>
                             </div>
                             <input type="password" class="form-control login-input" name="confirm_password"
                                    placeholder="Enter Confirmed Password">
-                        </div>
+                        </div>--}}
                         <div class="mb-3">
                             <span
                                 class="text-danger">{{$errors->has("confirm_password") ? $errors->first("confirm_password") : ""}}</span>
