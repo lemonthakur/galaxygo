@@ -13,7 +13,7 @@
                                 @if (Auth::check() && Auth::user()->role_id == 0)
                                     {{ucwords(auth()->user()->name)}}
                                 @else
-                                    i am Guest
+                                    {{$siteSetting->index_title ?? "i am Guest"}}
                                 @endif
                             </span>
                         </h2>

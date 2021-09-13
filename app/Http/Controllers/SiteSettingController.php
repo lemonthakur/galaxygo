@@ -33,11 +33,12 @@ class SiteSettingController extends Controller
             'meta_description' => 'max:180',
             'meta_keyword' => 'max:180',
             'copy_right' => 'max:50',
+            'start_contest_title' => 'max:300',
+            'start_contest_text' => 'max:300',
+            'index_title' => 'max:300',
         ];
 
-        $message = [
-
-        ];
+        $message = [];
 
         $validation = Validator::make($request->all(),$rules,$message);
 
@@ -63,6 +64,9 @@ class SiteSettingController extends Controller
         $setting->meta_keyword = $request->meta_keyword ?? Null;
         $setting->copy_right = $request->copy_right ?? Null;
         $setting->facebook_share_link = $request->facebook_share_link ?? Null;
+        $setting->start_contest_title = $request->start_contest_title ?? Null;
+        $setting->start_contest_text = $request->start_contest_text ?? Null;
+        $setting->index_title = $request->index_title ?? Null;
 
         if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){

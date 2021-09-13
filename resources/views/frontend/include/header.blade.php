@@ -12,9 +12,9 @@
                 @endif
 
                 @if(!empty($siteSetting->icon))
-                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset($siteSetting->icon)}}" class="img-fluid" alt="logo"></a>
+                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset($siteSetting->icon)}}" class="img-fluid" alt="mobile-logo"></a>
                 @else
-                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="logo"></a>
+                    <a href="{{route('home')}}" class="mobile-logo"><img src="{{asset('frontend/images/logo/mobile-logo.png')}}" class="img-fluid" alt="mobile-logo"></a>
                 @endif
             </div>
             <div class="ic-header-right">

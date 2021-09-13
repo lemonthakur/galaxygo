@@ -115,11 +115,12 @@
                     </li>
                 @endif
 
-                <li class="nav-item has-treeview {{ ($routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit') ? 'menu-open' : '' }}">
+                <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' ||
+                    $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-friends"></i>
+                        <i class="nav-icon fas fa-play-circle"></i>
                         <p>
-                            Players
+                            Contest Management
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -138,18 +139,6 @@
                                 <p>Player Create</p>
                             </a>
                         </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' || $routeName == 'contest.edit') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-play-circle"></i>
-                        <p>
-                            Contest Management
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route("contest.index")}}"
                                class="nav-link {{ ($routeName == 'contest.index' || $routeName == 'contest.edit') ? 'active' : '' }}">

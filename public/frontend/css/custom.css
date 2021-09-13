@@ -199,6 +199,12 @@ button.login-btn,
     border: 1px solid;
     border-radius: 4px;
 }
+.ic-entries-tab-contents .ic-item {
+    border: 2px solid #7d7b7b63;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
 @media only screen and (max-width: 576px) {
     .ic-entries-tab-contents .ic-item .user .image img {
         width: 100px !important;

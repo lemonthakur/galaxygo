@@ -90,8 +90,8 @@
 
                                             @forelse($contest->contestPlayers as $key => $contestPlayer)
                                             <!--Item-->
-                                                <div
-                                                    class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
+{{--                                                <div class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
+                                                <div class="ic-item">
                                                     <div class="user">
                                                         <div class="image">
                                                             <img src="{{asset($contestPlayer->player->image)}}" alt="user">
@@ -174,8 +174,8 @@
                                 @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 0)
                                     @forelse($contest->contestPlayers as $key => $contestPlayer)
                                         <!--Item-->
-                                            <div
-                                                class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
+{{--                                            <div class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
+                                            <div class="ic-item">
                                                 <div class="user">
                                                     <div class="image">
                                                         <img src="{{asset($contestPlayer->player->image)}}"
@@ -238,7 +238,8 @@
                                         </div>
                                         @forelse($contest->contestPlayers as $key => $contestPlayer)
                                         <!--Item 1-->
-                                            <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
+{{--                                            <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
+                                            <div class="ic-item">
                                                 <div class="user">
                                                     <div class="image">
                                                         <img src="{{asset($contestPlayer->player->image)}}"
@@ -368,7 +369,8 @@
                                         @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 1)
                                             @forelse($contest->contestPlayers as $key => $contestPlayer)
                                                 <!--Item 1-->
-                                                    <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">
+{{--                                                    <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
+                                                    <div class="ic-item">
                                                         <div class="user">
                                                             <div class="image">
                                                                 <img src="{{asset($contestPlayer->player->image)}}"

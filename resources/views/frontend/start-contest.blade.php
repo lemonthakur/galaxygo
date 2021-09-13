@@ -9,10 +9,15 @@
                 <div class="col-md-6">
                     <div class="ic-today-tomorrow-card">
                         <div class="ic-heading">
-                            <h2>how to <span>Play</span></h2>
+                            <h2><span>{{$siteSetting->start_contest_title ?? "how to Play"}}</span></h2>
                         </div>
                         <div class="content">
-                            <p>You can win {{$winCoins[0]['coin'] ?? 00}} coins daily. Start now!!</p>
+                            @if($siteSetting->start_contest_text)
+                                <p>{{$siteSetting->start_contest_text}}</p>
+                            @else
+                                <p>You can win {{$winCoins[0]['coin'] ?? 00}} coins daily. Start now!!</p>
+                            @endif
+
                             @forelse($winCoins as $winCoin)
                                 <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}} coins</p>
                             @empty
