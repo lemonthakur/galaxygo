@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContestParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -212,11 +213,34 @@ class ContestController extends Controller
 
     public function destroy(Contest $contest)
     {
-        if ($contest->delete()) {
-            session()->flash('success', 'Contest Delated');
-        } else {
-            session()->flash('error', 'Contest not Delated');
+        $success = false;
+        DB::beginTransaction();
+        try {
+            ContestPlayer::where("contest_id","=",$contest->id)->delete();
+            ContestParticipant::where("contest_id","=",$contest->id)->delete();
+            $contest->delete();
+            $success = true;
+        }catch(ValidationException $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->withErrors( $e->getErrors() )
+                ->withInput();
+        }catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
         }
+
+        DB::commit();
+
+        if($success){
+            session()->flash('success', 'Contest Delated');
+            return redirect()->back();
+        }else{
+            session()->flash('error', 'Contest not Delated');
+            return redirect()->back()->withInput();
+        }
+
         return redirect()->back();
     }
 }

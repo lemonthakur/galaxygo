@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ContestPlayer extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     public static function boot()
     {
