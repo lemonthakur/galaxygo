@@ -238,6 +238,22 @@
             });
         });
 
+        $("#player_name").on('input',function () {
+            var search = $(this).val();
+            var _token = "{{csrf_token()}}";
+            $.ajax({
+                url: '{{route("player.search")}}',
+                method: 'POST',
+                data: {search:search, _token:_token},
+                success:function (data) {
+                    $("#playerSearch").empty();
+                    $("#playerSearch").append(data);
+                    $("#playerSearch").css('display','block');
+                    $("#playerSearch").css('overflow-y','scroll');
+                }
+            });
+        });
+
         $(document).on('click','.player',function () {
             $("#player_name").val($(this).attr('name'));
             $("#player_id").val($(this).attr('pid'));

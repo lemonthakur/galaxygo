@@ -29,7 +29,9 @@
                             </div>
 
                             <div class="ic-payment-checkout-form">
-                                @if(!\Auth::check())
+                                @if (Auth::check() && Auth::user()->role_id > 0)
+                                    <p>Already have an account? <a href="{{route('login').'?checkoutpg=pg'}}">Log in</a> </p>
+                                @else
                                     <p>Already have an account? <a href="{{route('login').'?checkoutpg=pg'}}">Log in</a> </p>
                                 @endif
                                 <div class="row">
@@ -92,21 +94,34 @@
                                             <span class="text-danger"> {{$errors->has("shipping_post_code") ? $errors->first("shipping_post_code") : ""}} </span>
                                         </div>
                                     </div>
-                                    @if(!\Auth::check())
+                                    @if (Auth::check() && Auth::user()->role_id > 0)
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="password" name="password" value="" class="form-control" placeholder="Password" >
                                             <span class="text-danger"> {{$errors->has("password") ? $errors->first("password") : ""}} </span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="password" name="confirm_password" value="" class="form-control" placeholder="Confirm Password" >
-                                            <span class="text-danger"> {{$errors->has("confirm_password") ? $errors->first("confirm_password") : ""}} </span>
+{{--                                    <div class="col-md-6">--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="password" name="confirm_password" value="" class="form-control" placeholder="Confirm Password" >--}}
+{{--                                            <span class="text-danger"> {{$errors->has("confirm_password") ? $errors->first("confirm_password") : ""}} </span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+                                    @else
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="password" name="password" value="" class="form-control" placeholder="Password" >
+                                                <span class="text-danger"> {{$errors->has("password") ? $errors->first("password") : ""}} </span>
+                                            </div>
                                         </div>
-                                    </div>
+{{--                                        <div class="col-md-6">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <input type="password" name="confirm_password" value="" class="form-control" placeholder="Confirm Password" >--}}
+{{--                                                <span class="text-danger"> {{$errors->has("confirm_password") ? $errors->first("confirm_password") : ""}} </span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     @endif
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <input type="text" name="shipping_phone" value="{{ old("shipping_phone", \Auth::check() ? Auth::user()->shipping_phone : '') }}" class="form-control" placeholder="Phone number" >
                                             <span class="text-danger"> {{$errors->has("shipping_phone") ? $errors->first("shipping_phone") : ""}} </span>
