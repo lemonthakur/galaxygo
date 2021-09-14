@@ -53,6 +53,7 @@ class WinCoinController extends Controller
             'win' => 'required|unique:win_coins,win|integer|min:0',
             'out_of' => 'required|integer|min:0',
             'coin' => 'required|integer|min:0',
+            'coin_name' => 'max:100',
         ];
 
         $message = [];
@@ -69,6 +70,7 @@ class WinCoinController extends Controller
         $winCoin->win = $request->win;
         $winCoin->out_of = $request->out_of;
         $winCoin->coin = $request->coin;
+        $winCoin->coin_name = $request->coin_name;
 
         if ($winCoin->save()){
             session()->flash("success","Data Added Successfully");
@@ -114,6 +116,7 @@ class WinCoinController extends Controller
             'win' => "required|integer|min:0|unique:win_coins,win," . $winCoin->id,
             'out_of' => 'required|integer|min:0',
             'coin' => 'required|integer|min:0',
+            'coin_name' => 'max:100',
         ];
 
         $message = [
@@ -131,6 +134,7 @@ class WinCoinController extends Controller
         $winCoin->win = $request->win;
         $winCoin->out_of = $request->out_of;
         $winCoin->coin = $request->coin;
+        $winCoin->coin_name = $request->coin_name;
         $winCoin->status = $request->status;
 
         if ($winCoin->save()){

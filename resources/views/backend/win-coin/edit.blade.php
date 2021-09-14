@@ -76,6 +76,18 @@
                                         </div>
 
                                         <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="coin_name">Coin Name</label>
+                                                <input type="text" maxlength="100"
+                                                       class="form-control {{$errors->has("coin_name") ? "is-invalid":""}}"
+                                                       id="coin_name" name="coin_name" placeholder="Enter Coin Name"
+                                                       value="{{old("coin_name",$winCoin->coin_name)}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("coin_name") ? $errors->first("coin_name") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
                                             <div class="form-group select2-parent">
                                                 <label>Status</label>
                                                 <select name="status" class="form-control single-select2" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">

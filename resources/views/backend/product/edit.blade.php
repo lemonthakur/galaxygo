@@ -171,8 +171,8 @@
                                                     </div>
                                                 </div>
                                                 <?php
-                                                    $start_dt_for   = ($product->auction_start_date) ? date("d-m-Y", strtotime($product->auction_start_date)) : '';
-                                                    $end_dt_for     = ($product->auction_end_date) ? date("d-m-Y", strtotime($product->auction_end_date)) : '';
+                                                    $start_dt_for   = ($product->auction_start_date) ? date("m-d-Y", strtotime($product->auction_start_date)) : '';
+                                                    $end_dt_for     = ($product->auction_end_date) ? date("m-d-Y", strtotime($product->auction_end_date)) : '';
                                                     $start_tim_for  = ($product->auction_start_time) ? date("H:i A", strtotime($product->auction_start_time)) : '';
                                                     $end_tim_for    = ($product->auction_end_time) ? date("H:i A", strtotime($product->auction_end_time)) : '';
                                                 ?>
@@ -399,7 +399,7 @@
                         showClose: true
                     },
                     useCurrent:false,
-                    format: 'DD-MM-YYYY',
+                    format: 'MM-DD-YYYY',
                     icons: {
                         time: "fas fa-clock",
                         date: "fas fa-calendar",

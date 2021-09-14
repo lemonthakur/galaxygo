@@ -78,7 +78,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Auction Product List - {{date("d-m-Y")}}',
+                            title: 'Auction Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -86,14 +86,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }
@@ -133,7 +133,7 @@
                             let allDate = dateString.split(' ');
                             let thisDate = allDate[0].split('-');
                             let thisTime = allDate[1].split(':');
-                            let newDate = [thisDate[2],thisDate[1],thisDate[0] ].join("-");
+                            let newDate = [thisDate[1],thisDate[2],thisDate[0] ].join("-");
 
                             let suffix = thisTime[0] >= 12 ? " PM":" AM";
                             let hour = thisTime[0] > 12 ? thisTime[0] - 12 : thisTime[0];
@@ -151,7 +151,7 @@
                             let allDate = dateString.split(' ');
                             let thisDate = allDate[0].split('-');
                             let thisTime = allDate[1].split(':');
-                            let newDate = [thisDate[2],thisDate[1],thisDate[0] ].join("-");
+                            let newDate = [thisDate[1],thisDate[2],thisDate[0] ].join("-");
 
                             let suffix = thisTime[0] >= 12 ? " PM":" AM";
                             let hour = thisTime[0] > 12 ? thisTime[0] - 12 : thisTime[0];

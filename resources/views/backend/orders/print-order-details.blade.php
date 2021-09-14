@@ -17,22 +17,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>@yield("page-title") | {{env("APP_NAME")}}</title>
 
     <style type="text/css">
-        #printArea { 
-            width:1024px !important; 
-            margin:auto !important; 
+        #printArea {
+            width:1024px !important;
+            margin:auto !important;
         }
-        body, table { 
-            font-family:tahoma !important; 
-            font-size:13px !important; 
+        body, table {
+            font-family:tahoma !important;
+            font-size:13px !important;
         }
-        .data_table { 
-            border-collapse:collapse !important; 
+        .data_table {
+            border-collapse:collapse !important;
         }
-        .data_table th, .data_table td { 
-            padding:2px 15px 2px 4px !important; font-size:80% !important; 
+        .data_table th, .data_table td {
+            padding:2px 15px 2px 4px !important; font-size:80% !important;
         }
-        table td { 
-            padding:8px !important; 
+        table td {
+            padding:8px !important;
         }
 
         .text-right{
@@ -101,7 +101,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </td>
                 <td width="33%" style="text-align: right;">
                     <strong class="text-lg">Order</strong><br>
-                    Date: {!! $orders->created_at->format('d-M-Y') !!}<br>
+                    Date: {!! $orders->created_at->format('m/d/Y') !!}<br>
                     Time: {!! $orders->created_at->format('h:i A') !!}<br>
                     Status: {!! $orders->status !!}<br>
                     Payment: {!! 'Paid' !!}<br>

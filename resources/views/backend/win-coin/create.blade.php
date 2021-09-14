@@ -10,10 +10,6 @@
                         <h1 class="m-0 text-dark">Win Coin</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                            {{--<li class="breadcrumb-item active">Starter Page</li>--}}
-                        </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -69,6 +65,18 @@
                                                        value="{{old("coin")}}" required>
                                                 <span
                                                     class="text-danger"> {{$errors->has("coin") ? $errors->first("coin") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="coin_name">Coin Name</label>
+                                                <input type="text" maxlength="100"
+                                                       class="form-control {{$errors->has("coin_name") ? "is-invalid":""}}"
+                                                       id="coin_name" name="coin_name" placeholder="Enter Coin Name"
+                                                       value="{{old("coin_name")}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("coin_name") ? $errors->first("coin_name") : ""}} </span>
                                             </div>
                                         </div>
 

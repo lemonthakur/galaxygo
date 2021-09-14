@@ -358,7 +358,7 @@
                     showClose: true
                 },
                 useCurrent:false,
-                format: 'DD-MM-YYYY',
+                format: 'MM-DD-YYYY',
                 icons: {
                     time: "fas fa-clock",
                     date: "fas fa-calendar",

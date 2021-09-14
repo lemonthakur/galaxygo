@@ -91,7 +91,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'User List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml : false,
                                 columns: [ 0, 1, 2,3,4, 5 ],
@@ -99,14 +99,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'User List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4, 5 ]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'User List - {{date("d-m-Y")}}',
+                            title: 'User List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4, 5 ]
                             }

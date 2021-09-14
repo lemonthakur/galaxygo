@@ -96,7 +96,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Withdraw Request - {{date("d-m-Y")}}',
+                            title: 'Withdraw Request - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml : false,
                                 columns: [ 0, 1, 2,3,4,5,6,7 ],
@@ -104,14 +104,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Withdraw Request - {{date("d-m-Y")}}',
+                            title: 'Withdraw Request - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4,5,6,7]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Withdraw Request - {{date("d-m-Y")}}',
+                            title: 'Withdraw Request - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4,5,6,7 ]
                             }

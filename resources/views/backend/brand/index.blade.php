@@ -72,7 +72,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Brand List - {{date("d-m-Y")}}',
+                            title: 'Brand List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2],
@@ -80,14 +80,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Brand List - {{date("d-m-Y")}}',
+                            title: 'Brand List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Brand List - {{date("d-m-Y")}}',
+                            title: 'Brand List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2]
                             }

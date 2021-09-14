@@ -38,7 +38,7 @@
                                                        class="form-control datepicker {{$errors->has("name") ? "is-invalid":""}}"
                                                        id="name" data-target="#name" data-toggle="datetimepicker"
                                                        name="name" placeholder="Select Game Date"
-                                                       value="{{old("name",date('d-m-Y',strtotime($contest->name)))}}">
+                                                       value="{{old("name",date('m/d/Y',strtotime($contest->name)))}}">
                                                 <span
                                                         class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                             </div>
@@ -116,18 +116,6 @@
                                             </div>
                                         </div>
 
-                                        {{--                                        <div class="col-md-4">--}}
-                                        {{--                                            <div class="form-group">--}}
-                                        {{--                                                <label for="location">Location<span class="text-red">*</span></label>--}}
-                                        {{--                                                <input type="text"--}}
-                                        {{--                                                       class="form-control {{$errors->has("location") ? "is-invalid":""}}"--}}
-                                        {{--                                                       id="location" placeholder="Location"--}}
-                                        {{--                                                name="location" value="{{old('location')}}">--}}
-                                        {{--                                                <span--}}
-                                        {{--                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
-
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="played_on">Played On<span class="text-red">*</span></label>
@@ -137,7 +125,7 @@
                                                        data-toggle="datetimepicker" placeholder="play time"
                                                        name="played_on" value="{{old('played_on')}}">
                                                 <span
-                                                        class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>
+                                                        class="text-danger">{{$errors->has("played_on") ? $errors->first("played_on") : ""}}</span>
                                             </div>
                                         </div>
 
@@ -206,8 +194,7 @@
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
-                                                {{--                                                Location: {{strtoupper($player->location)}} <br/>--}}
-                                                Played On: {{date('d-m-Y h:i a',strtotime($player->played_on))}}
+                                                Played On: {{date('m/d/Y h:i a',strtotime($player->played_on))}}
                                             </td>
                                             <td>
                                                 Versus: {{strtoupper($player->versus)}} <br/>
@@ -266,13 +253,12 @@
         });
 
         $("#player_name").on('input',function () {
-        $("#player_name").on('focus',function () {
             var search = $(this).val();
             var _token = "{{csrf_token()}}";
             $.ajax({
                 url: '{{route("player.search")}}',
                 method: 'POST',
-                data: {_token:_token},
+                data: {search:search,_token:_token},
                 success:function (data) {
                     $("#playerSearch").empty();
                     $("#playerSearch").append(data);

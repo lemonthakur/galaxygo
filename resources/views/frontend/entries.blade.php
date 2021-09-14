@@ -69,7 +69,7 @@
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
                                             <div class="ic-pending-entries-title">
-                                                <h5>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h5>
+                                                <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
                                                 <div class="ic-timer">
                                                     <span class="d-none"
                                                           id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>

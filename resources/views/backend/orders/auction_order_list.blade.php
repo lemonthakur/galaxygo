@@ -120,7 +120,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Auction Order List - {{date("d-m-Y")}}',
+                            title: 'Auction Order List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -128,14 +128,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }
@@ -212,7 +212,7 @@
 
             $('.onlydate').datepicker({
                 //format: 'yyyy/mm/dd',
-                format: 'dd-mm-yyyy',
+                format: 'mm-dd-yyyy',
                 autoclose:true,
                 clearBtn:true,
                 todayHighlight:true,

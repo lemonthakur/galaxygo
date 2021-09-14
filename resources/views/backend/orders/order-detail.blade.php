@@ -56,7 +56,7 @@
 
                                     <div class="col-md-4 text-right">
                                         <strong class="text-lg">Order</strong><br>
-                                        Date: {!! $orders->created_at->format('d-M-Y') !!}<br>
+                                        Date: {!! $orders->created_at->format('m/d/Y') !!}<br>
                                         Time: {!! $orders->created_at->format('h:i A') !!}<br>
                                         Status: {!! $orders->status !!}<br>
                                         Payment: {!! 'Paid' !!}<br>

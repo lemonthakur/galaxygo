@@ -73,7 +73,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Category List - {{date("d-m-Y")}}',
+                            title: 'Category List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3],
@@ -81,14 +81,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Category List - {{date("d-m-Y")}}',
+                            title: 'Category List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Category List - {{date("d-m-Y")}}',
+                            title: 'Category List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3]
                             }

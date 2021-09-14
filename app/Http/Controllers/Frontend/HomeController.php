@@ -37,7 +37,7 @@ class HomeController extends Controller
     }
 
     public function startContest(){
-        $winCoins = WinCoin::select('win','out_of','coin')->orderBy('win','desc')->get();
+        $winCoins = WinCoin::select('win','out_of','coin','coin_name')->orderBy('win','desc')->get();
         return view('frontend.start-contest',compact('winCoins'));
     }
 

@@ -106,7 +106,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -114,14 +114,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Product List - {{date("d-m-Y")}}',
+                            title: 'Product List - {{date("m-d-Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7]
                             }

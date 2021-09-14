@@ -89,7 +89,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Contest List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml: false,
                                 columns: [0, 1, 2],
@@ -97,14 +97,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Contest List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Contest List - {{date("d-m-Y")}}',
+                            title: 'Contest List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [0, 1, 2]
                             }
@@ -138,7 +138,7 @@
                     'columns': [
                         {data: 'DT_RowIndex'},
                         { "data": function ( data, type, row ) {
-                                let name = moment(data.name).format('DD/MM/YYYY');
+                                let name = moment(data.name).format('MM/DD/YYYY');
                                 return name;
                             }
                         },

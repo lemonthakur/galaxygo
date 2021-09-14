@@ -90,7 +90,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Players List - {{date("d-m-Y")}}',
+                            title: 'Players List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml : false,
                                 columns: [ 0, 1, 2 ],
@@ -98,14 +98,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Player List - {{date("d-m-Y")}}',
+                            title: 'Player List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2 ]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Player List - {{date("d-m-Y")}}',
+                            title: 'Player List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2 ]
                             }

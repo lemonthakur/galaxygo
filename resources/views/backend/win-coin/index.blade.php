@@ -36,19 +36,6 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">
-{{--                                <form id="filterForm">--}}
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter User Name">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-md-2">--}}
-{{--                                            <button type="submit" class="btn btn-dark">Search</button>--}}
-{{--                                            <button id="reset" type="reset" class="btn btn-danger">Reset</button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </form>--}}
                                     <table class="table table-bordered table-hover" id="dTable">
                                         <thead>
                                         <tr>
@@ -56,6 +43,7 @@
                                             <th>Number Of Win</th>
                                             <th>Out Of</th>
                                             <th>Win Coin</th>
+                                            <th>Coin Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -85,7 +73,7 @@
                     buttons: [
                         {
                             extend: 'print',
-                            title: 'Win Coin List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 stripHtml : false,
                                 columns: [ 0, 1, 2,3,4],
@@ -93,14 +81,14 @@
                         },
                         {
                             extend: 'excelHtml5',
-                            title: 'Win Coin List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4]
                             }
                         },
                         {
                             extend: 'pdfHtml5',
-                            title: 'Win Coin List - {{date("d-m-Y")}}',
+                            title: 'Win Coin List - {{date("m/d-/Y")}}',
                             exportOptions: {
                                 columns: [ 0, 1, 2,3,4 ]
                             }
@@ -136,6 +124,10 @@
                         { data: 'win' },
                         { data: 'out_of' },
                         { data: 'coin' },
+                        { "data": function (data,type,row) {
+                                return data.coin_name ? data.coin_name : "Coins";
+                            }
+                        },
                         { "data": function ( data, type, row ) {
                                 let status = '<span class="btn btn-danger btn-xs">Inactive</span>';
                                 if (data.status == 1){

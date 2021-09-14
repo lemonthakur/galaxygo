@@ -73,7 +73,7 @@ $(document).ready(function() {
         showClose: true
     },
     useCurrent:false,
-     format: 'DD-MM-YYYY hh:mm A',
+     format: 'MM/DD/YYYY hh:mm A',
     icons: {
         time: "fas fa-clock",
         date: "fas fa-calendar",
@@ -97,7 +97,7 @@ $('.datepicker').datetimepicker({
         showClose: true
     },
     useCurrent:false,
-    format: 'DD-MM-YYYY',
+    format: 'MM/DD/YYYY',
     icons: {
         time: "fas fa-clock",
         date: "fas fa-calendar",

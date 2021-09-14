@@ -19,7 +19,7 @@
                             @endif
 
                             @forelse($winCoins as $winCoin)
-                                <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}} coins</p>
+                                <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}} {{$winCoin->coin_name ?? "coins"}}</p>
                             @empty
                                 <p>Nothing Found</p>
                             @endforelse
