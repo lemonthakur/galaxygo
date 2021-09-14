@@ -40,7 +40,7 @@
                                                        name="name" placeholder="Select Game Date"
                                                        value="{{old("name",date('d-m-Y',strtotime($contest->name)))}}">
                                                 <span
-                                                    class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
+                                                        class="text-danger"> {{$errors->has("name") ? $errors->first("name") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -54,7 +54,7 @@
                                                        placeholder="Select Count Down Begin Time"
                                                        value="{{old("time_start",$contest->time_start ? date("h:i A", strtotime($contest->time_start)) : "")}}">
                                                 <span
-                                                    class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
+                                                        class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -68,7 +68,7 @@
                                                        placeholder="Select Count Down End Time"
                                                        value="{{old("time_end",$contest->time_end ? date("h:i A", strtotime($contest->time_end)) : "")}}">
                                                 <span
-                                                    class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
+                                                        class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -103,7 +103,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group" style="position: relative">
                                                 <label for="player_name">Player Name<span
-                                                        class="text-red">*</span></label>
+                                                            class="text-red">*</span></label>
                                                 <input type="text"
                                                        class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
                                                        name="player_name" id="player_name" placeholder="Player Name"
@@ -112,21 +112,21 @@
 
                                                 <div id="playerSearch"></div>
                                                 <span
-                                                    class="text-danger">{{$errors->has("player_name") ? $errors->first("player_name") : ""}}</span>
+                                                        class="text-danger">{{$errors->has("player_name") ? $errors->first("player_name") : ""}}</span>
                                             </div>
                                         </div>
 
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="location">Location<span class="text-red">*</span></label>--}}
-{{--                                                <input type="text"--}}
-{{--                                                       class="form-control {{$errors->has("location") ? "is-invalid":""}}"--}}
-{{--                                                       id="location" placeholder="Location"--}}
-{{--                                                name="location" value="{{old('location')}}">--}}
-{{--                                                <span--}}
-{{--                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="col-md-4">--}}
+                                        {{--                                            <div class="form-group">--}}
+                                        {{--                                                <label for="location">Location<span class="text-red">*</span></label>--}}
+                                        {{--                                                <input type="text"--}}
+                                        {{--                                                       class="form-control {{$errors->has("location") ? "is-invalid":""}}"--}}
+                                        {{--                                                       id="location" placeholder="Location"--}}
+                                        {{--                                                name="location" value="{{old('location')}}">--}}
+                                        {{--                                                <span--}}
+                                        {{--                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
 
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -137,7 +137,7 @@
                                                        data-toggle="datetimepicker" placeholder="play time"
                                                        name="played_on" value="{{old('played_on')}}">
                                                 <span
-                                                    class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>
+                                                        class="text-danger">{{$errors->has("location") ? $errors->first("location") : ""}}</span>
                                             </div>
                                         </div>
 
@@ -147,9 +147,9 @@
                                                 <input type="text"
                                                        class="form-control {{$errors->has("versus") ? "is-invalid":""}}"
                                                        id="versus" placeholder="Versus"
-                                                name="versus" value="{{old('versus')}}">
+                                                       name="versus" value="{{old('versus')}}">
                                                 <span
-                                                    class="text-danger">{{$errors->has("versus") ? $errors->first("versus") : ""}}</span>
+                                                        class="text-danger">{{$errors->has("versus") ? $errors->first("versus") : ""}}</span>
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@
                                                 <input type="number" step="any"
                                                        class="form-control {{$errors->has("score") ? "is-invalid":""}}"
                                                        id="score" placeholder="Score"
-                                                name="score" value="{{old('score')}}">
+                                                       name="score" value="{{old('score')}}">
                                                 <span class="text-danger">{{$errors->has("score") ? $errors->first("score") : ""}}</span>
                                             </div>
                                         </div>
@@ -206,7 +206,7 @@
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player_name)}} <br/>
-{{--                                                Location: {{strtoupper($player->location)}} <br/>--}}
+                                                {{--                                                Location: {{strtoupper($player->location)}} <br/>--}}
                                                 Played On: {{date('d-m-Y h:i a',strtotime($player->played_on))}}
                                             </td>
                                             <td>
@@ -249,9 +249,24 @@
 
 @section('js')
     <script>
+        $("#player_name").on('focus',function () {
+            var search = $(this).val();
+            var _token = "{{csrf_token()}}";
+            $.ajax({
+                url: '{{route("player.search")}}',
+                method: 'POST',
+                data: {_token:_token},
+                success:function (data) {
+                    $("#playerSearch").empty();
+                    $("#playerSearch").append(data);
+                    $("#playerSearch").css('display','block');
+                    $("#playerSearch").css('overflow-y','scroll');
+                }
+            });
+        });
+
         $("#player_name").on('input',function () {
             var search = $(this).val();
-            $("#playerSearch").css('display','block');
             var _token = "{{csrf_token()}}";
             $.ajax({
                 url: '{{route("player.search")}}',
@@ -260,12 +275,13 @@
                 success:function (data) {
                     $("#playerSearch").empty();
                     $("#playerSearch").append(data);
+                    $("#playerSearch").css('display','block');
+                    $("#playerSearch").css('overflow-y','scroll');
                 }
             });
         });
 
         $(document).on('click','.player',function () {
-
             $("#player_name").val($(this).attr('name'));
             $("#player_id").val($(this).attr('pid'));
 
