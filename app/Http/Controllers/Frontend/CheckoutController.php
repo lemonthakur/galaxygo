@@ -34,7 +34,7 @@ class CheckoutController extends Controller
                 'last_name' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
-                'confirm_password' => 'required|same:password|min:6',
+//                'confirm_password' => 'required|same:password|min:6',
 
                 'shipping_adrress_line_1' => 'required',
                 'shipping_city' => 'required',
