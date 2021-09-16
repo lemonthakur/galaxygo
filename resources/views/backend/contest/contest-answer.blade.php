@@ -47,8 +47,9 @@
                                                          style="width: 50px;height:50px;border-radius:50%;"/>
                                                 </td>
                                                 <td>
-                                                    Name: {{ucwords($player->name)}} <br/>
-                                                    Location: {{ucwords($player->location)}}
+                                                    Name: {{ucwords($player->player_name)}} <br/>
+{{--                                                    Location: {{ucwords($player->location)}}--}}
+                                                    Played On: {{$player->played_on}}
                                                 </td>
                                                 <td>
                                                     Versus: {{ucwords($player->versus)}} <br/>
@@ -65,17 +66,20 @@
                                                         Status: <small class="bg-info p-1 text-white">Over</small>
                                                     @endif
                                                 </td>
+                                                @if($contest->is_final_answer == 0)
                                                 <td class="text-center align-middle">
                                                     <input name="contest_player_id[]" type="hidden"
                                                            value="{{$player->id}}">
-                                                    <input type="number" step="any" min="0" class="form-control" name="final_score[]" placeholder="Enter final score"/>
+                                                    <input required type="number" step="any" min="0" class="form-control" name="final_score[]" placeholder="Enter final score"/>
                                                 </td>
+                                                    @endif
                                             </tr>
                                         @endforeach
                                         </tbody>
                                         <tfoot>
                                         <tr>
                                             <td colspan="5" class="text-right">
+                                                <p class="text-danger w-50 text-justify ml-auto">Please check you have entered all the answers correctly. After submitting the answer, you won't be able to change it.</p>
                                                 <a href="{{route('contest.index')}}" class="btn btn-default">Back</a>
                                                 <button class="btn btn-primary" type="submit">Submit Answer</button>
                                             </td>

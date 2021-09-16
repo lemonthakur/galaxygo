@@ -76,6 +76,15 @@
                 </div>
                 <div id="menu" class="text-left ">
                     <ul class="ic-mobile-menu">
+
+                        <li class="ic-menu-item-has-children">
+                            <a href="{{ route('profile')}}">Profile</a>
+                        </li>
+
+                        <li class="ic-menu-item-has-children">
+                            <a href="{{route('profile')}}/#withdraw">Withdraw</a>
+                        </li>
+
                         <li class="ic-menu-item-has-children">
                             <a href="{{route('entries')}}">Entries</a>
                         </li>
@@ -96,9 +105,6 @@
                         </li>
                         <li class="ic-menu-item-has-children">
                             <a href="{{route('privacy.policy')}}">Terms & Condition</a>
-                        </li>
-                        <li class="ic-menu-item-has-children">
-                            <a href="{{route('profile')}}">Profile</a>
                         </li>
                         <li class="ic-menu-item-has-children">
                             <a href="{{route('logout')}}">Logout</a>

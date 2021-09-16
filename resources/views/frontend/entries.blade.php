@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-lg-8 col-md-7">
                     <div class="ic-entries-right">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#openEntries">Open Entries</a>
                             </li>
@@ -154,9 +154,9 @@
                                             </div>
                                         </form>
                                         @elseif($now > strtotime($contest->time_end))
-                                            <h3 class="text-center text-white">Today's Contest End</h3>
+                                            <h4 class="text-center text-white">Today's Contest End</h4>
                                         @else
-                                            <h3 class="text-center text-white">The contest hasn't started yet.</h3>
+                                            <h4 class="text-center text-white">The contest hasn't started yet.</h4>
                                             @endif
                                     @else
                                         <h3 class="text-center text-white">No contest found</h3>
@@ -169,7 +169,7 @@
                             <div class="tab-pane fade" id="pendingEntries">
                                 <div class="ic-entries-tab-contents pending-entries">
                                     <div class="ic-pending-entries-title">
-                                        <h5>pending entries</h5>
+                                        <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
                                     </div>
                                 @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 0)
                                     @forelse($contest->contestPlayers as $key => $contestPlayer)
@@ -234,7 +234,7 @@
                                 <div class="ic-entries-tab-contents final-entries">
                                     @if(!empty($contest)  && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 1)
                                         <div class="ic-time">
-                                            <h4>Today's final entries</h4>
+                                            <h4>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h4>
                                         </div>
                                         @forelse($contest->contestPlayers as $key => $contestPlayer)
                                         <!--Item 1-->
@@ -260,7 +260,7 @@
                                                 </div>
 
                                                 <div class="over-projection final-fantacy-score text-center">
-                                                        <span>your projection</span>
+                                                        <span>your proj</span>
                                                     @if(!empty($contestPlayer->participant->participant_answer))
                                                         @if($contestPlayer->participant->participant_answer == 2)
                                                             <div class="over-icon text-center">
@@ -299,7 +299,7 @@
                                                 </div>
 
                                                 <div class="over-projection mobile-over-projection final-fantacy-score text-center">
-                                                    <span>your projection</span>
+                                                    <span>your proj</span>
                                                     @if(!empty($contestPlayer->participant->participant_answer))
                                                         @if($contestPlayer->participant->participant_answer == 2)
                                                             <div class="over-icon text-center">
@@ -392,7 +392,7 @@
 
 
                                                         <div class="over-projection final-fantacy-score text-center">
-                                                            <span>your projection</span>
+                                                            <span>your proj</span>
                                                             @if(!empty($contestPlayer->participant->participant_answer))
                                                                 @if($contestPlayer->participant->participant_answer == 2)
                                                                     <div class="over-icon text-center">
@@ -431,7 +431,7 @@
                                                         </div>
 
                                                         <div class="over-projection mobile-over-projection final-fantacy-score text-center">
-                                                            <span>your projection</span>
+                                                            <span>your proj</span>
                                                             @if(!empty($contestPlayer->participant->participant_answer))
                                                                 @if($contestPlayer->participant->participant_answer == 2)
                                                                     <div class="over-icon text-center">
@@ -519,7 +519,9 @@
             });
 
             // Count down timer
-            var getTime = $('#timer-time').text()+' GMT';
+            let getTime = $('#timer-time').text()+' -08:00';
+            // let getTime = $('#timer-time').text()+' +06:00';
+            console.log(getTime);
 
             function makeTimer() {
                 if (Date.parse(getTime) < Date.parse(new Date().toUTCString())) {

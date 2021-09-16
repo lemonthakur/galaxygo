@@ -164,7 +164,7 @@ button.login-btn,
 }
 .ic-entries-tab-contents .ic-item .user .image img{
     border-radius: 8% !important;
-    border: 2px solid #D6BA4F;
+    /*border: 2px solid #D6BA4F;*/
 }
 
 .ic-item .player-name{
@@ -200,9 +200,15 @@ button.login-btn,
     border-radius: 4px;
 }
 .ic-entries-tab-contents .ic-item {
-    border: 2px solid #7d7b7b63;
+    border-bottom: 2px solid #7d7b7b63;
     margin-bottom: 15px;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
+}
+
+.ic-entries-tab-contents {
+    border: 1px solid #848484;
+    padding: 10px 5px;
+    border-radius: 0;
 }
 
 @media only screen and (max-width: 576px) {

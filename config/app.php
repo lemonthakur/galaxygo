@@ -67,9 +67,8 @@ return [
     |
     */
 
-      'timezone' => 'UTC',
-//    'timezone' => env('TIME_ZONE', 'UTC'),
-    //'timezone' => env('TIME_ZONE', 'UTC'),
+//      'timezone' => 'UTC',
+    'timezone' => env('TIME_ZONE', 'America/Los_Angeles'),
 
     /*
     |--------------------------------------------------------------------------
