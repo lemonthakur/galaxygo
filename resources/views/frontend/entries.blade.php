@@ -72,7 +72,7 @@
                                                 <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
                                                 <div class="ic-timer">
                                                     <span class="d-none"
-                                                          id="timer-time">{{date('M d,Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
+                                                          id="timer-time">{{date('D, d M Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
                                                     <div class="hours">
                                                         <h4 id="hour">00</h4>
                                                         <p>hours</p>
@@ -519,10 +519,10 @@
             });
 
             // Count down timer
-            var getTime = $('#timer-time').text();
+            var getTime = $('#timer-time').text()+' GMT';
 
             function makeTimer() {
-                if (Date.parse(getTime) < Date.parse(new Date())) {
+                if (Date.parse(getTime) < Date.parse(new Date().toUTCString())) {
                     getTime = new Date();
                     $('.open-entries').empty();
                     $('.open-entries').html('<h3 class="text-center text-white">Today\'s contest end</h3>');
