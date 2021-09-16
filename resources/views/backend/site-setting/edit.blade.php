@@ -140,6 +140,18 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label for="notice">Notice</label>
+                                                <textarea
+                                                    class="form-control {{$errors->has("notice") ? "is-invalid":""}}"
+                                                    id="notice" name="notice"
+                                                    placeholder="Notice">{{old("notice",$setting->notice)}}</textarea>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("notice") ? $errors->first("notice") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label for="google_map">Map Code</label>
                                                 <textarea
                                                     class="form-control {{$errors->has("google_map") ? "is-invalid":""}}"

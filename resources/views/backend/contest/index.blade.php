@@ -143,11 +143,11 @@
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                return moment(data.time_start).format('h:mm A');
+                                return moment(data.time_start, "YYYY/MM/DD h:mm A").format('h:mm A');
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                return moment(data.time_end).format('h:mm A');
+                                return moment(data.time_end, "YYYY/MM/DD h:mm A").format('h:mm A');
                             }
                         },
                         { "data": function ( data, type, row ) {

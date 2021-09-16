@@ -519,7 +519,7 @@
             });
 
             // Count down timer
-            let getTime = $('#timer-time').text()+' -08:00';
+            let getTime = $('#timer-time').text()+' -07:00';
             // let getTime = $('#timer-time').text()+' +06:00';
             console.log(getTime);
 

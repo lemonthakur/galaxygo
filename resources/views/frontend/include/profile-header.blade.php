@@ -46,8 +46,8 @@
                     <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
                                                                  alt=""></a>
                     @endguest
-
                     @auth()
+                        <span class="m-coins d-lg-none d-md-none d-sm-inline-block text-center mr-3" style="color: yellow">Coins Balance: {{(int) auth()->user()->current_coin}}</span>
                         @if(auth()->user()->photo)
                     <a href="#" class="mobile-profile-user"><img src="{{auth()->user()->photo}}"
                                                                  alt=""></a>

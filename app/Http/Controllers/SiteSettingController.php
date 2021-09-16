@@ -67,6 +67,7 @@ class SiteSettingController extends Controller
         $setting->start_contest_title = $request->start_contest_title ?? Null;
         $setting->start_contest_text = $request->start_contest_text ?? Null;
         $setting->index_title = $request->index_title ?? Null;
+        $setting->notice = $request->notice ?? Null;
 
         if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){

@@ -8,17 +8,17 @@
             <div class="ic-user-content-warper">
                 <div class="content">
                     <div class="ic-heading text-center">
-                        <h2>
-                            <span>
-                                @if (Auth::check() && Auth::user()->role_id == 0)
-                                    {{ucwords(auth()->user()->name)}}
-                                @else
-                                    {{$siteSetting->index_title ?? "i am Guest"}}
-                                @endif
-                            </span>
-                        </h2>
+                        @if (Auth::check() && Auth::user()->role_id == 0)
+                            <p class="text-center"
+                               style="color: white;align-items: center;font-weight: normal;font-family: galano-light">
+                                {{$siteSetting->notice ?? ""}}
+                            </p>
+                        @else
+                            <h2><span>{{$siteSetting->index_title ?? "i am Guest"}}</span></h2>
+                        @endif
+
                     </div>
-                    <div class="ic-btn-group ic-guest-btn">
+                    <div class="ic-btn-group ic-guest-btn text-center">
                         <div class="ic-today-btn">
                             <a href="{{route('start-contest')}}">
                                 <!-- <svg class="icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -111,7 +111,7 @@
 
                             </a>
                         </div>
-                        <div class="ic-get-share-btn">
+                        <div class="ic-get-share-btn justify-content-around">
                             <a href="#" class="ic-chat-icon" id="chatToggle">
                             <span class="chat-svg-warper">
                                 <svg id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
