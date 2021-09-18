@@ -101,8 +101,8 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->contact_no = Str::random(4).date('ymd').rand(0,99);
-        $user->total_coin = $user->total_coin + 100;
-        $user->current_coin = $user->current_coin + 100;
+        $user->total_coin = $user->total_coin + 5;
+        $user->current_coin = $user->current_coin + 5;
         $user->password = Hash::make($request->password);
 
         if ($user->save()){
@@ -111,7 +111,7 @@ class AuthController extends Controller
             $coinHistory = new CoinHistory();
             $coinHistory->user_id = auth()->id();
             $coinHistory->user_type = 0;
-            $coinHistory->amount = 100;
+            $coinHistory->amount = 5;
             $coinHistory->transaction_type = 0;
             $coinHistory->earn_expense_type = 0;
             $coinHistory->save();
@@ -151,8 +151,8 @@ class AuthController extends Controller
             $user->email = $userSocial->getEmail();
             $user->provider_id = $userSocial->getId();
             $user->provider = $provider;
-            $user->total_coin = $user->total_coin + 100;
-            $user->current_coin = $user->current_coin + 100;
+            $user->total_coin = $user->total_coin + 5;
+            $user->current_coin = $user->current_coin + 5;
             $user->provider = $provider;
 
             if($user->save()){
@@ -160,7 +160,7 @@ class AuthController extends Controller
 
                 $coinHistory = new CoinHistory();
                 $coinHistory->user_id = auth()->id();
-                $coinHistory->amount = 100;
+                $coinHistory->amount = 5;
                 $coinHistory->transaction_type = 0;
                 $coinHistory->earn_expense_type = 0;
                 $coinHistory->save();

@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title','Privacy Policy')
+@section('title','Contact')
 
 @section('content')
     <section class="ic-contact-area">

@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title','Home')
+@section('title','Payment')
 
 @section('css')
     <style type="text/css">
@@ -169,7 +169,7 @@
                 point_amount:point_amount,
             },
                 success:function (data) {
-                    
+
                     if(data.point_less=='yes'){
                         $("#loading").hide();
                         toastr.options =

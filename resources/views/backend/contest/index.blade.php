@@ -41,7 +41,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <input type="text" class="form-control datepicker" name="name" id="name"
-                                                       placeholder="Enter Contest Name"
+                                                       placeholder="Select Game Date"
                                                        readonly data-target="#name" data-toggle="datetimepicker">
                                             </div>
                                         </div>
@@ -143,11 +143,11 @@
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                return moment(data.time_start, "YYYY/MM/DD h:mm A").format('h:mm A');
+                                return moment(data.time_start, "YYYY/MM/DD h:mm A").format('MM/DD/YYYY h:mm A');
                             }
                         },
                         { "data": function ( data, type, row ) {
-                                return moment(data.time_end, "YYYY/MM/DD h:mm A").format('h:mm A');
+                                return moment(data.time_end, "YYYY/MM/DD h:mm A").format('MM/DD/YYYY h:mm A');
                             }
                         },
                         { "data": function ( data, type, row ) {

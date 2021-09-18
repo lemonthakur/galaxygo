@@ -52,7 +52,7 @@
                                             <div class="form-group">
                                                 <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("time_start") ? "is-invalid":""}}"
+                                                       class="form-control datetimepicker {{$errors->has("time_start") ? "is-invalid":""}}"
                                                        id="time_start" data-target="#time_start"
                                                        data-toggle="datetimepicker" name="time_start"
                                                        placeholder="Select Count Down Begin Time"
@@ -66,7 +66,7 @@
                                             <div class="form-group">
                                                 <label for="time_end">Count Down End<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("time_end") ? "is-invalid":""}}"
+                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"
                                                        id="time_end" data-target="#time_end"
                                                        data-toggle="datetimepicker" name="time_end"
                                                        placeholder="Select Count Down End Time"

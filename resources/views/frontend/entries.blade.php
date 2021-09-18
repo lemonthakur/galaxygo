@@ -63,8 +63,10 @@
                             {{-- Open Enries--}}
                             <div class="tab-pane fade show active" id="openEntries">
                                 <div class="ic-entries-tab-contents open-entries">
+
                                     @if(!empty($contest))
-                                        @if($now >= strtotime($contest->time_start) && strtotime($contest->time_end) >=  $now)
+
+                                        @if($now > strtotime($contest->time_start) && strtotime($contest->time_end) >  $now)
                                         <form method="post" action="{{route('entries.store')}}">
                                             @csrf
                                             <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
@@ -72,7 +74,11 @@
                                                 <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
                                                 <div class="ic-timer">
                                                     <span class="d-none"
-                                                          id="timer-time">{{date('D, d M Y H:i:s',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
+                                                          id="timer-time">{{date('d M Y H:i:s A',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
+                                                    <div class="hours">
+                                                        <h4 id="day" class="text-center">00</h4>
+                                                        <p>Days</p>
+                                                    </div>
                                                     <div class="hours">
                                                         <h4 id="hour">00</h4>
                                                         <p>hours</p>
@@ -168,10 +174,10 @@
                             {{--Pending Entries--}}
                             <div class="tab-pane fade" id="pendingEntries">
                                 <div class="ic-entries-tab-contents pending-entries">
+                                @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 0)
                                     <div class="ic-pending-entries-title">
                                         <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
                                     </div>
-                                @if(!empty($contest) && strtotime($contest->time_end) <= $now && $contest->is_final_answer == 0)
                                     @forelse($contest->contestPlayers as $key => $contestPlayer)
                                         <!--Item-->
 {{--                                            <div class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
@@ -295,7 +301,7 @@
                                                             </a>
                                                         </div>
                                                     @endif
-                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span></p>
                                                 </div>
 
                                                 <div class="over-projection mobile-over-projection final-fantacy-score text-center">
@@ -334,7 +340,7 @@
                                                             </a>
                                                         </div>
                                                     @endif
-                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                    <p><span class="final-score">{{$contestPlayer->final_score}}</span></p>
                                                 </div>
 
                                             </div>
@@ -427,7 +433,7 @@
                                                                     </a>
                                                                 </div>
                                                             @endif
-                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span></p>
                                                         </div>
 
                                                         <div class="over-projection mobile-over-projection final-fantacy-score text-center">
@@ -466,7 +472,7 @@
                                                                     </a>
                                                                 </div>
                                                             @endif
-                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span> <span>fantasy score</span></p>
+                                                            <p><span class="final-score">{{$contestPlayer->final_score}}</span></p>
                                                         </div>
                                                     </div>
                                                 @empty
@@ -520,7 +526,6 @@
 
             // Count down timer
             let getTime = $('#timer-time').text()+' -07:00';
-            // let getTime = $('#timer-time').text()+' +06:00';
             console.log(getTime);
 
             function makeTimer() {
@@ -553,7 +558,7 @@
                     seconds = "0" + seconds;
                 }
 
-                // $("#day").text(days);
+                $("#day").text(days);
                 $("#hour").text(hours);
                 $("#minute").text(minutes);
                 $("#second").text(seconds);

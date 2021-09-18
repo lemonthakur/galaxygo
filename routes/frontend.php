@@ -14,9 +14,6 @@ use App\Http\Controllers\Frontend\BidProductPaymentController;
 //Frontend Route
 Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('/start-contest',[HomeController::class,'startContest'])->name('start-contest');
-//Route::get('/product-details',[HomeController::class,'productDetails'])->name('product-details');
-//Route::get('/cart',[HomeController::class,'cart'])->name('cart');
-//Route::get('/checkout',[HomeController::class,'checkout'])->name('checkout');
 Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
 Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
 Route::get('/contact',[HomeController::class,'contact'])->name('contact');
@@ -91,6 +88,7 @@ Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::put('/profile-update',[HomeController::class,'updateProfile'])->name('profile.update');
     Route::post('/change-cover-photo',[HomeController::class,'changeCoverPhoto'])->name('change.cover.photo');
     Route::post('/change-profile-photo',[HomeController::class,'changeProfilePhoto'])->name('change.profile.photo');
+    Route::get('/withdraws',[HomeController::class,'withdraw'])->name('withdraw');
     Route::post('/withdraw-request',[HomeController::class,'withdrawRequest'])->name('withdraw.request');
 
     Route::post('checkout-point-payment', [CheckoutController::class, 'checkoutpointPayment'])->name('checkout-point.payment');

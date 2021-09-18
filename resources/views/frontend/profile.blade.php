@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title','Home')
+@section('title','Profile')
 
 @section('content')
 
@@ -126,32 +126,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        {{--                    withdraw amount--}}
-                        <div class="ic-withdraw" id="withdraw">
-                            <div class="title">
-                                <h4>Withdraw Coin</h4>
-                            </div>
-                            <form action="{{route('withdraw.request')}}" method="post" class="ic-profile-basic-info">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="amount">Withdraw Amount<span class="text-danger">*</span></label>
-                                            <input type="number" step="any" id="amount" class="form-control" placeholder="Enter amount"
-                                                   value="{{old('amount')}}"
-                                                   name="amount" min="2500">
-                                            <span class="text-danger">{{$errors->has("amount") ? $errors->first("amount") : ""}}</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button type="submit" class="ic-btn">Withdraw</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <<h6 class="text-warning text-center">1 USD = 100. Minimum withdraw amount is 2500</h6>
-                        </div>
                     </div>
                 </div>
             </div>

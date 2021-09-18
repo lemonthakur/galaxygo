@@ -27,7 +27,10 @@ class ContestController extends Controller
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
-        ->whereDate('name', date('Y-m-d'))->first();
+            ->orderBy('id','desc')
+        ->whereDate('time_start', '<=',date('Y-m-d'))
+        ->whereDate('time_end', '>=',date('Y-m-d'))
+        ->first();
 
         $latest7contests = Contest::
         with('userPLay',
@@ -36,7 +39,8 @@ class ContestController extends Controller
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name', 'time_end', 'is_final_answer')
         ->orderBy('id','desc')
-            ->whereDate('name','<',date('Y-m-d'))->limit(7)->get();
+//            ->whereDate('name','<',date('Y-m-d'))
+            ->skip(1)->limit(7)->get();
 
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));

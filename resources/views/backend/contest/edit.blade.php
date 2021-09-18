@@ -48,11 +48,11 @@
                                             <div class="form-group">
                                                 <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("time_start") ? "is-invalid":""}}"
+                                                       class="form-control datetimepicker {{$errors->has("time_start") ? "is-invalid":""}}"
                                                        id="time_start" data-target="#time_start"
                                                        data-toggle="datetimepicker" name="time_start"
                                                        placeholder="Select Count Down Begin Time"
-                                                       value="{{old("time_start",$contest->time_start ? date("h:i A", strtotime($contest->time_start)) : "")}}">
+                                                       value="{{old("time_start",$contest->time_start ? date("m-d-Y h:i A", strtotime($contest->time_start)) : "")}}">
                                                 <span
                                                         class="text-danger"> {{$errors->has("time_start") ? $errors->first("time_start") : ""}} </span>
                                             </div>
@@ -62,11 +62,11 @@
                                             <div class="form-group">
                                                 <label for="time_end">Count Down End<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
-                                                       class="form-control timepicker {{$errors->has("time_end") ? "is-invalid":""}}"
+                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"
                                                        id="time_end" data-target="#time_end"
                                                        data-toggle="datetimepicker" name="time_end"
-                                                       placeholder="Select Count Down End Time"
-                                                       value="{{old("time_end",$contest->time_end ? date("h:i A", strtotime($contest->time_end)) : "")}}">
+                                                       placeholder="Select Count Down End"
+                                                       value="{{old("time_end",$contest->time_end ? date("m-d-Y h:i A", strtotime($contest->time_end)) : "")}}">
                                                 <span
                                                         class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
                                             </div>

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use function PHPUnit\Framework\containsIdentical;
 
 class HomeController extends Controller
 {
@@ -292,6 +293,10 @@ class HomeController extends Controller
         }
     }
 
+    public function withdraw(){
+        return view('frontend.withdraw');
+    }
+
     public function withdrawRequest(Request $request){
 
         $rules = [
@@ -392,15 +397,15 @@ class HomeController extends Controller
 
             if($user['type']==1){
                 $gets_user = GuestUser::find($user['id']);
-                $gets_user->total_coin = $gets_user->total_coin + 100;
-                $gets_user->current_coin = $gets_user->current_coin + 100;
+                $gets_user->total_coin = $gets_user->total_coin + 5;
+                $gets_user->current_coin = $gets_user->current_coin + 5;
                 $gets_user->save();
                 $current_coin = $gets_user->current_coin;
             }
             elseif($user['type']==0){
                 $user = User::find($user['id']);
-                $user->total_coin = $user->total_coin + 100;
-                $user->current_coin = $user->current_coin + 100;
+                $user->total_coin = $user->total_coin + 5;
+                $user->current_coin = $user->current_coin + 5;
                 $user->save();
                 $current_coin = $user->current_coin;
             }
@@ -409,7 +414,7 @@ class HomeController extends Controller
             $coinHistory = new CoinHistory();
             $coinHistory->user_id = $user['id'];
             $coinHistory->user_type = $user['type'];
-            $coinHistory->amount = 100;
+            $coinHistory->amount = 5;
             $coinHistory->transaction_type = 0;
             $coinHistory->earn_expense_type = 5;
             $coinHistory->save();

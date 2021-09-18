@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('title','Home')
+@section('title','Payment')
 
 @section('css')
     <style type="text/css">
@@ -134,7 +134,7 @@
                 auc_bit_id:auc_bit_id,
             },
                 success:function (data) {
-                    
+
                     if(data.point_less=='yes'){
                         $("#loading").hide();
                         toastr.options =

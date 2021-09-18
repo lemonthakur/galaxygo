@@ -66,6 +66,11 @@ class ContestController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
 
+        if ($request->time_start > $request->time_end){
+            session()->flash('error','Count down begin time con not larger than count down end time');
+            return redirect()->back()->withInput();
+        }
+
         if (count(Cart::content()) == 0) {
             session()->flash('error', 'Please, Add Player');
             return redirect()->back()->withInput();
@@ -76,8 +81,8 @@ class ContestController extends Controller
             $contest = new Contest();
 
             $contest->name = $request->name;
-            $contest->time_start = $request->name . ' ' . $request->time_start;
-            $contest->time_end = $request->name . ' ' . $request->time_end;
+            $contest->time_start =date('Y-m-d h:i a', strtotime($request->time_start));
+            $contest->time_end =date('Y-m-d h:i a', strtotime($request->time_end));
 
             if ($contest->save()) {
                 $contestId = $contest->id;
@@ -88,8 +93,7 @@ class ContestController extends Controller
                     $contestPlayer->player_id = $row->id;
                     $contestPlayer->player_name = $row->name;
                     $contestPlayer->player_image = $row->options['player_image'];
-//                    $contestPlayer->location = $row->options['location'];
-                    $contestPlayer->played_on = date('Y-m-d h:i a', strtotime($row->options['played_on']));;
+                    $contestPlayer->played_on = date('Y-m-d h:i a', strtotime($row->options['played_on']));
                     $contestPlayer->versus = $row->options['versus'];
                     $contestPlayer->score = $row->options['score'];
                     $contestPlayer->save();
@@ -152,9 +156,15 @@ class ContestController extends Controller
         if ($validation->fails()) {
             return redirect()->back()->withInput()->withErrors($validation);
         }
+
+        if ($request->time_start > $request->time_end){
+            session()->flash('error','Count down begin time con not larger than count down end time');
+            return redirect()->back()->withInput();
+        }
+
         $contest->name = $request->name;
-        $contest->time_start = $request->name . ' ' . $request->time_start;
-        $contest->time_end = $request->name . ' ' . $request->time_end;
+        $contest->time_start =date('Y-m-d h:i a', strtotime($request->time_start));
+        $contest->time_end =date('Y-m-d h:i a', strtotime($request->time_end));
 
         if ($contest->save()) {
             session()->flash("success", "Data successfully updated");
