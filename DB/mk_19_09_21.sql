@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2021 at 03:18 AM
+-- Generation Time: Sep 19, 2021 at 06:37 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -151,12 +151,7 @@ CREATE TABLE `coin_histories` (
 --
 
 INSERT INTO `coin_histories` (`id`, `user_id`, `user_type`, `amount`, `transaction_type`, `earn_expense_type`, `created_by`, `updated_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '0.00', 0, 2, 1, 1, NULL, '2021-09-08 11:10:54', '2021-09-08 11:10:54'),
-(2, 1, 1, '10000.00', 0, 2, 1, 1, NULL, '2021-09-08 11:17:05', '2021-09-08 11:17:05'),
-(3, 2, 1, '0.00', 0, 2, 1, 1, NULL, '2021-09-10 17:32:02', '2021-09-10 17:32:02'),
-(4, 2, 1, '0.00', 0, 2, 1, 1, NULL, '2021-09-14 16:07:44', '2021-09-14 16:07:44'),
-(5, 29, 0, '100000.00', 0, 2, 29, 29, NULL, '2021-09-16 05:47:39', '2021-09-16 05:47:39'),
-(6, 29, 0, '100000.00', 0, 2, 29, 29, NULL, '2021-09-18 04:25:43', '2021-09-18 04:25:43');
+(1, 2, 1, '0.00', 0, 2, 1, 1, NULL, '2021-09-19 03:32:24', '2021-09-19 03:32:24');
 
 -- --------------------------------------------------------
 
@@ -167,8 +162,8 @@ INSERT INTO `coin_histories` (`id`, `user_id`, `user_type`, `amount`, `transacti
 CREATE TABLE `contests` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `time_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time_start` datetime DEFAULT NULL,
+  `time_end` datetime NOT NULL,
   `is_final_answer` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = not submitted,1= submitted',
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -183,12 +178,11 @@ CREATE TABLE `contests` (
 --
 
 INSERT INTO `contests` (`id`, `name`, `time_start`, `time_end`, `is_final_answer`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(11, '2021-09-09', '2021-09-09 11:22 PM', '2021-09-09 11:50 PM', 0, 1, 1, 1, NULL, '2021-09-10 17:23:29', '2021-09-10 17:23:29'),
-(12, '2021-09-10', '2021-09-10 11:25 PM', '2021-09-10 11:29 PM', 1, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(13, '2021-09-13', '2021-09-13 10:59 PM', '2021-09-13 11:05 PM', 1, 1, 1, 1, NULL, '2021-09-13 17:00:33', '2021-09-13 17:06:27'),
-(14, '2021-09-14', '2021-09-14 10:01 PM', '2021-09-14 10:05 PM', 1, 1, 1, 1, NULL, '2021-09-14 16:01:39', '2021-09-14 16:07:14'),
-(15, '2021-09-16', '2021-09-16 08:00 AM', '2021-09-16 11:25 AM', 1, 1, 1, 1, NULL, '2021-09-16 08:17:54', '2021-09-16 05:47:27'),
-(17, '2021-09-18', '2021-09-18 09:56 am', '2021-09-18 10:24 am', 1, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15');
+(5, '2021-09-19', '2021-09-19 09:00:00', '2021-09-19 09:30:00', 1, 1, 1, 1, NULL, '2021-09-19 02:58:12', '2021-09-19 03:29:26'),
+(6, '2021-09-18', '2021-09-18 10:08:00', '2021-09-18 22:08:00', 0, 1, 1, 1, NULL, '2021-09-19 03:09:33', '2021-09-19 03:09:33'),
+(7, '2021-09-20', '2021-09-20 10:09:00', '2021-09-20 22:09:00', 0, 1, 1, 1, NULL, '2021-09-19 03:10:44', '2021-09-19 03:10:44'),
+(8, '2021-09-17', '2021-09-17 10:11:00', '2021-09-17 22:11:00', 1, 1, 1, 1, NULL, '2021-09-19 03:12:10', '2021-09-19 03:27:40'),
+(9, '2021-09-16', '2021-09-16 10:12:00', '2021-09-16 22:12:00', 0, 1, 1, 1, NULL, '2021-09-19 03:12:33', '2021-09-19 03:12:33');
 
 -- --------------------------------------------------------
 
@@ -213,11 +207,7 @@ CREATE TABLE `contest_participants` (
 --
 
 INSERT INTO `contest_participants` (`id`, `participant_type`, `participant_id`, `contest_id`, `correct_answer`, `earn`, `get_coin`, `created_at`, `updated_at`) VALUES
-(4, 1, 2, 12, 4, 0, 1, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(5, 1, 2, 13, 0, 0, 0, '2021-09-13 17:03:52', '2021-09-13 17:03:52'),
-(6, 1, 2, 14, 0, 0, 1, '2021-09-14 16:02:02', '2021-09-14 16:07:44'),
-(7, 0, 29, 15, 10, 100000, 1, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(8, 0, 29, 17, 10, 100000, 1, '2021-09-18 04:19:40', '2021-09-18 04:25:43');
+(1, 1, 2, 5, 1, 0, 1, '2021-09-19 03:28:16', '2021-09-19 03:32:24');
 
 -- --------------------------------------------------------
 
@@ -250,40 +240,14 @@ CREATE TABLE `contest_players` (
 --
 
 INSERT INTO `contest_players` (`id`, `contest_id`, `player_id`, `player_name`, `player_image`, `location`, `played_on`, `versus`, `score`, `answer`, `final_score`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(61, 11, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-10 11:22 pm', 'Team A VS Team B', 45.00, 0, NULL, 1, 1, 1, NULL, '2021-09-10 17:23:29', '2021-09-10 17:23:29'),
-(62, 11, 19, 'Justin Herbert', 'http://localhost/l/galaxygo/public/upload/player/210908/Lb2HBVPtZ4.png', NULL, '2021-09-10 11:22 pm', 'Team A VS Team B', 74.00, 0, NULL, 1, 1, 1, NULL, '2021-09-10 17:23:29', '2021-09-14 02:19:09'),
-(63, 11, 21, 'Jalen Hurts', 'http://localhost/l/galaxygo/public/upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-10 11:22 pm', 'Team A VS Team B', 96.00, 0, NULL, 1, 1, 1, NULL, '2021-09-10 17:23:29', '2021-09-10 17:23:29'),
-(64, 12, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 96.00, 2, 100.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(65, 12, 16, 'Dak Prescott', 'http://localhost/l/galaxygo/public/upload/player/210908/6SLXDvA1Ut.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 45.00, 1, 40.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(66, 12, 21, 'Jalen Hurts', 'http://localhost/l/galaxygo/public/upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 45.00, 2, 50.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(67, 12, 13, 'Josh Allen', 'http://localhost/l/galaxygo/public/upload/player/210908/osGE42LJU0.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 96.00, 1, 90.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(68, 12, 19, 'Justin Herbert', 'http://localhost/l/galaxygo/public/upload/player/210908/Lb2HBVPtZ4.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 85.00, 1, 80.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(69, 12, 15, 'Kyler Murray', 'http://localhost/l/galaxygo/public/upload/player/210908/jMT4xdiF7s.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 46.00, 2, 50.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(70, 12, 14, 'Lamar Jackson', 'http://localhost/l/galaxygo/public/upload/player/210908/6yXWQxyDA4.png', NULL, '2021-09-10 11:24 pm', 'Team A VS Team B', 75.00, 1, 70.00, 1, 1, 1, NULL, '2021-09-10 17:25:43', '2021-09-10 17:30:15'),
-(71, 13, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-13 10:50 pm', 'Corporis VS laboriosam', 74.00, 2, 80.00, 1, 1, 1, NULL, '2021-09-13 17:00:33', '2021-09-13 17:06:27'),
-(72, 13, 16, 'Dak Prescott', 'http://localhost/l/galaxygo/public/upload/player/210908/6SLXDvA1Ut.png', NULL, '2021-09-13 10:50 pm', 'Exercitationem VS solut', 87.00, 1, 80.00, 1, 1, 1, NULL, '2021-09-13 17:00:33', '2021-09-13 17:06:27'),
-(73, 13, 21, 'Jalen Hurts', 'http://localhost/l/galaxygo/public/upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-13 10:50 pm', 'Exercitationem VS solut', 74.00, 2, 80.00, 1, 1, 1, NULL, '2021-09-13 17:00:33', '2021-09-13 17:06:27'),
-(74, 14, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-14 10:00 pm', 'Corporis vs laboriosam', 85.00, 1, 80.00, 1, 1, 1, NULL, '2021-09-14 16:01:39', '2021-09-14 16:07:14'),
-(75, 15, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-16 08:17 pm', 'Corporis vs laboriosam', 85.00, 2, 90.00, 1, 1, 1, NULL, '2021-09-16 08:17:54', '2021-09-16 05:26:43'),
-(76, 15, 16, 'Dak Prescott', 'http://localhost/l/galaxygo/public/upload/player/210908/6SLXDvA1Ut.png', NULL, '2021-09-16 08:17 pm', 'Fuga Nam quis beata', 96.00, 1, 90.00, 1, 1, 1, NULL, '2021-09-16 08:17:54', '2021-09-16 05:26:43'),
-(77, 15, 21, 'Jalen Hurts', 'http://localhost/l/galaxygo/public/upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-16 08:17 pm', 'Exercitationem solut', 755.00, 2, 800.00, 1, 1, 1, NULL, '2021-09-16 08:17:54', '2021-09-16 05:26:43'),
-(78, 15, 13, 'Josh Allen', 'http://localhost/l/galaxygo/public/upload/player/210908/osGE42LJU0.png', NULL, '2021-09-16 08:59 pm', 'Corporis laboriosam', 74.00, 1, 70.00, 1, 1, 1, NULL, '2021-09-16 02:22:43', '2021-09-16 05:26:43'),
-(79, 15, 19, 'Justin Herbert', 'http://localhost/l/galaxygo/public/upload/player/210908/Lb2HBVPtZ4.png', NULL, '2021-09-16 09:22 pm', 'Corporis laboriosam', 74.00, 2, 80.00, 1, 1, 1, NULL, '2021-09-16 02:22:57', '2021-09-16 05:42:47'),
-(80, 15, 15, 'Kyler Murray', 'http://localhost/l/galaxygo/public/upload/player/210908/jMT4xdiF7s.png', NULL, '2021-09-16 09:22 pm', 'Corporis laboriosam', 99.00, 1, 88.00, 1, 1, 1, NULL, '2021-09-16 02:23:18', '2021-09-16 05:47:27'),
-(81, 15, 14, 'Lamar Jackson', 'http://localhost/l/galaxygo/public/upload/player/210908/6yXWQxyDA4.png', NULL, '2021-09-16 09:23 pm', 'Corporis laboriosam', 88.00, 2, 90.00, 1, 1, 1, NULL, '2021-09-16 02:23:33', '2021-09-16 05:47:27'),
-(82, 15, 12, 'Patrick Mahomes', 'http://localhost/l/galaxygo/public/upload/player/210908/sOICyZKY65.png', NULL, '2021-09-16 09:23 pm', 'Corporis laboriosam', 11.00, 1, 10.00, 1, 1, 1, NULL, '2021-09-16 02:23:45', '2021-09-16 05:47:27'),
-(83, 15, 17, 'Russell Wilson', 'http://localhost/l/galaxygo/public/upload/player/210908/GKuz4NTqWE.png', NULL, '2021-09-16 09:23 pm', 'Corporis laboriosam', 66.00, 2, 70.00, 1, 1, 1, NULL, '2021-09-16 02:24:01', '2021-09-16 05:47:27'),
-(84, 15, 18, 'Tom Brady', 'http://localhost/l/galaxygo/public/upload/player/210908/IqxapoCp15.png', NULL, '2021-09-16 09:24 pm', 'Exercitationem solut', 88.00, 1, 80.00, 1, 1, 1, NULL, '2021-09-16 02:24:15', '2021-09-16 05:47:27'),
-(91, 17, 18, 'Tom Brady', 'http://localhost/l/galaxygo/public/upload/player/210908/IqxapoCp15.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 45.00, 2, 50.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(92, 17, 16, 'Dak Prescott', 'http://localhost/l/galaxygo/public/upload/player/210908/6SLXDvA1Ut.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 98.00, 1, 90.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(93, 17, 21, 'Jalen Hurts', 'http://localhost/l/galaxygo/public/upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 95.00, 2, 96.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(94, 17, 13, 'Josh Allen', 'http://localhost/l/galaxygo/public/upload/player/210908/osGE42LJU0.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 16.00, 1, 10.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(95, 17, 19, 'Justin Herbert', 'http://localhost/l/galaxygo/public/upload/player/210908/Lb2HBVPtZ4.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 12.00, 2, 15.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(96, 17, 15, 'Kyler Murray', 'http://localhost/l/galaxygo/public/upload/player/210908/jMT4xdiF7s.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 45.00, 1, 40.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(97, 17, 14, 'Lamar Jackson', 'http://localhost/l/galaxygo/public/upload/player/210908/6yXWQxyDA4.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 32.00, 2, 35.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(98, 17, 12, 'Patrick Mahomes', 'http://localhost/l/galaxygo/public/upload/player/210908/sOICyZKY65.png', NULL, '2021-09-18 10:51 pm', 'A Vs B', 33.00, 1, 30.00, 1, 1, 1, NULL, '2021-09-18 03:53:23', '2021-09-18 04:25:15'),
-(99, 17, 17, 'Russell Wilson', 'http://localhost/l/galaxygo/public/upload/player/210908/GKuz4NTqWE.png', NULL, '2021-09-18 10:57 pm', 'A VS B', 54.00, 2, 60.00, 1, 1, 1, NULL, '2021-09-18 03:57:59', '2021-09-18 04:25:15'),
-(100, 17, 20, 'Aaron Rodgers', 'http://localhost/l/galaxygo/public/upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-18 10:57 pm', 'A VS B', 74.00, 1, 70.00, 1, 1, 1, NULL, '2021-09-18 03:58:12', '2021-09-18 04:25:15');
+(2, 2, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-19 09:25 pm', 'Corporis laboriosam', 85.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 02:27:00', '2021-09-19 02:27:00'),
+(3, 3, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-19 09:28 pm', 'Corporis laboriosam', 87.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 02:45:30', '2021-09-19 02:45:30'),
+(4, 3, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-18 09:42 pm', 'Corporis laboriosam', 85.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 02:45:30', '2021-09-19 02:45:30'),
+(6, 5, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-19 09:57 pm', 'Corporis laboriosam', 87.00, 2, 90.00, 1, 1, 1, NULL, '2021-09-19 02:58:12', '2021-09-19 03:28:47'),
+(7, 6, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-18 10:08 pm', 'Corporis laboriosam', 45.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 03:09:33', '2021-09-19 03:09:33'),
+(8, 7, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-20 10:09 pm', 'Corporis laboriosam', 22.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 03:10:44', '2021-09-19 03:10:44'),
+(9, 8, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-17 10:11 pm', 'Corporis laboriosam', 56.00, 1, 50.00, 1, 1, 1, NULL, '2021-09-19 03:12:10', '2021-09-19 03:27:40'),
+(10, 9, 1, 'Riley Lara', 'http://localhost/l/galaxygo/public/upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-16 10:12 pm', 'Corporis laboriosam', 11.00, 0, NULL, 1, 1, 1, NULL, '2021-09-19 03:12:33', '2021-09-19 03:12:33');
 
 -- --------------------------------------------------------
 
@@ -633,7 +597,7 @@ CREATE TABLE `guest_users` (
 
 INSERT INTO `guest_users` (`id`, `mac`, `total_coin`, `current_coin`, `withdraw`, `created_at`, `updated_at`) VALUES
 (1, 'D0-37-45-D8-1B-20', '10000.00', '10000.00', '0.00', '2021-09-08 03:41:38', '2021-09-08 11:17:05'),
-(2, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-09-08 17:43:19', '2021-09-14 16:07:44');
+(2, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-09-08 17:43:19', '2021-09-19 03:32:24');
 
 -- --------------------------------------------------------
 
@@ -710,7 +674,21 @@ INSERT INTO `modules` (`id`, `name`, `description`, `status`, `deleted_at`, `cre
 (4, 'Module Management', NULL, 1, NULL, 1, 1, '2020-01-24 12:55:37', '2020-01-24 12:55:37'),
 (5, 'Activity Management', NULL, 1, NULL, 1, 1, '2020-01-24 12:55:58', '2020-01-24 12:55:58'),
 (6, 'Admin Panel User', NULL, 1, NULL, 1, 1, '2020-01-24 12:58:53', '2020-01-24 12:58:53'),
-(10, 'Site Setting', NULL, 1, NULL, 1, 1, '2021-07-14 03:08:07', '2021-07-14 03:08:07');
+(10, 'Site Setting', NULL, 1, NULL, 1, 1, '2021-07-14 03:08:07', '2021-07-14 03:08:07'),
+(11, 'Player', NULL, 1, NULL, 1, 1, '2021-09-19 06:47:03', '2021-09-19 06:51:41'),
+(12, 'Contest', NULL, 1, NULL, 1, 1, '2021-09-19 06:51:59', '2021-09-19 06:51:59'),
+(13, 'Win Coin', NULL, 1, NULL, 1, 1, '2021-09-19 06:56:31', '2021-09-19 06:56:31'),
+(14, 'Category', NULL, 1, NULL, 1, 1, '2021-09-19 07:01:56', '2021-09-19 07:01:56'),
+(15, 'Brand', NULL, 1, NULL, 1, 1, '2021-09-19 07:05:48', '2021-09-19 07:05:48'),
+(16, 'Product', NULL, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(17, 'Auction Product', NULL, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(18, 'Order', NULL, 1, NULL, 1, 1, '2021-09-19 07:16:21', '2021-09-19 07:16:21'),
+(19, 'Auction Order', NULL, 1, NULL, 1, 1, '2021-09-19 07:17:49', '2021-09-19 07:17:49'),
+(20, 'Withdraw', NULL, 1, NULL, 1, 1, '2021-09-19 07:20:43', '2021-09-19 07:20:43'),
+(21, 'Report', NULL, 1, NULL, 1, 1, '2021-09-19 07:25:20', '2021-09-19 07:25:20'),
+(22, 'Pages', NULL, 1, NULL, 1, 1, '2021-09-19 07:26:51', '2021-09-19 07:26:51'),
+(23, 'slider', NULL, 1, NULL, 1, 1, '2021-09-19 07:28:33', '2021-09-19 07:28:33'),
+(24, 'Footer Circle Image', NULL, 1, NULL, 1, 1, '2021-09-19 07:30:02', '2021-09-19 07:30:02');
 
 -- --------------------------------------------------------
 
@@ -761,7 +739,53 @@ INSERT INTO `module_to_activities` (`id`, `module_id`, `activity_id`, `status`, 
 (51, 1, 4, 1, NULL, 1, 1, '2020-12-05 09:05:04', '2020-12-05 09:05:04'),
 (52, 1, 3, 1, NULL, 1, 1, '2020-12-05 09:05:04', '2020-12-05 09:05:04'),
 (53, 1, 1, 1, NULL, 1, 1, '2020-12-05 09:05:04', '2020-12-05 09:05:04'),
-(54, 10, 3, 1, NULL, 1, 1, '2021-07-14 03:08:07', '2021-07-14 03:08:07');
+(54, 10, 3, 1, NULL, 1, 1, '2021-07-14 03:08:07', '2021-07-14 03:08:07'),
+(59, 11, 2, 1, NULL, 1, 1, '2021-09-19 06:51:41', '2021-09-19 06:51:41'),
+(60, 11, 4, 1, NULL, 1, 1, '2021-09-19 06:51:41', '2021-09-19 06:51:41'),
+(61, 11, 3, 1, NULL, 1, 1, '2021-09-19 06:51:41', '2021-09-19 06:51:41'),
+(62, 11, 1, 1, NULL, 1, 1, '2021-09-19 06:51:41', '2021-09-19 06:51:41'),
+(63, 12, 2, 1, NULL, 1, 1, '2021-09-19 06:51:59', '2021-09-19 06:51:59'),
+(64, 12, 4, 1, NULL, 1, 1, '2021-09-19 06:51:59', '2021-09-19 06:51:59'),
+(65, 12, 3, 1, NULL, 1, 1, '2021-09-19 06:51:59', '2021-09-19 06:51:59'),
+(66, 12, 1, 1, NULL, 1, 1, '2021-09-19 06:51:59', '2021-09-19 06:51:59'),
+(67, 13, 2, 1, NULL, 1, 1, '2021-09-19 06:56:31', '2021-09-19 06:56:31'),
+(68, 13, 4, 1, NULL, 1, 1, '2021-09-19 06:56:31', '2021-09-19 06:56:31'),
+(69, 13, 3, 1, NULL, 1, 1, '2021-09-19 06:56:31', '2021-09-19 06:56:31'),
+(70, 13, 1, 1, NULL, 1, 1, '2021-09-19 06:56:31', '2021-09-19 06:56:31'),
+(71, 14, 2, 1, NULL, 1, 1, '2021-09-19 07:01:56', '2021-09-19 07:01:56'),
+(72, 14, 4, 1, NULL, 1, 1, '2021-09-19 07:01:56', '2021-09-19 07:01:56'),
+(73, 14, 3, 1, NULL, 1, 1, '2021-09-19 07:01:56', '2021-09-19 07:01:56'),
+(74, 14, 1, 1, NULL, 1, 1, '2021-09-19 07:01:56', '2021-09-19 07:01:56'),
+(75, 15, 2, 1, NULL, 1, 1, '2021-09-19 07:05:48', '2021-09-19 07:05:48'),
+(76, 15, 4, 1, NULL, 1, 1, '2021-09-19 07:05:48', '2021-09-19 07:05:48'),
+(77, 15, 3, 1, NULL, 1, 1, '2021-09-19 07:05:48', '2021-09-19 07:05:48'),
+(78, 15, 1, 1, NULL, 1, 1, '2021-09-19 07:05:48', '2021-09-19 07:05:48'),
+(79, 16, 2, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(80, 16, 4, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(81, 16, 8, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(82, 16, 3, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(83, 16, 1, 1, NULL, 1, 1, '2021-09-19 07:07:51', '2021-09-19 07:07:51'),
+(84, 17, 2, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(85, 17, 4, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(86, 17, 8, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(87, 17, 3, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(88, 17, 1, 1, NULL, 1, 1, '2021-09-19 07:11:04', '2021-09-19 07:11:04'),
+(89, 18, 8, 1, NULL, 1, 1, '2021-09-19 07:16:21', '2021-09-19 07:16:21'),
+(90, 18, 1, 1, NULL, 1, 1, '2021-09-19 07:16:21', '2021-09-19 07:16:21'),
+(91, 19, 8, 1, NULL, 1, 1, '2021-09-19 07:17:49', '2021-09-19 07:17:49'),
+(92, 19, 1, 1, NULL, 1, 1, '2021-09-19 07:17:49', '2021-09-19 07:17:49'),
+(93, 20, 3, 1, NULL, 1, 1, '2021-09-19 07:20:43', '2021-09-19 07:20:43'),
+(94, 20, 1, 1, NULL, 1, 1, '2021-09-19 07:20:43', '2021-09-19 07:20:43'),
+(95, 21, 1, 1, NULL, 1, 1, '2021-09-19 07:25:20', '2021-09-19 07:25:20'),
+(96, 22, 3, 1, NULL, 1, 1, '2021-09-19 07:26:51', '2021-09-19 07:26:51'),
+(97, 23, 2, 1, NULL, 1, 1, '2021-09-19 07:28:33', '2021-09-19 07:28:33'),
+(98, 23, 4, 1, NULL, 1, 1, '2021-09-19 07:28:33', '2021-09-19 07:28:33'),
+(99, 23, 3, 1, NULL, 1, 1, '2021-09-19 07:28:33', '2021-09-19 07:28:33'),
+(100, 23, 1, 1, NULL, 1, 1, '2021-09-19 07:28:33', '2021-09-19 07:28:33'),
+(101, 24, 2, 1, NULL, 1, 1, '2021-09-19 07:30:02', '2021-09-19 07:30:02'),
+(102, 24, 4, 1, NULL, 1, 1, '2021-09-19 07:30:02', '2021-09-19 07:30:02'),
+(103, 24, 3, 1, NULL, 1, 1, '2021-09-19 07:30:02', '2021-09-19 07:30:02'),
+(104, 24, 1, 1, NULL, 1, 1, '2021-09-19 07:30:02', '2021-09-19 07:30:02');
 
 -- --------------------------------------------------------
 
@@ -787,57 +811,144 @@ CREATE TABLE `module_to_roles` (
 --
 
 INSERT INTO `module_to_roles` (`id`, `module_id`, `role_id`, `activity_id`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(264, 1, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(265, 1, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(266, 1, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(267, 1, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(268, 2, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(269, 2, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(270, 2, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(271, 2, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(272, 3, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(273, 3, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(274, 3, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(275, 3, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(276, 4, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(277, 4, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(278, 4, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(279, 4, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(280, 5, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(281, 5, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(282, 5, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(283, 5, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(284, 6, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(285, 6, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(286, 6, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(287, 6, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(288, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(289, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(290, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(291, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(292, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(293, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(294, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(295, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(296, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(297, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(298, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(299, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(300, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(301, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(302, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(303, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(304, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(305, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(306, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(307, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(308, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(309, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(310, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(311, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(312, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
-(313, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
-(314, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL);
+(631, 1, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(632, 1, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(633, 1, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(634, 1, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(635, 2, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(636, 2, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(637, 2, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(638, 2, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(639, 3, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(640, 3, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(641, 3, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(642, 3, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(643, 6, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(644, 6, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(645, 6, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(646, 6, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(647, 6, 2, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(648, 6, 2, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(649, 10, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(650, 11, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(651, 11, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(652, 11, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(653, 11, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(654, 12, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(655, 12, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(656, 12, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(657, 12, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(658, 13, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(659, 13, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(660, 13, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(661, 13, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(662, 14, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(663, 14, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(664, 14, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(665, 14, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(666, 15, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(667, 15, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(668, 15, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(669, 15, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(670, 16, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(671, 16, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(672, 16, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(673, 16, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(674, 16, 2, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(675, 17, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(676, 17, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(677, 17, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(678, 17, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(679, 17, 2, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(680, 18, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(681, 18, 2, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(682, 19, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(683, 19, 2, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(684, 20, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(685, 20, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(686, 21, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(687, 22, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(688, 23, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(689, 23, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(690, 23, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(691, 23, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(692, 24, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(693, 24, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(694, 24, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(695, 24, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(696, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(697, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(698, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(699, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(700, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(701, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(702, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(703, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(704, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(705, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(706, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(707, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(708, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(709, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(710, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(711, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(712, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(713, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(714, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(715, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(716, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(717, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(718, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(719, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(720, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(721, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(722, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(723, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(724, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(725, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(726, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(727, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(728, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(729, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(730, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(731, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(732, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(733, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(734, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(735, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(736, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(737, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(738, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(739, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(740, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(741, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(742, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(743, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(744, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(745, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(746, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(747, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(748, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(749, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(750, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(751, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(752, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(753, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(754, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(755, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(756, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(757, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(758, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(759, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(760, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(761, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(762, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(763, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(764, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(765, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(766, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(767, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(768, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -915,33 +1026,144 @@ INSERT INTO `module_to_users` (`id`, `module_id`, `user_id`, `activity_id`, `sta
 (366, 6, 5, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (367, 6, 5, 3, 1, NULL, NULL, NULL, NULL, NULL),
 (368, 6, 5, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(435, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(436, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(437, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(438, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(439, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(440, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(441, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(442, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(443, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(444, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(445, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(446, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(447, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(448, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(449, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(450, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(451, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(452, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(453, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(454, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(455, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(456, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(457, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(458, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(459, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
-(460, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
-(461, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL);
+(778, 1, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(779, 1, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(780, 1, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(781, 1, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(782, 2, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(783, 2, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(784, 2, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(785, 2, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(786, 3, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(787, 3, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(788, 3, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(789, 3, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(790, 6, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(791, 6, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(792, 6, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(793, 6, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(794, 6, 30, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(795, 6, 30, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(796, 10, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(797, 11, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(798, 11, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(799, 11, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(800, 11, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(801, 12, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(802, 12, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(803, 12, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(804, 12, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(805, 13, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(806, 13, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(807, 13, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(808, 13, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(809, 14, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(810, 14, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(811, 14, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(812, 14, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(813, 15, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(814, 15, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(815, 15, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(816, 15, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(817, 16, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(818, 16, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(819, 16, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(820, 16, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(821, 16, 30, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(822, 17, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(823, 17, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(824, 17, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(825, 17, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(826, 17, 30, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(827, 18, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(828, 18, 30, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(829, 19, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(830, 19, 30, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(831, 20, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(832, 20, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(833, 21, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(834, 22, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(835, 23, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(836, 23, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(837, 23, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(838, 23, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(839, 24, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(840, 24, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(841, 24, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(842, 24, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(843, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(844, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(845, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(846, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(847, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(848, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(849, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(850, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(851, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(852, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(853, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(854, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(855, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(856, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(857, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(858, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(859, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(860, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(861, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(862, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(863, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(864, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(865, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(866, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(867, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(868, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(869, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(870, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(871, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(872, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(873, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(874, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(875, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(876, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(877, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(878, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(879, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(880, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(881, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(882, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(883, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(884, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(885, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(886, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(887, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(888, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(889, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(890, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(891, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(892, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(893, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(894, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(895, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(896, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(897, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(898, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(899, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(900, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(901, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(902, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(903, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(904, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(905, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(906, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(907, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(908, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(909, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(910, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(911, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(912, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(913, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(914, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(915, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1136,65 +1358,7 @@ CREATE TABLE `participant_answers` (
 --
 
 INSERT INTO `participant_answers` (`id`, `contest_participant_id`, `contest_id`, `contest_player_id`, `participant_type`, `participant_id`, `participant_answer`, `is_correct`, `created_at`, `updated_at`) VALUES
-(1, 1, 9, 36, 1, 1, 2, 2, '2021-09-08 10:10:04', '2021-09-08 11:10:54'),
-(2, 1, 9, 37, 1, 1, 1, 2, '2021-09-08 10:10:04', '2021-09-08 11:10:54'),
-(3, 1, 9, 43, 1, 1, 2, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(4, 1, 9, 44, 1, 1, 1, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(5, 1, 9, 45, 1, 1, 2, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(6, 1, 9, 46, 1, 1, 1, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(7, 1, 9, 47, 1, 1, 2, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(8, 1, 9, 48, 1, 1, 1, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(9, 1, 9, 49, 1, 1, 2, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(10, 1, 9, 50, 1, 1, 1, 2, '2021-09-08 10:40:50', '2021-09-08 11:10:54'),
-(11, 2, 9, 36, 1, 1, 2, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(12, 2, 9, 37, 1, 1, 1, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(13, 2, 9, 43, 1, 1, 2, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(14, 2, 9, 44, 1, 1, 1, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(15, 2, 9, 45, 1, 1, 2, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(16, 2, 9, 46, 1, 1, 1, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(17, 2, 9, 47, 1, 1, 2, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(18, 2, 9, 48, 1, 1, 1, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(19, 2, 9, 49, 1, 1, 2, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(20, 2, 9, 50, 1, 1, 1, 0, '2021-09-08 11:15:22', '2021-09-08 11:15:22'),
-(21, 3, 10, 51, 1, 2, 2, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(22, 3, 10, 52, 1, 2, 1, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(23, 3, 10, 53, 1, 2, 2, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(24, 3, 10, 54, 1, 2, 1, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(25, 3, 10, 55, 1, 2, 2, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(26, 3, 10, 56, 1, 2, 1, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(27, 3, 10, 57, 1, 2, 2, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(28, 3, 10, 58, 1, 2, 1, 0, '2021-09-09 16:26:20', '2021-09-09 16:26:20'),
-(29, 4, 12, 64, 1, 2, 2, 2, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(30, 4, 12, 65, 1, 2, 1, 2, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(31, 4, 12, 66, 1, 2, 2, 2, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(32, 4, 12, 67, 1, 2, 2, 1, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(33, 4, 12, 68, 1, 2, 2, 1, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(34, 4, 12, 69, 1, 2, 2, 2, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(35, 4, 12, 70, 1, 2, 2, 1, '2021-09-10 17:27:06', '2021-09-10 17:32:02'),
-(36, 5, 13, 71, 1, 2, 2, 0, '2021-09-13 17:03:52', '2021-09-13 17:03:52'),
-(37, 5, 13, 72, 1, 2, 1, 0, '2021-09-13 17:03:52', '2021-09-13 17:03:52'),
-(38, 5, 13, 73, 1, 2, 2, 0, '2021-09-13 17:03:52', '2021-09-13 17:03:52'),
-(39, 6, 14, 74, 1, 2, 2, 1, '2021-09-14 16:02:02', '2021-09-14 16:07:44'),
-(40, 7, 15, 75, 0, 29, 2, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(41, 7, 15, 76, 0, 29, 1, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(42, 7, 15, 77, 0, 29, 2, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(43, 7, 15, 78, 0, 29, 1, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(44, 7, 15, 80, 0, 29, 1, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(45, 7, 15, 81, 0, 29, 2, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(46, 7, 15, 82, 0, 29, 1, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(47, 7, 15, 83, 0, 29, 2, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(48, 7, 15, 84, 0, 29, 1, 2, '2021-09-16 05:10:04', '2021-09-16 05:47:39'),
-(49, 7, 15, 79, 0, 29, 2, 2, '2021-09-16 05:24:26', '2021-09-16 05:47:39'),
-(50, 8, 17, 91, 0, 29, 2, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(51, 8, 17, 92, 0, 29, 1, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(52, 8, 17, 93, 0, 29, 2, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(53, 8, 17, 94, 0, 29, 1, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(54, 8, 17, 95, 0, 29, 2, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(55, 8, 17, 96, 0, 29, 1, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(56, 8, 17, 97, 0, 29, 2, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(57, 8, 17, 98, 0, 29, 1, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(58, 8, 17, 99, 0, 29, 2, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43'),
-(59, 8, 17, 100, 0, 29, 1, 2, '2021-09-18 04:19:40', '2021-09-18 04:25:43');
+(1, 1, 5, 6, 1, 2, 2, 2, '2021-09-19 03:28:16', '2021-09-19 03:32:24');
 
 -- --------------------------------------------------------
 
@@ -1228,16 +1392,7 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`id`, `name`, `image`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(12, 'Patrick Mahomes', 'upload/player/210908/sOICyZKY65.png', NULL, '2021-09-08 00:11:05', '2021-09-08 00:30:47'),
-(13, 'Josh Allen', 'upload/player/210908/osGE42LJU0.png', NULL, '2021-09-08 00:11:37', '2021-09-08 00:33:21'),
-(14, 'Lamar Jackson', 'upload/player/210908/6yXWQxyDA4.png', NULL, '2021-09-08 00:12:19', '2021-09-08 00:31:11'),
-(15, 'Kyler Murray', 'upload/player/210908/jMT4xdiF7s.png', NULL, '2021-09-08 00:13:00', '2021-09-08 00:32:49'),
-(16, 'Dak Prescott', 'upload/player/210908/6SLXDvA1Ut.png', NULL, '2021-09-08 00:14:36', '2021-09-08 00:14:36'),
-(17, 'Russell Wilson', 'upload/player/210908/GKuz4NTqWE.png', NULL, '2021-09-08 00:15:27', '2021-09-08 00:15:27'),
-(18, 'Tom Brady', 'upload/player/210908/IqxapoCp15.png', NULL, '2021-09-08 00:15:59', '2021-09-08 00:15:59'),
-(19, 'Justin Herbert', 'upload/player/210908/Lb2HBVPtZ4.png', NULL, '2021-09-08 00:16:33', '2021-09-08 00:16:33'),
-(20, 'Aaron Rodgers', 'upload/player/210908/f8wkbOj2uR.png', NULL, '2021-09-08 00:16:58', '2021-09-08 00:16:58'),
-(21, 'Jalen Hurts', 'upload/player/210908/f5DelxvSwl.png', NULL, '2021-09-08 00:17:28', '2021-09-08 00:17:28');
+(1, 'Riley Lara', 'upload/player/210919/QcnfB2O5g2.png', NULL, '2021-09-19 02:22:37', '2021-09-19 02:22:37');
 
 -- --------------------------------------------------------
 
@@ -1377,7 +1532,7 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`id`, `name`, `info`, `status`, `deleted_at`, `updated_by`, `created_at`, `updated_at`, `created_by`) VALUES
 (1, 'Super Admin', NULL, 1, NULL, 1, '2020-01-24 12:50:33', '2020-12-05 07:05:06', 1),
 (2, 'Admin', NULL, 1, NULL, 1, '2020-01-24 12:50:48', '2020-01-24 12:50:48', NULL),
-(3, 'Customer', NULL, 1, NULL, 1, '2020-03-03 05:13:42', '2020-03-03 05:13:42', 1),
+(3, 'Customer', NULL, 1, '2021-09-19 06:29:13', 1, '2020-03-03 05:13:42', '2021-09-19 06:29:13', 1),
 (4, 'Test role', NULL, 0, '2020-11-23 08:56:47', 1, '2020-11-23 08:53:06', '2020-11-23 08:56:47', 1);
 
 -- --------------------------------------------------------
@@ -1550,9 +1705,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `paypal_email`, `last_name`, `email_verified_at`, `contact_no`, `photo`, `cover_photo`, `password`, `lastLoginTime`, `provider`, `provider_id`, `total_coin`, `current_coin`, `withdraw`, `status`, `shipping_first_name`, `shipping_last_name`, `shipping_email`, `shipping_company_name`, `shipping_adrress_line_1`, `shipping_adrress_line_2`, `shipping_city`, `shipping_country`, `shipping_post_code`, `shipping_phone`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-09-18 09:31:57', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'zuN6WLK6KBfHu9O1YvNfFjtXYxklcyz7tXuPN4AsGxtdebh3V1qQuAUq7puo', 1, 1, '2020-01-18 04:14:02', '2021-09-18 03:31:57'),
+(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-09-19 08:20:38', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sLtM9th4HmScLEkCE4MnTG1h9se6VzxfTY9Oq6Y2T8AaqYi0EZ7TRWoYF5Ap', 1, 1, '2020-01-18 04:14:02', '2021-09-19 02:20:38'),
 (29, 0, 'user3', 'byxakyny@mailinator.net', 'byxakyny@mailinator.net', NULL, NULL, 'dUZ021081638', 'upload/profile-pic/O4S9eQhOcbNwBLTFuTsK.png', 'upload/cover_photo/cu4qJa1wSHaITSuPxBKs.jpg', '$2y$10$venzZCfGmM9gsWt4GnpKdOsoZy8jcmaahWlK3ITrvyfVLmDIkq9Su', '2021-09-18 09:15:32', NULL, NULL, '201000.00', '201000.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 29, '2021-08-15 18:12:15', '2021-09-18 04:25:43'),
-(30, 2, 'admin2', 'admin2@email.com', NULL, NULL, NULL, '7034954485', 'upload/portfolio-pic/OxrA57QHZQPCuUZwCOzb.png', NULL, '$2y$10$H5pgea2PIPNydfEoRdWW5urFXsocmcnZEOyrEYvU4altbF9Bu1S.O', NULL, NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, '2021-08-18 13:53:50', '2021-08-18 13:53:50');
+(30, 2, 'admin2', 'admin2@email.com', NULL, NULL, NULL, '7034954485', 'upload/portfolio-pic/OxrA57QHZQPCuUZwCOzb.png', NULL, '$2y$10$H5pgea2PIPNydfEoRdWW5urFXsocmcnZEOyrEYvU4altbF9Bu1S.O', '2021-09-19 13:55:24', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, '2021-08-18 13:53:50', '2021-09-19 07:55:24');
 
 -- --------------------------------------------------------
 
@@ -1581,8 +1736,7 @@ CREATE TABLE `win_coins` (
 INSERT INTO `win_coins` (`id`, `win`, `out_of`, `coin`, `coin_name`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 10, 10, 100000, 'Dogecoin', 1, 1, 1, NULL, '2021-09-08 11:12:11', '2021-09-14 16:19:54'),
 (2, 8, 10, 1000, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:05', '2021-09-10 05:51:17'),
-(3, 9, 10, 10000, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:18', '2021-09-10 05:51:06'),
-(4, 7, 10, 500, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:30', '2021-09-10 05:51:30');
+(3, 9, 10, 10000, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:18', '2021-09-10 05:51:06');
 
 -- --------------------------------------------------------
 
@@ -1855,25 +2009,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coin_histories`
 --
 ALTER TABLE `coin_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contests`
 --
 ALTER TABLE `contests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `contest_participants`
 --
 ALTER TABLE `contest_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contest_players`
 --
 ALTER TABLE `contest_players`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -1915,25 +2069,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `module_to_activities`
 --
 ALTER TABLE `module_to_activities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `module_to_roles`
 --
 ALTER TABLE `module_to_roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=315;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
 
 --
 -- AUTO_INCREMENT for table `module_to_users`
 --
 ALTER TABLE `module_to_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=916;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1963,13 +2117,13 @@ ALTER TABLE `other_pages`
 -- AUTO_INCREMENT for table `participant_answers`
 --
 ALTER TABLE `participant_answers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`

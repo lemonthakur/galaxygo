@@ -35,8 +35,7 @@ class ContestController extends Controller
         return view('backend.contest.index');
     }
 
-    public function create()
-    {
+    public function create(){
         return view('backend.contest.create');
     }
 
@@ -66,7 +65,7 @@ class ContestController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
 
-        if ($request->time_start > $request->time_end){
+        if (strtotime($request->time_start) > strtotime($request->time_end)){
             session()->flash('error','Count down begin time con not larger than count down end time');
             return redirect()->back()->withInput();
         }
@@ -81,8 +80,8 @@ class ContestController extends Controller
             $contest = new Contest();
 
             $contest->name = $request->name;
-            $contest->time_start =date('Y-m-d h:i a', strtotime($request->time_start));
-            $contest->time_end =date('Y-m-d h:i a', strtotime($request->time_end));
+            $contest->time_start =date('Y-m-d H:i', strtotime($request->time_start));
+            $contest->time_end =date('Y-m-d H:i', strtotime($request->time_end));
 
             if ($contest->save()) {
                 $contestId = $contest->id;
@@ -157,14 +156,14 @@ class ContestController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
 
-        if ($request->time_start > $request->time_end){
+        if (strtotime($request->time_start) > strtotime($request->time_end)){
             session()->flash('error','Count down begin time con not larger than count down end time');
             return redirect()->back()->withInput();
         }
 
         $contest->name = $request->name;
-        $contest->time_start =date('Y-m-d h:i a', strtotime($request->time_start));
-        $contest->time_end =date('Y-m-d h:i a', strtotime($request->time_end));
+        $contest->time_start = date('Y-m-d H:i', strtotime($request->time_start));
+        $contest->time_end = date('Y-m-d H:i', strtotime($request->time_end));
 
         if ($contest->save()) {
             session()->flash("success", "Data successfully updated");

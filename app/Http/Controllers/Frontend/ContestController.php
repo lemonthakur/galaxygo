@@ -27,20 +27,31 @@ class ContestController extends Controller
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
-        ->orderBy('id','desc')
-        ->whereDate('time_start', '<=',date('Y-m-d h:i a'))
-        ->whereDate('time_end', '<=',date('Y-m-d h:i a'))
+        ->where('time_start', '<',date('Y-m-d H:i:s'))
+        ->where('time_end', '>',date('Y-m-d H:i:s'))
         ->first();
 
-        $latest7contests = Contest::
+        $pendingContest = Contest::
+        with('userPLay',
+            'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
+            'contestPlayers.player:id,name,image',
+            'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
+        ->orderBy('name','desc')
+        ->where('is_final_answer',0)
+        ->where('time_end', '<',date('Y-m-d H:i:s'))
+        ->get();
+
+        $finalContests = Contest::
         with('userPLay',
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name', 'time_end', 'is_final_answer')
-        ->orderBy('id','desc')
-//            ->whereDate('name','<',date('Y-m-d'))
-            ->skip(1)->limit(7)->get();
+        ->orderBy('name','desc')
+            ->where('is_final_answer',1)
+            ->where('time_end', '<',date('Y-m-d H:i:s'))
+            ->limit(7)->get();
 
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));
@@ -48,7 +59,7 @@ class ContestController extends Controller
 
         //Total entry won
         $entryWon = OwnLibrary::entryWon();
-        return view('frontend.entries', compact('contest', 'latest7contests','now','entryWon'));
+        return view('frontend.entries', compact('contest', 'pendingContest','finalContests','now','entryWon'));
     }
 
     public function entriesStore(Request $request)

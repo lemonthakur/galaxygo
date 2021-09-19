@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2021 at 09:57 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Generation Time: Sep 19, 2021 at 06:41 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `galaxy`
+-- Database: `l_galaxy`
 --
 
 -- --------------------------------------------------------
@@ -155,8 +155,8 @@ CREATE TABLE `coin_histories` (
 CREATE TABLE `contests` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time_start` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `time_end` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `time_start` datetime DEFAULT NULL,
+  `time_end` datetime NOT NULL,
   `is_final_answer` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = not submitted,1= submitted',
   `created_by` int(11) NOT NULL,
   `updated_by` int(11) NOT NULL,
@@ -558,7 +558,7 @@ CREATE TABLE `guest_users` (
 
 INSERT INTO `guest_users` (`id`, `mac`, `total_coin`, `current_coin`, `withdraw`, `created_at`, `updated_at`) VALUES
 (1, 'D0-37-45-D8-1B-20', '10000.00', '10000.00', '0.00', '2021-09-08 03:41:38', '2021-09-08 11:17:05'),
-(2, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-09-08 17:43:19', '2021-09-14 16:07:44');
+(2, '00-FF-61-3E-12-B1', '0.00', '0.00', '0.00', '2021-09-08 17:43:19', '2021-09-19 03:32:24');
 
 -- --------------------------------------------------------
 
@@ -772,79 +772,6 @@ CREATE TABLE `module_to_roles` (
 --
 
 INSERT INTO `module_to_roles` (`id`, `module_id`, `role_id`, `activity_id`, `status`, `deleted_at`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(558, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(559, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(560, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(561, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(562, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(563, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(564, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(565, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(566, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(567, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(568, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(569, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(570, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(571, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(572, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(573, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(574, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(575, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(576, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(577, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(578, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(579, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(580, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(581, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(582, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
-(583, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
-(584, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(585, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(586, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(587, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(588, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(589, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(590, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(591, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(592, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(593, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(594, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(595, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(596, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(597, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(598, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(599, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(600, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(601, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(602, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(603, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(604, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(605, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(606, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(607, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(608, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(609, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(610, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(611, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(612, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(613, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(614, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(615, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(616, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(617, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(618, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(619, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(620, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(621, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(622, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(623, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(624, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(625, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(626, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(627, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(628, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(629, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(630, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
 (631, 1, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (632, 1, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (633, 1, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
@@ -909,7 +836,80 @@ INSERT INTO `module_to_roles` (`id`, `module_id`, `role_id`, `activity_id`, `sta
 (692, 24, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (693, 24, 2, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (694, 24, 2, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(695, 24, 2, 4, 1, NULL, NULL, NULL, NULL, NULL);
+(695, 24, 2, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(696, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(697, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(698, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(699, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(700, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(701, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(702, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(703, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(704, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(705, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(706, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(707, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(708, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(709, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(710, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(711, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(712, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(713, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(714, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(715, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(716, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(717, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(718, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(719, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(720, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(721, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(722, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(723, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(724, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(725, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(726, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(727, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(728, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(729, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(730, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(731, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(732, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(733, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(734, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(735, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(736, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(737, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(738, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(739, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(740, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(741, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(742, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(743, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(744, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(745, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(746, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(747, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(748, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(749, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(750, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(751, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(752, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(753, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(754, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(755, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(756, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(757, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(758, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(759, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(760, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(761, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(762, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(763, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(764, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(765, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(766, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(767, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(768, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -987,79 +987,6 @@ INSERT INTO `module_to_users` (`id`, `module_id`, `user_id`, `activity_id`, `sta
 (366, 6, 5, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (367, 6, 5, 3, 1, NULL, NULL, NULL, NULL, NULL),
 (368, 6, 5, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(705, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(706, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(707, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(708, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(709, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(710, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(711, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(712, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(713, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(714, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(715, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(716, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(717, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(718, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(719, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(720, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(721, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(722, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(723, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(724, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(725, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(726, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(727, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(728, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(729, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
-(730, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
-(731, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(732, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(733, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(734, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(735, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(736, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(737, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(738, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(739, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(740, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(741, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(742, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(743, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(744, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(745, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(746, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(747, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(748, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(749, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(750, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(751, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(752, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(753, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(754, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(755, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(756, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(757, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(758, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(759, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(760, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(761, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(762, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(763, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(764, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(765, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
-(766, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(767, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(768, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(769, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(770, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(771, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(772, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(773, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
-(774, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(775, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
-(776, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(777, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
 (778, 1, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (779, 1, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (780, 1, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
@@ -1124,7 +1051,80 @@ INSERT INTO `module_to_users` (`id`, `module_id`, `user_id`, `activity_id`, `sta
 (839, 24, 30, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (840, 24, 30, 2, 1, NULL, NULL, NULL, NULL, NULL),
 (841, 24, 30, 3, 1, NULL, NULL, NULL, NULL, NULL),
-(842, 24, 30, 4, 1, NULL, NULL, NULL, NULL, NULL);
+(842, 24, 30, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(843, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(844, 1, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(845, 1, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(846, 1, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(847, 2, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(848, 2, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(849, 2, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(850, 2, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(851, 3, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(852, 3, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(853, 3, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(854, 3, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(855, 4, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(856, 4, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(857, 4, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(858, 4, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(859, 5, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(860, 5, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(861, 5, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(862, 5, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(863, 6, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(864, 6, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(865, 6, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(866, 6, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(867, 6, 1, 5, 1, NULL, NULL, NULL, NULL, NULL),
+(868, 6, 1, 6, 1, NULL, NULL, NULL, NULL, NULL),
+(869, 10, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(870, 11, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(871, 11, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(872, 11, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(873, 11, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(874, 12, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(875, 12, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(876, 12, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(877, 12, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(878, 13, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(879, 13, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(880, 13, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(881, 13, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(882, 14, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(883, 14, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(884, 14, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(885, 14, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(886, 15, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(887, 15, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(888, 15, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(889, 15, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(890, 16, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(891, 16, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(892, 16, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(893, 16, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(894, 16, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(895, 17, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(896, 17, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(897, 17, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(898, 17, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(899, 17, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(900, 18, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(901, 18, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(902, 19, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(903, 19, 1, 8, 1, NULL, NULL, NULL, NULL, NULL),
+(904, 20, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(905, 20, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(906, 21, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(907, 22, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(908, 23, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(909, 23, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(910, 23, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(911, 23, 1, 4, 1, NULL, NULL, NULL, NULL, NULL),
+(912, 24, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(913, 24, 1, 2, 1, NULL, NULL, NULL, NULL, NULL),
+(914, 24, 1, 3, 1, NULL, NULL, NULL, NULL, NULL),
+(915, 24, 1, 4, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1652,8 +1652,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `paypal_email`, `last_name`, `email_verified_at`, `contact_no`, `photo`, `cover_photo`, `password`, `lastLoginTime`, `provider`, `provider_id`, `total_coin`, `current_coin`, `withdraw`, `status`, `shipping_first_name`, `shipping_last_name`, `shipping_email`, `shipping_company_name`, `shipping_adrress_line_1`, `shipping_adrress_line_2`, `shipping_city`, `shipping_country`, `shipping_post_code`, `shipping_phone`, `deleted_at`, `remember_token`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-09-19 13:54:30', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'q7rzhF0FxkfkbvQ6PRGPtooKc1OptC7NEbdiZZSM1cOJHhDt3paj2HsLuj7H', 1, 1, '2020-01-18 04:14:02', '2021-09-19 07:54:30'),
-(29, 0, 'user3', 'byxakyny@mailinator.net', 'byxakyny@mailinator.net', NULL, NULL, 'dUZ021081638', 'upload/profile-pic/O4S9eQhOcbNwBLTFuTsK.png', 'upload/cover_photo/cu4qJa1wSHaITSuPxBKs.jpg', '$2y$10$venzZCfGmM9gsWt4GnpKdOsoZy8jcmaahWlK3ITrvyfVLmDIkq9Su', '2021-09-18 09:15:32', NULL, NULL, '201000.00', '201000.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 29, '2021-08-15 18:12:15', '2021-09-18 04:25:43'),
+(1, 1, 'admin', 'admin@email.com', NULL, NULL, NULL, '01682234164', 'upload/portfolio-pic/yrVXGUlsb6sRYH2FyM2H.jpg', NULL, '$2y$10$m4ZSPJRaz3C7chseDTpqCub3ZeN4Pn4IRfXFiifnbYN21hkP.4hbm', '2021-09-19 08:20:38', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'sLtM9th4HmScLEkCE4MnTG1h9se6VzxfTY9Oq6Y2T8AaqYi0EZ7TRWoYF5Ap', 1, 1, '2020-01-18 04:14:02', '2021-09-19 02:20:38'),
 (30, 2, 'admin2', 'admin2@email.com', NULL, NULL, NULL, '7034954485', 'upload/portfolio-pic/OxrA57QHZQPCuUZwCOzb.png', NULL, '$2y$10$H5pgea2PIPNydfEoRdWW5urFXsocmcnZEOyrEYvU4altbF9Bu1S.O', '2021-09-19 13:55:24', NULL, NULL, '0.00', '0.00', '0.00', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, '2021-08-18 13:53:50', '2021-09-19 07:55:24');
 
 -- --------------------------------------------------------
@@ -1675,15 +1674,6 @@ CREATE TABLE `win_coins` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `win_coins`
---
-
-INSERT INTO `win_coins` (`id`, `win`, `out_of`, `coin`, `coin_name`, `created_by`, `updated_by`, `status`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 10, 10, 100000, 'Dogecoin', 1, 1, 1, NULL, '2021-09-08 11:12:11', '2021-09-14 16:19:54'),
-(2, 8, 10, 1000, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:05', '2021-09-10 05:51:17'),
-(3, 9, 10, 10000, NULL, 1, 1, 1, NULL, '2021-09-09 16:50:18', '2021-09-10 05:51:06');
 
 -- --------------------------------------------------------
 
@@ -2028,13 +2018,13 @@ ALTER TABLE `module_to_activities`
 -- AUTO_INCREMENT for table `module_to_roles`
 --
 ALTER TABLE `module_to_roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=696;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
 
 --
 -- AUTO_INCREMENT for table `module_to_users`
 --
 ALTER TABLE `module_to_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=843;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=916;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -2124,7 +2114,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `win_coins`
 --
 ALTER TABLE `win_coins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `withdraw_requests`
