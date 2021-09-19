@@ -324,7 +324,7 @@
     </script>
 
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-    <div id="shareBtn" class="btn btn-success clearfix">Share Dialog</div>
+    {{--<div id="shareBtn" class="btn btn-success clearfix">Share Dialog</div>--}}
     <script>
         window.fbAsyncInit = function() {
             FB.init({
