@@ -43,11 +43,11 @@
                                         @foreach($contest->contestPlayers as $player)
                                             <tr>
                                                 <td>
-                                                    <img src="{{asset($player->player_image)}}"
+                                                    <img src="{{asset($player->player->image)}}"
                                                          style="width: 50px;height:50px;border-radius:50%;"/>
                                                 </td>
                                                 <td>
-                                                    Name: {{ucwords($player->player_name)}} <br/>
+                                                    Name: {{ucwords($player->player->name)}} <br/>
 {{--                                                    Location: {{ucwords($player->location)}}--}}
                                                     Played On: {{$player->played_on}}
                                                 </td>

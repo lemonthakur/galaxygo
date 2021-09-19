@@ -1,11 +1,11 @@
-@if(!empty($aclList[1][3]) || !empty($aclList[1][4]))
+@if(!empty($aclList[14][3]) || !empty($aclList[14][4]))
     <form method="post" action="{{ route('category.destroy',$id) }}">
-        @if(!empty($aclList[1][3]))
+        @if(!empty($aclList[14][3]))
             <a class="btn btn-xs btn-warning text-white" href="{{route('category.edit',$id)}}" title="Edit">
                 <i class="fas fa-pencil-alt"></i>
             </a>
         @endif
-        @if(!empty($aclList[1][4]))
+        @if(!empty($aclList[14][4]))
             @method('delete')
             @csrf
 

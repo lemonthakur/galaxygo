@@ -115,6 +115,7 @@
                     </li>
                 @endif
 
+                @if(!empty($aclList[11][1]) || !empty($aclList[11][2]) || empty($aclList[12][1]) || !empty($aclList[12][2]) || empty($aclList[13][1]) || !empty($aclList[13][2]))
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' ||
                     $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit' || $routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
@@ -125,6 +126,8 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+
+                        @if(!empty($aclList[11][1]))
                         <li class="nav-item">
                             <a href="{{route("players.index")}}"
                                class="nav-link {{ ($routeName == 'players.index' || $routeName == 'players.edit') ? 'active' : '' }}">
@@ -132,13 +135,17 @@
                                 <p>Player List</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{route("players.create")}}"
-                               class="nav-link {{ ($routeName == 'players.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Player Create</p>
-                            </a>
-                        </li>
+                        @endif
+                        @if(!empty($aclList[11][2]))
+                            <li class="nav-item">
+                                <a href="{{route("players.create")}}"
+                                   class="nav-link {{ ($routeName == 'players.create') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Player Create</p>
+                                </a>
+                            </li>
+                        @endif
+                            @if(!empty($aclList[12][1]))
                         <li class="nav-item">
                             <a href="{{route("contest.index")}}"
                                class="nav-link {{ ($routeName == 'contest.index' || $routeName == 'contest.edit') ? 'active' : '' }}">
@@ -146,6 +153,8 @@
                                 <p>Contest List</p>
                             </a>
                         </li>
+                            @endif
+                            @if(!empty($aclList[12][1]))
                         <li class="nav-item">
                             <a href="{{route("contest.create")}}"
                                class="nav-link {{ ($routeName == 'contest.create') ? 'active' : '' }}">
@@ -153,6 +162,8 @@
                                 <p>Contest Create</p>
                             </a>
                         </li>
+                            @endif
+                            @if(!empty($aclList[13][2]))
                         <li class="nav-item">
                             <a href="{{route("win-coin.index")}}"
                                class="nav-link {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.edit') ? 'active' : '' }}">
@@ -160,6 +171,8 @@
                                 <p>Contest Win Coin List</p>
                             </a>
                         </li>
+                            @endif
+                            @if(!empty($aclList[13][2]))
                         <li class="nav-item">
                             <a href="{{route("win-coin.create")}}"
                                class="nav-link {{ ($routeName == 'win-coin.create') ? 'active' : '' }}">
@@ -167,35 +180,11 @@
                                 <p>Contest Win Coin Create</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
-
-                {{--<li class="nav-item has-treeview {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-coins"></i>
-                        <p>
-                            Contest Win Coin
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route("win-coin.index")}}"
-                               class="nav-link {{ ($routeName == 'win-coin.index' || $routeName == 'win-coin.edit') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contest Win Coin List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route("win-coin.create")}}"
-                               class="nav-link {{ ($routeName == 'win-coin.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contest Win Coin Create</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>--}}
-
+@endif
+                @if(!empty($aclList[14][1]) || !empty($aclList[14][2]) || empty($aclList[15][1]) || !empty($aclList[15][2]) || empty($aclList[16][1]) || !empty($aclList[16][2]) || !empty($aclList[17][1]))
                 <li class="nav-item has-treeview {{ ($routeName == 'category.index' || $routeName == 'category.create' || $routeName == 'category.edit'
                  || $routeName == 'brand.index' || $routeName == 'brand.create' || $routeName == 'brand.edit'
                  || $routeName == 'product.index' || $routeName == 'product.create' || $routeName == 'product.edit' || $routeName == 'auction-product.list') ? 'menu-open' : '' }}">
@@ -207,6 +196,7 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @if(!empty($aclList[14][1]))
                         <li class="nav-item">
                             <a href="{{route("category.index")}}"
                                class="nav-link {{ ($routeName == 'category.index' || $routeName == 'category.edit') ? 'active' : '' }}">
@@ -214,6 +204,8 @@
                                 <p>Category List</p>
                             </a>
                         </li>
+                        @endif
+                            @if(!empty($aclList[14][2]))
                         <li class="nav-item">
                             <a href="{{route("category.create")}}"
                                class="nav-link {{ ($routeName == 'category.create') ? 'active' : '' }}">
@@ -221,7 +213,8 @@
                                 <p>Category Create</p>
                             </a>
                         </li>
-
+                            @endif
+                            @if(!empty($aclList[15][1]))
                         <li class="nav-item">
                             <a href="{{route("brand.index")}}"
                                class="nav-link {{ ($routeName == 'brand.index' || $routeName == 'brand.edit') ? 'active' : '' }}">
@@ -229,6 +222,8 @@
                                 <p>Brand List</p>
                             </a>
                         </li>
+                            @endif
+                            @if(!empty($aclList[15][1]))
                         <li class="nav-item">
                             <a href="{{route("brand.create")}}"
                                class="nav-link {{ ($routeName == 'brand.create') ? 'active' : '' }}">
@@ -236,7 +231,8 @@
                                 <p>Brand Create</p>
                             </a>
                         </li>
-
+                            @endif
+                            @if(!empty($aclList[16][1]))
                         <li class="nav-item">
                             <a href="{{route("product.index")}}"
                                class="nav-link {{ ($routeName == 'product.index' || $routeName == 'product.edit') ? 'active' : '' }}">
@@ -244,6 +240,8 @@
                                 <p>Product List</p>
                             </a>
                         </li>
+                            @endif
+                            @if(!empty($aclList[16][1]))
                         <li class="nav-item">
                             <a href="{{route("product.create")}}"
                                class="nav-link {{ ($routeName == 'product.create') ? 'active' : '' }}">
@@ -251,6 +249,8 @@
                                 <p>Product Create</p>
                             </a>
                         </li>
+                            @endif
+
                         <li class="nav-item">
                             <a href="{{route("auction-product.list")}}"
                                class="nav-link {{ ($routeName == 'auction-product.list') ? 'active' : '' }}">
@@ -260,175 +260,188 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="nav-item has-treeview {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'
-                || $routeName == 'backend.auction.order.view') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Order Management
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route("backend.order.view")}}"
-                               class="nav-link {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'|| $routeName == 'backend.order.print') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Orders</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route("backend.auction.order.view")}}"
-                               class="nav-link {{ ($routeName == 'backend.auction.order.view') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Auction Orders</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item has-treeview {{ ($routeName == 'withdraw.index' ) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Withdraw
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route("withdraw.index")}}"
-                               class="nav-link {{ ($routeName == 'withdraw.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>WIthdraw Request List</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item has-treeview {{ ($routeName == 'product.stock.report' ) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>
-                            Report
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route("product.stock.report")}}"
-                               class="nav-link {{ ($routeName == 'product.stock.report') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Stock Report</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item has-treeview {{ ($routeName == 'about-us.edit' || $routeName == 'other-page.edit') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-coins"></i>
-                        <p>
-                            Pages
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route("about-us.edit")}}"
-                               class="nav-link {{ ($routeName == 'about-us.edit') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>About Us</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{route("other-page.edit")}}"
-                               class="nav-link {{ ($routeName == 'other-page.edit') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Other Pages</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3])
-                 || !empty($aclList[10][3]) )
-                    <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
-                    || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
-                    || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
-                    || $routeName == 'slider.edit' || $routeName == 'slider.index' || $routeName == 'footer-circle-image.index'
-                    || $routeName == 'footer-circle-image.create' || $routeName == 'footer-circle-image.edit') ? 'menu-open' : '' }}">
-                        <a href="#"
-                           class="nav-link">
-                            <i class="nav-icon fas fa-cog"></i>
-                            <p>
-                                Setting
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @if(!empty($aclList[4][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("module.index")}}"
-                                       class="nav-link {{ ($routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Module Management</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[5][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("activity.index")}}"
-                                       class="nav-link {{ ($routeName == 'activity.index' || $routeName == 'activity.create'|| $routeName == 'activity.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Activity Management</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[10][3]))
-                                <li class="nav-item">
-                                    <a href="{{route("site.setting.edit")}}"
-                                       class="nav-link {{ ($routeName == 'site.setting.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Site Setting</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[5][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("slider.index")}}"
-                                       class="nav-link {{ ($routeName == 'slider.index' || $routeName == 'slider.create'|| $routeName == 'slider.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Slider</p>
-                                    </a>
-                                </li>
-                            @endif
-                            @if(!empty($aclList[5][1]))
-                                <li class="nav-item">
-                                    <a href="{{route("footer-circle-image.index")}}"
-                                       class="nav-link {{ ($routeName == 'footer-circle-image.index' || $routeName == 'footer-circle-image.create'|| $routeName == 'footer-circle-image.edit') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Footer circle image</p>
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
                 @endif
 
-                <li class="nav-item">
-                    <a href="{{route('admin.logout')}}" class="nav-link">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>
-                            Logout
-                        </p>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+
+@if(!empty($aclList[18][1]))
+               <li class="nav-item has-treeview {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'
+               || $routeName == 'backend.auction.order.view') ? 'menu-open' : '' }}">
+                   <a href="#" class="nav-link">
+                       <i class="nav-icon fas fa-user"></i>
+                       <p>
+                           Order Management
+                           <i class="right fas fa-angle-left"></i>
+                       </p>
+                   </a>
+                   <ul class="nav nav-treeview">
+                       @if(!empty($aclList[18][1]))
+                       <li class="nav-item">
+                           <a href="{{route("backend.order.view")}}"
+                              class="nav-link {{ ($routeName == 'backend.order.view' || $routeName == 'backend.order.details'|| $routeName == 'backend.order.print') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Orders</p>
+                           </a>
+                       </li>
+                       @endif
+                           @if(!empty($aclList[19][1]))
+                       <li class="nav-item">
+                           <a href="{{route("backend.auction.order.view")}}"
+                              class="nav-link {{ ($routeName == 'backend.auction.order.view') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Auction Orders</p>
+                           </a>
+                       </li>
+                               @endif
+                   </ul>
+               </li>
+                @endif
+
+                @if(!empty($aclList[20][1]))
+               <li class="nav-item has-treeview {{ ($routeName == 'withdraw.index' ) ? 'menu-open' : '' }}">
+                   <a href="#" class="nav-link">
+                       <i class="nav-icon fas fa-user"></i>
+                       <p>
+                           Withdraw
+                           <i class="right fas fa-angle-left"></i>
+                       </p>
+                   </a>
+                   <ul class="nav nav-treeview">
+                       <li class="nav-item">
+                           <a href="{{route("withdraw.index")}}"
+                              class="nav-link {{ ($routeName == 'withdraw.index') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>WIthdraw Request List</p>
+                           </a>
+                       </li>
+                   </ul>
+               </li>
+                    @endif
+
+                @if(!empty($aclList[21][1]))
+               <li class="nav-item has-treeview {{ ($routeName == 'product.stock.report' ) ? 'menu-open' : '' }}">
+                   <a href="#" class="nav-link">
+                       <i class="nav-icon fas fa-user"></i>
+                       <p>
+                           Report
+                           <i class="right fas fa-angle-left"></i>
+                       </p>
+                   </a>
+                   <ul class="nav nav-treeview">
+                       <li class="nav-item">
+                           <a href="{{route("product.stock.report")}}"
+                              class="nav-link {{ ($routeName == 'product.stock.report') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Stock Report</p>
+                           </a>
+                       </li>
+                   </ul>
+               </li>
+                @endif
+
+                @if(!empty($aclList[22][3]))
+               <li class="nav-item has-treeview {{ ($routeName == 'about-us.edit' || $routeName == 'other-page.edit') ? 'menu-open' : '' }}">
+                   <a href="#" class="nav-link">
+                       <i class="nav-icon fas fa-coins"></i>
+                       <p>
+                           Pages
+                           <i class="right fas fa-angle-left"></i>
+                       </p>
+                   </a>
+                   <ul class="nav nav-treeview">
+                       <li class="nav-item">
+                           <a href="{{route("about-us.edit")}}"
+                              class="nav-link {{ ($routeName == 'about-us.edit') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>About Us</p>
+                           </a>
+                       </li>
+
+                       <li class="nav-item">
+                           <a href="{{route("other-page.edit")}}"
+                              class="nav-link {{ ($routeName == 'other-page.edit') ? 'active' : '' }}">
+                               <i class="far fa-circle nav-icon"></i>
+                               <p>Other Pages</p>
+                           </a>
+                       </li>
+                   </ul>
+               </li>
+                @endif
+
+               @if(!empty($aclList[4][1]) || !empty($aclList[5][1]) || !empty($aclList[10][3]) || !empty($aclList[10][3]) || !empty($aclList[23][1]))
+                   <li class="nav-item has-treeview {{ ($routeName == 'activity.index' || $routeName == 'activity.create'
+                   || $routeName == 'activity.edit' || $routeName == 'module.index' || $routeName == 'module.create'
+                   || $routeName == 'module.edit' || $routeName == 'site.setting.edit' || $routeName == 'slider.create'
+                   || $routeName == 'slider.edit' || $routeName == 'slider.index' || $routeName == 'footer-circle-image.index'
+                   || $routeName == 'footer-circle-image.create' || $routeName == 'footer-circle-image.edit') ? 'menu-open' : '' }}">
+                       <a href="#"
+                          class="nav-link">
+                           <i class="nav-icon fas fa-cog"></i>
+                           <p>
+                               Setting
+                               <i class="right fas fa-angle-left"></i>
+                           </p>
+                       </a>
+                       <ul class="nav nav-treeview">
+                           @if(!empty($aclList[4][1]))
+                               <li class="nav-item">
+                                   <a href="{{route("module.index")}}"
+                                      class="nav-link {{ ($routeName == 'module.index' || $routeName == 'module.create'|| $routeName == 'module.edit') ? 'active' : '' }}">
+                                       <i class="far fa-circle nav-icon"></i>
+                                       <p>Module Management</p>
+                                   </a>
+                               </li>
+                           @endif
+                           @if(!empty($aclList[5][1]))
+                               <li class="nav-item">
+                                   <a href="{{route("activity.index")}}"
+                                      class="nav-link {{ ($routeName == 'activity.index' || $routeName == 'activity.create'|| $routeName == 'activity.edit') ? 'active' : '' }}">
+                                       <i class="far fa-circle nav-icon"></i>
+                                       <p>Activity Management</p>
+                                   </a>
+                               </li>
+                           @endif
+                           @if(!empty($aclList[10][3]))
+                               <li class="nav-item">
+                                   <a href="{{route("site.setting.edit")}}"
+                                      class="nav-link {{ ($routeName == 'site.setting.edit') ? 'active' : '' }}">
+                                       <i class="far fa-circle nav-icon"></i>
+                                       <p>Site Setting</p>
+                                   </a>
+                               </li>
+                           @endif
+                           @if(!empty($aclList[23][1]))
+                               <li class="nav-item">
+                                   <a href="{{route("slider.index")}}"
+                                      class="nav-link {{ ($routeName == 'slider.index' || $routeName == 'slider.create'|| $routeName == 'slider.edit') ? 'active' : '' }}">
+                                       <i class="far fa-circle nav-icon"></i>
+                                       <p>Slider</p>
+                                   </a>
+                               </li>
+                           @endif
+                           @if(!empty($aclList[24][1]))
+                               <li class="nav-item">
+                                   <a href="{{route("footer-circle-image.index")}}"
+                                      class="nav-link {{ ($routeName == 'footer-circle-image.index' || $routeName == 'footer-circle-image.create'|| $routeName == 'footer-circle-image.edit') ? 'active' : '' }}">
+                                       <i class="far fa-circle nav-icon"></i>
+                                       <p>Footer circle image</p>
+                                   </a>
+                               </li>
+                           @endif
+                       </ul>
+                   </li>
+               @endif
+
+               <li class="nav-item">
+                   <a href="{{route('admin.logout')}}" class="nav-link">
+                       <i class="nav-icon fas fa-sign-out-alt"></i>
+                       <p>
+                           Logout
+                       </p>
+                   </a>
+               </li>
+           </ul>
+       </nav>
+       <!-- /.sidebar-menu -->
+   </div>
+   <!-- /.sidebar -->
 </aside>

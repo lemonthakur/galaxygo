@@ -26,7 +26,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Circle Image List</h3>
-                                @if(!empty($aclList[1][2]))
+                                @if(!empty($aclList[24][2]))
                                     <a href="{{route('footer-circle-image.create')}}" class="btn btn-primary float-right text-white">
                                         <i class="fas fa-plus-circle"></i>
                                         Add New
@@ -73,14 +73,14 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                @if(!empty($aclList[1][3]) || !empty($aclList[1][4]))
+                                                @if(!empty($aclList[24][3]) || !empty($aclList[24][4]))
                                                     <form method="post" action="{{ route('footer-circle-image.destroy',$cir_image->id) }}">
-                                                        @if(!empty($aclList[1][3]))
+                                                        @if(!empty($aclList[24][3]))
                                                             <a class="btn btn-xs btn-warning text-white" href="{{route('footer-circle-image.edit',$cir_image->id)}}" title="Edit">
                                                                 <i class="fas fa-pencil-alt"></i>
                                                             </a>
                                                         @endif
-                                                        @if(!empty($aclList[1][4]))
+                                                        @if(!empty($aclList[24][4]))
                                                             @method('delete')
                                                             @csrf
                                                             <button type="submit" class="btn btn-xs btn-danger text-white delete" title="Delete">

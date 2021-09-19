@@ -28,6 +28,7 @@ class UserAccessController extends Controller
                 $userList[$item->id] = $item->name.' » '.$item->role->name;
             }
         }
+
         $data['userList'] = $userList;
         return view('backend.access-control.useracl', $data);
     }

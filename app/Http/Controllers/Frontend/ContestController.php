@@ -27,9 +27,9 @@ class ContestController extends Controller
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
         )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
-            ->orderBy('id','desc')
-        ->whereDate('time_start', '<=',date('Y-m-d'))
-        ->whereDate('time_end', '>=',date('Y-m-d'))
+        ->orderBy('id','desc')
+        ->whereDate('time_start', '<=',date('Y-m-d h:i a'))
+        ->whereDate('time_end', '<=',date('Y-m-d h:i a'))
         ->first();
 
         $latest7contests = Contest::

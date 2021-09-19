@@ -29,10 +29,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Players List</h3>
+                                @if(!empty($aclList[11][2]))
                                 <a href="{{route('players.create')}}" class="btn btn-primary float-right text-white">
                                     <i class="fas fa-plus-circle"></i>
                                     Add New
                                 </a>
+                                    @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">

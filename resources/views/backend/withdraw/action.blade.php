@@ -1,3 +1,4 @@
+@if(!empty($aclList[20][3]))
 @if($status == 0)
     <div class="row">
         <div class="col-6">
@@ -26,3 +27,4 @@
     </div>
 @endif
 
+@endif

@@ -27,7 +27,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Brand List</h3>
-                                @if(!empty($aclList[1][2]))
+                                @if(!empty($aclList[15][2]))
                                     <a href="{{route('brand.create')}}" class="btn btn-primary float-right text-white">
                                         <i class="fas fa-plus-circle"></i>
                                         Add New
