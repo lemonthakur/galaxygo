@@ -16,6 +16,7 @@ use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\CustomClass\OwnLibrary;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +31,12 @@ class HomeController extends Controller
     public function home(){
         $all_images = FooterCircleImage::where('status', 1)->orderBy('order_serial', 'asc')->get();
         $fb_share_link = SiteSetting::select('facebook_share_link')->first();
+
+        if (!isset($_COOKIE['galaxy_guest']) || empty($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] == null){
+            $cookieId = Str::random(3).rand(000,999).Str::random(3).date('ymd');
+            setcookie('galaxy_guest',$cookieId,time()+315360000, "/");
+        }
+
         return view('frontend.home', compact('all_images', 'fb_share_link'));
     }
 

@@ -19,8 +19,9 @@
             </div>
             <div class="ic-header-right">
                 @php
-                    $mac = strtok(exec('getmac'), ' ');
-                    $guestUser = \App\Models\GuestUser::where('mac','=',$mac)->first();
+                    use App\CustomClass\OwnLibrary;
+                    $user = OwnLibrary::getUserInfo();
+                    $guestUser = \App\Models\GuestUser::where('id','=',$user['id'])->first();
                     $total_coins = $guestUser->total_coin ?? 00;
                     $current_coins = $guestUser->current_coin ?? 00;
                 @endphp

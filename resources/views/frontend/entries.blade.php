@@ -26,15 +26,16 @@
                             </div>
                         </div>
                         @php
-                            if(Auth::check() && Auth::user()->role_id == 0){
-                               $total_coins = auth()->user()->total_coin ?? 00;
-                               $current_coins = auth()->user()->current_coin ?? 00;
-                                }else{
-                                    $mac = strtok(exec('getmac'), ' ');
-                                    $guestUser = \App\Models\GuestUser::where('mac','=',$mac)->first();
-                                    $total_coins = $guestUser->total_coin ?? 00;
-                                    $current_coins = $guestUser->current_coin ?? 00;
-                                }
+                            use App\CustomClass\OwnLibrary;
+                                if(Auth::check() && Auth::user()->role_id == 0){
+                                   $total_coins = auth()->user()->total_coin ?? 00;
+                                   $current_coins = auth()->user()->current_coin ?? 00;
+                                    }else{
+                                        $user = OwnLibrary::getUserInfo();
+                                        $guestUser = \App\Models\GuestUser::where('id','=',$user['id'])->first();
+                                        $total_coins = $guestUser->total_coin ?? 00;
+                                        $current_coins = $guestUser->current_coin ?? 00;
+                                    }
                         @endphp
                         <div class="ic-win-btn">
                             <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>

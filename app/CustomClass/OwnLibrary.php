@@ -79,20 +79,24 @@ class OwnLibrary {
 
     public static function getUserInfo(){
         $participantType = 1;
-
+        $participantId = 0;
         if (Auth::check() && Auth::user()->role_id == 0){
             $participantType = 0;
             $participantId = auth()->id();
         }else{
-            $mac = strtok(exec('getmac'), ' ');
-
-            $guestUser = GuestUser::where('mac','=',$mac)->first();
-            if (empty($guestUser)){
-                $guestUser = new GuestUser();
-                $guestUser->mac = $mac;
-                $guestUser->save();
+            if (isset($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] != null){
+                //            $mac = strtok(exec('getmac'), ' ');
+                $mac = $_COOKIE['galaxy_guest'];
+                if (!empty($mac)){
+                    $guestUser = GuestUser::where('mac','=',$mac)->first();
+                    if (empty($guestUser)){
+                        $guestUser = new GuestUser();
+                        $guestUser->mac = $mac;
+                        $guestUser->save();
+                    }
+                    $participantId = $guestUser->id;
+                }
             }
-            $participantId = $guestUser->id;
         }
 
         return array('type' => $participantType,'id' => $participantId);
