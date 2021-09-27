@@ -78,12 +78,6 @@ class ContestController extends Controller
 
             $user = OwnLibrary::getUserInfo();
 
-            if ($user['id'] == 0){
-                DB::rollback();
-                session()->flash("error", "Unable to insert data");
-                return redirect()->back();
-            }
-
             $contestParticipant = ContestParticipant::where('participant_type', '=', $user['type'])
                 ->where('participant_id', '=', $user['id'])
                 ->where('contest_id', '=', $contestId)
@@ -147,11 +141,6 @@ class ContestController extends Controller
     public function claimCoin(Request $request){
         $contestId = decrypt($request->id);
         $user = OwnLibrary::getUserInfo();
-
-        if ($user['id'] == 0){
-            session()->flash("error", "Unable to claim");
-            return redirect()->back();
-        }
 
         DB::beginTransaction();
         $success = false;

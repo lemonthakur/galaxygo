@@ -8,9 +8,10 @@
 
 namespace App\CustomClass;
 
-
+use App\Models\Contest;
 use App\Models\ContestParticipant;
 use App\Models\GuestUser;
+use App\Models\ParticipantAnswer;
 use App\Models\WinCoin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -77,14 +78,14 @@ class OwnLibrary {
         return $image_url;
     }
 
-    public static function getUserInfo(){
+     public static function getUserInfo(){
         $participantType = 1;
         $participantId = 0;
         if (Auth::check() && Auth::user()->role_id == 0){
             $participantType = 0;
             $participantId = auth()->id();
         }else{
-            if (isset($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] != null){
+            if (isset($_COOKIE['galaxy_guest']) &&  $_COOKIE['galaxy_guest'] != null){
                 //            $mac = strtok(exec('getmac'), ' ');
                 $mac = $_COOKIE['galaxy_guest'];
                 if (!empty($mac)){
@@ -120,5 +121,48 @@ class OwnLibrary {
             ->where('correct_answer', '>=', $winCoin[0]->win ?? 0)
             ->count();
         return $win;
+    }
+
+    public static function winCoin($id){
+        $contestId = $id;
+        $user = self::getUserInfo();
+
+        if ($user['id'] == 0){
+            return 0;
+        }
+            $contest = Contest::
+            with('userPLay',
+                'contestPlayers:id,contest_id,player_name,player_image,played_on,versus,score,answer',
+                'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+            )->select('id', 'name', 'time_end', 'is_final_answer')
+                ->where('id',"=",$contestId)->first();
+
+            if (empty($contest)){
+                return 0;
+            }
+
+        $win = 0;
+
+            foreach($contest->contestPlayers as  $contestPlayer){
+                //check number of correct and Update participant answer
+                if (!empty($contestPlayer->participant->participant_answer)){
+                    $participantAns = ParticipantAnswer::find($contestPlayer->participant->id);
+                    if($contestPlayer->answer == $contestPlayer->participant->participant_answer){
+                        $participantAns->is_correct = 2;
+                        $win++;
+                    }else{
+                        $participantAns->is_correct = 1;
+                    }
+                    $participantAns->save();
+                }
+            }
+
+            //Based on Win Coin earn
+            $winCoin = WinCoin::select('coin')->where('win','=',$win)->first();
+            if (!empty($winCoin->coin)){
+                return $winCoin->coin;
+            }else{
+                return 0;
+            }
     }
 }

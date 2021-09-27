@@ -21,7 +21,7 @@
                                             <label for="amount">Withdraw Amount<span class="text-danger">*</span></label>
                                             <input type="number" step="any" id="amount" class="form-control" placeholder="Enter amount"
                                                    value="{{old('amount')}}"
-                                                   name="amount" min="2500">
+                                                   name="amount" min="100">
                                             <span class="text-danger">{{$errors->has("amount") ? $errors->first("amount") : ""}}</span>
                                         </div>
                                     </div>
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <<h6 class="text-warning text-center">1 USD = 100. Minimum withdraw amount is 2500</h6>
+                            <<h6 class="text-warning text-center">Minimum withdraw 100 Dogecoin</h6>
                         </div>
                     </div>
                 </div>

@@ -26,16 +26,16 @@
                             </div>
                         </div>
                         @php
-                            use App\CustomClass\OwnLibrary;
-                                if(Auth::check() && Auth::user()->role_id == 0){
-                                   $total_coins = auth()->user()->total_coin ?? 00;
-                                   $current_coins = auth()->user()->current_coin ?? 00;
-                                    }else{
-                                        $user = OwnLibrary::getUserInfo();
-                                        $guestUser = \App\Models\GuestUser::where('id','=',$user['id'])->first();
-                                        $total_coins = $guestUser->total_coin ?? 00;
-                                        $current_coins = $guestUser->current_coin ?? 00;
-                                    }
+                        use App\CustomClass\OwnLibrary;
+                            if(Auth::check() && Auth::user()->role_id == 0){
+                               $total_coins = auth()->user()->total_coin ?? 00;
+                               $current_coins = auth()->user()->current_coin ?? 00;
+                                }else{
+                                    $user = OwnLibrary::getUserInfo();
+                                    $guestUser = \App\Models\GuestUser::where('id','=',$user['id'])->first();
+                                    $total_coins = $guestUser->total_coin ?? 00;
+                                    $current_coins = $guestUser->current_coin ?? 00;
+                                }
                         @endphp
                         <div class="ic-win-btn">
                             <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
@@ -101,16 +101,20 @@
                                                 <div class="ic-item">
                                                     <div class="user">
                                                         <div class="image">
+                                                            @if(!empty($contestPlayer->player->image))
                                                             <img src="{{asset($contestPlayer->player->image)}}" alt="user">
+                                                            @else
+                                                            <img src="{{asset('demo-pic/download.png')}}" alt="user">
+                                                            @endif
                                                         </div>
                                                         <div class="name-title pt-3">
-                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
-                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
@@ -245,7 +249,10 @@
                                     @foreach($finalContests as $contest)
                                         <div class="ic-entries-tab-contents mt-3 final-entries">
                                             <div class="ic-time">
-                                                <h4>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h4>
+                                                <div class="d-flex justify-content-between">
+                                                    <h4>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h4>
+                                                    <h4>Won {{\App\CustomClass\OwnLibrary::winCoin($contest->id)}}</h4>
+                                                </div>
                                             </div>
                                         @forelse($contest->contestPlayers as $key => $contestPlayer)
                                             <!--Item 1-->
@@ -253,17 +260,20 @@
                                                 <div class="ic-item">
                                                     <div class="user">
                                                         <div class="image">
-                                                            <img src="{{asset($contestPlayer->player->image)}}"
-                                                                 alt="user">
+                                                                @if(!empty($contestPlayer->player->image))
+                                                                    <img src="{{asset($contestPlayer->player->image)}}" alt="user">
+                                                                    @else
+                                                                    <img src="{{asset('demo-pic/download.png')}}" alt="user">
+                                                                @endif
                                                         </div>
                                                         <div class="name-title pt-3">
-                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
-                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
+                                                            <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</p><br />

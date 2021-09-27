@@ -328,7 +328,7 @@
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId            : '542974070289636',
+                appId            : '414090753572111',
                 autoLogAppEvents : true,
                 xfbml            : true,
                 version          : 'v11.0'
@@ -369,13 +369,13 @@
                                 toastr.error("Something went wrong. Please try again later.");
                             }
                             else if(data.ret == 'success'){
-                                $(".aft-bd-share").empty().text(parseFloat(data.val).toFixed(2));
+                                $(".aft-bd-share").empty().text(parseFloat(data.val));
                                 toastr.options =
                                     {
                                         "closeButton" : true,
                                         "progressBar" : true
                                     }
-                                toastr.success("Thanks for your share. you have received 100 coins.");
+                                toastr.success("Thanks for your share. you have received 5 coins.");
                             }
                         });
                 }

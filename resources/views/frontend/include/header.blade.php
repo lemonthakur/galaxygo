@@ -19,14 +19,14 @@
             </div>
             <div class="ic-header-right">
                 @php
-                    use App\CustomClass\OwnLibrary;
+                     use App\CustomClass\OwnLibrary;
                     $user = OwnLibrary::getUserInfo();
                     $guestUser = \App\Models\GuestUser::where('id','=',$user['id'])->first();
                     $total_coins = $guestUser->total_coin ?? 00;
                     $current_coins = $guestUser->current_coin ?? 00;
                 @endphp
                 <a href="{{route('login')}}" class="ic-btn"><i class="flaticon-login"></i> <span>login</span></a>
-                <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">Coins Balance: <sapn class="aft-bd-share">{{ (int) $total_coins }}</sapn></span> <span class="sm-coin-bal aft-bd-share">00</span></a>
+                <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span class="lg-coin-bal">DOGECOIN: <sapn class="aft-bd-share">{{ (int) $total_coins }}</sapn></span> <span class="sm-coin-bal aft-bd-share">00</span></a>
             </div>
         </div>
     </div>

@@ -116,12 +116,10 @@ class AuthController extends Controller
             $coinHistory->earn_expense_type = 0;
             $coinHistory->save();
 
-
             $mac = '';
             if (isset($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] != null){
                 $mac = $_COOKIE['galaxy_guest'];
             }
-
             $guestUser = GuestUser::where('mac','=',$mac)->first();
 
             if (!empty($guestUser) && $guestUser->current_coin > 0){
@@ -174,7 +172,6 @@ class AuthController extends Controller
                 if (isset($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] != null){
                     $mac = $_COOKIE['galaxy_guest'];
                 }
-
                 $guestUser = GuestUser::where('mac','=',$mac)->first();
 
                 if (!empty($guestUser) && $guestUser->current_coin > 0){

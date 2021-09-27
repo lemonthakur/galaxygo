@@ -1,6 +1,12 @@
 @extends('frontend.layout.master')
 @section('title','Product details')
 
+@section('facebook_meta')
+    <meta property="og:url" content="{{route('product-details', $product->slug)}}">
+    <meta property="og:image" content="{{asset('upload/product-thumbnail-634-512/'.$product->feature_image)}}">
+    <meta property="og:description" content="Place your data here">
+@endsection
+
 @section('css')
     <style type="text/css">
         /* Chrome, Safari, Edge, Opera */

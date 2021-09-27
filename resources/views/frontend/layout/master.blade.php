@@ -1,3 +1,10 @@
+@php
+ if (!isset($_COOKIE['galaxy_guest']) || empty($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] == null){
+            $cookieId = Str::random(3).rand(000,999).Str::random(3).date('ymd');
+            setcookie('galaxy_guest',$cookieId,time()+315360000, "/");
+        }
+@endphp
+
 <!doctype html>
 <html lang="en">
 
@@ -10,9 +17,16 @@
 
     {{--meta tag for social share--}}
     <meta property="og:title" content="{{$siteSetting->site_title ?? env("APP_NAME")}}">
+    <!-- <meta property="og:description" content="{{$siteSetting->meta_description ?? ''}}">
+    <meta property="og:image" content="{{asset('upload/fbshare/share.jpeg')}}">
+    <meta property="og:url" content="{{route('home')}}"> -->
+    @if(View::hasSection('facebook_meta'))
+        @yield('facebook_meta')
+    @else
     <meta property="og:description" content="{{$siteSetting->meta_description ?? ''}}">
-    <meta property="og:image" content="{{$siteSetting->logo ?? ''}}">
+    <meta property="og:image" content="{{asset('upload/fbshare/share.jpeg')}}">
     <meta property="og:url" content="{{route('home')}}">
+    @endif
     <meta name="twitter:card" content="{{$siteSetting->logo ?? ''}}">
     <meta property="og:site_name" content="{{$siteSetting->site_title ?? env("APP_NAME")}}">
     <meta name="twitter:image:alt" content="Site Logo">

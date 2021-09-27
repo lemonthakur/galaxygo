@@ -87,7 +87,7 @@
                                                        class="form-control {{$errors->has("video_url") ? "is-invalid":""}}"
                                                        id="video_url" name="video_url" placeholder="Enter video url"
                                                        value="{{old("video_url",$aboutUs->video_url)}}"
-                                                       required maxlength="255">
+                                                       maxlength="255">
                                                 <span
                                                     class="text-danger"> {{$errors->has("video_url") ? $errors->first("video_url") : ""}} </span>
                                             </div>
