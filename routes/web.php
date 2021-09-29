@@ -45,6 +45,8 @@ Route::group(['middleware'=>'authCheck'],function (){
         'players' => PlayerController::class,
     ]);
 
+    Route::get('user-frontend',[UserController::class,'frontendIndex'])->name('user.frontend');
+
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');
     Route::put('site-setting', [SiteSettingController::class,'update'])->name('site.setting.update');
 

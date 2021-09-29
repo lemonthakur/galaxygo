@@ -51,7 +51,7 @@
                 </li>
 
                 @if(!empty($aclList[6][1]))
-                    <li class="nav-item has-treeview {{ ($routeName == 'user.index' || $routeName == 'user.create' || $routeName == 'user.edit') ? 'menu-open' : '' }}">
+                    <li class="nav-item has-treeview {{ ($routeName == 'user.index' || $routeName == 'user.create' || $routeName == 'user.edit' || $routeName == 'user.frontend') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
@@ -66,6 +66,14 @@
                                        class="nav-link {{ ($routeName == 'user.index' || $routeName == 'user.create'|| $routeName == 'user.edit') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Admin Panel User</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route("user.frontend")}}"
+                                       class="nav-link {{ ($routeName == 'user.frontend') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Frontend User</p>
                                     </a>
                                 </li>
                             @endif

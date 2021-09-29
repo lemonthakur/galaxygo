@@ -44,6 +44,32 @@ class UserController extends Controller
         return view('backend.user.index');
     }
 
+    public function frontendIndex(Request $request)
+    {
+        OwnLibrary::validateAccess($this->moduleId,1);
+
+        if($request->ajax()){
+            $name = $request->name;
+            $email = $request->email;
+
+            $users = User::orderBy('id','desc')->where('role_id','=',0);
+
+            if (!empty($name)){
+                $users = $users->where("name","LIKE","%$name%");
+            }
+
+            if (!empty($email)){
+                $users = $users->where("email","LIKE","%$email%");
+            }
+
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('backend.user.frontend-index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
