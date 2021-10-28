@@ -28,7 +28,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Frontend dUser List</h3>
+                                <h3 class="card-title">Frontend User List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body ">
@@ -58,6 +58,7 @@
                                             <th>Photo</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>PayPal Email</th>
                                             <th>Total Coin</th>
                                             <th>Current Coin</th>
                                             <th>Total Withdraw</th>
@@ -143,6 +144,7 @@
                         },
                         { data: 'name' },
                         { data: 'email' },
+                        {data: 'paypal_email'},
                         { data: 'total_coin' },
                         { data: 'current_coin' },
                         { data: 'withdraw' },
