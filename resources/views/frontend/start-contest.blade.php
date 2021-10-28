@@ -3,37 +3,38 @@
 
 @section('content')
 
-    <section class="ic-today-tomorrow-area">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="ic-today-tomorrow-card">
-                        <div class="ic-heading">
-                            <h2><span>{{$siteSetting->start_contest_title ?? "how to Play"}}</span></h2>
-                        </div>
-                        <div class="content">
-                            @if($siteSetting->start_contest_text)
-                                <p>{{$siteSetting->start_contest_text}}</p>
-                            @else
-                                <p>You can win {{$winCoins[0]['coin'] ?? 00}} coins daily. Start now!!</p>
-                            @endif
-
-                            @forelse($winCoins as $winCoin)
-                                <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}} {{$winCoin->coin_name ?? "coins"}}</p>
-                            @empty
-                            @endforelse
-                        </div>
-                        <div class="ic-game-start-btn">
-                            @if (Auth::check() && Auth::user()->role_id == 0)
-                            <a href="{{route('entries')}}" class="ic-btn">start the contest</a>
-                            @else
-                            <a href="{{route('entries')}}" class="ic-btn">Guest try out</a>
-                            <a href="{{route('login')}}" class="ic-btn">login</a>
-                            <a href="{{route('register')}}" class="ic-btn">register</a>
-                            @endif
-                        </div>
+<section class="ic-today-tomorrow-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="ic-today-tomorrow-card">
+                    <div class="ic-heading">
+                        <h2><span>{{$siteSetting->start_contest_title ?? "how to Play"}}</span></h2>
                     </div>
-                    <!-- <div class="ic-guest-btn">
+                    <div class="content">
+                        @if($siteSetting->start_contest_text)
+                        <p>{{$siteSetting->start_contest_text}}</p>
+                        @else
+                        <p>You can win {{$winCoins[0]['coin'] ?? 00}} coins daily. Start now!!</p>
+                        @endif
+
+                        @forelse($winCoins as $winCoin)
+                        <p>{{$winCoin->win}} of {{$winCoin->out_of}} win {{$winCoin->coin}}
+                            {{$winCoin->coin_name ?? "coins"}}</p>
+                        @empty
+                        @endforelse
+                    </div>
+                    <div class="ic-game-start-btn">
+                        @if (Auth::check() && Auth::user()->role_id == 0)
+                        <a href="{{route('entries')}}" class="ic-btn">start the contest</a>
+                        @else
+                        {{-- <a href="{{route('entries')}}" class="ic-btn">Guest try out</a> --}}
+                        <a href="{{route('login')}}" class="ic-btn">login</a>
+                        <a href="{{route('register')}}" class="ic-btn">register</a>
+                        @endif
+                    </div>
+                </div>
+                <!-- <div class="ic-guest-btn">
                         <div class="ic-get-share-btn">
                             <a href="#" class="ic-chat-icon">
                                 <span class="chat-svg-warper">
@@ -73,9 +74,9 @@
 
                         </div>
                     </div> -->
-                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 @endsection

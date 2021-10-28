@@ -68,8 +68,8 @@
                                         <p>Admin Panel User</p>
                                     </a>
                                 </li>
-
-                                <li class="nav-item">
+                           
+                           <li class="nav-item">
                                     <a href="{{route("user.frontend")}}"
                                        class="nav-link {{ ($routeName == 'user.frontend') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -77,7 +77,7 @@
                                     </a>
                                 </li>
                             @endif
-
+                            
                         </ul>
                     </li>
                 @endif
@@ -98,14 +98,6 @@
                                        class="nav-link {{ ($routeName == 'role.index' || $routeName == 'role.create'|| $routeName == 'role.edit') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Role Management</p>
-                                    </a>
-                                </li>
-
-                           <li class="nav-item">
-                                    <a href="{{route("user.frontend")}}"
-                                       class="nav-link {{ ($routeName == 'user.frontend') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Frontend User</p>
                                     </a>
                                 </li>
                             @endif

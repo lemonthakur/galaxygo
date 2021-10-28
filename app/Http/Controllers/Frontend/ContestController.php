@@ -215,7 +215,7 @@ class ContestController extends Controller
         } catch (ValidationException $e) {
             DB::rollback();
             session()->flash("error", "Unable to insert data");
-            return redirect()->back()
+            return redirect()->route('entries')
                 ->withErrors($e->getErrors())
                 ->withInput();
         } catch (\Exception $e) {
@@ -229,20 +229,7 @@ class ContestController extends Controller
         } else {
             Session::flash("error", "Unable claim coin");
         }
-        return redirect()->back();
-    }
-
-    public function participantEntries(Request $request){
-        $user = OwnLibrary::getUserInfo();
-        $entryWon = OwnLibrary::entryWon();
-
-        $contestParticipants= ContestParticipant::with('contest:id,name,time_start,time_end,is_final_answer')
-            ->orderBy('id','desc')
-            ->where('participant_type', '=', $user['type'])
-            ->where('participant_id', '=', $user['id'])
-            ->paginate(10);
-        $now = strtotime(date('Y-m-d h:i a'));
-        return view('frontend.participant-entries',compact('entryWon','contestParticipants','now'));
+        return redirect()->route('entries');
     }
 
 }
