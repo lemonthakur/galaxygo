@@ -115,10 +115,10 @@ class OwnLibrary {
 
     public static function entryWon(){
         $user = self::getUserInfo();
-        $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
+//        $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
         $win = ContestParticipant::where('participant_type', '=', $user['type'])
             ->where('participant_id', '=', $user['id'])
-            ->where('correct_answer', '>=', $winCoin[0]->win ?? 0)
+            ->where('earn', '>', 0)
             ->count();
         return $win;
     }

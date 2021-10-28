@@ -37,6 +37,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{route('profile')}}">Profile</a>
                             <a class="dropdown-item" href="{{route('withdraw')}}">Withdraw</a>
+                            <a class="dropdown-item" href="{{route('participant.entries')}}">Participant Entries</a>
                             <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
                         </div>
                     </div>
@@ -84,6 +85,10 @@
 
                         <li class="ic-menu-item-has-children">
                             <a href="{{route('withdraw')}}">Withdraw</a>
+                        </li>
+
+                        <li class="ic-menu-item-has-children">
+                            <a href="{{route('participant.entries')}}">Participant Entries</a>
                         </li>
 
                         <li class="ic-menu-item-has-children">

@@ -50,12 +50,11 @@ class ContestController extends Controller
         )->select('id', 'name', 'time_end', 'is_final_answer')
         ->orderBy('name','desc')
             ->where('is_final_answer',1)
-            ->where('time_end', '<',date('Y-m-d H:i:s'))
+            ->where('time_end', '<=',date('Y-m-d H:i:s'))
             ->limit(7)->get();
 
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));
-
 
         //Total entry won
         $entryWon = OwnLibrary::entryWon();
@@ -216,7 +215,7 @@ class ContestController extends Controller
         } catch (ValidationException $e) {
             DB::rollback();
             session()->flash("error", "Unable to insert data");
-            return redirect()->route('entries')
+            return redirect()->back()
                 ->withErrors($e->getErrors())
                 ->withInput();
         } catch (\Exception $e) {
@@ -230,7 +229,20 @@ class ContestController extends Controller
         } else {
             Session::flash("error", "Unable claim coin");
         }
-        return redirect()->route('entries');
+        return redirect()->back();
+    }
+
+    public function participantEntries(Request $request){
+        $user = OwnLibrary::getUserInfo();
+        $entryWon = OwnLibrary::entryWon();
+
+        $contestParticipants= ContestParticipant::with('contest:id,name,time_start,time_end,is_final_answer')
+            ->orderBy('id','desc')
+            ->where('participant_type', '=', $user['type'])
+            ->where('participant_id', '=', $user['id'])
+            ->paginate(10);
+        $now = strtotime(date('Y-m-d h:i a'));
+        return view('frontend.participant-entries',compact('entryWon','contestParticipants','now'));
     }
 
 }

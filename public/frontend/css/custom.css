@@ -211,10 +211,22 @@ button.login-btn,
     border-radius: 0;
 }
 
+.ic-body{
+  min-height: 100vh;
+}
+.ic-profile-header-btn .m-coins strong{
+  font-size:16px;
+}
+
 @media only screen and (max-width: 576px) {
     .ic-entries-tab-contents .ic-item .user .image img {
         width: 100px !important;
         height: 100px !important;
         /*border-radius: 50%;*/
     }
+}
+@media only screen and (max-width: 767px){
+.ic-entries-right .nav-tabs .nav-item .nav-link{
+  line-height:56px;
+}
 }

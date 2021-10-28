@@ -109,14 +109,14 @@
                                                         </div>
                                                         <div class="name-title pt-3">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
-                                                            <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize  mb-2">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                            <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize m-date">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                     </div>
@@ -195,14 +195,14 @@
                                                         </div>
                                                         <div class="name-title pt-3">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
-                                                            <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize  mb-2">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name)}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                            <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize m-date">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                     </div>
@@ -251,7 +251,12 @@
                                             <div class="ic-time">
                                                 <div class="d-flex justify-content-between">
                                                     <h4>{{$contest->name ? date('d M',strtotime($contest->name)) : ''}}</h4>
+
+                                                    @if(!empty($contest->userPLay) && $contest->userPLay->get_coin == 1)
+                                                    <h4>Won {{$contest->userPLay->earn}}</h4>
+                                                    @else
                                                     <h4>Won {{\App\CustomClass\OwnLibrary::winCoin($contest->id)}}</h4>
+                                                    @endif
                                                 </div>
                                             </div>
                                         @forelse($contest->contestPlayers as $key => $contestPlayer)
@@ -268,14 +273,14 @@
                                                         </div>
                                                         <div class="name-title pt-3">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
-                                                            <small class="text-white text-capitalize  mb-2">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize  mb-2">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <small class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
                                                             <p class="score text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</span></p><br />
                                                         </div>
                                                         <div class="mobile-name-title name-title">
                                                             <p class="mb-2 font-weight-bold player-name">{{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                             <small class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                            <small class="text-white text-capitalize m-date">{{date('D, M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                            <small class="text-white text-capitalize m-date">{{date('M y, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                                             <p class="score text-white d-block text-capitalize">proj fantasy score: <span>{{$contestPlayer->score}}</p><br />
                                                         </div>
                                                     </div>

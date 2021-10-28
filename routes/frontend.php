@@ -95,4 +95,6 @@ Route::group(['middleware'=>'frontAuthCheck'],function () {
     Route::post('checkout-bid-point-payment', [CheckoutController::class, 'checkoutbidpointPayment'])->name('checkout-bid-point.payment');
     Route::get('/payment',[HomeController::class,'payment'])->name('payment');
     Route::get('/bid-payment/{id}',[HomeController::class,'bidpayment'])->name('bid.payment');
+
+    Route::get('/participant-entries',[ContestController::class,'participantEntries'])->name('participant.entries');
 });
