@@ -249,7 +249,7 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                     <button editRowId="{{$player->id}}" type="button" class="btn btn-success btn-xs editCart"
-                                                            attr-player="{{$player->player->name ?? ''}}" attr-player-id="{{$player->player_id}}" attr-played-on="{{date('d-m-Y h:i a',strtotime($player->played_on))}}"
+                                                            attr-player="{{$player->player->name ?? ''}}" attr-player-id="{{$player->player_id}}" attr-played-on="{{date('m/d/Y h:i a',strtotime($player->played_on))}}"
                                                             attr-versus="{{$player->versus}}" attr-score="{{$player->score}}"
                                                             attr-player-image="{{$player->player->image ?? ''}}">
                                                         <i class="fas fa-edit"></i>

@@ -20,6 +20,7 @@
                     <form action="{{route('register.submit')}}" method="post" class="ic-login-form-warper">
                         @csrf
 
+                        <input type="hidden" value="{{ request()->input('ref_yu') }}" name="ref_byu">
                         <div class="form-group input-form-group mb-0">
                             <div class="icon">
                                 <i class="icofont-ui-user"></i>

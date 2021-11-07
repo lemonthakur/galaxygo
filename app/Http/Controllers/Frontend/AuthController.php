@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CoinHistory;
 use App\Models\GuestUser;
 use App\Models\User;
+use App\Models\SiteSetting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,13 +97,15 @@ class AuthController extends Controller
                 ->withErrors($validation);
         }
 
+        $site_settins = SiteSetting::find(1);
+
         $user = new User();
         $user->role_id = 0;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->contact_no = Str::random(4).date('ymd').rand(0,99);
-        $user->total_coin = $user->total_coin + 5;
-        $user->current_coin = $user->current_coin + 5;
+        $user->total_coin = $user->total_coin + $site_settins->register_coin;
+        $user->current_coin = $user->current_coin + $site_settins->register_coin;
         $user->password = Hash::make($request->password);
 
         if ($user->save()){
@@ -111,7 +114,7 @@ class AuthController extends Controller
             $coinHistory = new CoinHistory();
             $coinHistory->user_id = auth()->id();
             $coinHistory->user_type = 0;
-            $coinHistory->amount = 5;
+            $coinHistory->amount = $site_settins->register_coin;
             $coinHistory->transaction_type = 0;
             $coinHistory->earn_expense_type = 0;
             $coinHistory->save();
@@ -124,6 +127,24 @@ class AuthController extends Controller
 
             if (!empty($guestUser) && $guestUser->current_coin > 0){
                 $res = $this->coinTransfer($guestUser);
+            }
+
+            $refer_has = base64_decode(urldecode( $request->ref_byu ));
+            if($refer_has){
+                $ref_user_info = User::find($refer_has);
+                if($ref_user_info){
+                    $coinHistoryRef = new CoinHistory();
+                    $coinHistoryRef->user_id = $ref_user_info->id;
+                    $coinHistoryRef->user_type = 0;
+                    $coinHistoryRef->amount = $site_settins->refer_coin_amount;
+                    $coinHistoryRef->transaction_type = 0;
+                    $coinHistoryRef->earn_expense_type = 0;
+                    $coinHistoryRef->save();
+
+                    $ref_user_info->total_coin = $ref_user_info->total_coin + $site_settins->refer_coin_amount;
+                    $ref_user_info->current_coin = $ref_user_info->current_coin + $site_settins->refer_coin_amount;
+                    $ref_user_info->save();
+                }
             }
 
             session()->flash("success","Successfully register");
@@ -146,6 +167,8 @@ class AuthController extends Controller
         if($users){
             Auth::login($users);
         }else{
+            $site_settins = SiteSetting::find(1);
+
             $user = new User();
             $user->role_id = 0;
             $user->contact_no = Str::random(4).date('ymd').rand(0,99);
@@ -154,8 +177,8 @@ class AuthController extends Controller
             $user->email = $userSocial->getEmail();
             $user->provider_id = $userSocial->getId();
             $user->provider = $provider;
-            $user->total_coin = $user->total_coin + 5;
-            $user->current_coin = $user->current_coin + 5;
+            $user->total_coin = $user->total_coin + $site_settins->register_coin;
+            $user->current_coin = $user->current_coin + $site_settins->register_coin;
             $user->provider = $provider;
 
             if($user->save()){
@@ -163,7 +186,7 @@ class AuthController extends Controller
 
                 $coinHistory = new CoinHistory();
                 $coinHistory->user_id = auth()->id();
-                $coinHistory->amount = 5;
+                $coinHistory->amount = $site_settins->register_coin;
                 $coinHistory->transaction_type = 0;
                 $coinHistory->earn_expense_type = 0;
                 $coinHistory->save();

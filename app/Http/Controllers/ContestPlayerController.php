@@ -139,7 +139,13 @@ class ContestPlayerController extends Controller
             $contest->save();
         }
 
-        if ( $contestPlayer->save()){
+        if ($contestPlayer->save()){
+            $maxPlayedOn = ContestPlayer::where('contest_id', $request->contest_id)->max('played_on');
+
+            $contest_2 = Contest::find($request->contest_id);
+            $contest_2->time_end = date('Y-m-d H:i', strtotime($maxPlayedOn));
+            $contest_2->save();
+
             session()->flash('success','Contest Player Added');
         }else{
             session()->flash('error','Contest player not added');

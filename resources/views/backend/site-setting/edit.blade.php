@@ -138,6 +138,44 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="register_coin">Register Coin</label>
+                                                <input type="number"
+                                                       class="form-control {{$errors->has("register_coin") ? "is-invalid":""}}"
+                                                       id="register_coin" name="register_coin"
+                                                       placeholder="Register Coin"
+                                                       value="{{old("register_coin",$setting->register_coin)}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("register_coin") ? $errors->first("register_coin") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="refer_coin_amount">Refer Coin</label>
+                                                <input type="number"
+                                                       class="form-control {{$errors->has("refer_coin_amount") ? "is-invalid":""}}"
+                                                       id="refer_coin_amount" name="refer_coin_amount"
+                                                       placeholder="Refer Coin"
+                                                       value="{{old("refer_coin_amount",$setting->refer_coin_amount)}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("refer_coin_amount") ? $errors->first("refer_coin_amount") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="notice">Withdraw Message</label>
+                                                <textarea
+                                                    class="form-control {{$errors->has("withdraw_message") ? "is-invalid":""}}"
+                                                    id="withdraw_message" name="withdraw_message"
+                                                    placeholder="Withdraw message">{{old("withdraw_message",$setting->withdraw_message)}}</textarea>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("withdraw_message") ? $errors->first("withdraw_message") : ""}} </span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="notice">Notice</label>

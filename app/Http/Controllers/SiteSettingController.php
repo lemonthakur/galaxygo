@@ -28,6 +28,8 @@ class SiteSettingController extends Controller
             'email' => 'required|email',
             'contact_no' => 'required|max:15',
             'address' => 'required|max:100',
+            'refer_coin_amount' => 'required',
+            'register_coin' => 'required',
             'google_map' => 'max:500',
             'site_title' => 'max:90',
             'meta_description' => 'max:180',
@@ -68,6 +70,9 @@ class SiteSettingController extends Controller
         $setting->start_contest_text = $request->start_contest_text ?? Null;
         $setting->index_title = $request->index_title ?? Null;
         $setting->notice = $request->notice ?? Null;
+        $setting->register_coin = $request->register_coin ?? Null;
+        $setting->refer_coin_amount = $request->refer_coin_amount ?? Null;
+        $setting->withdraw_message = $request->withdraw_message ?? Null;
 
         if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){

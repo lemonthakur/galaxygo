@@ -112,7 +112,7 @@
                             </a>
                         </div>
                         <div class="ic-get-share-btn justify-content-around">
-                            <a href="#" class="ic-chat-icon" id="chatToggle">
+                            <a href="javascript:void(0)" class="ic-chat-icon" id="chatToggleRef">
                             <span class="chat-svg-warper">
                                 <svg id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
                                     <g>
@@ -133,7 +133,7 @@
                                 </svg>
                             </span>
 
-                                <span class="public-chat-txt">public <br> chat</span>
+                                <span class="public-chat-txt">Get {{$site_setting->refer_coin_amount}} coins <br>for each friend refer</span>
                             </a>
                             <a href="javascript:void(0)" class="ic-faceboob-share-btn" id="fbShareTg">
                             <span class="facebook-svg-warper">
@@ -151,6 +151,41 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="shareModal">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Share Link With Friends</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                @if (!Auth::check())
+                    <p class=""
+                       style="color:#c9c916; font-family: galano-light">
+                        {{"**Please login to win coins inviting your friends with your refer code/link."}}
+                    </p>
+                @endif
+                <br>
+                <p>
+                    {{"Refer Code/Link is: "}} <u><span id="copy-ref-link">{{"http://localhost/galaxygo/public/registration"}}@if (Auth::check()){{'?ref_yu='.urlencode(base64_encode(Auth::user()->id))}}@endif</span></u>
+                    &nbsp;&nbsp;<input type="button" class="btn btn-warning btn-sm" id="copy-btn" value="Copy Link">
+                </p>
+                <p class="text-center"><b>Or</b></p>
+                <br>
+                <p>
+                    <button class="btn btn-success btn-block btn-sm" id="chatToggleMdl">Share</button>
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </section>
 
 @endsection
@@ -390,5 +425,52 @@
 
             });
         }
+
+        $(document).on('click', '#chatToggleRef', function(){
+            $('#shareModal').modal('show');
+        });
+
+        $(document).ready(function(){
+            $(document).on("click", "#copy-btn", function(){
+                var copy_text = $("#copy-ref-link").text();
+                copyToClipboard(copy_text);
+            });
+        });
+
+        function copyToClipboard(text) {
+            var input = document.getElementById("copy-ref-link").appendChild(document.createElement("input"));
+            input.value = text;
+            input.focus();
+            input.select();
+            document.execCommand('copy');
+            input.parentNode.removeChild(input);
+
+            toastr.options =
+                {
+                    "closeButton" : true,
+                    "progressBar" : true
+                }
+            toastr.success("Copied to clipboard.");
+        }
+
+        const shareData = {
+            title: 'GalaxyGo',
+            text: 'Register and Share, Get Instant Bonus!!',
+            url: $("#copy-ref-link").text()
+          }
+
+          const btn = document.querySelector('#chatToggleMdl');
+          const resultPara = document.querySelector('.result');
+
+          // Share must be triggered by "user activation"
+          btn.addEventListener('click', async () => {
+            try {
+              await navigator.share(shareData)
+              resultPara.textContent = 'MDN shared successfully'
+            } catch(err) {
+              resultPara.textContent = 'Error: ' + err
+            }
+          });
+
     </script>
 @endsection

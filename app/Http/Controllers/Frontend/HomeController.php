@@ -30,11 +30,12 @@ class HomeController extends Controller
     public function home(){
         $all_images = FooterCircleImage::where('status', 1)->orderBy('order_serial', 'asc')->get();
         $fb_share_link = SiteSetting::select('facebook_share_link')->first();
+        $site_setting = SiteSetting::find(1);
         if (!isset($_COOKIE['galaxy_guest']) || empty($_COOKIE['galaxy_guest']) ||  $_COOKIE['galaxy_guest'] == null){
             $cookieId = Str::random(3).rand(000,999).Str::random(3).date('ymd');
             setcookie('galaxy_guest',$cookieId,time()+315360000, "/");
         }
-        return view('frontend.home', compact('all_images', 'fb_share_link'));
+        return view('frontend.home', compact('all_images', 'fb_share_link', 'site_setting'));
     }
 
     public function todayTomorrow(){
@@ -298,7 +299,8 @@ class HomeController extends Controller
     }
 
     public function withdraw(){
-        return view('frontend.withdraw');
+        $site_setting = SiteSetting::find(1);
+        return view('frontend.withdraw', compact('site_setting'));
     }
 
     public function withdrawRequest(Request $request){
@@ -306,6 +308,10 @@ class HomeController extends Controller
         $rules = [
             'amount' => 'required|numeric|min:100',
         ];
+
+        if(!auth()->user()->paypal_email){
+            $rules['paypal_email'] = 'required|email';
+        }
 
         $message = [];
 
@@ -315,6 +321,13 @@ class HomeController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors($validation);
+        }
+
+        if(!auth()->user()->paypal_email){
+            $user = User::find(auth()->id());
+            $user->paypal_email = $request->paypal_email;
+            $user->save();
+            \Auth::setUser($user);
         }
 
         if (!auth()->user()->paypal_email){
