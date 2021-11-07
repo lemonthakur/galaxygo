@@ -6,7 +6,7 @@
         </a>
     @endif
 
-    @if(strtotime($time_end) > strtotime(date("y-m-d h:i a")))
+    @if(strtotime($time_end) > strtotime(date("y-m-d H:i")))
         @if(!empty($aclList[12][3]))
             <a class="btn btn-xs btn-warning text-white" href="{{route('contest.edit',$id)}}" title="Edit">
                 <i class="fas fa-pencil-alt"></i>

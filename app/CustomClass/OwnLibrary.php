@@ -10,6 +10,7 @@ namespace App\CustomClass;
 
 use App\Models\Contest;
 use App\Models\ContestParticipant;
+use App\Models\ContestWin;
 use App\Models\GuestUser;
 use App\Models\ParticipantAnswer;
 use App\Models\WinCoin;
@@ -115,10 +116,11 @@ class OwnLibrary {
 
     public static function entryWon(){
         $user = self::getUserInfo();
-        $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
+//        $winCoin = WinCoin::select('win')->orderBy('win')->limit(1)->get();
         $win = ContestParticipant::where('participant_type', '=', $user['type'])
-            ->where('participant_id', '=', $user['id'])
-            ->where('correct_answer', '>=', $winCoin[0]->win ?? 0)
+            ->where('earn', '>', 0)
+//            ->where('participant_id', '=', $user['id'])
+//            ->where('correct_answer', '>=', $winCoin[0]->win ?? 0)
             ->count();
         return $win;
     }
@@ -158,7 +160,7 @@ class OwnLibrary {
             }
 
             //Based on Win Coin earn
-            $winCoin = WinCoin::select('coin')->where('win','=',$win)->first();
+            $winCoin = ContestWin::select('coin')->where('contest_id',$contestId)->where('win','=',$win)->first();
             if (!empty($winCoin->coin)){
                 return $winCoin->coin;
             }else{

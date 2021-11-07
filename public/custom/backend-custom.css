@@ -2,6 +2,10 @@ table.table thead th{
     text-align: center;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    color: black;
+}
+
 .select2-parent .select2-container--default .select2-selection--single {
     height: calc(2.25rem + 2px);
     padding: .375rem .75rem;

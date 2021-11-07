@@ -35,7 +35,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="win">Number of win<span class="text-danger">*</span></label>
-                                                <input type="number" min="0"
+                                                <input type="number" min="1"
                                                        class="form-control {{$errors->has("win") ? "is-invalid":""}}"
                                                        id="win" name="win" placeholder="Enter Number Of Win"
                                                        value="{{old("win")}}" required>
@@ -47,7 +47,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="out_of">Out of<span class="text-danger">*</span></label>
-                                                <input type="number" min="10"
+                                                <input type="number" min="1"
                                                        class="form-control {{$errors->has("out_of") ? "is-invalid":""}}"
                                                        id="out_of" name="out_of" placeholder="Enter Out Of"
                                                        value="{{old("out_of")}}" required>

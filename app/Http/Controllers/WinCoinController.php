@@ -19,7 +19,7 @@ class WinCoinController extends Controller
     {
         if($request->ajax()){
 
-            $winCoin = WinCoin::orderBy('win','desc');
+            $winCoin = WinCoin::orderBy('out_of','desc');
 
             return DataTables::of($winCoin)
                 ->addIndexColumn()
@@ -50,9 +50,9 @@ class WinCoinController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'win' => 'required|unique:win_coins,win|integer|min:0',
-            'out_of' => 'required|integer|min:0',
-            'coin' => 'required|integer|min:0',
+            'win' => 'required|integer|min:1',
+            'out_of' => 'required|integer|min:1',
+            'coin' => 'required|integer|min:1',
             'coin_name' => 'max:100',
         ];
 
@@ -113,9 +113,9 @@ class WinCoinController extends Controller
     public function update(Request $request, WinCoin $winCoin)
     {
         $rules = [
-            'win' => "required|integer|min:0|unique:win_coins,win," . $winCoin->id,
-            'out_of' => 'required|integer|min:0',
-            'coin' => 'required|integer|min:0',
+            'win' => "required|integer|min:1",
+            'out_of' => 'required|integer|min:1',
+            'coin' => 'required|integer|min:1',
             'coin_name' => 'max:100',
         ];
 

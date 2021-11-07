@@ -31,7 +31,7 @@
                                 @method('put')
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="name">Game Date<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
@@ -44,7 +44,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
                                                 <input readonly type="text"
@@ -58,19 +58,54 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-5">
                                             <div class="form-group">
-                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>
-                                                <input readonly type="text"
-                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"
-                                                       id="time_end" data-target="#time_end"
-                                                       data-toggle="datetimepicker" name="time_end"
-                                                       placeholder="Select Count Down End"
-                                                       value="{{old("time_end",$contest->time_end ? date("m-d-Y h:i A", strtotime($contest->time_end)) : "")}}">
+                                                <label for="win_coin">Win Coin<span class="text-danger">*</span></label>
+                                                <select class="form-control {{$errors->has("win_coins") ? "is-invalid":""}}"
+                                                        id="win_coin" name="win_coins[]" multiple>
+                                                    <option></option>
+                                                    @foreach($winCoins as $winCoin)
+                                                        <option value="{{$winCoin->id}}" @if(in_array($winCoin->id,$contestWins)) selected @endif>
+                                                            {{$winCoin->win}} Of {{$winCoin->out_of}} Win {{$winCoin->coin}} {{$winCoin->coin_name}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 <span
-                                                        class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>
+                                                    class="text-danger"> {{$errors->has("win_coins") ? $errors->first("win_coins") : ""}} </span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="contest_type">Contest Type<span class="text-danger">*</span></label>
+                                                <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
+                                                        id="contest_type" name="contest_type">
+                                                    <option @if(empty(old("contest_type")) && empty($contest->contest_type)) selected @endif disabled hidden>Select Contest Type</option>
+                                                    <option @if(old("contest_type") == "Fantasy score" || $contest->contest_type == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>
+                                                    <option @if(old("contest_type") == "Passing yards" || $contest->contest_type == "Passing yards") selected @endif value="Passing yards">Passing yards</option>
+                                                    <option @if(old("contest_type") == "Rushing yards" || $contest->contest_type == "Rushing yards") selected @endif value="Rushing yards">Rushing yards</option>
+                                                    <option @if(old("contest_type") == "Receiving yards" || $contest->contest_type == "Receiving yards") selected @endif value="Receiving yards">Receiving yards</option>
+                                                    <option @if(old("contest_type") == "Shot" || $contest->contest_type == "Shot") selected @endif value="Shot">Shot</option>
+                                                </select>
+                                                <span class="text-danger">
+                                                    {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}
+                                                </span>
+                                            </div>
+                                        </div>
+
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>--}}
+{{--                                                <input readonly type="text"--}}
+{{--                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"--}}
+{{--                                                       id="time_end" data-target="#time_end"--}}
+{{--                                                       data-toggle="datetimepicker" name="time_end"--}}
+{{--                                                       placeholder="Select Count Down End"--}}
+{{--                                                       value="{{old("time_end",$contest->time_end ? date("m-d-Y h:i A", strtotime($contest->time_end)) : "")}}">--}}
+{{--                                                <span--}}
+{{--                                                        class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                         <div class="col-md-2">
                                             <button style="margin-top: 15%;" type="submit" class="btn btn-dark">Update
@@ -239,6 +274,11 @@
 
 @section('js')
     <script>
+        $('#win_coin').select2({
+            placeholder: "Select a win condition",
+            // allowClear: true
+        });
+
         $("#player_name").on('focus',function () {
             var search = $(this).val();
             var _token = "{{csrf_token()}}";

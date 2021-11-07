@@ -64,41 +64,41 @@
                     <div class="tab-content" id="myTabContent">
                         {{-- Open Enries--}}
                         <div class="tab-pane fade show active" id="openEntries">
-                            <div class="ic-entries-tab-contents open-entries">
+                            <span class="d-none" id="contestCount">{{count($contests)}}</span>
+                            @if(!empty($contests))
+                                @foreach($contests as $contest)
+                                    <div class="ic-entries-tab-contents open-entries mb-3">
+                                        @if($now > strtotime($contest->time_start) && strtotime($contest->time_end) > $now)
+                                            <form method="post" action="{{route('entries.store')}}">
+                                                @csrf
+                                                <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
+                                                <div class="ic-pending-entries-title">
+                                                    <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
+                                                    <div class="ic-timer" id="ic-timer{{$loop->iteration}}">
+                                                    <span class="d-none timer-time"
+                                                          id="timer-time">{{date('d-M-Y h:i:s A',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
+                                                        <div class="hours">
+                                                            <h4 id="day" class="d text-center">00</h4>
+                                                            <p>Days</p>
+                                                        </div>
+                                                        <div class="hours">
+                                                            <h4 id="hour" class="h">00</h4>
+                                                            <p>hours</p>
+                                                        </div>
+                                                        <div class="minute mr-3">
+                                                            <h4 id="minute" class="m">00</h4>
+                                                            <p>Minutes</p>
+                                                        </div>
+                                                        <div class="seconds">
+                                                            <h4 id="second" class="s">00</h4>
+                                                            <p>seconds</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                @if(!empty($contest))
-
-                                @if($now > strtotime($contest->time_start) && strtotime($contest->time_end) > $now)
-                                <form method="post" action="{{route('entries.store')}}">
-                                    @csrf
-                                    <input type="hidden" name="contest_id" value="{{encrypt($contest->id)}}">
-                                    <div class="ic-pending-entries-title">
-                                        <h5>{{$contest->name ? date('M d',strtotime($contest->name)) : ''}}</h5>
-                                        <div class="ic-timer">
-                                            <span class="d-none"
-                                                id="timer-time">{{date('d-M-Y h:i:s A',strtotime($contest->time_end)) ?? date('Y-m-d 0:00')}}</span>
-                                            <div class="hours">
-                                                <h4 id="day" class="text-center">00</h4>
-                                                <p>Days</p>
-                                            </div>
-                                            <div class="hours">
-                                                <h4 id="hour">00</h4>
-                                                <p>hours</p>
-                                            </div>
-                                            <div class="minute mr-3">
-                                                <h4 id="minute">00</h4>
-                                                <p>Minutes</p>
-                                            </div>
-                                            <div class="seconds">
-                                                <h4 id="second">00</h4>
-                                                <p>seconds</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <span class="d-none" id="contestPlayerCount{{$loop->iteration}}">{{count($contest->contestPlayers)}}</span>
                                     @forelse($contest->contestPlayers as $key => $contestPlayer)
                                     <!--Item-->
-                                    {{--                                                <div class="ic-item {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
                                     <div class="ic-item">
                                         <div class="user">
                                             <div class="image">
@@ -111,11 +111,17 @@
                                             <div class="name-title pt-3">
                                                 <p class="mb-2 font-weight-bold player-name">
                                                     {{ucwords($contestPlayer->player->name ?? '')}}</p>
-                                                <small
-                                                    class="text-white text-capitalize  mb-2">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
+                                                <span class="d-none" id="play-time{{$loop->parent->iteration}}{{$loop->iteration}}">
+                                                    {{date('d-M-Y h:i:s A',strtotime($contestPlayer->played_on))}}
+                                                </span>
+                                                <small class="text-white text-capitalize  mb-2" id="player-countdown{{$loop->parent->iteration}}{{$loop->iteration}}">
+{{--                                                    {{date('M d, h:i A',strtotime($contestPlayer->played_on))}}--}}
+                                                </small>
+                                                <br />
                                                 <small
                                                     class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                <p class="score text-capitalize">proj fantasy score:
+                                                <p class="score text-capitalize">
+                                                    {{$contest->contest_type ?? "proj fantasy score"}}:
                                                     <span>{{$contestPlayer->score}}</span></p><br />
                                             </div>
                                             <div class="mobile-name-title name-title">
@@ -123,58 +129,61 @@
                                                     {{ucwords($contestPlayer->player->name ?? '')}}</p>
                                                 <small
                                                     class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                                <small
-                                                    class="text-white text-capitalize m-date">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                                <p class="score text-white d-block text-capitalize">proj fantasy score:
+                                                <small class="text-white text-capitalize m-date" id="m-player-countdown{{$loop->parent->iteration}}{{$loop->iteration}}">
+{{--                                                    {{date('M d, h:i A',strtotime($contestPlayer->played_on))}}--}}
+                                                </small><br />
+                                                <p class="score text-white d-block text-capitalize">
+                                                    {{$contest->contest_type ?? "proj fantasy score"}}:
                                                     <span>{{$contestPlayer->score}}</span></p><br />
                                             </div>
                                         </div>
 
-                                        <div class="over-under-btn">
-                                            {{--Over--}}
-                                            <input class="d-none" type="radio" id="over_{{$contestPlayer->id}}_2"
-                                                value="2" name="players[{{$contestPlayer->id}}]" {{(!empty($contestPlayer->participant->participant_answer)
-                                                            && $contestPlayer->participant->participant_answer == 2)
-                                                                ? 'checked' : ''}}>
-                                            <label id="over_lavel_{{$contestPlayer->id}}" pid="{{$contestPlayer->id}}"
-                                                ltype="2" for="over_{{$contestPlayer->id}}_2" class="over-btn mb-1 rlabel  {{(!empty($contestPlayer->participant->participant_answer)
-                                                        && $contestPlayer->participant->participant_answer == 2)
-                                                            ? 'active' : ''}}">over</label>
-                                            {{--Over--}}
+                                                        <div class="over-under-btn" id="over-under-btn{{$loop->parent->iteration}}{{$loop->iteration}}">
+                                                            {{--Over--}}
+                                                            <input class="d-none" type="radio" id="over_{{$contestPlayer->id}}_2"
+                                                                   value="2" name="players[{{$contestPlayer->id}}]" {{(!empty($contestPlayer->participant->participant_answer)
+                                                                    && $contestPlayer->participant->participant_answer == 2)
+                                                                        ? 'checked' : ''}}>
+                                                            <label id="over_lavel_{{$contestPlayer->id}}" pid="{{$contestPlayer->id}}"
+                                                                   ltype="2" for="over_{{$contestPlayer->id}}_2" class="over-btn mb-1 rlabel  {{(!empty($contestPlayer->participant->participant_answer)
+                                                                && $contestPlayer->participant->participant_answer == 2)
+                                                                    ? 'active' : ''}}">over</label>
+                                                            {{--Over--}}
 
-                                            {{--Under--}}
-                                            <input class="d-none" type="radio" id="under_{{$contestPlayer->id}}_1"
-                                                value="1" name="players[{{$contestPlayer->id}}]" {{(!empty($contestPlayer->participant->participant_answer)
-                                                           && $contestPlayer->participant->participant_answer == 1)
-                                                               ? 'checked' : ''}}>
-                                            <label id="under_lavel_{{$contestPlayer->id}}" pid="{{$contestPlayer->id}}"
-                                                ltype="1" for="under_{{$contestPlayer->id}}_1" class="under-btn rlabel
-                                                        {{(!empty($contestPlayer->participant->participant_answer)
-                                                        && $contestPlayer->participant->participant_answer == 1)
-                                                            ? 'active' : ''}}">under</label>
-                                            {{--Under--}}
-                                        </div>
-                                    </div>
-                                    <!--Item-->
-                                    @empty
-                                    <h3 class="text-center">No Players Found</h3>
-                                    @endforelse
+                                                            {{--Under--}}
+                                                            <input class="d-none" type="radio" id="under_{{$contestPlayer->id}}_1"
+                                                                   value="1" name="players[{{$contestPlayer->id}}]" {{(!empty($contestPlayer->participant->participant_answer)
+                                                                   && $contestPlayer->participant->participant_answer == 1)
+                                                                       ? 'checked' : ''}}>
+                                                            <label id="under_lavel_{{$contestPlayer->id}}" pid="{{$contestPlayer->id}}"
+                                                                   ltype="1" for="under_{{$contestPlayer->id}}_1" class="under-btn rlabel
+                                                                {{(!empty($contestPlayer->participant->participant_answer)
+                                                                && $contestPlayer->participant->participant_answer == 1)
+                                                                    ? 'active' : ''}}">under</label>
+                                                            {{--Under--}}
+                                                        </div>
+                                                    </div>
+                                                    <!--Item-->
+                                                @empty
+                                                    <h3 class="text-center">No Players Found</h3>
+                                            @endforelse
 
-                                    <!--Item End-->
-                                    <div class="ic-item-load-more">
-                                        {{--<a href="#"><i class="flaticon-loading"></i> load more</a>--}}
-                                        <button type="submit" class="btn-submit">Submit</button>
+                                            <!--Item End-->
+                                                <div class="ic-item-load-more">
+                                                    {{--<a href="#"><i class="flaticon-loading"></i> load more</a>--}}
+                                                    <button type="submit" class="btn-submit">Submit</button>
+                                                </div>
+                                            </form>
+                                        @elseif($now > strtotime($contest->time_end))
+                                            <h4 class="text-center text-white">Today's Contest End</h4>
+                                        @else
+                                            <h4 class="text-center text-white">The contest hasn't started yet.</h4>
+                                        @endif
                                     </div>
-                                </form>
-                                @elseif($now > strtotime($contest->time_end))
-                                <h4 class="text-center text-white">Today's Contest End</h4>
-                                @else
-                                <h4 class="text-center text-white">The contest hasn't started yet.</h4>
-                                @endif
-                                @else
+                                @endforeach
+                            @else
                                 <h3 class="text-center text-white">No contest found</h3>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                         {{--Open Enries--}}
 
@@ -201,7 +210,8 @@
                                                 class="text-white text-capitalize  mb-2">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                             <small
                                                 class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                            <p class="score text-capitalize">proj fantasy score:
+                                            <p class="score text-capitalize">
+                                                {{$contest->contest_type ?? "proj fantasy score"}}:
                                                 <span>{{$contestPlayer->score}}</span></p><br />
                                         </div>
                                         <div class="mobile-name-title name-title">
@@ -211,7 +221,8 @@
                                                 class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                             <small
                                                 class="text-white text-capitalize m-date">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                            <p class="score text-white d-block text-capitalize">proj fantasy score:
+                                            <p class="score text-white d-block text-capitalize">
+                                                {{$contest->contest_type ?? "proj fantasy score"}}:
                                                 <span>{{$contestPlayer->score}}</span></p><br />
                                         </div>
                                     </div>
@@ -270,7 +281,6 @@
                                 </div>
                                 @forelse($contest->contestPlayers as $key => $contestPlayer)
                                 <!--Item 1-->
-                                {{--                                                    <div class="ic-item  {{$loop->iteration % 2 == 0 ? 'item-bg-mobile' : 'item-bg'}}">--}}
                                 <div class="ic-item">
                                     <div class="user">
                                         <div class="image">
@@ -287,7 +297,8 @@
                                                 class="text-white text-capitalize  mb-2">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
                                             <small
                                                 class="text-white text-capitalize  mb-2">{{strtoupper($contestPlayer->versus)}}</small><br />
-                                            <p class="score text-capitalize">proj fantasy score:
+                                            <p class="score text-capitalize">
+                                                {{$contest->contest_type ?? "proj fantasy score"}}:
                                                 <span>{{$contestPlayer->score}}</span></p><br />
                                         </div>
                                         <div class="mobile-name-title name-title">
@@ -297,7 +308,8 @@
                                                 class="text-white text-capitalize m-vs">{{strtoupper($contestPlayer->versus)}}</small><br />
                                             <small
                                                 class="text-white text-capitalize m-date">{{date('M d, h:i A',strtotime($contestPlayer->played_on))}}</small><br />
-                                            <p class="score text-white d-block text-capitalize">proj fantasy score:
+                                            <p class="score text-white d-block text-capitalize">
+                                                {{$contest->contest_type ?? "proj fantasy score"}}:
                                                 <span>{{$contestPlayer->score}}</p><br />
                                         </div>
                                     </div>
@@ -416,60 +428,106 @@
 <script>
     $(document).ready(function () {
 
-            $(".rlabel").on('click',function (){
-                let pid = $(this).attr('pid');
-                let ltype = $(this).attr('ltype');
-                $(this).addClass('active');
+        $(".rlabel").on('click',function (){
+            let pid = $(this).attr('pid');
+            let ltype = $(this).attr('ltype');
+            $(this).addClass('active');
 
-                if (ltype === "1"){
-                    $('#over_lavel_'+pid).removeClass('active');
-                }else{
-                    $('#under_lavel_'+pid).removeClass('active');
-                }
-            });
+            if (ltype === "1"){
+                $('#over_lavel_'+pid).removeClass('active');
+            }else{
+                $('#under_lavel_'+pid).removeClass('active');
+            }
+        });
 
-            // Count down timer
-            let getTime = $('#timer-time').text()+' -07:00';
-            function makeTimer() {
-                if (Date.parse(getTime) < Date.parse(new Date().toUTCString())) {
-                    getTime = new Date();
-                    $('.open-entries').empty();
-                    $('.open-entries').html('<h3 class="text-center text-white">Today\'s contest end</h3>');
-                }
+        const contestCount = $("#contestCount").text();
 
-                var endTime = new Date(getTime);
-                endTime = (Date.parse(endTime) / 1000);
+        for (let i = 0; i < contestCount; i++){
+            let parent = $('#ic-timer'+(i+1));
+                setInterval(function() {
+                    contestTimer(parent.find('.timer-time'),
+                        parent.find('.d'),
+                        parent.find('.h'),
+                        parent.find('.m'),
+                        parent.find('.s'),parent);
+                    }, 1000);
+            let contestPlayerCount = $("#contestPlayerCount"+(i+1)).text();
+            for (let j = 0; j < contestPlayerCount; j++){
+                playerCountDown(
+                    $("#play-time"+(i+1)+(j+1)).text(),
+                    $("#player-countdown"+(i+1)+(j+1)),
+                    $("#m-player-countdown"+(i+1)+(j+1)),
+                    $("#over-under-btn"+(i+1)+(j+1))
+                )
+            }
+        }
 
-                var now = new Date();
-                now = (Date.parse(now) / 1000);
+        // contest timer
+        function contestTimer(getTimeSpan,daysDiv,hoursDiv,minutesDiv,secondsDiv,holder) {
+            var getTime = getTimeSpan.text() + ' -07:00';
 
-                var timeLeft = endTime - now;
-
-                var days = Math.floor(timeLeft / 86400);
-                var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-                var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
-                var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-
-                if (hours < "10") {
-                    hours = "0" + hours;
-                }
-                if (minutes < "10") {
-                    minutes = "0" + minutes;
-                }
-                if (seconds < "10") {
-                    seconds = "0" + seconds;
-                }
-
-                $("#day").text(days);
-                $("#hour").text(hours);
-                $("#minute").text(minutes);
-                $("#second").text(seconds);
+            if (Date.parse(getTime) < Date.parse(new Date())) {
+                getTime = new Date();
+                holder.closest('.open-entries').remove();
             }
 
-            setInterval(function () {
-                makeTimer();
+            var endTime = new Date(getTime);
+            endTime = (Date.parse(endTime) / 1000);
+
+            var now = new Date();
+            now = (Date.parse(now) / 1000);
+
+            var timeLeft = endTime - now;
+
+            var days = Math.floor(timeLeft / 86400);
+            var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+            var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
+            var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+
+            if (hours < "10") { hours = "0" + hours; }
+            if (minutes < "10") { minutes = "0" + minutes; }
+            if (seconds < "10") { seconds = "0" + seconds; }
+
+            daysDiv.text(days);
+            hoursDiv.text(hours);
+            minutesDiv.text(minutes);
+            secondsDiv.text(seconds);
+        }
+
+        // $("#player-countdown").text($("#play-time").text());
+        function playerCountDown(countDownTime,setElement,setMobileElement,removeBtn){
+            let countDownDate = new Date(countDownTime + " -07:00").getTime();
+            // Update the count down every 1 second
+            let x = setInterval(function() {
+                // Get todays date and time
+                let now = new Date().getTime();
+
+                // Find the distance between now an the count down date
+                let distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (hours < "10") { hours = "0" + hours; }
+                if (minutes < "10") { minutes = "0" + minutes; }
+                if (seconds < "10") { seconds = "0" + seconds; }
+
+                const clone = " : "
+
+                setElement.text("Start " + hours + clone + minutes + clone + seconds);
+                setMobileElement.text("Start " + hours + clone + minutes + clone + seconds);
+                // console.log(setElement.parents(".user").siblings().find(".over-under-btn"));
+                if (distance < 0) {
+                    // setElement.parents(".user").siblings().find(".over-under-btn").empty();
+                    removeBtn.empty();
+                    clearInterval(x);
+                    setElement.text("Start 00 : 00 : 00 ");
+                    setMobileElement.text("Start 00 : 00 : 00 ");
+                }
             }, 1000);
-            // makeTimer();
+        }
         });
 </script>
 @endsection

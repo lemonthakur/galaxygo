@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\CustomClass\OwnLibrary;
+use App\Models\Contest;
 use App\Models\ContestPlayer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -122,6 +124,20 @@ class ContestPlayerController extends Controller
         $contestPlayer->played_on = date('Y-m-d h:i a',strtotime($request->played_on));
         $contestPlayer->versus = $request->versus;
         $contestPlayer->score = $request->score;
+
+
+
+        DB::table("contests")
+            ->where('id', $request->contest_id)
+            ->whereDate("time_end", "<", date('Y-m-d H:i', strtotime($request->played_on)))
+            ->update(['time_end' =>  date('Y-m-d H:i', strtotime($request->played_on))]);
+
+        $contest = Contest::find($request->contest_id);
+        if ($contest->time_end < $request->played_on){
+            $time_end = date('Y-m-d H:i', strtotime($request->played_on));
+            $contest->time_end = $time_end;
+            $contest->save();
+        }
 
         if ( $contestPlayer->save()){
             session()->flash('success','Contest Player Added');

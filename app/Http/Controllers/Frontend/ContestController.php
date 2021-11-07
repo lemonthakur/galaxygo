@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CoinHistory;
 use App\Models\Contest;
 use App\Models\ContestParticipant;
+use App\Models\ContestWin;
 use App\Models\GuestUser;
 use App\Models\ParticipantAnswer;
 use App\Models\User;
@@ -21,22 +22,22 @@ class ContestController extends Controller
     public function entries()
     {
         //        Today Contest
-        $contest = Contest::
+        $contests = Contest::
         with('userPLay',
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
-        ->where('time_start', '<',date('Y-m-d H:i:s'))
-        ->where('time_end', '>',date('Y-m-d H:i:s'))
-        ->first();
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type')
+        ->where('time_start', '<',date('Y-m-d H:i'))
+        ->where('time_end', '>',date('Y-m-d H:i'))
+        ->get();
 
         $pendingContest = Contest::
         with('userPLay',
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name','time_start', 'time_end', 'is_final_answer')
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type')
         ->orderBy('name','desc')
         ->where('is_final_answer',0)
         ->where('time_end', '<',date('Y-m-d H:i:s'))
@@ -47,7 +48,7 @@ class ContestController extends Controller
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name', 'time_end', 'is_final_answer')
+        )->select('id', 'name', 'time_end', 'is_final_answer','contest_type')
         ->orderBy('name','desc')
             ->where('is_final_answer',1)
             ->where('time_end', '<=',date('Y-m-d H:i:s'))
@@ -58,7 +59,7 @@ class ContestController extends Controller
 
         //Total entry won
         $entryWon = OwnLibrary::entryWon();
-        return view('frontend.entries', compact('contest', 'pendingContest','finalContests','now','entryWon'));
+        return view('frontend.entries', compact('contests', 'pendingContest','finalContests','now','entryWon'));
     }
 
     public function entriesStore(Request $request)
@@ -178,7 +179,8 @@ class ContestController extends Controller
             }
 
             //Based on Win Coin earn
-            $winCoin = WinCoin::select('coin')->where('win','=',$win)->first();
+//            $winCoin = WinCoin::select('coin')->where('win','=',$win)->first();
+            $winCoin = ContestWin::select('coin')->where('contest_id',$contestId)->where('win','=',$win)->first();
             $coin = $winCoin->coin ?? 0;
 
             //Update Coin Participant
