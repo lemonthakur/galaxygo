@@ -11,6 +11,7 @@ use App\Models\OrderDetail;
 use App\Models\Transaction;
 use App\Models\CoinHistory;
 use App\Models\ProductWiseBid;
+use App\Models\SiteSetting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,6 +67,7 @@ class CheckoutController extends Controller
             }else{
                 DB::beginTransaction();
                 try {
+                    $site_settins = SiteSetting::find(1);
                     $success = false;
 
                     $user = new User();
@@ -87,15 +89,15 @@ class CheckoutController extends Controller
                     $user->shipping_post_code       = $request->shipping_post_code;
                     $user->shipping_phone           = $request->shipping_phone;
 
-                    $user->total_coin = $user->total_coin + 100;
-                    $user->current_coin = $user->current_coin + 100;
+                    $user->total_coin = $user->total_coin + $site_settins->register_coin;
+                    $user->current_coin = $user->current_coin + $site_settins->register_coin;
 
                     if ($user->save()){
                         Auth::loginUsingId($user->id);
 
                         $coinHistory = new CoinHistory();
                         $coinHistory->user_id = auth()->id();
-                        $coinHistory->amount = 100;
+                        $coinHistory->amount = $site_settins->register_coin;
                         $coinHistory->transaction_type = 0;
                         $coinHistory->earn_expense_type = 0;
                         $coinHistory->save();
