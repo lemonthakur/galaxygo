@@ -27,7 +27,7 @@ class ContestController extends Controller
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type')
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type',"is_paid","amount")
         ->where('time_start', '<',date('Y-m-d H:i'))
         ->where('time_end', '>',date('Y-m-d H:i'))
         ->get();
@@ -84,12 +84,41 @@ class ContestController extends Controller
                 ->first();
 
             if (empty($contestParticipant)) {
+                $contest = Contest::find($contestId);
+
+                if ($contest->is_paid == 2 && auth()->check() && auth()->user()->current_coin < $contest->amount){
+                    session()->flash("error", "This is a paid contest and you doesn't have enough coin to play.");
+                    return redirect()->route('entries');
+                }
+
                 $contestParticipant = new ContestParticipant();
                 $contestParticipant->participant_type = $user['type'];
                 $contestParticipant->participant_id = $user['id'];
                 $contestParticipant->contest_id = $contestId;
                 $contestParticipant->save();
                 $isUpdate = false;
+
+                //Insert in coin history
+                $coinHistory = new CoinHistory();
+                $coinHistory->user_id =  $user['id'];
+                $coinHistory->user_type =  $user['type'];
+                $coinHistory->amount = $contest->amount;
+                $coinHistory->transaction_type = 1;
+                $coinHistory->earn_expense_type = 6;
+                $coinHistory->save();
+
+                //Deduct Coin from users
+                if ($user['type'] == 0){
+                    //Update user table
+                    $users = User::find($user['id']);
+                    $users->current_coin = $users->current_coin - $contest->amount;
+                    $users->save();
+                }else{
+                    //update guest_user table
+                    $guest = GuestUser::find($user['id']);
+                    $guest->current_coin = $guest->current_coin - $contest->amount;
+                    $guest->save();
+                }
             }
 
             $contestParticipantId = $contestParticipant->id;

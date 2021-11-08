@@ -53,13 +53,16 @@ class ContestController extends Controller
             "time_start" => "required",
             "win_coins" => "required",
             "contest_type" => "required",
-//            "time_end" => "required"
+            "is_paid" => "required",
         ];
+
+        if ($request->is_paid == 2){
+            $rules["amount"] = "required";
+        }
 
         $message = [
             "name.required" => "Game Date is required",
             "time_start.required" => "Count Down Begin Time is required",
-//            "time_end.required" => "Count Down End Time is required",
         ];
 
         $validation = Validator::make($request->all(), $rules, $message);
@@ -85,6 +88,8 @@ class ContestController extends Controller
             $contest->name = $request->name;
             $contest->time_start =date('Y-m-d H:i', strtotime($request->time_start));
             $contest->contest_type = $request->contest_type;
+            $contest->is_paid = $request->is_paid;
+            $contest->amount = $request->is_paid == 2 ? $request->amount : 0;
 //            $contest->time_end =date('Y-m-d H:i', strtotime($request->time_end));
 
             if ($contest->save()) {
@@ -171,8 +176,12 @@ class ContestController extends Controller
             "time_start" => "required",
             "win_coins" => "required",
             "contest_type" => "required",
-//            "time_end" => "required"
+           "is_paid" => "required",
         ];
+
+        if ($request->is_paid == 2){
+            $rules["amount"] = "required";
+        }
 
         $message = [
             "name.required" => "Game Date is required",
@@ -194,6 +203,8 @@ class ContestController extends Controller
         $contest->name = $request->name;
         $contest->time_start = date('Y-m-d H:i', strtotime($request->time_start));
         $contest->contest_type = $request->contest_type;
+        $contest->is_paid = $request->is_paid;
+        $contest->amount = $request->is_paid == 2 ? $request->amount : 0;
 //        $contest->time_end = date('Y-m-d H:i', strtotime($request->time_end));
 
         if ($contest->save()) {

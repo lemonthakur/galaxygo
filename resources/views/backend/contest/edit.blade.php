@@ -58,7 +58,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="win_coin">Win Coin<span class="text-danger">*</span></label>
                                                 <select class="form-control {{$errors->has("win_coins") ? "is-invalid":""}}"
@@ -75,7 +75,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="contest_type">Contest Type<span class="text-danger">*</span></label>
                                                 <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
@@ -90,6 +90,31 @@
                                                 <span class="text-danger">
                                                     {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}
                                                 </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="is_paid">Is Paid<span class="text-danger">*</span></label>
+                                                <select class="form-control {{$errors->has("is_paid") ? "is-invalid":""}}"
+                                                        id="is_paid" name="is_paid">
+                                                    <option @if(old("is_paid",$contest->is_paid) == 2) selected @endif value="2">Yes</option>
+                                                    <option @if(old("is_paid",$contest->is_paid) == 1) selected @endif value="1">No</option>
+                                                </select>
+                                                <span class="text-danger">
+                                                    {{$errors->has("is_paid") ? $errors->first("is_paid") : ""}}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group @if(old("is_paid",$contest->is_paid) != 2) d-none @endif" id="is-paid-amount">
+                                                <label for="amount">Amount<span class="text-danger">*</span></label>
+                                                <input type="number"
+                                                       class="form-control {{$errors->has("amount") ? "is-invalid":""}}"
+                                                       id="amount" value="{{old("amount",$contest->amount)}}" min="1" name="amount">
+                                                <span
+                                                    class="text-danger"> {{$errors->has("amount") ? $errors->first("amount") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -274,6 +299,18 @@
 
 @section('js')
     <script>
+        $("#is_paid").on("change",function () {
+            const isPaidAmount = $("#is-paid-amount");
+            const isPaidAmountIn = $("#is-paid-amount input");
+            if ($(this).val() == 2){
+                isPaidAmount.removeClass("d-none");
+                isPaidAmountIn.prop('required',true);
+            }else{
+                isPaidAmount.addClass("d-none");
+                isPaidAmountIn.prop('required',false);
+            }
+        });
+
         $('#win_coin').select2({
             placeholder: "Select a win condition",
             // allowClear: true
