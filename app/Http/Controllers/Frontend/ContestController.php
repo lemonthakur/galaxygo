@@ -37,7 +37,7 @@ class ContestController extends Controller
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type')
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
         ->orderBy('name','desc')
         ->where('is_final_answer',0)
         ->where('time_end', '<',date('Y-m-d H:i:s'))
@@ -48,7 +48,7 @@ class ContestController extends Controller
             'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
             'contestPlayers.player:id,name,image',
             'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-        )->select('id', 'name', 'time_end', 'is_final_answer','contest_type')
+        )->select('id', 'name', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
         ->orderBy('name','desc')
             ->where('is_final_answer',1)
             ->where('time_end', '<=',date('Y-m-d H:i:s'))

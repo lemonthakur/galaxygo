@@ -40,8 +40,8 @@
                             }
                         @endphp
                         <div class="ic-win-btn">
-                            <a href="#">{{$entryWon ?? 00}} <span>Entries Won</span></a>
-                            <a href="#">{{(int) $total_coins}} <span>Coins Won</span></a>
+                            <a href="javascript:void(0)">{{$entryWon ?? 00}} <span>Entries Won</span></a>
+                            <a href="javascript:void(0)">{{(int) $total_coins}} <span>Coins Won</span></a>
                         </div>
                         <div class="ic-total-balance">
                             <p>Total Coins Balance</p>
@@ -188,10 +188,13 @@
                                                 <!--Item End-->
                                                     <div class="ic-item-load-more">
                                                         @if($contest->is_paid == 2 && auth()->check() && auth()->user()->current_coin < $contest->amount)
-                                                            <button type="submit" disabled class="btn-submit">Submit</button>
-                                                            <p class="text-center w-75 m-auto text-danger py-2">This is a paid contest and you doesn't have enough coin to play.</p>
+                                                            <button type="submit" disabled class="btn-submit text-danger" style="line-height: 20px; font-size: 13px;">Paid contest, you don't have {{ $contest->amount }} coin to play.</button>
+                                                            <!-- <p class="text-center w-75 m-auto text-danger py-2">This is a paid contest and you doesn't have enough coin to play.</p> -->
                                                         @else
                                                             <button type="submit" class="btn-submit">Submit</button>
+                                                            @if($contest->is_paid == 2)
+                                                            <p class="text-center w-75 m-auto text-danger py-1" style="font-size: 12px;">Paid contest, need {{ $contest->amount }} coin to play.</p>
+                                                            @endif
                                                         @endif
                                                     </div>
                                                 </form>
@@ -275,6 +278,10 @@
                                             @empty
                                                 <h3 class="text-center">No Players Found</h3>
                                             @endforelse
+
+                                            @if($contest->is_paid == 2)
+                                                <p class="text-center w-75 m-auto text-danger py-1" style="font-size: 12px;">Paid contest, {{ $contest->amount }} coin.</p>
+                                            @endif
                                         </div>
                                     @endforeach
                                 @else
@@ -343,11 +350,11 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer))
                                                             @if($contestPlayer->participant->participant_answer == 2)
                                                                 <div class="over-icon text-center">
-                                                                    <a class="d-inline-block" href="#">over</a>
+                                                                    <a class="d-inline-block" href="javascript:void(0)">over</a>
                                                                 </div>
                                                             @else
                                                                 <div class="under-icon justify-content-center">
-                                                                    <a class="d-inline-block" href="#">under</a>
+                                                                    <a class="d-inline-block" href="javascript:void(0)">under</a>
                                                                 </div>
                                                             @endif
                                                         @else
@@ -362,14 +369,14 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer) &&
                                                         $contestPlayer->answer == $contestPlayer->participant->participant_answer)
                                                             <div class="text-center">
-                                                                <a href="#" class="final-remove check d-inline-block">
+                                                                <a href="javascript:void(0)" class="final-remove check d-inline-block">
                                                                     <i class="flaticon-tick-mark"></i>
                                                                     final
                                                                 </a>
                                                             </div>
                                                         @else
                                                             <div class="text-center">
-                                                                <a href="#" class="final-remove d-inline-block">
+                                                                <a href="javascript:void(0)" class="final-remove d-inline-block">
                                                                     <i class="flaticon-error"></i>
                                                                     final
                                                                 </a>
@@ -386,12 +393,12 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer))
                                                             @if($contestPlayer->participant->participant_answer == 2)
                                                                 <div class="over-icon text-center">
-                                                                    <a class="d-inline-block" href="#">over</a>
+                                                                    <a class="d-inline-block" href="javascript:void(0)">over</a>
                                                                 </div>
                                                             @else
                                                                 <div class="under-icon justify-content-center">
                                                                     <a class="d-inline-block text-dark"
-                                                                       href="#">under</a>
+                                                                       href="javascript:void(0)">under</a>
                                                                 </div>
                                                             @endif
                                                         @else
@@ -406,14 +413,14 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer) &&
                                                         $contestPlayer->answer == $contestPlayer->participant->participant_answer)
                                                             <div class="text-center">
-                                                                <a href="#" class="final-remove check d-inline-block">
+                                                                <a href="javascript:void(0)" class="final-remove check d-inline-block">
                                                                     <i class="flaticon-tick-mark"></i>
                                                                     final
                                                                 </a>
                                                             </div>
                                                         @else
                                                             <div class="text-center">
-                                                                <a href="#" class="final-remove d-inline-block">
+                                                                <a href="javascript:void(0)" class="final-remove d-inline-block">
                                                                     <i class="flaticon-error"></i>
                                                                     final
                                                                 </a>
@@ -441,6 +448,10 @@
                                                     </form>
                                                 @endif
                                             </div>
+
+                                            @if($contest->is_paid == 2)
+                                                <p class="text-center w-75 m-auto text-danger py-1" style="font-size: 12px;">Paid contest, {{ $contest->amount }} coin.</p>
+                                            @endif
                                         </div>
                                     @endforeach
                                 @else
