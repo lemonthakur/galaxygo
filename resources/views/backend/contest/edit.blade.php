@@ -84,7 +84,7 @@
                                                     <option @if(old("contest_type") == "Fantasy score" || $contest->contest_type == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>
                                                     <option @if(old("contest_type") == "Passing yards" || $contest->contest_type == "Passing yards") selected @endif value="Passing yards">Passing yards</option>
                                                     <option @if(old("contest_type") == "Rushing yards" || $contest->contest_type == "Rushing yards") selected @endif value="Rushing yards">Rushing yards</option>
-                                                    <option @if(old("contest_type") == "Receiving yards" || $contest->contest_type == "Receiving yards") selected @endif value="Receiving yards">Receiving yards</option>
+                                                    <option @if(old("contest_type") == "Points" || $contest->contest_type == "Points") selected @endif value="Points">Points</option>
                                                     <option @if(old("contest_type") == "Shot" || $contest->contest_type == "Shot") selected @endif value="Shot">Shot</option>
                                                 </select>
                                                 <span class="text-danger">
@@ -112,7 +112,7 @@
                                                 <label for="amount">Amount<span class="text-danger">*</span></label>
                                                 <input type="number"
                                                        class="form-control {{$errors->has("amount") ? "is-invalid":""}}"
-                                                       id="amount" value="{{old("amount",$contest->amount)}}" min="1" name="amount">
+                                                       id="amount" value="{{old("amount",$contest->amount)}}" min="0" name="amount">
                                                 <span
                                                     class="text-danger"> {{$errors->has("amount") ? $errors->first("amount") : ""}} </span>
                                             </div>

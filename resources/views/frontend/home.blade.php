@@ -170,13 +170,13 @@
                 @endif
                 <br>
                 <p>
-                    {{"Refer Code/Link is: "}} <u><span id="copy-ref-link">{{"http://localhost/galaxygo/public/registration"}}@if (Auth::check()){{'?ref_yu='.urlencode(base64_encode(Auth::user()->id))}}@endif</span></u>
+                    {{"Refer Code/Link is: "}} <u><span id="copy-ref-link">{{\URL::to('/')."/registration"}}@if (Auth::check()){{'?ref_yu='.urlencode(base64_encode(Auth::user()->id))}}@endif</span></u>
                     &nbsp;&nbsp;<input type="button" class="btn btn-warning btn-sm" id="copy-btn" value="Copy Link">
                 </p>
                 <p class="text-center"><b>Or</b></p>
                 <br>
                 <p>
-                    <button class="btn btn-success btn-block btn-sm" id="chatToggleMdl">Share</button>
+                    <button class="btn btn-success btn-block btn-sm" id="chatToggleMdl">Refer Friends</button>
                 </p>
               </div>
               <div class="modal-footer">
@@ -431,6 +431,21 @@
         });
 
         $(document).ready(function(){
+
+             $(document).on("click","#chatToggleMdl",function () {
+                $.ajax({
+                        url: "{{route("share.bonus")}}",
+                        method: "GET"
+                    });
+                
+                // setTimeout(function(){
+                //     $.ajax({
+                //         url: "{{route("share.bonus")}}",
+                //         method: "GET"
+                //     });
+                //     }, 30000);
+            });
+             
             $(document).on("click", "#copy-btn", function(){
                 var copy_text = $("#copy-ref-link").text();
                 copyToClipboard(copy_text);

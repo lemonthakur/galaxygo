@@ -12,7 +12,8 @@
                             <div class="ic-cover-bg">
 
                                 @if(auth()->user()->cover_photo)
-                                    <img id="cover_photo" src="{{asset(auth()->user()->cover_photo)}}" class="img-fluid" alt="cover">
+                                    <!-- <img id="cover_photo" src="{{asset(auth()->user()->cover_photo)}}" class="img-fluid" alt="cover"> -->
+                                    <img id="cover_photo" src="{{asset(auth()->user()->cover_photo)}}" class="img-fluid" alt="default cover">
                                 @else
                                     <img id="cover_photo" src="{{asset('frontend/images/profile-cover.png')}}" class="img-fluid" alt="default cover">
                                 @endif
@@ -20,8 +21,8 @@
                                 <div class="ic-edit-cover-photo">
                                     <input class="d-none" id="cover_photo_upload" type="file" name="cover_photo">
                                     <a href="#">
-                                        <i class="icofont-camera"></i>
-                                        <label id="cover_photo_label" for="cover_photo_upload">edit cover photo</label>
+                                        <!-- <i class="icofont-camera"></i> -->
+                                        <label id="cover_photo_label" for="cover_photo_upload"><!-- edit cover photo --></label>
                                     </a>
                                 </div>
                             </div>

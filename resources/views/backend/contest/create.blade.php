@@ -88,7 +88,7 @@
                                                     <option @if(old("contest_type") == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>
                                                     <option @if(old("contest_type") == "Passing yards") selected @endif value="Passing yards">Passing yards</option>
                                                     <option @if(old("contest_type") == "Rushing score") selected @endif value="Rushing score">Rushing score</option>
-                                                    <option @if(old("contest_type") == "Receiving score") selected @endif value="Receiving score">Receiving score</option>
+                                                    <option @if(old("contest_type") == "Points") selected @endif value="Points">Points</option>
                                                     <option @if(old("contest_type") == "Shot") selected @endif value="Shot">Shot</option>
                                                 </select>
                                                 <span class="text-danger">
@@ -117,7 +117,7 @@
                                                 <label for="amount">Amount<span class="text-danger">*</span></label>
                                                 <input type="number"
                                                        class="form-control {{$errors->has("amount") ? "is-invalid":""}}"
-                                                       id="amount" value="{{old("amount")}}" min="1" name="amount">
+                                                       id="amount" value="{{old("amount")}}" min="0" name="amount">
                                                 <span
                                                     class="text-danger"> {{$errors->has("amount") ? $errors->first("amount") : ""}} </span>
                                             </div>

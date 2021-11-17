@@ -218,6 +218,23 @@ button.login-btn,
   font-size:16px;
 }
 
+.ic-profile-left{
+padding-top: 30px;
+}
+
+.ic-cover-bg{}
+.ic-profile-left{
+padding-top: 30px;
+}
+
+.ic-cover-bg{
+display: none;
+}
+
+.ic-profile-left .ic-user .user-profile{
+    margin-top: 0px !important;
+}
+
 @media only screen and (max-width: 576px) {
     .ic-entries-tab-contents .ic-item .user .image img {
         width: 100px !important;

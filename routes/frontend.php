@@ -18,6 +18,8 @@ Route::get('/about-us',[HomeController::class,'about'])->name('about-us');
 Route::get('/privacy-policy',[HomeController::class,'privacyPolicy'])->name('privacy.policy');
 Route::get('/contact',[HomeController::class,'contact'])->name('contact');
 Route::post('/contact-message',[HomeController::class,'contactMessage'])->name('contact.message');
+
+Route::get('/share-bonus',[HomeController::class,'shareBonus'])->name('share.bonus');
 //Frontend Route
 
 //Contest Frontend

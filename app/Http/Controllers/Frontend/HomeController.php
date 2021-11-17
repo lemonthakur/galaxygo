@@ -448,4 +448,50 @@ class HomeController extends Controller
 
         return response()->json(['ret' => 'success', 'val' => $current_coin]);
     }
+
+    public function shareBonus(){
+        $user = OwnLibrary::getUserInfo();
+
+        DB::beginTransaction();
+
+        $current_coin  = 0.00;
+        try {
+             $site_settins = SiteSetting::find(1);
+
+            if($user['type']==1){
+                $gets_user = GuestUser::find($user['id']);
+                $gets_user->total_coin = $gets_user->total_coin + $site_settins->refer_coin_amount;
+                $gets_user->current_coin = $gets_user->current_coin + $site_settins->refer_coin_amount;
+                $gets_user->save();
+                $current_coin = $gets_user->current_coin;
+            }
+            elseif($user['type']==0){
+                $user = User::find($user['id']);
+                $user->total_coin = $user->total_coin + $site_settins->refer_coin_amount;
+                $user->current_coin = $user->current_coin + $site_settins->refer_coin_amount;
+                $user->save();
+                $current_coin = $user->current_coin;
+            }
+
+            //Insert in coin history
+            $coinHistory = new CoinHistory();
+            $coinHistory->user_id = $user['id'];
+            $coinHistory->user_type = $user['type'];
+            $coinHistory->amount = $site_settins->refer_coin_amount;
+            $coinHistory->transaction_type = 0;
+            $coinHistory->earn_expense_type = 5;
+            $coinHistory->save();
+
+        }catch(ValidationException $e) {
+            DB::rollback();
+            return response()->json(['ret' => 'db_error', 'data' => '']);
+        }catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
+
+        return response()->json(['ret' => 'success', 'val' => $current_coin]);
+    }
 }

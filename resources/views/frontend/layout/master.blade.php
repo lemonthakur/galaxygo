@@ -24,7 +24,7 @@
         @yield('facebook_meta')
     @else
     <meta property="og:description" content="{{$siteSetting->meta_description ?? ''}}">
-    <meta property="og:image" content="{{asset('upload/fbshare/share.jpeg')}}">
+    <meta property="og:image" content="{{asset('upload/fbshare/share2.jpeg')}}">
     <meta property="og:url" content="{{route('home')}}">
     @endif
     <meta name="twitter:card" content="{{$siteSetting->logo ?? ''}}">

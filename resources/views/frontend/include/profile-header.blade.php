@@ -41,19 +41,20 @@
                         </div>
                     </div>
 
-                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>DOGECOIN: <span class="aft-bd-share">{{(int) auth()->user()->current_coin}}</span></span></a>
+                    <a href="#" class="ic-btn"><i class="flaticon-coins-1"></i> <span>SHIBA INU: <span class="aft-bd-share">{{(int) auth()->user()->current_coin}}</span></span></a>
 
                     @guest()
-                    <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-user.png')}}"
-                                                                 alt=""></a>
+                    <a href="#" class="mobile-profile-user">
+                        <img src="{{asset('demo-pic/download.png')}}" alt="">
+                    </a>
                     @endguest
                     @auth()
-                        <span class="m-coins d-lg-none d-md-none d-sm-inline-block text-center mr-3" style="color: yellow">DOGECOIN: <strong>{{(int) auth()->user()->current_coin}}</strong></span>
+                        <span class="m-coins d-lg-none d-md-none d-sm-inline-block text-center mr-3" style="color: yellow">SHIBA INU: <strong>{{(int) auth()->user()->current_coin}}</strong></span>
                         @if(auth()->user()->photo)
-                    <a href="#" class="mobile-profile-user"><img src="{{auth()->user()->photo}}"
+                    <a href="{{route('profile')}}" class="mobile-profile-user"><img src="{{asset(auth()->user()->photo)}}"
                                                                  alt=""></a>
                         @else
-                            <a href="#" class="mobile-profile-user"><img src="{{asset('frontend/images/profile-cover.png')}}"
+                            <a href="{{route('profile')}}" class="mobile-profile-user"><img src="{{asset('demo-pic/download.png')}}"
                                                                          alt=""></a>
                             @endif
                     @endauth
@@ -111,7 +112,7 @@
                             <a href="{{route('logout')}}">Logout</a>
                         </li>
                         <li class="ic-menu-item-has-children">
-                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> DOGECOIN: {{(int) auth()->user()->current_coin}}</a>
+                            <a href="#"><i class="flaticon-coins-1 menu-icon"></i> SHIBA INU: {{(int) auth()->user()->current_coin}}</a>
                         </li>
                     </ul>
 

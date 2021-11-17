@@ -19,63 +19,47 @@ use Illuminate\Support\Facades\Session;
 
 class ContestController extends Controller
 {
-    public function entries($alise=null)
+    public function entries()
     {
         //        Today Contest
-        if($alise==null){
-            $contests = Contest::
-            with('userPLay',
-                'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
-                'contestPlayers.player:id,name,image',
-                'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-            )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type',"is_paid","amount")
-            ->where('time_start', '<',date('Y-m-d H:i'))
-            ->where('time_end', '>',date('Y-m-d H:i'))
-            ->orderBy('time_end', 'ASC')
-            ->get();
-        }else{
-            $contests = array();
-        }
+        $contests = Contest::
+        with('userPLay',
+            'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
+            'contestPlayers.player:id,name,image',
+            'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type',"is_paid","amount")
+        ->where('time_start', '<',date('Y-m-d H:i'))
+        ->where('time_end', '>',date('Y-m-d H:i'))
+        ->get();
 
-        if($alise=='pending'){
-            $pendingContest = Contest::
-            with('userPLay',
-                'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
-                'contestPlayers.player:id,name,image',
-                'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-            )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
-            //->orderBy('name','desc')
-            ->where('is_final_answer',0)
-            ->where('time_end', '<',date('Y-m-d H:i:s'))
-            ->orderBy('time_end', 'DESC')
-            ->get();
-        }else{
-            $pendingContest = array();
-        }
+        $pendingContest = Contest::
+        with('userPLay',
+            'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
+            'contestPlayers.player:id,name,image',
+            'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+        )->select('id', 'name','time_start', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
+        ->orderBy('name','desc')
+        ->where('is_final_answer',0)
+        ->where('time_end', '<',date('Y-m-d H:i:s'))
+        ->get();
 
-
-        if($alise=='final'){
-            $finalContests = Contest::
-            with('userPLay',
-                'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
-                'contestPlayers.player:id,name,image',
-                'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
-            )->select('id', 'name', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
-            // ->orderBy('name','desc')
-            ->orderBy('time_end', 'DESC')
-                ->where('is_final_answer',1)
-                ->where('time_end', '<=',date('Y-m-d H:i:s'))
-                ->limit(7)->get();
-        }else{
-            $finalContests = array();
-        }
+        $finalContests = Contest::
+        with('userPLay',
+            'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
+            'contestPlayers.player:id,name,image',
+            'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
+        )->select('id', 'name', 'time_end', 'is_final_answer','contest_type','is_paid','amount')
+        ->orderBy('name','desc')
+            ->where('is_final_answer',1)
+            ->where('time_end', '<=',date('Y-m-d H:i:s'))
+            ->limit(7)->get();
 
         //        Current time as a unix time
         $now = strtotime(date('Y-m-d h:i a'));
 
         //Total entry won
         $entryWon = OwnLibrary::entryWon();
-        return view('frontend.entries', compact('contests', 'pendingContest','finalContests','now','entryWon','alise'));
+        return view('frontend.entries', compact('contests', 'pendingContest','finalContests','now','entryWon'));
     }
 
     public function entriesStore(Request $request)

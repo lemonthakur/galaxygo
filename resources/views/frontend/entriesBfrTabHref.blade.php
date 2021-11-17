@@ -21,7 +21,7 @@
                             </div>
                             <div class="user-profile">
                                 @if(Auth::check() && Auth::user()->role_id == 0 && !empty(auth()->user()->photo))
-                                    <img src="{{asset(auth()->user()->photo)}}" alt="user">
+                                    <img src="{{auth()->user()->photo}}" alt="user">
                                 @else
                                     <img id="profile_pic" src="{{asset('demo-pic/download.png')}}" alt="user">
                                 @endif
@@ -52,7 +52,7 @@
                 <div class="col-lg-8 col-md-7">
                     <div class="ic-entries-right">
                         <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                            <!-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#openEntries">Open Entries</a>
                             </li>
                             <li class="nav-item second-nav-item">
@@ -60,23 +60,13 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#finalEntries">Final Entries</a>
-                            </li> -->
-
-                            <li class="nav-item">
-                                <a class="nav-link  @if($alise==null){{'active'}}@endif" data-toggle="" href="{{ route('entries') }}">Open Entries</a>
-                            </li>
-                            <li class="nav-item second-nav-item">
-                                <a class="nav-link @if($alise=='pending'){{'active'}}@endif" data-toggle="" href="{{ route('entries', 'pending') }}">Pending Entries</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link @if($alise=='final'){{'active'}}@endif" data-toggle="" href="{{ route('entries', 'final') }}">Final Entries</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             {{-- Open Enries--}}
-                            <div class="tab-pane fade @if($alise==null){{'show active'}}@endif" id="openEntries">
+                            <div class="tab-pane fade show active" id="openEntries">
                                 <span class="d-none" id="contestCount">{{count($contests)}}</span>
-                                @if(!empty($contests) && count($contests)>0)
+                                @if(!empty($contests))
                                     @foreach($contests as $contest)
                                         <div class="ic-entries-tab-contents open-entries mb-3">
                                             @if($now > strtotime($contest->time_start) && strtotime($contest->time_end) > $now)
@@ -220,8 +210,8 @@
                             {{--Open Enries--}}
 
                             {{--Pending Entries--}}
-                            <div class="tab-pane fade @if($alise=='pending'){{'show active'}}@endif" id="pendingEntries">
-                                @if(!empty($pendingContest) && count($pendingContest)>0)
+                            <div class="tab-pane fade" id="pendingEntries">
+                                @if(!empty($pendingContest))
                                     @foreach($pendingContest as $contest)
                                         <div class="ic-entries-tab-contents pending-entries mb-4">
                                             <div class="ic-pending-entries-title">
@@ -301,8 +291,8 @@
                             {{--Pending Entries--}}
 
                             {{--Final entry data--}}
-                            <div class="tab-pane fade @if($alise=='final'){{'show active'}}@endif" id="finalEntries">
-                                @if(!empty($finalContests) && count($finalContests)>0)
+                            <div class="tab-pane fade" id="finalEntries">
+                                @if(!empty($finalContests))
                                     @foreach($finalContests as $contest)
                                         <div class="ic-entries-tab-contents mt-3 final-entries">
                                             <div class="ic-time">
