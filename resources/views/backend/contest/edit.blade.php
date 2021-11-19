@@ -78,20 +78,32 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="contest_type">Contest Type<span class="text-danger">*</span></label>
-                                                <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
-                                                        id="contest_type" name="contest_type">
-                                                    <option @if(empty(old("contest_type")) && empty($contest->contest_type)) selected @endif disabled hidden>Select Contest Type</option>
-                                                    <option @if(old("contest_type") == "Fantasy score" || $contest->contest_type == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>
-                                                    <option @if(old("contest_type") == "Passing yards" || $contest->contest_type == "Passing yards") selected @endif value="Passing yards">Passing yards</option>
-                                                    <option @if(old("contest_type") == "Rushing yards" || $contest->contest_type == "Rushing yards") selected @endif value="Rushing yards">Rushing yards</option>
-                                                    <option @if(old("contest_type") == "Points" || $contest->contest_type == "Points") selected @endif value="Points">Points</option>
-                                                    <option @if(old("contest_type") == "Shot" || $contest->contest_type == "Shot") selected @endif value="Shot">Shot</option>
-                                                </select>
+                                                <input type="text"
+                                                       class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
+                                                       id="contest_type" placeholder="Contest Type" value="{{old('contest_type',$contest->contest_type ?? '')}}" name="contest_type" required/>
                                                 <span class="text-danger">
                                                     {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}
                                                 </span>
                                             </div>
                                         </div>
+
+{{--                                        <div class="col-md-6">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="contest_type">Contest Type<span class="text-danger">*</span></label>--}}
+{{--                                                <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"--}}
+{{--                                                        id="contest_type" name="contest_type">--}}
+{{--                                                    <option @if(empty(old("contest_type")) && empty($contest->contest_type)) selected @endif disabled hidden>Select Contest Type</option>--}}
+{{--                                                    <option @if(old("contest_type") == "Fantasy score" || $contest->contest_type == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>--}}
+{{--                                                    <option @if(old("contest_type") == "Passing yards" || $contest->contest_type == "Passing yards") selected @endif value="Passing yards">Passing yards</option>--}}
+{{--                                                    <option @if(old("contest_type") == "Rushing yards" || $contest->contest_type == "Rushing yards") selected @endif value="Rushing yards">Rushing yards</option>--}}
+{{--                                                    <option @if(old("contest_type") == "Points" || $contest->contest_type == "Points") selected @endif value="Points">Points</option>--}}
+{{--                                                    <option @if(old("contest_type") == "Shot" || $contest->contest_type == "Shot") selected @endif value="Shot">Shot</option>--}}
+{{--                                                </select>--}}
+{{--                                                <span class="text-danger">--}}
+{{--                                                    {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}--}}
+{{--                                                </span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                         <div class="col-md-5">
                                             <div class="form-group">

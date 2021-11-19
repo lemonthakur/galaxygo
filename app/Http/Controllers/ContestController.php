@@ -21,7 +21,7 @@ class ContestController extends Controller
         if ($request->ajax()) {
             $name = $request->name;
 
-            $contests = Contest::orderBy('name', 'desc');
+            $contests = Contest::orderBy('id', 'desc');
             if (!empty($name)) {
                 $name = date('Y-m-d', strtotime($name));
                 $contests = $contests->whereDate("name", "=", "$name");
@@ -195,10 +195,6 @@ class ContestController extends Controller
             return redirect()->back()->withInput()->withErrors($validation);
         }
 
-//        if (strtotime($request->time_start) > strtotime($request->time_end)){
-//            session()->flash('error','Count down begin time con not larger than count down end time');
-//            return redirect()->back()->withInput();
-//        }
 
         $contest->name = $request->name;
         $contest->time_start = date('Y-m-d H:i', strtotime($request->time_start));

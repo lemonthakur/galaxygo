@@ -75,7 +75,7 @@ class ContestController extends Controller
 
         //Total entry won
         $entryWon = OwnLibrary::entryWon();
-        return view('frontend.entries', compact('contests', 'pendingContest','finalContests','now','entryWon'));
+        return view('frontend.entries', compact('contests', 'pendingContest','finalContests','now','entryWon','alise'));
     }
 
     public function entriesStore(Request $request)

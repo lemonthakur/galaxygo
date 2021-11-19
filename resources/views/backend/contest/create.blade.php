@@ -50,7 +50,8 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="time_start">Count Down Begin<span class="text-danger">*</span></label>
+                                                <label for="time_start">Count Down Begin<span
+                                                        class="text-danger">*</span></label>
                                                 <input readonly type="text"
                                                        class="form-control datetimepicker {{$errors->has("time_start") ? "is-invalid":""}}"
                                                        id="time_start" data-target="#time_start"
@@ -65,12 +66,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="win_coin">Win Coin<span class="text-danger">*</span></label>
-                                                <select class="form-control {{$errors->has("win_coins") ? "is-invalid":""}}"
-                                                       id="win_coin" name="win_coins[]" multiple>
+                                                <select
+                                                    class="form-control {{$errors->has("win_coins") ? "is-invalid":""}}"
+                                                    id="win_coin" name="win_coins[]" multiple>
                                                     <option></option>
                                                     @foreach($winCoins as $winCoin)
                                                         <option value="{{$winCoin->id}}">
-                                                            {{$winCoin->win}} Of {{$winCoin->out_of}} Win {{$winCoin->coin}} {{$winCoin->coin_name}}
+                                                            {{$winCoin->win}} Of {{$winCoin->out_of}}
+                                                            Win {{$winCoin->coin}} {{$winCoin->coin_name}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -82,29 +85,46 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="contest_type">Contest Type<span class="text-danger">*</span></label>
-                                                <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
-                                                        id="contest_type" name="contest_type">
-                                                    <option @if(empty(old("contest_type"))) selected @endif disabled hidden>Select Contest Type</option>
-                                                    <option @if(old("contest_type") == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>
-                                                    <option @if(old("contest_type") == "Passing yards") selected @endif value="Passing yards">Passing yards</option>
-                                                    <option @if(old("contest_type") == "Rushing score") selected @endif value="Rushing score">Rushing score</option>
-                                                    <option @if(old("contest_type") == "Points") selected @endif value="Points">Points</option>
-                                                    <option @if(old("contest_type") == "Shot") selected @endif value="Shot">Shot</option>
-                                                </select>
+                                                <input type="text"
+                                                       class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"
+                                                       id="contest_type" placeholder="Contest Type" value="{{old('contest_type')}}" name="contest_type" required/>
                                                 <span class="text-danger">
                                                     {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}
                                                 </span>
                                             </div>
                                         </div>
 
+                                        {{--                                        <div class="col-md-6">--}}
+                                        {{--                                            <div class="form-group">--}}
+                                        {{--                                                <label for="contest_type">Contest Type<span class="text-danger">*</span></label>--}}
+                                        {{--                                                <select class="form-control {{$errors->has("contest_type") ? "is-invalid":""}}"--}}
+                                        {{--                                                        id="contest_type" name="contest_type">--}}
+                                        {{--                                                    <option @if(empty(old("contest_type"))) selected @endif disabled hidden>Select Contest Type</option>--}}
+                                        {{--                                                    <option @if(old("contest_type") == "Fantasy score") selected @endif value="Fantasy score">Fantasy score</option>--}}
+                                        {{--                                                    <option @if(old("contest_type") == "Passing yards") selected @endif value="Passing yards">Passing yards</option>--}}
+                                        {{--                                                    <option @if(old("contest_type") == "Rushing score") selected @endif value="Rushing score">Rushing score</option>--}}
+                                        {{--                                                    <option @if(old("contest_type") == "Points") selected @endif value="Points">Points</option>--}}
+                                        {{--                                                    <option @if(old("contest_type") == "Shot") selected @endif value="Shot">Shot</option>--}}
+                                        {{--                                                </select>--}}
+                                        {{--                                                <span class="text-danger">--}}
+                                        {{--                                                    {{$errors->has("contest_type") ? $errors->first("contest_type") : ""}}--}}
+                                        {{--                                                </span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="is_paid">Is Paid<span class="text-danger">*</span></label>
-                                                <select class="form-control {{$errors->has("is_paid") ? "is-invalid":""}}"
-                                                        id="is_paid" name="is_paid">
-                                                    <option @if(empty(old("is_paid"))) selected @endif disabled hidden>Select One</option>
-                                                    <option @if(old("is_paid") == 2) selected @endif value="2">Yes</option>
-                                                    <option @if(old("is_paid") == 1) selected @endif value="1">No</option>
+                                                <select
+                                                    class="form-control {{$errors->has("is_paid") ? "is-invalid":""}}"
+                                                    id="is_paid" name="is_paid">
+                                                    <option @if(empty(old("is_paid"))) selected @endif disabled hidden>
+                                                        Select One
+                                                    </option>
+                                                    <option @if(old("is_paid") == 2) selected @endif value="2">Yes
+                                                    </option>
+                                                    <option @if(old("is_paid") == 1) selected @endif value="1">No
+                                                    </option>
                                                 </select>
                                                 <span class="text-danger">
                                                     {{$errors->has("is_paid") ? $errors->first("is_paid") : ""}}
@@ -113,7 +133,9 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <div class="form-group @if(empty(old("is_paid")) || old("is_paid") != 2) d-none @endif" id="is-paid-amount">
+                                            <div
+                                                class="form-group @if(empty(old("is_paid")) || old("is_paid") != 2) d-none @endif"
+                                                id="is-paid-amount">
                                                 <label for="amount">Amount<span class="text-danger">*</span></label>
                                                 <input type="number"
                                                        class="form-control {{$errors->has("amount") ? "is-invalid":""}}"
@@ -123,19 +145,19 @@
                                             </div>
                                         </div>
 
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>--}}
-{{--                                                <input readonly type="text"--}}
-{{--                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"--}}
-{{--                                                       id="time_end" data-target="#time_end"--}}
-{{--                                                       data-toggle="datetimepicker" name="time_end"--}}
-{{--                                                       placeholder="Select Count Down End Time"--}}
-{{--                                                       value="{{old("time_end")}}">--}}
-{{--                                                <span--}}
-{{--                                                    class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="col-md-4">--}}
+                                        {{--                                            <div class="form-group">--}}
+                                        {{--                                                <label for="time_end">Count Down End<span class="text-danger">*</span></label>--}}
+                                        {{--                                                <input readonly type="text"--}}
+                                        {{--                                                       class="form-control datetimepicker {{$errors->has("time_end") ? "is-invalid":""}}"--}}
+                                        {{--                                                       id="time_end" data-target="#time_end"--}}
+                                        {{--                                                       data-toggle="datetimepicker" name="time_end"--}}
+                                        {{--                                                       placeholder="Select Count Down End Time"--}}
+                                        {{--                                                       value="{{old("time_end")}}">--}}
+                                        {{--                                                <span--}}
+                                        {{--                                                    class="text-danger"> {{$errors->has("time_end") ? $errors->first("time_end") : ""}} </span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
 
                                         <div class="col-md-12" id="forTarget">
                                             <div class="row">
@@ -150,9 +172,11 @@
                                                                 class="text-red">*</span></label>
                                                         <input type="text"
                                                                class="form-control {{$errors->has("player_name") ? "is-invalid":""}}"
-                                                               id="player_name" placeholder="Player Name" autocomplete="off">
+                                                               id="player_name" placeholder="Player Name"
+                                                               autocomplete="off">
 
-                                                        <input type="text" class="d-none" id="player_id" name="player_id">
+                                                        <input type="text" class="d-none" id="player_id"
+                                                               name="player_id">
 
                                                         <div id="playerSearch"></div>
                                                         <span class="text-danger"></span>
@@ -193,10 +217,14 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="score">Player Image<span class="text-red">*</span></label><br/>
-                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}" width="120"/><br/>
-                                                        <input type="text" class="form-control image d-none" id="player_image">
-                                                        <span style="font-weight: normal" class="text-danger d-block"></span>
+                                                        <label for="score">Player Image<span
+                                                                class="text-red">*</span></label><br/>
+                                                        <img id="output" src="{{asset('/demo-pic/upload-image.jpg')}}"
+                                                             width="120"/><br/>
+                                                        <input type="text" class="form-control image d-none"
+                                                               id="player_image">
+                                                        <span style="font-weight: normal"
+                                                              class="text-danger d-block"></span>
                                                     </div>
                                                 </div>
 
@@ -210,8 +238,10 @@
                                                             class="btn btn-info">Add Player
                                                     </button>
 
-                                                    <button id="btn-loader" class="btn btn-info" type="button" style="margin-top: 24%;" disabled>
-                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                    <button id="btn-loader" class="btn btn-info" type="button"
+                                                            style="margin-top: 24%;" disabled>
+                                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                                              aria-hidden="true"></span>
                                                         Add Player...
                                                     </button>
                                                 </div>
@@ -238,7 +268,7 @@
                                                     </td>
                                                     <td>
                                                         Name: {{ucwords($row->name)}} <br/>
-{{--                                                        Location: {{strtoupper($row->options['location'])}} <br/>--}}
+                                                        {{--                                                        Location: {{strtoupper($row->options['location'])}} <br/>--}}
                                                         Played On: {{$row->options['played_on']}}
                                                     </td>
                                                     <td>
@@ -249,9 +279,13 @@
                                                         <button rowId="{{$row->rowId}}" type="button"
                                                                 class="btn btn-danger btn-xs removeCart"><i
                                                                 class="fas fa-trash"></i></button>
-                                                        <button editRowId="{{$row->rowId}}" type="button" class="btn btn-success btn-xs editCart"
-                                                                attr-player="{{$row->name}}" attr-player-id="{{$row->id}}" attr-played-on="{{$row->options['played_on']}}"
-                                                                attr-versus="{{$row->options['versus']}}" attr-score="{{$row->options['score']}}"
+                                                        <button editRowId="{{$row->rowId}}" type="button"
+                                                                class="btn btn-success btn-xs editCart"
+                                                                attr-player="{{$row->name}}"
+                                                                attr-player-id="{{$row->id}}"
+                                                                attr-played-on="{{$row->options['played_on']}}"
+                                                                attr-versus="{{$row->options['versus']}}"
+                                                                attr-score="{{$row->options['score']}}"
                                                                 attr-player-image="{{$row->options['player_image']}}">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
@@ -283,15 +317,15 @@
 @section('js')
     <script>
 
-        $("#is_paid").on("change",function () {
+        $("#is_paid").on("change", function () {
             const isPaidAmount = $("#is-paid-amount");
             const isPaidAmountIn = $("#is-paid-amount input");
-            if ($(this).val() == 2){
+            if ($(this).val() == 2) {
                 isPaidAmount.removeClass("d-none");
-                isPaidAmountIn.prop('required',true);
-            }else{
+                isPaidAmountIn.prop('required', true);
+            } else {
                 isPaidAmount.addClass("d-none");
-                isPaidAmountIn.prop('required',false);
+                isPaidAmountIn.prop('required', false);
             }
         });
 
@@ -301,46 +335,46 @@
             allowClear: true
         });
 
-        $("#player_name").on('focus',function () {
+        $("#player_name").on('focus', function () {
             var search = $(this).val();
             var _token = "{{csrf_token()}}";
             $.ajax({
                 url: '{{route("player.search")}}',
                 method: 'POST',
-                data: {_token:_token},
-                success:function (data) {
+                data: {_token: _token},
+                success: function (data) {
                     $("#playerSearch").empty();
                     $("#playerSearch").append(data);
-                    $("#playerSearch").css('display','block');
-                    $("#playerSearch").css('overflow-y','scroll');
+                    $("#playerSearch").css('display', 'block');
+                    $("#playerSearch").css('overflow-y', 'scroll');
                 }
             });
         });
 
-        $("#player_name").on('input',function () {
+        $("#player_name").on('input', function () {
             var search = $(this).val();
             var _token = "{{csrf_token()}}";
             $.ajax({
                 url: '{{route("player.search")}}',
                 method: 'POST',
-                data: {search:search, _token:_token},
-                success:function (data) {
+                data: {search: search, _token: _token},
+                success: function (data) {
                     $("#playerSearch").empty();
                     $("#playerSearch").append(data);
-                    $("#playerSearch").css('display','block');
-                    $("#playerSearch").css('overflow-y','scroll');
+                    $("#playerSearch").css('display', 'block');
+                    $("#playerSearch").css('overflow-y', 'scroll');
                 }
             });
         });
 
-        $(document).on('click','.player',function () {
+        $(document).on('click', '.player', function () {
             $("#player_name").val($(this).attr('name'));
             $("#player_id").val($(this).attr('pid'));
 
-            $("#output").attr('src',$(this).attr('imgUrl'));
+            $("#output").attr('src', $(this).attr('imgUrl'));
             $("#player_image").val($(this).attr('imgUrl'));
 
-            $("#playerSearch").css('display','none');
+            $("#playerSearch").css('display', 'none');
         });
 
         // Add Player
@@ -387,7 +421,7 @@
                 success: function (data) {
                     $('#add-player').show();
                     $('#btn-loader').hide();
-                    $('#output').attr('src',"{{asset('/demo-pic/upload-image.jpg')}}");
+                    $('#output').attr('src', "{{asset('/demo-pic/upload-image.jpg')}}");
                     if (data.status === 1) {
                         validate(data);
                         return;
@@ -409,9 +443,9 @@
                     $("#cancel-player").addClass("d-none");
                 },
                 error: function () {
-                    $('#add-player').css('display','block');
-                    $('#btn-loader').css('display','none');
-                    $('#output').attr('src',"{{asset('/demo-pic/upload-image.jpg')}}");
+                    $('#add-player').css('display', 'block');
+                    $('#btn-loader').css('display', 'none');
+                    $('#output').attr('src', "{{asset('/demo-pic/upload-image.jpg')}}");
                     Swal.fire(
                         '',
                         "Unable to add player",
@@ -447,14 +481,14 @@
         }
 
         // Edit contest player
-        $(document).on("click", ".editCart", function(){
-            let editRowId       = $(this).attr("editRowId");
-            let edt_player_id   = $(this).attr("attr-player-id");
-            let edt_player      = $(this).attr("attr-player");
-            let edt_played_on   = $(this).attr("attr-played-on");
-            let edt_versus      = $(this).attr("attr-versus");
-            let edt_score       = $(this).attr("attr-score");
-            let edt_player_image      = $(this).attr("attr-player-image");
+        $(document).on("click", ".editCart", function () {
+            let editRowId = $(this).attr("editRowId");
+            let edt_player_id = $(this).attr("attr-player-id");
+            let edt_player = $(this).attr("attr-player");
+            let edt_played_on = $(this).attr("attr-played-on");
+            let edt_versus = $(this).attr("attr-versus");
+            let edt_score = $(this).attr("attr-score");
+            let edt_player_image = $(this).attr("attr-player-image");
 
             $("#player_name").val(edt_player);
             $("#player_id").val(edt_player_id);
@@ -462,7 +496,7 @@
             $("#versus").val(edt_versus);
             $("#score").val(edt_score);
 
-            $("#output").attr('src',edt_player_image);
+            $("#output").attr('src', edt_player_image);
             $("#player_image").val(edt_player_image);
 
             $("#add-player").html("Update Player");
@@ -474,7 +508,7 @@
             }, 200);
         });
 
-        $(document).on("click", "#cancel-player", function(){
+        $(document).on("click", "#cancel-player", function () {
             $('#player_name').val('');
             $('#player_id').val('');
             $('#played_on').val('');
@@ -482,7 +516,7 @@
             $('#versus').val('');
             $('#score').val('');
             $('#player_image').val('');
-            $("#output").attr('src','');
+            $("#output").attr('src', '');
             $('#edit_id').val('');
 
             $("#add-player").html("Add Player");

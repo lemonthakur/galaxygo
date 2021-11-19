@@ -23,7 +23,7 @@ Route::get('/share-bonus',[HomeController::class,'shareBonus'])->name('share.bon
 //Frontend Route
 
 //Contest Frontend
-Route::get('/entries',[ContestController::class,'entries'])->name('entries');
+Route::get('/entries/{alise?}',[ContestController::class,'entries'])->name('entries');
 Route::post('/entries/store',[ContestController::class,'entriesStore'])->name('entries.store');
 //    Claim Contest Coin
 Route::post('/entries/claim-coin',[ContestController::class,'claimCoin'])->name('entries.claim.coin');

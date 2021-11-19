@@ -1,3 +1,7 @@
+@php
+    \App\CustomClass\OwnLibrary::claimCoin();
+@endphp
+
 @extends('frontend.layout.master')
 @section('title','Home')
 
@@ -360,7 +364,7 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer))
                                                             @if($contestPlayer->participant->participant_answer == 2)
                                                                 <div class="over-icon text-center">
-                                                                    <a class="d-inline-block" href="javascript:void(0)">over</a>
+                                                                    <a style="color: black;background-color: white;" class="d-inline-block" href="javascript:void(0)">over</a>
                                                                 </div>
                                                             @else
                                                                 <div class="under-icon justify-content-center">
@@ -379,14 +383,14 @@
                                                         @if(!empty($contestPlayer->participant->participant_answer) &&
                                                         $contestPlayer->answer == $contestPlayer->participant->participant_answer)
                                                             <div class="text-center">
-                                                                <a href="javascript:void(0)" class="final-remove check d-inline-block">
+                                                                <a style="background-color: #39c539;color: black;" href="javascript:void(0)" class="final-remove check d-inline-block">
                                                                     <i class="flaticon-tick-mark"></i>
                                                                     final
                                                                 </a>
                                                             </div>
                                                         @else
                                                             <div class="text-center">
-                                                                <a href="javascript:void(0)" class="final-remove d-inline-block">
+                                                                <a style="background-color: crimson;color: white;" href="javascript:void(0)" class="final-remove d-inline-block">
                                                                     <i class="flaticon-error"></i>
                                                                     final
                                                                 </a>
@@ -451,7 +455,7 @@
                                                         @csrf
                                                         <input type="hidden" name="id"
                                                                value="{{encrypt($contest->id)}}">
-                                                        <button type="submit" class="btn-submit">
+                                                        <button type="submit" class="btn-submit d-none">
                                                             <i class="icofont-coins mr-1"></i>
                                                             Claim Coin
                                                         </button>
@@ -517,7 +521,7 @@
 
             // contest timer
             function contestTimer(getTimeSpan, daysDiv, hoursDiv, minutesDiv, secondsDiv, holder) {
-                var getTime = getTimeSpan.text() + ' -07:00';
+                var getTime = getTimeSpan.text() + ' -08:00';
 
                 if (Date.parse(getTime) < Date.parse(new Date())) {
                     getTime = new Date();
@@ -555,7 +559,7 @@
 
             // $("#player-countdown").text($("#play-time").text());
             function playerCountDown(countDownTime, setElement, setMobileElement, removeBtn) {
-                let countDownDate = new Date(countDownTime + " -07:00").getTime();
+                let countDownDate = new Date(countDownTime + " -08:00").getTime();
                 // Update the count down every 1 second
                 let x = setInterval(function () {
                     // Get todays date and time
