@@ -138,7 +138,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="register_coin">Register Coin</label>
                                                 <input type="number"
@@ -151,7 +151,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="refer_coin_amount">Refer Coin</label>
                                                 <input type="number"
@@ -161,6 +161,19 @@
                                                        value="{{old("refer_coin_amount",$setting->refer_coin_amount)}}" required>
                                                 <span
                                                     class="text-danger"> {{$errors->has("refer_coin_amount") ? $errors->first("refer_coin_amount") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="facebook_share_coin">Facebook Share Coin</label>
+                                                <input type="number"
+                                                       class="form-control {{$errors->has("facebook_share_coin") ? "is-invalid":""}}"
+                                                       id="facebook_share_coin" name="facebook_share_coin"
+                                                       placeholder="Refer Coin"
+                                                       value="{{old("facebook_share_coin",$setting->facebook_share_coin)}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("facebook_share_coin") ? $errors->first("facebook_share_coin") : ""}} </span>
                                             </div>
                                         </div>
 
@@ -249,7 +262,26 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <label>
+                                                Refer & Facebook image(1200 x 630 px)
+                                            </label>
+                                            <p><input type="file" accept="image/*" name="facebook_and_share_image" class="facebook_and_share_image" id="facebook_and_share_image"
+                                                      style="display: none;"></p>
+                                            <p><label for="facebook_and_share_image" style="cursor: pointer;">
+                                                    @if($setting->facebook_and_share_image && file_exists($setting->facebook_and_share_image))
+                                                        <img id="outputFbShr" src="{{asset($setting->facebook_and_share_image)}}"
+                                                             width="180"/>
+                                                    @else
+                                                        <img id="outputFbShr"
+                                                             src="{{asset('/demo-pic/upload-image.jpg')}}" width="180"/>
+                                                    @endif
+                                                </label></p>
+                                            <span
+                                                class="text-danger"> {{$errors->has("facebook_and_share_image") ? $errors->first("facebook_and_share_image") : ""}} </span>
+                                        </div>
+
+                                        <div class="col-md-4">
                                             <label>
                                                 {{--                                                Upload Company Logo (128x128)--}}
                                                 Upload Company Logo
@@ -269,7 +301,7 @@
                                                 class="text-danger"> {{$errors->has("logo") ? $errors->first("logo") : ""}} </span>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label>
                                                 {{--                                                Upload Icon (50x50)--}}
                                                 Upload Mobile Logo

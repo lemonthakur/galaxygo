@@ -62,6 +62,13 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $('.facebook_and_share_image').change(function () {
+        var image = document.getElementById('outputFbShr');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    });
+});
+
 // date time picker
  $('.datetimepicker').datetimepicker({
     ignoreReadonly: true,

@@ -43,4 +43,8 @@ class Contest extends Model
             ->where('participant_type', '=', $user['type'])
             ->where('participant_id', '=', $user['id']);
     }
+
+    public function contestParticipant(){
+        return $this->hasMany(ContestParticipant::class,'contest_id','id');
+    }
 }

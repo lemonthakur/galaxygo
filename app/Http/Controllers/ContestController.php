@@ -309,7 +309,9 @@ class ContestController extends Controller
         if ($request->ajax()) {
             $name = $request->name;
 
-            $contests = Contest::orderBy('id', 'desc');
+            $contests = Contest::withCount('contestParticipant')
+                            ->having('contest_participant_count', '>', 0)
+                            ->orderBy('id', 'desc');
             if (!empty($name)) {
                 $name = date('Y-m-d', strtotime($name));
                 $contests = $contests->whereDate("name", "=", "$name");

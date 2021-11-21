@@ -30,6 +30,7 @@ class SiteSettingController extends Controller
             'address' => 'required|max:100',
             'refer_coin_amount' => 'required',
             'register_coin' => 'required',
+            'facebook_share_coin' => 'required',
             'google_map' => 'max:500',
             'site_title' => 'max:90',
             'meta_description' => 'max:180',
@@ -72,6 +73,7 @@ class SiteSettingController extends Controller
         $setting->notice = $request->notice ?? Null;
         $setting->register_coin = $request->register_coin ?? Null;
         $setting->refer_coin_amount = $request->refer_coin_amount ?? Null;
+        $setting->facebook_share_coin = $request->facebook_share_coin ?? Null;
         $setting->withdraw_message = $request->withdraw_message ?? Null;
 
         if ($request->hasFile('mobile_logo')){
@@ -88,6 +90,14 @@ class SiteSettingController extends Controller
             }
             $logo = OwnLibrary::uploadImage($request->logo, "site-setting");
             $setting->logo = $logo;
+        }
+
+        if ($request->hasFile('facebook_and_share_image')){
+            if (!empty($setting->facebook_and_share_image)){
+                @unlink($setting->facebook_and_share_image);
+            }
+            $facebook_and_share_image = OwnLibrary::uploadImage($request->facebook_and_share_image, "site-setting");
+            $setting->facebook_and_share_image = $facebook_and_share_image;
         }
 
         if ($setting->save()){

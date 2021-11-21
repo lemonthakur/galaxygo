@@ -202,7 +202,7 @@
                                                 <!--Item End-->
                                                     <div class="ic-item-load-more">
                                                         @if($contest->is_paid == 2 && auth()->check() && auth()->user()->current_coin < $contest->amount)
-                                                            <button type="submit" disabled class="btn-submit text-danger" style="line-height: 20px; font-size: 13px;">Paid contest, you don't have {{ $contest->amount }} coin to play.</button>
+                                                            <button type="submit" disabled class="btn-submit text-danger" style="line-height: 20px; font-size: 13px;">{{-- Paid contest, you don't have {{ $contest->amount }} coin to play.--}}Refer Friends to get more tokens.</button>
                                                             <!-- <p class="text-center w-75 m-auto text-danger py-2">This is a paid contest and you doesn't have enough coin to play.</p> -->
                                                         @else
                                                             <button type="submit" class="btn-submit">Submit</button>

@@ -190,7 +190,7 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="played_on">Played On<span class="text-red">*</span></label>
+                                                <label for="played_on">Game date & time<span class="text-red">*</span></label>
                                                 <input type="text" readonly
                                                        class="form-control datetimepicker {{$errors->has("played_on") ? "is-invalid":""}}"
                                                        id="played_on" data-target="#played_on"
@@ -269,7 +269,7 @@
                                             </td>
                                             <td>
                                                 Name: {{ucwords($player->player->name ?? '')}} <br/>
-                                                Played On: {{date('m/d/Y h:i a',strtotime($player->played_on))}}
+                                                Game date & time: {{date('m/d/Y h:i a',strtotime($player->played_on))}}
                                             </td>
                                             <td>
                                                 Versus: {{strtoupper($player->versus)}} <br/>

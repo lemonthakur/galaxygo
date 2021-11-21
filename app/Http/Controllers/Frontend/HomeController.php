@@ -405,6 +405,7 @@ class HomeController extends Controller
 
         $current_coin  = 0.00;
         try {
+            $site_setting = SiteSetting::find(1);
             $fb_share = new FacebookShare();
             $fb_share->user_id = $user['id'];
             $fb_share->user_type = $user['type'];
@@ -414,15 +415,15 @@ class HomeController extends Controller
 
             if($user['type']==1){
                 $gets_user = GuestUser::find($user['id']);
-                $gets_user->total_coin = $gets_user->total_coin + 5;
-                $gets_user->current_coin = $gets_user->current_coin + 5;
+                $gets_user->total_coin = $gets_user->total_coin + $site_setting->facebook_share_coin;
+                $gets_user->current_coin = $gets_user->current_coin + $site_setting->facebook_share_coin;
                 $gets_user->save();
                 $current_coin = $gets_user->current_coin;
             }
             elseif($user['type']==0){
                 $user = User::find($user['id']);
-                $user->total_coin = $user->total_coin + 5;
-                $user->current_coin = $user->current_coin + 5;
+                $user->total_coin = $user->total_coin + $site_setting->facebook_share_coin;
+                $user->current_coin = $user->current_coin + $site_setting->facebook_share_coin;
                 $user->save();
                 $current_coin = $user->current_coin;
             }
@@ -431,9 +432,9 @@ class HomeController extends Controller
             $coinHistory = new CoinHistory();
             $coinHistory->user_id = $user['id'];
             $coinHistory->user_type = $user['type'];
-            $coinHistory->amount = 5;
+            $coinHistory->amount = $site_setting->facebook_share_coin;
             $coinHistory->transaction_type = 0;
-            $coinHistory->earn_expense_type = 5;
+            $coinHistory->earn_expense_type = $site_setting->facebook_share_coin;
             $coinHistory->save();
 
         }catch(ValidationException $e) {
