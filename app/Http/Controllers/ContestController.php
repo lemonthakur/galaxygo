@@ -304,4 +304,23 @@ class ContestController extends Controller
 
         return redirect()->back();
     }
+
+    public function noParticipant(Request $request){
+        if ($request->ajax()) {
+            $name = $request->name;
+
+            $contests = Contest::orderBy('id', 'desc');
+            if (!empty($name)) {
+                $name = date('Y-m-d', strtotime($name));
+                $contests = $contests->whereDate("name", "=", "$name");
+            }
+
+            return DataTables::of($contests)
+                ->addIndexColumn()
+                ->addColumn('actions', 'backend.contest.action')
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+        return view('backend.contest.no-participant');
+    }
 }

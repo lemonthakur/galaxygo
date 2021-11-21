@@ -68,7 +68,7 @@
                                         <p>Admin Panel User</p>
                                     </a>
                                 </li>
-                           
+
                            <li class="nav-item">
                                     <a href="{{route("user.frontend")}}"
                                        class="nav-link {{ ($routeName == 'user.frontend') ? 'active' : '' }}">
@@ -77,7 +77,7 @@
                                     </a>
                                 </li>
                             @endif
-                            
+
                         </ul>
                     </li>
                 @endif
@@ -126,7 +126,8 @@
 
                 @if(!empty($aclList[11][1]) || !empty($aclList[11][2]) || empty($aclList[12][1]) || !empty($aclList[12][2]) || empty($aclList[13][1]) || !empty($aclList[13][2]))
                 <li class="nav-item has-treeview {{ ($routeName == 'contest.index' || $routeName == 'contest.create' ||
-                    $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create' || $routeName == 'players.edit' || $routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit') ? 'menu-open' : '' }}">
+                    $routeName == 'contest.edit' || $routeName == 'players.index' || $routeName == 'players.create'
+                    || $routeName == 'players.edit' || $routeName == 'win-coin.index' || $routeName == 'win-coin.create' || $routeName == 'win-coin.edit' || $routeName == 'contest.no.participant') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-play-circle"></i>
                         <p>
@@ -172,6 +173,15 @@
                             </a>
                         </li>
                             @endif
+                        @if(!empty($aclList[12][1]))
+                            <li class="nav-item">
+                                <a href="{{route("contest.no.participant")}}"
+                                   class="nav-link {{ ($routeName == 'contest.no.participant') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Contest No Participant</p>
+                                </a>
+                            </li>
+                        @endif
                             @if(!empty($aclList[13][2]))
                         <li class="nav-item">
                             <a href="{{route("win-coin.index")}}"

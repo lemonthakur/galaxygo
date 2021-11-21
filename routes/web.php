@@ -45,6 +45,10 @@ Route::group(['middleware'=>'authCheck'],function (){
         'players' => PlayerController::class,
     ]);
 
+
+
+    Route::get('no-participant',[ContestController::class,'noParticipant'])->name('contest.no.participant');
+
     Route::get('user-frontend',[UserController::class,'frontendIndex'])->name('user.frontend');
 
     Route::get('site-setting',[SiteSettingController::class,'edit'])->name('site.setting.edit');

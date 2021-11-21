@@ -38,8 +38,8 @@ class ContestController extends Controller
         }
 
         if($alise=='pending'){
-            $pendingContest = Contest::
-            with('userPLay',
+            $pendingContest = Contest::has('userPLay')
+            ->with('userPLay',
                 'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
                 'contestPlayers.player:id,name,image',
                 'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
@@ -56,7 +56,8 @@ class ContestController extends Controller
 
         if($alise=='final'){
             $finalContests = Contest::
-            with('userPLay',
+            has('userPLay')
+                ->with('userPLay',
                 'contestPlayers:id,contest_id,played_on,versus,score,final_score,answer,player_id',
                 'contestPlayers.player:id,name,image',
                 'contestPlayers.participant:id,contest_player_id,participant_answer,is_correct,participant_id',
