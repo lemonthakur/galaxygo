@@ -16,24 +16,24 @@
                             <form action="{{route('withdraw.request')}}" method="post" class="ic-profile-basic-info">
                                 @csrf
                                 <div class="row">
-                                    @if(!auth()->user()->paypal_email)
+                                    {{-- @if(!auth()->user()->paypal_email) --}}
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="amount">Paypal Email<span class="text-danger">*</span></label>
+                                            <label for="amount">PayPal Email or SHIBA wallet address<span class="text-danger">*</span></label>
                                             <input type="email" id="paypal_email" class="form-control" placeholder="Enter paypal email"
-                                                   value="{{old('paypal_email')}}"
+                                                   value="{{old("paypal_email", auth()->user()->paypal_email)}}"
                                                    name="paypal_email" required>
                                             <span class="text-danger">{{$errors->has("paypal_email") ? $errors->first("paypal_email") : ""}}</span>
                                         </div>
                                     </div>
-                                    @endif
+                                    {{-- @endif --}}
 
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="amount">Withdraw Amount<span class="text-danger">*</span></label>
                                             <input type="number" step="any" id="amount" class="form-control" placeholder="Enter amount"
                                                    value="{{old('amount')}}"
-                                                   name="amount" min="100" required="">
+                                                   name="amount" min="{{ $site_setting->min_withdraw_amount }}" required="">
                                             <span class="text-danger">{{$errors->has("amount") ? $errors->first("amount") : ""}}</span>
                                         </div>
                                     </div>

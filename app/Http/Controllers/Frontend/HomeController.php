@@ -177,7 +177,11 @@ class HomeController extends Controller
         $rules = [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.auth()->id(),
-            'paypal_email' => 'required|email',
+            'contact_no' => 'nullable|max:100|unique:users,contact_no,'.auth()->id(),
+            'address' => 'nullable|max:1000',
+            'optional_name' => 'nullable|max:250',
+            'date_of_birth' => 'nullable|max:100',
+            //'paypal_email' => 'required|email',
         ];
 
         $message = [];
@@ -197,7 +201,11 @@ class HomeController extends Controller
         $user = User::find(auth()->id());
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->paypal_email = $request->paypal_email;
+        $user->contact_no = $request->contact_no;
+        $user->address = $request->address;
+        $user->optional_name = $request->optional_name;
+        $user->date_of_birth = $request->date_of_birth;
+        //$user->paypal_email = $request->paypal_email;
         if(!empty($request->password)){
             $user->password = Hash::make($request->password);
         }
@@ -304,14 +312,16 @@ class HomeController extends Controller
     }
 
     public function withdrawRequest(Request $request){
+        $site_setting = SiteSetting::find(1);
 
         $rules = [
-            'amount' => 'required|numeric|min:100',
+            'amount' => 'required|numeric|min:'.$site_setting->min_withdraw_amount,
+            'paypal_email' => 'required|email|max:1000',
         ];
 
-        if(!auth()->user()->paypal_email){
+        /*if(!auth()->user()->paypal_email){
             $rules['paypal_email'] = 'required|email';
-        }
+        }*/
 
         $message = [];
 
@@ -323,12 +333,12 @@ class HomeController extends Controller
                 ->withErrors($validation);
         }
 
-        if(!auth()->user()->paypal_email){
+        //if(!auth()->user()->paypal_email){
             $user = User::find(auth()->id());
             $user->paypal_email = $request->paypal_email;
             $user->save();
             \Auth::setUser($user);
-        }
+        //}
 
         if (!auth()->user()->paypal_email){
             session()->flash('error','Please provide PayPal email first');

@@ -1,6 +1,10 @@
 @extends('frontend.layout.master')
 @section('title','Profile')
 
+@section('css')
+    <!-- <link rel="stylesheet" href="{{asset('admin-lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}"> -->
+@endsection
+
 @section('content')
 
     <section class="ic-profile-area">
@@ -74,7 +78,7 @@
                                         <span class="text-danger">{{$errors->has("name") ? $errors->first("name") : ""}}</span>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group">
                                         <label for="paypal_email">paypal email<span class="text-danger">*</span></label>
                                         <input type="text" id="paypal_email" class="form-control"
@@ -82,6 +86,44 @@
                                                value="{{old('paypal_email',auth()->user()->paypal_email)}}"
                                         name="paypal_email">
                                         <span class="text-danger">{{$errors->has("paypal_email") ? $errors->first("paypal_email") : ""}}</span>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="optional_name">Name</label>
+                                        <input type="text" id="optional_name" class="form-control" placeholder="Enter Name"
+                                               value="{{old('optional_name',auth()->user()->optional_name)}}"
+                                        name="optional_name">
+                                        <span class="text-danger">{{$errors->has("optional_name") ? $errors->first("optional_name") : ""}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <textarea placeholder="Enter address" class="form-control" name="address">{{old('address',auth()->user()->address)}}</textarea>
+                                        <span class="text-danger">{{$errors->has("address") ? $errors->first("address") : ""}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="contact_no">Phone</label>
+                                        <input type="text" id="contact_no" class="form-control" placeholder="Phone"
+                                               value="{{old('contact_no',auth()->user()->contact_no)}}"
+                                        name="contact_no">
+                                        <span class="text-danger">{{$errors->has("contact_no") ? $errors->first("contact_no") : ""}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="date_of_birth">Date Of Birth</label>
+                                        <input type="date" id="date_of_birth" class="form-control datepicker" placeholder="Date Of Birth"
+                                               value="{{old('date_of_birth',auth()->user()->date_of_birth)}}"
+                                        name="date_of_birth">
+                                        <span class="text-danger">{{$errors->has("date_of_birth") ? $errors->first("date_of_birth") : ""}}</span>
                                     </div>
                                 </div>
 
@@ -136,6 +178,8 @@
 @endsection
 
 @section('js')
+    <!-- <script src="{{asset('admin-lte/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script> -->
     <script>
         // change cover photo
         $(document).on('change','#cover_photo_upload',function (){

@@ -138,7 +138,20 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="min_withdraw_amount">Minium Withdraw Amount</label>
+                                                <input type="number"
+                                                       class="form-control {{$errors->has("min_withdraw_amount") ? "is-invalid":""}}"
+                                                       id="min_withdraw_amount" name="min_withdraw_amount"
+                                                       placeholder="Minium Withdraw Amount"
+                                                       value="{{old("min_withdraw_amount",$setting->min_withdraw_amount)}}" required>
+                                                <span
+                                                    class="text-danger"> {{$errors->has("register_coin") ? $errors->first("register_coin") : ""}} </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="register_coin">Register Coin</label>
                                                 <input type="number"
@@ -151,7 +164,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="refer_coin_amount">Refer Coin</label>
                                                 <input type="number"
@@ -164,7 +177,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="facebook_share_coin">Facebook Share Coin</label>
                                                 <input type="number"

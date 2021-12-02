@@ -31,6 +31,7 @@ class SiteSettingController extends Controller
             'refer_coin_amount' => 'required',
             'register_coin' => 'required',
             'facebook_share_coin' => 'required',
+            'min_withdraw_amount' => 'required',
             'google_map' => 'max:500',
             'site_title' => 'max:90',
             'meta_description' => 'max:180',
@@ -75,6 +76,7 @@ class SiteSettingController extends Controller
         $setting->refer_coin_amount = $request->refer_coin_amount ?? Null;
         $setting->facebook_share_coin = $request->facebook_share_coin ?? Null;
         $setting->withdraw_message = $request->withdraw_message ?? Null;
+        $setting->min_withdraw_amount = $request->min_withdraw_amount ?? Null;
 
         if ($request->hasFile('mobile_logo')){
             if (!empty($setting->icon)){
